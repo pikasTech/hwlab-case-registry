@@ -11,8 +11,7 @@
     "conversationId": "cnv_case_d601-f103-v2-main-marker-download-uart_issue1020-harness-business-20260606-141500",
     "providerProfile": "deepseek",
     "projectId": "prj_hwpod_workbench",
-    "source": "caserun-identity",
-    "lookupOnly": true,
+    "source": "hwlab-cli.client.agent.trace",
     "lookup": {
       "source": "hwlab-cli.client.agent",
       "strategy": "id_plus_existing_cli",
@@ -30,9 +29,10 @@
       }
     },
     "status": "completed",
-    "commandCount": 0,
-    "hwpodCommandCount": 0,
-    "hwpodBuildCommandCount": 0
+    "terminalStatus": "completed",
+    "commandCount": 20,
+    "hwpodCommandCount": 14,
+    "hwpodBuildCommandCount": 1
   },
   "traceLookup": {
     "source": "hwlab-cli.client.agent",
@@ -81,15 +81,17 @@
     "traceRender": {
       "renderer": "tools/src/hwlab-cli/trace-renderer:traceDisplayRows",
       "status": "completed",
-      "sourceEventCount": 0,
-      "renderedRowCount": 0,
+      "sourceEventCount": 5686,
+      "renderedRowCount": 63,
       "noiseEventCount": 0
     },
     "finalResponse": {
-      "present": false,
-      "reason": "finalResponse=null; no authoritative final assistant response was returned by the trace/result payload",
+      "present": true,
       "status": "completed",
-      "terminalRows": []
+      "source": "agentrun-command-result",
+      "text": "## CaseRun Trace Summary — `d601-f103-v2-main-marker-download-uart`\n\n### 1. Workspace & Spec\n- `.hwlab/hwpod-spec.yaml` present, validated via `hwpod-ctl spec validate` — board `D601-F103-V2`, toolchain `keil-mdk`, workspace `F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1020-harness-business-20260606-141500`\n- `hwpod inspect` confirmed node `node-d601-f103-v2` healthy (win32/x64, workspace exists)\n\n### 2. Source Edit (HWPOD workspace path)\n- Used `hwpod workspace insert-after` to add the UART marker after `usart_init(115200);`\n- Inserted line: `printf(\"[D601-F103] CaseRun UART marker issue1020-harness-business-20260606-141500\\r\\n\");`\n- **Confirmed in file** at line 17 via `hwpod workspace cat` re-read\n\n### 3. Build (`hwpod build`)\n- Submitted via HWPOD node ops: Keil CLI accepted build as **async job** `20260606_221555_e63e2a7d` (queued)\n- No ad-hoc workspace exec available to poll job status from the agent side — the build may still be pending on the Keil/Windows side\n\n### 4. Download (`hwpod download`)\n- **Timed out** (default wait) — expected since the async Keil build had not completed during the time window. No download was attempted.\n\n### 5. UART Read (`hwpod uart read --port uart1`)\n- **Blocked**: serial monitor not currently monitoring COM9. Last session was `2026-05-30T19:44:37`. The monitor process is not running (`isMonitoring: false`). COM9 is not in the active port list (only COM3, COM4 visible).\n\n### Raw Observations for HWPOD Harness Improvement\n| Step | Result | Notes |\n|------|--------|-------|\n| `hwpod-ctl spec validate` | ✅ Passed | |\n| `hwpod inspect` | ✅ Passed | node healthy, workspace exists |\n| `workspace insert-after` | ✅ Passed | Marker inserted, file SHA changed `ae38a7a5`→`afe3b445` |\n| `hwpod build` | ✅ Accepted (async) | Job `20260606_221555_e63e2a7d`, no poll-from-agent capability |\n| `hwpod download` | ❌ Timeout | Build not complete within wait window |\n| `hwpod uart read` | ❌ Blocked | Serial monitor not active on COM9 |",
+      "textChars": 1989,
+      "traceId": "trc_case_d601-f103-v2-main-marker-download-uart_341da1e887b8405c9f463aae512a4118"
     }
   },
   "prompt": {
@@ -105,8 +107,114 @@
   "agentStage": {
     "source": "agent-trace-commands",
     "autoEvaluation": false,
-    "commands": [],
-    "kinds": []
+    "commands": [
+      {
+        "kind": "spec-validate",
+        "seq": 86,
+        "exitCode": 0,
+        "command": "hwpod-ctl spec validate --spec .hwlab/hwpod-spec.yaml 2>&1",
+        "detail": "hwpod-ctl spec validate --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { \"ok\": true, \"action\": \"hwpod-ctl.spec.validate\", \"status\": \"succeeded\", \"specPath\": \".hwlab/hwpod-spec.yaml\", \"document\": { \"apiVersion\": \"hwlab.dev/v0alpha1\", \"kind\": \"Hwpod\", \"metadata\": { \"uid\": \"D601-F103-V2\", \"name\": \"d601-f103-v2\" }, \"spec\": { \"targetDevice\": { \"board\": \"D601-F103-V2\", \"mcu\": \"STM32F103\" }, \"workspace\": { \"path\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1020-harness-business-20260606-141500\", \"toolchain\": \"keil-mdk\", \"keilProject\": \"projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx\", \"keilTarget\": \"USART\", \"keilCliPath\": \"C:\\\\Users\\\\liang\\\\.agents\\\\s... exitCode=0"
+      },
+      {
+        "kind": "inspect",
+        "seq": 137,
+        "exitCode": 0,
+        "command": "hwpod inspect --spec .hwlab/hwpod-spec.yaml 2>&1",
+        "detail": "hwpod inspect --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \".hwlab/hwpod-spec.yaml\", \"intent\": \"inspect\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"subprocess\", \"entrypoint\": \"tools/hwpod-compiler-cli.ts\", \"argv\": [ \"compile\", \"--spec\", \".hwlab/hwpod-spec.yaml\", \"--intent\", \"inspect\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_315d03e7-658c-40c1-a881-cb77c466ce80\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specP... exitCode=0"
+      },
+      {
+        "kind": "workspace-edit",
+        "seq": 526,
+        "exitCode": 0,
+        "command": "hwpod workspace insert-after --path projects/01_baseline/User/main.c --anchor \" usart_init(115200);\" --line \" printf(\\\"[D601-F103] CaseRun UART marker issue1020-harness-business-20260606-141500\\\\r\\\\n\\\");\" --spec .hwlab/hwpod-spec.yaml 2>&1",
+        "detail": "hwpod workspace insert-after --path projects/01_baseline/User/main.c --anchor \" usart_init(115200);\" --line \" printf(\\\"[D601-F103] CaseRun UART marker issue1020-harness-business-20260606-141500\\\\r\\\\n\\\");\" --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \".hwlab/hwpod-spec.yaml\", \"intent\": \"workspace.insert-after\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"subprocess\", \"entrypoint\": \"tools/hwpod-compiler-cli.ts\", \"argv\": [ \"compile\", \"--spec\", \".hwlab/hwpod-spec.yaml\", \"--intent\", \"workspace.insert-after\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_74b91f29-44a6-46a7-8f3c-e3de8b80663b\", \"source\": { \"compiler\"... exitCode=0"
+      },
+      {
+        "kind": "build",
+        "seq": 644,
+        "exitCode": 0,
+        "command": "hwpod build --spec .hwlab/hwpod-spec.yaml 2>&1",
+        "detail": "hwpod build --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \".hwlab/hwpod-spec.yaml\", \"intent\": \"debug.build\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"subprocess\", \"entrypoint\": \"tools/hwpod-compiler-cli.ts\", \"argv\": [ \"compile\", \"--spec\", \".hwlab/hwpod-spec.yaml\", \"--intent\", \"debug.build\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_a56754f8-466f-467b-abb8-098380fe8218\", \"source\": { \"compiler\": \"hwpod-compiler-cli\"... exitCode=0"
+      },
+      {
+        "kind": "download",
+        "seq": 913,
+        "command": "hwpod download --spec .hwlab/hwpod-spec.yaml 2>&1",
+        "detail": "hwpod download --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: commandExecution inProgress: /bin/sh -lc 'hwpod download --spec .hwlab/hwpod-spec.yaml 2>&1'"
+      },
+      {
+        "kind": "uart-read",
+        "seq": 3757,
+        "exitCode": 1,
+        "command": "hwpod uart read --spec .hwlab/hwpod-spec.yaml --port uart1 --max-bytes 4096 2>&1",
+        "detail": "hwpod uart read --spec .hwlab/hwpod-spec.yaml --port uart1 --max-bytes 4096 2>&1 stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"failed\", \"specPath\": \".hwlab/hwpod-spec.yaml\", \"intent\": \"io.uart.read\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"subprocess\", \"entrypoint\": \"tools/hwpod-compiler-cli.ts\", \"argv\": [ \"compile\", \"--spec\", \".hwlab/hwpod-spec.yaml\", \"--intent\", \"io.uart.read\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_fd38a022-bb31-45db-9ea8-a95efff378a7\", \"source\": { \"compiler\": \"hwpod-compiler-cli\",... exitCode=1"
+      },
+      {
+        "kind": "hwpod-other",
+        "seq": 242,
+        "exitCode": 0,
+        "command": "hwpod workspace ls . --spec .hwlab/hwpod-spec.yaml 2>&1 | head -80",
+        "detail": "hwpod workspace ls . --spec .hwlab/hwpod-spec.yaml 2>&1 | head -80 stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \".hwlab/hwpod-spec.yaml\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"subprocess\", \"entrypoint\": \"tools/hwpod-compiler-cli.ts\", \"argv\": [ \"compile\", \"--spec\", \".hwlab/hwpod-spec.yaml\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_6858447a-ad1b-49b9-9ece-f3a5a4d80c43\", \"source\": { \"compiler\": \"hwpod-compiler-cl... exitCode=0"
+      },
+      {
+        "kind": "hwpod-other",
+        "seq": 325,
+        "exitCode": 0,
+        "command": "hwpod --help 2>&1",
+        "detail": "hwpod --help 2>&1 stdout: { \"ok\": true, \"action\": \"hwpod-cli.help\", \"status\": \"succeeded\", \"contractVersion\": \"hwpod-node-ops-v1\", \"usage\": [ \"bun tools/hwpod-cli.ts inspect --dry-run\", \"bun tools/hwpod-cli.ts workspace ls . --dry-run\", \"bun tools/hwpod-cli.ts workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml\", \"cat patch.txt | bun tools/hwpod-cli.ts workspace apply-patch --spec .hwlab/hwpod-spec.yaml --reason \\\"edit subject workspace through hwpod-node\\\"\", \"bun tools/hwpod-cli.ts workspace replace --path projects/01_baseline/User/main.c --find \\\"old text\\\" --replace \\\"new text\\\" --expecte... exitCode=0"
+      },
+      {
+        "kind": "hwpod-other",
+        "seq": 416,
+        "exitCode": 0,
+        "command": "hwpod workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml 2>&1",
+        "detail": "hwpod workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \".hwlab/hwpod-spec.yaml\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"subprocess\", \"entrypoint\": \"tools/hwpod-compiler-cli.ts\", \"argv\": [ \"compile\", \"--spec\", \".hwlab/hwpod-spec.yaml\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_f1f4be4f-94f0-4351-bdf0-a1dfffed0cc0\", \"source\": { \"compiler\": \"hwpod-compiler-... exitCode=0"
+      },
+      {
+        "kind": "workspace-edit",
+        "seq": 470,
+        "exitCode": 1,
+        "command": "hwpod workspace insert-after --path projects/01_baseline/User/main.c --anchor \"usart_init(115200)\" --line \" printf(\\\"[D601-F103] CaseRun UART marker issue1020-harness-business-20260606-141500\\\\r\\\\n\\\");\" --spec .hwlab/hwpod-spec.yaml 2>&1",
+        "detail": "hwpod workspace insert-after --path projects/01_baseline/User/main.c --anchor \"usart_init(115200)\" --line \" printf(\\\"[D601-F103] CaseRun UART marker issue1020-harness-business-20260606-141500\\\\r\\\\n\\\");\" --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"failed\", \"specPath\": \".hwlab/hwpod-spec.yaml\", \"intent\": \"workspace.insert-after\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"subprocess\", \"entrypoint\": \"tools/hwpod-compiler-cli.ts\", \"argv\": [ \"compile\", \"--spec\", \".hwlab/hwpod-spec.yaml\", \"--intent\", \"workspace.insert-after\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_565f99df-806a-4668-aba4-5a66f3da48d4\", \"source\": { \"compiler\": \"... exitCode=1"
+      },
+      {
+        "kind": "hwpod-other",
+        "seq": 840,
+        "exitCode": 1,
+        "command": "hwpod workspace ls C:\\\\Users\\\\liang\\\\.agents\\\\skills\\\\keil\\\\.state\\\\jobs --spec .hwlab/hwpod-spec.yaml 2>&1",
+        "detail": "hwpod workspace ls C:\\\\Users\\\\liang\\\\.agents\\\\skills\\\\keil\\\\.state\\\\jobs --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"failed\", \"specPath\": \".hwlab/hwpod-spec.yaml\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"subprocess\", \"entrypoint\": \"tools/hwpod-compiler-cli.ts\", \"argv\": [ \"compile\", \"--spec\", \".hwlab/hwpod-spec.yaml\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_ae75182a-7570-493b-a60d-7f721091fef3\", \"source\": { \"compiler\": \"hwpod-compiler-cli\",... exitCode=1"
+      },
+      {
+        "kind": "hwpod-other",
+        "seq": 3850,
+        "exitCode": 0,
+        "command": "hwpod workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml 2>&1 | grep -o '\"content\": *\"[\"'^\"]*\"'\"' | head -1 | cut -c12-",
+        "detail": "hwpod workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml 2>&1 | grep -o '\"content\": *\"[\"'^\"]*\"'\"' | head -1 | cut -c12- stdout: \"#include \\\" exitCode=0"
+      },
+      {
+        "kind": "hwpod-other",
+        "seq": 4036,
+        "exitCode": 0,
+        "command": "hwpod workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml 2>&1 | python3 -c \"import sys,json; d=json.load(sys.stdin); print(d.get('body',{}).get('results',[{}])[0].get('output',{}).get('content',''))\" 2>/dev/null || hwpod workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml 2>&1 | node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{let j=JSON.parse(d);let r=j.body?.results?.[0]?.output?.content||'NOT_FOUND';console.log(r.slice(600,900))})",
+        "detail": "hwpod workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml 2>&1 | python3 -c \"import sys,json; d=json.load(sys.stdin); print(d.get('body',{}).get('results',[{}])[0].get('output',{}).get('content',''))\" 2>/dev/null || hwpod workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml 2>&1 | node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{let j=JSON.parse(d);let r=j.body?.results?.[0]?.output?.content||'NOT_FOUND';console.log(r.slice(600,900))})\" stdout: printf(\"[D601-F103] LCD ID=0x%04X\\r\\n\", (unsigned int)d601_lcd_get_id()); printf(\"[D601-F103] ARM-2D demo rendered\\r\\n\"); printf(\"[D601-F103] JSON-RPC ready on USART1 115200 8N1\\r\\n\"); while (1) { jsonrpc_process(); d601_arm2d_demo_task(); } } exitCode=0"
+      },
+      {
+        "kind": "hwpod-other",
+        "seq": 4234,
+        "exitCode": 0,
+        "command": "hwpod workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml > /tmp/main_c_result.json 2>&1; node -e \"let j=require('/tmp/main_c_result.json');let c=j.body.results[0].output.content;let i=c.indexOf('CaseRun');console.log(i>=0?c.slice(Math.max(0,i-80),i+100):'NOT_FOUND')",
+        "detail": "hwpod workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml > /tmp/main_c_result.json 2>&1; node -e \"let j=require('/tmp/main_c_result.json');let c=j.body.results[0].output.content;let i=c.indexOf('CaseRun');console.log(i>=0?c.slice(Math.max(0,i-80),i+100):'NOT_FOUND')\" stdout: HAL_Init(); led_init(); usart_init(115200); printf(\"[D601-F103] CaseRun UART marker issue1020-harness-business-20260606-141500\\r\\n\"); printf(\"\\r\\n[D601-F103] d exitCode=0"
+      }
+    ],
+    "kinds": [
+      "spec-validate",
+      "inspect",
+      "workspace-edit",
+      "build",
+      "download",
+      "uart-read",
+      "hwpod-other"
+    ]
   },
   "keilJob": {
     "jobId": "20260606_221906_a51ceb11",
@@ -149,34 +257,34 @@
   "files": [
     {
       "path": "evidence.json",
-      "bytes": 12432,
-      "sha256": "abe311fcb7b3956cb85dce7a3c55e51da8a11c7a0a5cb7135ce8498d1866af11",
+      "bytes": 36985,
+      "sha256": "2c7d71cb43b2f695608d965912e75ade3b2d28f91d1749caf35171cd50206c1a",
       "source": "evidence.json"
     },
     {
       "path": "summary.md",
-      "bytes": 1524,
-      "sha256": "3fe09ef399426fe5100a0ada2299c7561cc5952836630248cf17409508847168"
+      "bytes": 6226,
+      "sha256": "fdfcbc2f6205e4382e6224ae9b3aa01310fe10d7ea6984cfb4b317302b4c01b4"
     },
     {
       "path": "agent-messages.json",
-      "bytes": 2585,
-      "sha256": "a1f08a7e71156497663d848a6ba8013aa03feeaa8304a4f061673997c4771eba"
+      "bytes": 35563,
+      "sha256": "221b98e5bb9dd76257a6e003d8428686f02a6f6295043d769d7718d675b6cb62"
     },
     {
       "path": "agent-trace.md",
-      "bytes": 1940,
-      "sha256": "75110ecc2f037a8eb956da2ae2f63e15d617c5567dfd2aaa0d887a1ed555488a"
+      "bytes": 26937,
+      "sha256": "c6b2f971d3bfd873187f6cb9d31ead629fb4013e9bb9b03c36ebd0e38509e61f"
     },
     {
       "path": "agent-transcript.md",
-      "bytes": 1940,
-      "sha256": "75110ecc2f037a8eb956da2ae2f63e15d617c5567dfd2aaa0d887a1ed555488a"
+      "bytes": 26937,
+      "sha256": "c6b2f971d3bfd873187f6cb9d31ead629fb4013e9bb9b03c36ebd0e38509e61f"
     },
     {
       "path": "final-response.md",
-      "bytes": 432,
-      "sha256": "bababec9bdc7ac9665ad5fdd13736fe15ab965285f06b8ba04618b774e9660d9"
+      "bytes": 2248,
+      "sha256": "fb9311dc27c8246acc3d793716e789ba7c138c291d84aee81717fd2d7eb46e63"
     },
     {
       "path": "run.json",
@@ -186,14 +294,14 @@
     },
     {
       "path": "result.json",
-      "bytes": 29088,
-      "sha256": "dcdccc28e21708d12e032890a85231446cf1964333f7fe102f813e8e9c89b04d",
+      "bytes": 42902,
+      "sha256": "c9847919ac4079a3cf8d13925d55714e73eb1ec382009a78447ab1f4be33a50c",
       "source": "result.json"
     },
     {
       "path": "agent-trace.json",
-      "bytes": 2213,
-      "sha256": "022aaac318db9ff20cd8646e514cfef7bec5d32924593cbf33fb253f79d70a39",
+      "bytes": 116558,
+      "sha256": "23ff4dc4e1c4d3cd5889bf1982ca8bd0df08c7009ff257548105723d848b0732",
       "source": "agent-trace.json"
     },
     {
