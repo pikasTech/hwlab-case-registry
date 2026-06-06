@@ -1,0 +1,108 @@
+{
+  "contractVersion": "hwpod-case-run-evidence-v1",
+  "caseId": "d601-f103-v2-compile",
+  "runId": "run-codeagent-20260605-latest-compile-only",
+  "compileOnly": true,
+  "ok": true,
+  "status": "succeeded",
+  "observedAt": "2026-06-05T15:05:23.311Z",
+  "apiUrl": "http://74.48.78.17:19667",
+  "hwpod": {
+    "command": [
+      "bun",
+      "hwpod-cli.ts",
+      "build",
+      "--spec",
+      "hwpod-spec.yaml",
+      "--reason",
+      "case-run d601-f103-v2-compile run-codeagent-20260605-latest-compile-only compile-only"
+    ],
+    "exitCode": 0,
+    "stdoutJson": {
+      "ok": true,
+      "action": "hwpod-cli.invoke",
+      "status": "completed",
+      "results": [
+        {
+          "opId": "op_01_debug_build",
+          "op": "debug.build",
+          "ok": true,
+          "status": "completed",
+          "output": {
+            "cwd": "F:\\Work\\D601-HWLAB",
+            "command": "py -3 C:\\Users\\liang\\.agents\\skills\\keil\\keil-cli.py build -p F:\\Work\\D601-HWLAB\\projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103.uvprojx -t USART",
+            "bindingSource": "hwpod-node-ops.command",
+            "shell": [
+              "cmd.exe",
+              "/d",
+              "/s",
+              "/c"
+            ],
+            "exitCode": 0,
+            "stdout": "{\r\n  \"accepted\": true,\r\n  \"command\": \"build\",\r\n  \"mode\": \"async\",\r\n  \"job_id\": \"20260605_230515_8010fe20\",\r\n  \"status\": \"queued\",\r\n  \"state_file\": \"C:\\\\Users\\\\liang\\\\.agents\\\\skills\\\\keil\\\\.state\\\\jobs\\\\20260605_230515_8010fe20.json\",\r\n  \"check_command\": \"py -3 keil-cli.py job-status 20260605_230515_8010fe20\",\r\n  \"hex_file_preview\": \"F:\\\\Work\\\\D601-HWLAB\\\\projects\\\\01_baseline\\\\Output\\\\atk_f103.hex\",\r\n  \"axf_file_preview\": \"F:\\\\Work\\\\D601-HWLAB\\\\projects\\\\01_baseline\\\\Output\\\\atk_f103.axf\"\r\n}\r\n",
+            "stderr": "",
+            "ok": true
+          }
+        }
+      ]
+    }
+  },
+  "keilJob": {
+    "status": "completed",
+    "returnCode": 0,
+    "success": true,
+    "artifacts": [
+      "F:\\Work\\D601-HWLAB\\projects\\01_baseline\\Output\\atk_f103.hex",
+      "F:\\Work\\D601-HWLAB\\projects\\01_baseline\\Output\\atk_f103.axf"
+    ],
+    "raw": {
+      "job_id": "20260605_230515_8010fe20",
+      "command": "build",
+      "status": "completed",
+      "created_at": "2026-06-05T23:05:15.319563",
+      "started_at": "2026-06-05T23:05:15.503370",
+      "finished_at": "2026-06-05T23:05:18.773946",
+      "return_code": 0,
+      "success": true,
+      "params": {
+        "project": "F:\\Work\\D601-HWLAB\\projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103.uvprojx",
+        "programmer": null,
+        "probe": null,
+        "target": "USART",
+        "program_backend": null,
+        "erase_mode": null
+      },
+      "result": {
+        "return_code": 0,
+        "success": true,
+        "message": "Build completed successfully",
+        "hex_file": "F:\\Work\\D601-HWLAB\\projects\\01_baseline\\Output\\atk_f103.hex",
+        "axf_file": "F:\\Work\\D601-HWLAB\\projects\\01_baseline\\Output\\atk_f103.axf",
+        "warning_count": 0,
+        "target": "USART",
+        "shared_output_cleanup": {
+          "performed": false,
+          "patterns": [],
+          "removed_count": 0,
+          "removed_files": []
+        },
+        "cleared_build_state_file": null,
+        "build_state_file": "F:\\Work\\D601-HWLAB\\projects\\01_baseline\\Projects\\MDK-ARM\\output\\.keil_target_build_state.json",
+        "_log_file": "C:\\Users\\liang\\.agents\\skills\\keil\\logs\\20260605\\keil_build_20260605_230515.jsonl"
+      },
+      "log_file": "C:\\Users\\liang\\.agents\\skills\\keil\\logs\\20260605\\keil_build_20260605_230515.jsonl",
+      "state_file": "C:\\Users\\liang\\.agents\\skills\\keil\\.state\\jobs\\20260605_230515_8010fe20.json"
+    },
+    "jobId": "20260605_230515_8010fe20",
+    "polls": 3,
+    "timedOut": false
+  },
+  "artifacts": [
+    "F:\\Work\\D601-HWLAB\\projects\\01_baseline\\Output\\atk_f103.hex",
+    "F:\\Work\\D601-HWLAB\\projects\\01_baseline\\Output\\atk_f103.axf"
+  ],
+  "decisions": {
+    "downloadSkipped": true,
+    "reason": "compile-only validation is the current case-run acceptance line"
+  }
+}
