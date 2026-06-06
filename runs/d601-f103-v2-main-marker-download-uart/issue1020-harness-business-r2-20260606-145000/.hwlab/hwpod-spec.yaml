@@ -1,0 +1,29 @@
+apiVersion: hwlab.dev/v0alpha1
+kind: Hwpod
+metadata:
+  uid: D601-F103-V2
+  name: d601-f103-v2
+spec:
+  targetDevice:
+    board: D601-F103-V2
+    mcu: STM32F103
+  workspace:
+    path: "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1020-harness-business-r2-20260606-145000"
+    toolchain: keil-mdk
+    keilProject: projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx
+    keilTarget: USART
+    keilCliPath: "C:\\Users\\liang\\.agents\\skills\\keil\\keil-cli.py"
+  debugProbe:
+    type: daplink
+    adapter: keil
+    probeUid: 3FD750C63E342E24
+    probeName: MicroLink CMSIS-DAP
+    programBackend: keil
+  ioProbe:
+    uart:
+      id: uart/1
+      port: COM9
+      baudrate: 115200
+  nodeBinding:
+    nodeId: node-d601-f103-v2
+    nodeType: pc-host
