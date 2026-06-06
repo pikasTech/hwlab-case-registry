@@ -1,0 +1,50 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "d601-f103-v2-main-marker",
+  "title": "D601-F103-V2 minimal main.c marker mutation CaseRun",
+  "mode": "agent-mutation-compile-only",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "F:\\Work\\HWLAB-CASE-F103",
+    "commitId": "df7a4e6e551fa90d64bde5537cc000f89d63dd20",
+    "subdir": "projects/01_baseline"
+  },
+  "runtime": {
+    "apiUrl": "http://74.48.78.17:19667",
+    "webUrl": "http://74.48.78.17:19666"
+  },
+  "agentTask": {
+    "workspace": "subjectWorktree",
+    "providerProfile": "deepseek",
+    "projectId": "prj_hwpod_workbench",
+    "prompt": "In the isolated subject worktree only, make the smallest compile-safe mutation to projects/01_baseline/User/main.c: add exactly one line after the existing printf(\"[D601-F103] JSON-RPC ready on USART1 115200 8N1\\\\r\\\\n\"); line: printf(\"[D601-F103] CaseRun marker stageB\\\\r\\\\n\");. Use the hwpod workspace apply-patch entry or an equivalent HWPOD workspace operation so the edit is applied through hwpod-node to subjectWorktreePath; do not edit from the Linux runner by cd'ing into the Windows path. After the edit, run hwpod-ctl spec validate, hwpod inspect, and hwpod build with .hwlab/hwpod-spec.yaml, then report the diff summary and build job/artifact summary. Do not modify any file other than projects/01_baseline/User/main.c.",
+    "constraints": [
+      "只允许修改 projects/01_baseline/User/main.c",
+      "必须新增且只新增一行 printf marker，不做 Arm2D 移植",
+      "必须通过 HWPOD workspace/node 链路修改 subjectWorktreePath，不得尝试从 Linux runner 直接 cd 到 Windows 路径",
+      "修改后只做 compile-only build check，不下载、不运行 runtime smoke",
+      "结果只作为 raw diff/evidence 记录，不做自动评价或自动门禁"
+    ]
+  },
+  "expected": {
+    "diff": {
+      "files": [
+        "projects/01_baseline/User/main.c"
+      ],
+      "contains": [
+        "printf(\"[D601-F103] CaseRun marker stageB\\\\r\\\\n\");"
+      ]
+    },
+    "compile": {
+      "success": true,
+      "artifactSuffixes": [
+        "projects/01_baseline/Output/atk_f103.hex",
+        "projects/01_baseline/Output/atk_f103.axf"
+      ]
+    },
+    "download": {
+      "skipped": true,
+      "reason": "stageB validates minimal agent mutation plus compile-only evidence only"
+    }
+  }
+}
