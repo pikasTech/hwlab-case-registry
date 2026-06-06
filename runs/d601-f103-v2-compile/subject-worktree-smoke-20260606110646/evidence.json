@@ -1,0 +1,122 @@
+{
+  "contractVersion": "hwpod-case-run-evidence-v1",
+  "caseId": "d601-f103-v2-compile",
+  "runId": "subject-worktree-smoke-20260606110646",
+  "compileOnly": true,
+  "ok": true,
+  "status": "succeeded",
+  "observedAt": "2026-06-06T03:07:01.569Z",
+  "apiUrl": "http://74.48.78.17:19667",
+  "subject": {
+    "repoLocalPath": "F:\\Work\\HWLAB-CASE-F103",
+    "commitId": "df7a4e6e551fa90d64bde5537cc000f89d63dd20",
+    "subdir": "projects/01_baseline",
+    "worktreePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-subject-worktree-smoke-20260606110646",
+    "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-subject-worktree-smoke-20260606110646",
+    "setup": {
+      "httpStatus": 200,
+      "planId": "case_subject_0ad93a52-ec9c-45fb-b3d2-e57c08c0b05d",
+      "nodeId": "node-d601-f103-v2",
+      "exitCode": 0,
+      "stdout": "HEAD is now at df7a4e6 chore: initialize D601 HWLAB subject repo\ndf7a4e6e551fa90d64bde5537cc000f89d63dd20",
+      "stderr": "Preparing worktree (detached HEAD df7a4e6)"
+    }
+  },
+  "hwpod": {
+    "command": [
+      "bun",
+      "hwpod-cli.ts",
+      "build",
+      "--spec",
+      "hwpod-spec.yaml",
+      "--reason",
+      "case-run d601-f103-v2-compile subject-worktree-smoke-20260606110646 compile-only"
+    ],
+    "exitCode": 0,
+    "stdoutJson": {
+      "ok": true,
+      "action": "hwpod-cli.invoke",
+      "status": "completed",
+      "results": [
+        {
+          "opId": "op_01_cmd_run",
+          "op": "cmd.run",
+          "ok": true,
+          "status": "completed",
+          "output": {
+            "cwd": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-subject-worktree-smoke-20260606110646",
+            "command": [
+              "cmd.exe",
+              "/d",
+              "/s",
+              "/c",
+              "py -3 C:\\Users\\liang\\.agents\\skills\\keil\\keil-cli.py build -p F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-subject-worktree-smoke-20260606110646\\projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103.uvprojx -t USART"
+            ],
+            "exitCode": 0,
+            "stdout": "{\r\n  \"accepted\": true,\r\n  \"command\": \"build\",\r\n  \"mode\": \"async\",\r\n  \"job_id\": \"20260606_110650_00531599\",\r\n  \"status\": \"queued\",\r\n  \"state_file\": \"C:\\\\Users\\\\liang\\\\.agents\\\\skills\\\\keil\\\\.state\\\\jobs\\\\20260606_110650_00531599.json\",\r\n  \"check_command\": \"py -3 keil-cli.py job-status 20260606_110650_00531599\",\r\n  \"hex_file_preview\": null,\r\n  \"axf_file_preview\": null\r\n}\r\n",
+            "stderr": "",
+            "ok": true
+          }
+        }
+      ]
+    }
+  },
+  "keilJob": {
+    "status": "completed",
+    "returnCode": 0,
+    "success": true,
+    "artifacts": [
+      "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-subject-worktree-smoke-20260606110646\\projects\\01_baseline\\Output\\atk_f103.hex",
+      "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-subject-worktree-smoke-20260606110646\\projects\\01_baseline\\Output\\atk_f103.axf"
+    ],
+    "raw": {
+      "job_id": "20260606_110650_00531599",
+      "command": "build",
+      "status": "completed",
+      "created_at": "2026-06-06T11:06:50.936655",
+      "started_at": "2026-06-06T11:06:51.224096",
+      "finished_at": "2026-06-06T11:06:56.772316",
+      "return_code": 0,
+      "success": true,
+      "params": {
+        "project": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-subject-worktree-smoke-20260606110646\\projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103.uvprojx",
+        "programmer": null,
+        "probe": null,
+        "target": "USART",
+        "program_backend": null,
+        "erase_mode": null
+      },
+      "result": {
+        "return_code": 0,
+        "success": true,
+        "message": "Build completed successfully",
+        "hex_file": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-subject-worktree-smoke-20260606110646\\projects\\01_baseline\\Output\\atk_f103.hex",
+        "axf_file": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-subject-worktree-smoke-20260606110646\\projects\\01_baseline\\Output\\atk_f103.axf",
+        "warning_count": 26,
+        "target": "USART",
+        "shared_output_cleanup": {
+          "performed": false,
+          "patterns": [],
+          "removed_count": 0,
+          "removed_files": []
+        },
+        "cleared_build_state_file": null,
+        "build_state_file": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-subject-worktree-smoke-20260606110646\\projects\\01_baseline\\Projects\\MDK-ARM\\output\\.keil_target_build_state.json",
+        "_log_file": "C:\\Users\\liang\\.agents\\skills\\keil\\logs\\20260606\\keil_build_20260606_110651.jsonl"
+      },
+      "log_file": "C:\\Users\\liang\\.agents\\skills\\keil\\logs\\20260606\\keil_build_20260606_110651.jsonl",
+      "state_file": "C:\\Users\\liang\\.agents\\skills\\keil\\.state\\jobs\\20260606_110650_00531599.json"
+    },
+    "jobId": "20260606_110650_00531599",
+    "polls": 3,
+    "timedOut": false
+  },
+  "artifacts": [
+    "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-subject-worktree-smoke-20260606110646\\projects\\01_baseline\\Output\\atk_f103.hex",
+    "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-subject-worktree-smoke-20260606110646\\projects\\01_baseline\\Output\\atk_f103.axf"
+  ],
+  "decisions": {
+    "downloadSkipped": true,
+    "reason": "compile-only validation is the current case-run acceptance line"
+  }
+}
