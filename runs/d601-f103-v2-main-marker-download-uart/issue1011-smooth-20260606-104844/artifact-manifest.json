@@ -1,0 +1,227 @@
+{
+  "contractVersion": "hwpod-case-run-artifact-manifest-v1",
+  "caseId": "d601-f103-v2-main-marker-download-uart",
+  "runId": "issue1011-smooth-20260606-104844",
+  "archivedAt": "2026-06-06T10:50:23.885Z",
+  "sourceRunDir": "/root/hwlab-v02/.state/hwlab-cli/caserun/issue1011-smooth-20260606-104844",
+  "caseRepoRunDir": "/root/hwlab-case-registry/runs/d601-f103-v2-main-marker-download-uart/issue1011-smooth-20260606-104844",
+  "trace": {
+    "traceId": "trc_case_d601-f103-v2-main-marker-download-uart_483c541dfdc24261949a1adf1e4efca0",
+    "sessionId": "ses_dd8fdd1a-15f1-490e-9e51-863b048735a2",
+    "conversationId": "cnv_case_d601-f103-v2-main-marker-download-uart_issue1011-smooth-20260606-104844",
+    "providerProfile": "deepseek",
+    "projectId": "prj_hwpod_workbench",
+    "status": "completed",
+    "terminalStatus": "completed",
+    "commandCount": 30,
+    "hwpodCommandCount": 360,
+    "hwpodBuildCommandCount": 33,
+    "agentRun": {
+      "adapter": "agentrun-v01",
+      "runId": "run_702bc2b828464dddb1038a065370df49",
+      "commandId": "cmd_fc7153024c634c3cb782ae0066b16338",
+      "attemptId": "attempt_mq28d1fd",
+      "runnerId": "runner_99f9929904de",
+      "jobName": "agentrun-v01-runner-6895b078d147",
+      "namespace": "agentrun-v01",
+      "terminalStatus": "completed",
+      "lastSeq": 0,
+      "valuesPrinted": false
+    }
+  },
+  "subject": {
+    "repoLocalPath": "F:\\Work\\HWLAB-CASE-F103",
+    "commitId": "df7a4e6e551fa90d64bde5537cc000f89d63dd20",
+    "subdir": "projects/01_baseline",
+    "worktreePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1011-smooth-20260606-104844",
+    "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1011-smooth-20260606-104844",
+    "setup": {
+      "httpStatus": 200,
+      "planId": "case_subject_ccd5320b-054d-42e1-884c-6c302361f9eb",
+      "nodeId": "node-d601-f103-v2",
+      "exitCode": 0,
+      "stdout": "HEAD is now at df7a4e6 chore: initialize D601 HWLAB subject repo\ndf7a4e6e551fa90d64bde5537cc000f89d63dd20",
+      "stderr": "Preparing worktree (detached HEAD df7a4e6)"
+    }
+  },
+  "agent": {
+    "providerProfile": "deepseek",
+    "projectId": "prj_hwpod_workbench",
+    "conversationId": "cnv_case_d601-f103-v2-main-marker-download-uart_issue1011-smooth-20260606-104844",
+    "sessionId": "ses_dd8fdd1a-15f1-490e-9e51-863b048735a2",
+    "traceId": "trc_case_d601-f103-v2-main-marker-download-uart_483c541dfdc24261949a1adf1e4efca0"
+  },
+  "readableAgent": {
+    "renderer": "tools/src/hwlab-cli/trace-renderer:traceDisplayRows",
+    "messagesPath": "agent-messages.json",
+    "tracePath": "agent-trace.md",
+    "transcriptPath": "agent-transcript.md",
+    "finalResponsePath": "final-response.md",
+    "traceRender": {
+      "renderer": "tools/src/hwlab-cli/trace-renderer:traceDisplayRows",
+      "status": "completed",
+      "sourceEventCount": 1568,
+      "renderedRowCount": 45,
+      "noiseEventCount": 302
+    },
+    "finalResponse": {
+      "present": true,
+      "status": "completed",
+      "source": "agentrun-command-result",
+      "text": "---\n\n## CaseRun Complete: `d601-f103-v2-main-marker-download-uart`\n\n### 1. Edit — `projects/01_baseline/User/main.c`\n\nInserted UART marker via `hwpod workspace insert-after` (HWPOD workspace/node path, no direct Linux-to-Windows `cd`):\n\n```\n+    printf(\"[D601-F103] CaseRun UART marker issue1011-smooth-20260606-104844\\r\\n\");\n```\n\n- **anchor line 24**: `printf(\"[D601-F103] JSON-RPC ready on USART1 115200 8N1\\r\\n\");`\n- **inserted at line 25**\n- SHA: `ae38a7a5...` → `f2a87403...`\n- bytes: 800 → 885, CRLF only\n\n### 2. `hwpod build` — ✅ Accepted (async)\n\n```json\n{\"accepted\": true, \"command\": \"build\", \"mode\": \"async\", \"job_id\": \"20260606_184923_fd44d610\"}\n```\n\nKeil build dispatched via `keil-cli.py` for target `USART`. No compile error reported.\n\n### 3. `hwpod download` — ⚠️ Partial failure\n\n- **Op 1 (probe binding set)**: FAILED — `uvoptx file not found` (`atk_f103.uvoptx` missing from Keil project). Pre-existing workspace gap, not caused by our edit.\n- **Op 2 (program)**: ✅ Accepted (async, job `20260606_184936_5538bae1`)\n\n### 4. `hwpod uart read` — ❌ Blocked: `hwpod_uart_monitor_not_active`\n\nSerial monitor not currently active on COM9. Last session ended `2026-05-30`. Active ports in system: COM3, COM4 (no COM9). The monitor would need to be started with:\n\n```\ncd C:\\Users\\liang\\.agents\\skills\\serial-monitor && bun scripts/serial-monitor-cli.ts monitor start -p COM9 -b 115200\n```\n\n### Summary\n\n| Step | Status | Detail |\n|---|---|---|\n| Spec validate | ✅ | All 4 elements OK, node `node-d601-f103-v2` |\n| Inspect | ✅ | Node `win32/x64`, workspace exists |\n| Edit main.c | ✅ | UART marker inserted at line 25 |\n| Build | ✅ | Async job `20260606_184923_fd44d610` queued |\n| Download (probe binding) | ❌ | `.uvoptx` not found (pre-existing) |\n| Download (program) | ✅ | Async job `20260606_184936_5538bae1` queued |\n| UART read | ❌ | Monitor not active on COM9 |",
+      "textChars": 1877,
+      "traceId": "trc_case_d601-f103-v2-main-marker-download-uart_483c541dfdc24261949a1adf1e4efca0"
+    }
+  },
+  "prompt": {
+    "path": "agent-prompt.md",
+    "sha256": "f5d2eb5fd0c2b0b4e0c94e60705b17185c3077c0c560e3c25a5e11b77e85024b"
+  },
+  "diff": {
+    "path": "agent-diff.patch",
+    "sha256": "2a7077e6ecb9dc861a17c4147650b707fdacfc50d418751327573ac9fd9ef1e7",
+    "statusShort": "M projects/01_baseline/User/main.c",
+    "diffStat": "projects/01_baseline/User/main.c | 1 +\n 1 file changed, 1 insertion(+)"
+  },
+  "keilJob": {
+    "status": "completed",
+    "returnCode": 0,
+    "success": true,
+    "artifacts": [
+      "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1011-smooth-20260606-104844\\projects\\01_baseline\\Output\\atk_f103.hex",
+      "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1011-smooth-20260606-104844\\projects\\01_baseline\\Output\\atk_f103.axf"
+    ],
+    "raw": {
+      "job_id": "20260606_185006_04089d9d",
+      "command": "build",
+      "status": "completed",
+      "created_at": "2026-06-06T18:50:06.420131",
+      "started_at": "2026-06-06T18:50:06.609022",
+      "finished_at": "2026-06-06T18:50:09.192417",
+      "return_code": 0,
+      "success": true,
+      "params": {
+        "project": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1011-smooth-20260606-104844\\projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103.uvprojx",
+        "programmer": null,
+        "probe": null,
+        "target": "USART",
+        "program_backend": null,
+        "erase_mode": null
+      },
+      "result": {
+        "return_code": 0,
+        "success": true,
+        "message": "Build completed successfully",
+        "hex_file": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1011-smooth-20260606-104844\\projects\\01_baseline\\Output\\atk_f103.hex",
+        "axf_file": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1011-smooth-20260606-104844\\projects\\01_baseline\\Output\\atk_f103.axf",
+        "warning_count": 0,
+        "target": "USART",
+        "shared_output_cleanup": {
+          "performed": false,
+          "patterns": [],
+          "removed_count": 0,
+          "removed_files": []
+        },
+        "cleared_build_state_file": null,
+        "build_state_file": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1011-smooth-20260606-104844\\projects\\01_baseline\\Projects\\MDK-ARM\\output\\.keil_target_build_state.json",
+        "_log_file": "C:\\Users\\liang\\.agents\\skills\\keil\\logs\\20260606\\keil_build_20260606_185006.jsonl"
+      },
+      "log_file": "C:\\Users\\liang\\.agents\\skills\\keil\\logs\\20260606\\keil_build_20260606_185006.jsonl",
+      "state_file": "C:\\Users\\liang\\.agents\\skills\\keil\\.state\\jobs\\20260606_185006_04089d9d.json"
+    },
+    "jobId": "20260606_185006_04089d9d",
+    "polls": 2,
+    "timedOut": false
+  },
+  "artifacts": [
+    "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1011-smooth-20260606-104844\\projects\\01_baseline\\Output\\atk_f103.hex",
+    "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1011-smooth-20260606-104844\\projects\\01_baseline\\Output\\atk_f103.axf"
+  ],
+  "decisions": {
+    "autoEvaluation": false,
+    "downloadSkipped": true,
+    "reason": "flow-only run: the manifest records artifacts and trace without auto-grading or gate decisions"
+  },
+  "files": [
+    {
+      "path": "evidence.json",
+      "bytes": 39845,
+      "sha256": "c0f0d2df7f51444622aeaaf8ec3a2d7eabe33a334fe5b817af30396f4347083a",
+      "source": "evidence.json"
+    },
+    {
+      "path": "summary.md",
+      "bytes": 873,
+      "sha256": "eb2a4ec5cc362e80005232d8df73dc7d17b75fc797cbe72915bf78967c8681e2"
+    },
+    {
+      "path": "agent-messages.json",
+      "bytes": 26836,
+      "sha256": "82db644ed32329ea66fa4c4a8d536044da621edf65f4ac049df48a4c0f0c165d"
+    },
+    {
+      "path": "agent-trace.md",
+      "bytes": 21289,
+      "sha256": "a33eaab9072b04ea5a6b9e26a68743811aa199c57a4ee41f0f0774e74d77da52"
+    },
+    {
+      "path": "agent-transcript.md",
+      "bytes": 21289,
+      "sha256": "a33eaab9072b04ea5a6b9e26a68743811aa199c57a4ee41f0f0774e74d77da52"
+    },
+    {
+      "path": "final-response.md",
+      "bytes": 2142,
+      "sha256": "f565449299c25a0aa193b440b6cf4daa87a9662fe00e198b7c77599777250aba"
+    },
+    {
+      "path": "run.json",
+      "bytes": 51399,
+      "sha256": "cdfb341308253658a22aa05098cc8d646ed1d8df0802bb1b5b38a263bae4071b",
+      "source": "run.json"
+    },
+    {
+      "path": "result.json",
+      "bytes": 78379,
+      "sha256": "3a755046808856e0d88ba750682b6b3e13125d5281f1f30a22fbdbfcf75309f8",
+      "source": "result.json"
+    },
+    {
+      "path": "agent-trace.json",
+      "bytes": 2507999,
+      "sha256": "4dea6928af6402e1c0482b75f57b3cb7463e4e7c3130c0e42b68fe39c971614a",
+      "source": "agent-trace.json"
+    },
+    {
+      "path": "agent-prompt.md",
+      "bytes": 3844,
+      "sha256": "f5d2eb5fd0c2b0b4e0c94e60705b17185c3077c0c560e3c25a5e11b77e85024b",
+      "source": "agent-prompt.md"
+    },
+    {
+      "path": "agent-diff.patch",
+      "bytes": 530,
+      "sha256": "2a7077e6ecb9dc861a17c4147650b707fdacfc50d418751327573ac9fd9ef1e7",
+      "source": "agent-diff.patch"
+    },
+    {
+      "path": ".hwlab/hwpod-spec.yaml",
+      "bytes": 739,
+      "sha256": "8935537961ca4e8149c7e58c3b5ce1a03dc4908ca6145569630b73ba9b2e1724",
+      "source": ".hwlab/hwpod-spec.yaml"
+    },
+    {
+      "path": "worker.stdout.log",
+      "bytes": 78475,
+      "sha256": "4968029be4b8170baa19211d5160487bb9f24421f8d8dd23efc7e4ab5849a74e",
+      "source": "worker.stdout.log"
+    },
+    {
+      "path": "worker.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "worker.stderr.log"
+    }
+  ],
+  "skippedFiles": []
+}
