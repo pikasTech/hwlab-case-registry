@@ -1,0 +1,60 @@
+# HWPOD CaseRun d601-f103-v2-arm2d-integration
+
+- runId: d601-f103-v2-arm2d-integration-20260607072315-1a46f6be
+- status: recorded
+- autoEvaluation: false
+- compileOnly: true
+- subjectRepoLocalPath: F:\Work\HWLAB-CASE-F103
+- subjectCommitId: 14a414da470013914b2a19229c36f2e9f8e2da4f
+- subjectWorktreePath: F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260607072315-1a46f6be
+- agentTraceId: trc_case_d601-f103-v2-arm2d-integration_23245d87384540239f7f408ec66cb7a2
+- agentSessionId: ses_2560ce91-e91c-4d52-b129-c28e0165c0d6
+- traceLookupStrategy: id_plus_existing_cli
+- traceCommand: hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-integration_23245d87384540239f7f408ec66cb7a2 --render web
+- resultCommand: hwlab-cli client agent result trc_case_d601-f103-v2-arm2d-integration_23245d87384540239f7f408ec66cb7a2
+- inspectCommand: hwlab-cli client agent inspect --trace-id trc_case_d601-f103-v2-arm2d-integration_23245d87384540239f7f408ec66cb7a2
+- agentTraceCommandCount: 59
+- agentTraceHwpodCommandCount: 49
+- agentTraceHwpodBuildCommandCount: 1
+- agentStageCommandCount: 30
+- agentStageKinds: spec-validate, inspect, workspace-edit, build, hwpod-other
+- diffPatchPath: /root/hwlab-v02/.state/hwlab-cli/caserun/d601-f103-v2-arm2d-integration-20260607072315-1a46f6be/agent-diff.patch
+- runnerHwpodSource: case-run-runner-post-agent-compile-check
+- hwpodExitCode: 0
+- jobId: 20260607_152647_e54e0bbd
+- runnerPostAgentCompileCheck: recorded
+
+## Agent HWPOD Raw Steps
+
+| Step | Status | Exit | Command | Raw detail |
+|---|---:|---:|---|---|
+| spec-validate |  | 0 | `hwpod-ctl spec validate --spec .hwlab/hwpod-spec.yaml 2>&1` | hwpod-ctl spec validate --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-ctl.spec.validate", "status": "succeeded", "specPath": ".hwlab/hwpod-spec.yaml", " ... clipped ... |
+| inspect |  | 0 | `hwpod inspect --spec .hwlab/hwpod-spec.yaml 2>&1` | hwpod inspect --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "inspect ... clipped ... |
+| workspace-edit |  | 0 | `hwpod workspace replace \ --path projects/01_baseline/User/d601_arm2d_demo.c \ --find '(uint32_t)0' \ --replace "(uint32_t)'0'" \ --all \ --spec .hwlab/hwpod-sp ... clipped ...` | hwpod workspace replace \ --path projects/01_baseline/User/d601_arm2d_demo.c \ --find '(uint32_t)0' \ --replace "(uint32_t)'0'" \ --all \ --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: ... clipped ... |
+| build |  | 0 | `hwpod build --spec .hwlab/hwpod-spec.yaml 2>&1` | hwpod build --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "debug.bui ... clipped ... |
+| workspace-edit |  | 0 | `hwpod workspace insert-after \ --path projects/01_baseline/User/main.c \ --anchor '#include "d601_lcd.h"' \ --line '#include "d601_arm2d_demo.h"' \ --spec .hwla ... clipped ...` | hwpod workspace insert-after \ --path projects/01_baseline/User/main.c \ --anchor '#include "d601_lcd.h"' \ --line '#include "d601_arm2d_demo.h"' \ --spec .hwlab/hwpod-spec.yaml 2> ... clipped ... |
+| hwpod-other |  | 0 | `hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/__arm_2d_impl.h --spec .hwlab/hwpod-spec.yaml 2>&1` | hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/__arm_2d_impl.h --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", " ... clipped ... |
+| hwpod-other |  | 0 | `hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_features.h --spec .hwlab/hwpod-spec.yaml 2>&1` | hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_features.h --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", ... clipped ... |
+| hwpod-other |  | 0 | `hwpod workspace ls projects/01_baseline/Middlewares/Arm-2D/Port/ --spec .hwlab/hwpod-spec.yaml 2>&1` | hwpod workspace ls projects/01_baseline/Middlewares/Arm-2D/Port/ --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "spec ... clipped ... |
+| hwpod-other |  | 0 | `hwpod workspace ls projects/01_baseline/Middlewares/Arm-2D/Helper/ --spec .hwlab/hwpod-spec.yaml 2>&1` | hwpod workspace ls projects/01_baseline/Middlewares/Arm-2D/Helper/ --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "sp ... clipped ... |
+| hwpod-other |  | 0 | `hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_utils.h --spec .hwlab/hwpod-spec.yaml 2>&1 \| head -200` | hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_utils.h --spec .hwlab/hwpod-spec.yaml 2>&1 \| head -200 stdout: { "ok": true, "action": "hwpod-cli ... clipped ... |
+| hwpod-other |  | 0 | `hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Port/arm_2d_cfg.h --spec .hwlab/hwpod-spec.yaml 2>&1` | hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Port/arm_2d_cfg.h --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "comp ... clipped ... |
+| workspace-edit |  | 0 | `hwpod workspace insert-after \ --path projects/01_baseline/User/main.c \ --anchor 'd601_gpio_init();' \ --line ' d601_arm2d_demo_show();' \ --spec .hwlab/hwpod- ... clipped ...` | hwpod workspace insert-after \ --path projects/01_baseline/User/main.c \ --anchor 'd601_gpio_init();' \ --line ' d601_arm2d_demo_show();' \ --spec .hwlab/hwpod-spec.yaml 2>&1 stdou ... clipped ... |
+| workspace-edit |  | 0 | `hwpod workspace insert-after \ --path projects/01_baseline/User/main.c \ --anchor 'jsonrpc_process();' \ --line ' d601_arm2d_demo_task();' \ --spec .hwlab/hwpod ... clipped ...` | hwpod workspace insert-after \ --path projects/01_baseline/User/main.c \ --anchor 'jsonrpc_process();' \ --line ' d601_arm2d_demo_task();' \ --spec .hwlab/hwpod-spec.yaml 2>&1 stdo ... clipped ... |
+| workspace-edit |  |  | `hwpod workspace write \ --path projects/01_baseline/User/d601_arm2d_demo.c \ --expected-sha b60c2a4cb91fb2e74e7ac1472bcacdfa50a4572dd72bbb45d63b18f4565cda22 \ - ... clipped ...` | ... clipped ... |
+| hwpod-other |  | 0 | `hwpod workspace ls projects/01_baseline/Projects/MDK-ARM/output/ --spec .hwlab/hwpod-spec.yaml 2>&1` | hwpod workspace ls projects/01_baseline/Projects/MDK-ARM/output/ --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "spec ... clipped ... |
+| hwpod-other |  | 0 | `hwpod workspace cat projects/01_baseline/Projects/MDK-ARM/output/build_output_USART.txt --spec .hwlab/hwpod-spec.yaml 2>&1` | hwpod workspace cat projects/01_baseline/Projects/MDK-ARM/output/build_output_USART.txt --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "stat ... clipped ... |
+| hwpod-other |  | 0 | `hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h --spec .hwlab/hwpod-spec.yaml 2>&1 \| grep -A 30 'typedef struct.*arm_ ... clipped ...` | hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h --spec .hwlab/hwpod-spec.yaml 2>&1 \| grep -A 30 'typedef struct.*arm_2d_tile' \| head -40  ... clipped ... |
+| hwpod-other |  | 0 | `hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h --spec .hwlab/hwpod-spec.yaml 2>&1 \| grep -B5 -A30 'arm_2d_tile_info_ ... clipped ...` | hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h --spec .hwlab/hwpod-spec.yaml 2>&1 \| grep -B5 -A30 'arm_2d_tile_info_t\\|tInfo\\|arm_2d_til ... clipped ... |
+| hwpod-other |  | 1 | `hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h --spec .hwlab/hwpod-spec.yaml 2>&1 \| grep -c 'nColourDep` | hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h --spec .hwlab/hwpod-spec.yaml 2>&1 \| grep -c 'nColourDep' stdout: 0 exitCode=1 |
+| hwpod-other |  | 0 | `hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h --spec .hwlab/hwpod-spec.yaml 2>&1 \| grep -A 20 'typedef.*arm_2d_tile ... clipped ...` | hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h --spec .hwlab/hwpod-spec.yaml 2>&1 \| grep -A 20 'typedef.*arm_2d_tile_info' \| head -25 st ... clipped ... |
+| hwpod-other |  | 0 | `hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h --spec .hwlab/hwpod-spec.yaml 2>&1 \| grep -i 'tInfo\\|bIsRoot\\|colour\ ... clipped ...` | hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h --spec .hwlab/hwpod-spec.yaml 2>&1 \| grep -i 'tInfo\\|bIsRoot\\|colour\\|colDep\\|ColourDep\\| ... clipped ... |
+| hwpod-other |  | 0 | `hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_tile.h --spec .hwlab/hwpod-spec.yaml 2>&1 \| head -c 10000` | hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_tile.h --spec .hwlab/hwpod-spec.yaml 2>&1 \| head -c 10000 stdout: { "ok": true, "action": "hwpod- ... clipped ... |
+| workspace-edit |  | 0 | `hwpod workspace replace \ --path projects/01_baseline/User/d601_arm2d_demo.c \ --find ' ptTile->tInfo.bHasEnforcedColour = true;' \ --replace '' \ --spec .hwlab ... clipped ...` | hwpod workspace replace \ --path projects/01_baseline/User/d601_arm2d_demo.c \ --find ' ptTile->tInfo.bHasEnforcedColour = true;' \ --replace '' \ --spec .hwlab/hwpod-spec.yaml 2>& ... clipped ... |
+| workspace-edit |  |  | `hwpod workspace replace \ --path projects/01_baseline/User/d601_arm2d_demo.c \ --find ' ptTile->tInfo.bHasEnforcedColour' \ --find ' ptTile->tInfo.nColourDep =  ... clipped ...` | hwpod workspace replace \ --path projects/01_baseline/User/d601_arm2d_demo.c \ --find ' ptTile->tInfo.bHasEnforcedColour' \ --find ' ptTile->tInfo.nColourDep = 2U;' \ --replace ''  ... clipped ... |
+| hwpod-other |  | 1 | `hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.c --spec .hwlab/hwpod-spec.yaml 2>&1 \| grep -A2 '"sha256\\|actualSha` | hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.c --spec .hwlab/hwpod-spec.yaml 2>&1 \| grep -A2 '"sha256\\|actualSha' stdout: commandExecution failed: /bin/sh -lc "hwp ... clipped ... |
+| workspace-edit |  |  | `hwpod workspace write \ --path projects/01_baseline/User/d601_arm2d_demo.c \ --expected-sha fa7efdd91a0427449da6dfe0f163de11155ec98e777df8250379d114269f307d \ - ... clipped ...` | ... clipped ... |
+| hwpod-other |  | 0 | `hwpod workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml 2>&1` | hwpod workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwl ... clipped ... |
+| hwpod-other |  | 0 | `hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.c --spec .hwlab/hwpod-spec.yaml 2>&1` | hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.c --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specP ... clipped ... |
+| hwpod-other |  | 0 | `hwpod workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml 2>&1` | hwpod workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwl ... clipped ... |
+| hwpod-other |  | 0 | `hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.h --spec .hwlab/hwpod-spec.yaml 2>&1` | hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.h --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specP ... clipped ... |

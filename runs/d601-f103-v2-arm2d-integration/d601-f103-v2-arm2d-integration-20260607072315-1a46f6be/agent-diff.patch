@@ -1,0 +1,242 @@
+diff --git a/projects/01_baseline/User/d601_arm2d_demo.c b/projects/01_baseline/User/d601_arm2d_demo.c
+index f4400f9..497d104 100644
+--- a/projects/01_baseline/User/d601_arm2d_demo.c
++++ b/projects/01_baseline/User/d601_arm2d_demo.c
+@@ -1,4 +1,4 @@
+-﻿#include "d601_arm2d_demo.h"
++#include "d601_arm2d_demo.h"
+ #include "d601_lcd.h"
+ #include "stm32f1xx_hal.h"
+ #include "arm_2d.h"
+@@ -28,10 +28,23 @@ static uint32_t s_fps_frame_count;
+ static uint32_t s_fps_value;
+ 
+ static void arm2d_wait(void)
+-{ }
++{
++    s_arm2d_ready = 1U;
++}
+ 
+ static void arm2d_tile_bind(arm_2d_tile_t *ptTile, uint16_t width, uint16_t height)
+-{ }
++{
++    if (NULL == ptTile) {
++        return;
++    }
++    memset(ptTile, 0, sizeof(arm_2d_tile_t));
++    ptTile->tRegion.tSize.iWidth = (int16_t)width;
++    ptTile->tRegion.tSize.iHeight = (int16_t)height;
++    ptTile->tInfo.bIsRoot = true;
++
++
++    ptTile->pchBuffer = (uint8_t *)s_pfb;
++}
+ 
+ static void arm2d_fill_local(arm_2d_tile_t *ptTile,
+                              int16_t x,
+@@ -39,7 +52,22 @@ static void arm2d_fill_local(arm_2d_tile_t *ptTile,
+                              int16_t width,
+                              int16_t height,
+                              uint16_t colour)
+-{ }
++{
++    arm_2d_region_t tRegion;
++
++    if (NULL == ptTile) {
++        return;
++    }
++
++    tRegion.tLocation.iX = x;
++    tRegion.tLocation.iY = y;
++    tRegion.tSize.iWidth = width;
++    tRegion.tSize.iHeight = height;
++
++    arm_2dp_rgb16_fill_colour(NULL, ptTile, &tRegion, (uint_fast16_t)colour);
++
++    arm2d_wait();
++}
+ 
+ static void arm2d_fill_global(arm_2d_tile_t *ptTile,
+                               uint16_t stripe_y,
+@@ -49,19 +77,112 @@ static void arm2d_fill_global(arm_2d_tile_t *ptTile,
+                               uint16_t width,
+                               uint16_t height,
+                               uint16_t colour)
+-{ }
++{
++    int16_t local_y = (int16_t)((int32_t)y - (int32_t)stripe_y);
++    if (local_y < 0) {
++        return;
++    }
++
++    arm2d_fill_local(ptTile, (int16_t)x, local_y, (int16_t)width, (int16_t)height, colour);
++
++    d601_lcd_draw_bitmap(x, (uint16_t)(stripe_y + (uint16_t)local_y),
++                         width, (uint16_t)height, (const uint16_t *)ptTile->pchBuffer);
++}
+ 
+ static void arm2d_render_stripe(uint16_t y, uint16_t stripe_h, uint16_t width, uint16_t height)
+-{ }
++{
++    arm_2d_tile_t tPFB;
++
++    arm2d_tile_bind(&tPFB, width, stripe_h);
++
++    arm2d_fill_local(&tPFB, 0, 0, (int16_t)width, (int16_t)stripe_h, D601_C_BG);
++
++    if (y < 60U) {
++        uint16_t banner_top = (y < 10U) ? (10U - y) : 0U;
++        uint16_t banner_bot = (60U > y) ? (60U - y) : 0U;
++        if (banner_bot > stripe_h) {
++            banner_bot = stripe_h;
++        }
++        if (banner_bot > banner_top) {
++            arm2d_fill_global(&tPFB, y, stripe_h, 0U, (uint16_t)(y + banner_top),
++                              width, (uint16_t)(banner_bot - banner_top), D601_C_BANNER);
++        }
++    }
++
++    if (y < 180U && (y + stripe_h) > 80U) {
++        uint16_t card_top = (y < 80U) ? (80U - y) : 0U;
++        uint16_t card_bot = (180U > y) ? (180U - y) : 0U;
++        if (card_bot > stripe_h) {
++            card_bot = stripe_h;
++        }
++        if (card_bot > card_top) {
++            arm2d_fill_global(&tPFB, y, stripe_h, 10U, (uint16_t)(y + card_top),
++                              (uint16_t)(width - 20U), (uint16_t)(card_bot - card_top), D601_C_CARD);
++        }
++    }
++
++    if (y < 290U && (y + stripe_h) > 190U) {
++        uint16_t panel_top = (y < 190U) ? (190U - y) : 0U;
++        uint16_t panel_bot = (290U > y) ? (290U - y) : 0U;
++        if (panel_bot > stripe_h) {
++            panel_bot = stripe_h;
++        }
++        if (panel_bot > panel_top) {
++            arm2d_fill_global(&tPFB, y, stripe_h, 10U, (uint16_t)(y + panel_top),
++                              (uint16_t)(width - 20U), (uint16_t)(panel_bot - panel_top), D601_C_PANEL);
++        }
++    }
++
++    if ((y + stripe_h) > (height - 50U)) {
++        uint16_t foot_top = (y < (height - 50U)) ? ((height - 50U) - y) : 0U;
++        uint16_t foot_bot = stripe_h;
++        if ((uint32_t)y + foot_bot > height) {
++            foot_bot = (uint16_t)(height - y);
++        }
++        if (foot_bot > foot_top) {
++            arm2d_fill_global(&tPFB, y, stripe_h, 0U, (uint16_t)(y + foot_top),
++                              width, (uint16_t)(foot_bot - foot_top), D601_C_FOOT);
++        }
++    }
++
++    d601_lcd_draw_bitmap(0, y, width, stripe_h, (const uint16_t *)tPFB.pchBuffer);
++}
+ 
+ static void arm2d_fps_text(char *text, uint32_t fps)
+-{ }
++{
++    if (NULL == text) {
++        return;
++    }
++    text[0] = (char)((fps / 100U) + (uint32_t)'0');
++    text[1] = (char)(((fps % 100U) / 10U) + (uint32_t)'0');
++    text[2] = (char)((fps % 10U) + (uint32_t)'0');
++    text[3] = '\0';
++}
+ 
+ static void arm2d_draw_fps(uint16_t height)
+-{ }
++{
++    char fps_text[16] = "FPS:";
++    char digits[4];
++    uint16_t width = d601_lcd_get_width();
++
++    if (s_fps_value > 999U) {
++        s_fps_value = 999U;
++    }
++    arm2d_fps_text(digits, s_fps_value);
++    fps_text[4] = digits[0];
++    fps_text[5] = digits[1];
++    fps_text[6] = digits[2];
++    fps_text[7] = '\0';
++
++    d601_lcd_show_string(width - 70U, (uint16_t)(height - 40U),
++                         fps_text, D601_LCD_GREEN, D601_C_FOOT, 2);
++}
+ 
+ void d601_arm2d_demo_show(void)
+-{ }
++{
++    uint16_t width;
++    uint16_t height;
++    uint16_t y;
+ 
+     width = d601_lcd_get_width();
+     height = d601_lcd_get_height();
+@@ -69,6 +190,8 @@ void d601_arm2d_demo_show(void)
+         width = D601_ARM2D_PFB_WIDTH;
+     }
+ 
++    s_arm2d_ready = 0U;
++
+     for (y = 0; y < height; y = (uint16_t)(y + D601_ARM2D_PFB_LINES)) {
+         uint16_t stripe_h = D601_ARM2D_PFB_LINES;
+         if ((uint32_t)y + stripe_h > height) {
+@@ -85,8 +208,27 @@ void d601_arm2d_demo_show(void)
+ }
+ 
+ void d601_arm2d_demo_task(void)
+-{ }
++{
++    static uint32_t s_last_tick;
+ 
+     d601_arm2d_demo_show();
+     ++s_fps_frame_count;
++
++    if (s_last_tick == 0U) {
++        s_last_tick = HAL_GetTick();
++        s_fps_window_ms = 0U;
++        s_fps_frame_count = 0U;
++        return;
++    }
++
++    uint32_t now = HAL_GetTick();
++    uint32_t elapsed = now - s_last_tick;
++    s_fps_window_ms += elapsed;
++    s_last_tick = now;
++
++    if (s_fps_window_ms >= 1000U) {
++        s_fps_value = (s_fps_frame_count * 1000U) / s_fps_window_ms;
++        s_fps_frame_count = 0U;
++        s_fps_window_ms = 0U;
++    }
+ }
+diff --git a/projects/01_baseline/User/main.c b/projects/01_baseline/User/main.c
+index 7467c9a..df8bf9a 100644
+--- a/projects/01_baseline/User/main.c
++++ b/projects/01_baseline/User/main.c
+@@ -4,6 +4,7 @@
+ #include "./BSP/LED/led.h"
+ #include "jsonrpc_handler.h"
+ #include "d601_lcd.h"
++#include "d601_arm2d_demo.h"
+ #include "d601_gpio.h"
+ 
+ int main(void)
+@@ -17,11 +18,13 @@ int main(void)
+ 
+     d601_lcd_init();
+     d601_gpio_init();
++    d601_arm2d_demo_show();
+     printf("[D601-F103] LCD ID=0x%04X\r\n", (unsigned int)d601_lcd_get_id());
+     printf("[D601-F103] JSON-RPC ready on USART1 115200 8N1\r\n");
+ 
+     while (1)
+     {
+         jsonrpc_process();
++        d601_arm2d_demo_task();
+     }
+ }
