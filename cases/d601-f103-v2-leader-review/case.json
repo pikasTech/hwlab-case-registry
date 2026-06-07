@@ -1,0 +1,46 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "d601-f103-v2-leader-review",
+  "title": "D601-F103-V2 Leader-Coder-Reviewer pattern test",
+  "mode": "agent-mutation-compile-only",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "F:\\Work\\HWLAB-CASE-F103",
+    "commitId": "14a414da470013914b2a19229c36f2e9f8e2da4f",
+    "subdir": "projects/01_baseline"
+  },
+  "runtime": {
+    "apiUrl": "http://74.48.78.17:19667",
+    "webUrl": "http://74.48.78.17:19666"
+  },
+  "agentTask": {
+    "workspace": "subjectWorktree",
+    "providerProfile": "deepseek",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 600000,
+    "prompt": "You are a Leader agent with the `hwlab-code-agent` tool available. Your task is to demonstrate the Leader-Coder-Reviewer pattern.\n\nThe subject workspace has .hwlab/hwpod-spec.yaml already. The subject files are under projects/01_baseline/User/.\n\n## Step 1: Spawn Coder\nUse `hwlab-code-agent spawn --message \"...\" ` to create a coder agent. Tell it:\n- Read projects/01_baseline/User/main.c via hwpod workspace cat\n- Add a single comment line `// case05-leader-test` after the existing `#include \"d601_lcd.h\"` line\n- Use `hwpod workspace insert-after` to make the edit\n- After editing, run `hwpod workspace cat projects/01_baseline/User/main.c` to verify\n- Report what you changed\n\nThe hwpod spec is at .hwlab/hwpod-spec.yaml — the coder will auto-inherit it.\n\n## Step 2: Wait for Coder\nUse `hwlab-code-agent poll <traceId> --timeout 300000` to wait for the coder to finish.\n\n## Step 3: Spawn Reviewer\nUse `hwlab-code-agent spawn --message \"...\" ` to create a reviewer agent. Tell it:\n- Read projects/01_baseline/User/main.c via hwpod workspace cat\n- Check if the file contains `// case05-leader-test` \n- Verify the comment is on its own line after `#include \"d601_lcd.h\"`\n- Report PASS if found correctly placed, FAIL otherwise\n\n## Step 4: Wait for Reviewer\nUse `hwlab-code-agent poll <reviewerTraceId> --timeout 300000`.\n\n## Output\nAfter both complete, report:\n1. Coder traceId and what it did\n2. Reviewer verdict (PASS/FAIL)\n3. Whether the Leader-Coder-Reviewer pattern worked correctly",
+    "constraints": [
+      "Leader 使用 hwlab-code-agent spawn/poll 调度 Coder 和 Reviewer",
+      "Coder 通过 hwpod 修改 subject worktree 中的文件",
+      "Reviewer 通过 hwpod 读取 subject worktree 验证改动",
+      "hwpod spec 通过 CWD 自动继承，无需显式 --spec-path",
+      "compile-only 模式，不下载不串口"
+    ]
+  },
+  "expected": {
+    "diff": {
+      "files": [
+        "projects/01_baseline/User/main.c"
+      ],
+      "contains": [
+        "case05-leader-test"
+      ]
+    },
+    "compile": {
+      "success": true,
+      "artifactSuffixes": [
+        "projects/01_baseline/Output/atk_f103.hex"
+      ]
+    }
+  }
+}
