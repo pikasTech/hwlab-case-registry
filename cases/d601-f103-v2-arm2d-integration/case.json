@@ -1,0 +1,47 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "d601-f103-v2-arm2d-integration",
+  "title": "D601-F103-V2 ARM-2D integration CaseRun",
+  "mode": "agent-mutation-compile-only",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "F:\\Work\\HWLAB-CASE-F103",
+    "commitId": "39af6d864348a67cd61ff470cff2dfdc749c3cf4",
+    "subdir": "projects/01_baseline"
+  },
+  "runtime": {
+    "apiUrl": "http://74.48.78.17:19667",
+    "webUrl": "http://74.48.78.17:19666"
+  },
+  "agentTask": {
+    "workspace": "subjectWorktree",
+    "providerProfile": "deepseek",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 600000,
+    "prompt": "The subject workspace currently has LCD driver (d601_lcd) and GPIO but no ARM-2D integration. The ARM-2D library is already present under Middlewares/Arm-2D/ and the demo files d601_arm2d_demo.c/h exist in the User directory. Your task: integrate ARM-2D into main.c by adding exactly: (1) #include \"d601_arm2d_demo.h\" after the d601_lcd.h include, (2) d601_arm2d_demo_show(); after d601_gpio_init(), (3) d601_arm2d_demo_task(); in the while(1) loop after jsonrpc_process(). Do NOT add the printf about ARM-2D — only the three integration lines. Use HWPOD workspace/ls/cat/write/apply-patch. After the edit, run hwpod-ctl spec validate, hwpod inspect, and hwpod build with .hwlab/hwpod-spec.yaml. Report diff summary and build result. Do not download or run UART.",
+    "constraints": [
+      "只允许修改 projects/01_baseline/User/main.c",
+      "只加 3 行：include + show() + task()，不添加/修改其他代码",
+      "必须通过 HWPOD workspace/node 链路修改",
+      "只做 compile-only build check",
+      "ARM-2D 库已在 Middlewares/Arm-2D/，无需修改"
+    ]
+  },
+  "expected": {
+    "diff": {
+      "files": ["projects/01_baseline/User/main.c"],
+      "contains": ["d601_arm2d_demo.h", "d601_arm2d_demo_show", "d601_arm2d_demo_task"]
+    },
+    "compile": {
+      "success": true,
+      "artifactSuffixes": [
+        "projects/01_baseline/Output/atk_f103.hex",
+        "projects/01_baseline/Output/atk_f103.axf"
+      ]
+    },
+    "download": {
+      "skipped": true,
+      "reason": "ARM-2D integration validation is compile-only at this stage"
+    }
+  }
+}
