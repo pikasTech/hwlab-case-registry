@@ -1,0 +1,69 @@
+{
+  "contractVersion": "hwpod-case-run-agent-messages-v1",
+  "renderer": "tools/src/hwlab-cli/trace-renderer:traceDisplayRows",
+  "traceSource": "hwlab-cli.client.agent.trace",
+  "traceLookup": {
+    "source": "hwlab-cli.client.agent",
+    "strategy": "id_plus_existing_cli",
+    "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+    "baseUrl": "http://74.48.78.17:19666",
+    "traceId": "trc_case_d601-f103-v2-arm2d-integration_18454ee004d8443bb69ab09dfb932166",
+    "sessionId": "ses_432d917b-4b87-40e2-9840-f6977fd7c15f",
+    "conversationId": "cnv_case_d601-f103-v2-arm2d-integration_d601-f103-v2-arm2d-integration-20260607064116-8cc84774",
+    "commands": {
+      "result": "hwlab-cli client agent result trc_case_d601-f103-v2-arm2d-integration_18454ee004d8443bb69ab09dfb932166",
+      "trace": "hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-integration_18454ee004d8443bb69ab09dfb932166 --render web",
+      "traceFull": "hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-integration_18454ee004d8443bb69ab09dfb932166 --render web --full",
+      "inspect": "hwlab-cli client agent inspect --trace-id trc_case_d601-f103-v2-arm2d-integration_18454ee004d8443bb69ab09dfb932166",
+      "sessionStatus": "hwlab-cli client agent session status ses_432d917b-4b87-40e2-9840-f6977fd7c15f"
+    }
+  },
+  "traceId": "trc_case_d601-f103-v2-arm2d-integration_18454ee004d8443bb69ab09dfb932166",
+  "conversationId": "cnv_case_d601-f103-v2-arm2d-integration_d601-f103-v2-arm2d-integration-20260607064116-8cc84774",
+  "sessionId": "ses_432d917b-4b87-40e2-9840-f6977fd7c15f",
+  "status": "result",
+  "sourceEventCount": 3,
+  "renderedRowCount": 3,
+  "noiseEventCount": 0,
+  "finalResponse": {
+    "present": false,
+    "reason": "finalResponse=null; no authoritative final assistant response was returned by the trace/result payload",
+    "status": "result",
+    "terminalRows": [
+      {
+        "rowId": "event:3",
+        "seq": 3,
+        "tone": "blocked",
+        "header": "06:41:26 total=00:00:00 fail agentrun:dispatch:failed",
+        "body": "resourceBundleRef.workspaceFiles must contain at most 16 entries"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "rowId": "trace-request:1",
+      "seq": 1,
+      "tone": "warn",
+      "header": "06:41:26  请求接受"
+    },
+    {
+      "rowId": "event:2",
+      "seq": 2,
+      "tone": "warn",
+      "header": "06:41:26 total=00:00:00 run agentrun:run:reuse-skipped",
+      "body": "No reusable AgentRun run was found for this HWLAB session; a new runner Job will be created."
+    },
+    {
+      "rowId": "event:3",
+      "seq": 3,
+      "tone": "blocked",
+      "header": "06:41:26 total=00:00:00 fail agentrun:dispatch:failed",
+      "body": "resourceBundleRef.workspaceFiles must contain at most 16 entries"
+    }
+  ],
+  "diff": {
+    "path": "agent-diff.patch",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "patchIncludedInTranscript": true
+  }
+}
