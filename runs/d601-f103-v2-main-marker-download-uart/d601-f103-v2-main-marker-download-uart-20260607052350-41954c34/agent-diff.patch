@@ -1,0 +1,25 @@
+diff --git a/projects/01_baseline/User/main.c b/projects/01_baseline/User/main.c
+index 9324b60..f0eed9b 100644
+--- a/projects/01_baseline/User/main.c
++++ b/projects/01_baseline/User/main.c
+@@ -14,14 +14,16 @@ int main(void)
+     HAL_Init();
+     led_init();
+     usart_init(115200);
+-    printf("\r\n[D601-F103] device-pod LCD bring-up\r\n");
++    printf("[D601-F103] CaseRun UART\x0D\x0A");
++    printf("  runId: d601-f103-v2-main-marker-download-uart-20260607052350-41954c34\x0D\x0A");
++    printf("\x0D\x0A[D601-F103] device-pod LCD bring-up\x0D\x0A");
+ 
+     d601_lcd_init();
+     d601_gpio_init();
+     d601_arm2d_demo_show();
+-    printf("[D601-F103] LCD ID=0x%04X\r\n", (unsigned int)d601_lcd_get_id());
+-    printf("[D601-F103] ARM-2D demo rendered\r\n");
+-    printf("[D601-F103] JSON-RPC ready on USART1 115200 8N1\r\n");
++    printf("[D601-F103] LCD ID=0x%04X\x0D\x0A", (unsigned int)d601_lcd_get_id());
++    printf("[D601-F103] ARM-2D demo rendered\x0D\x0A");
++    printf("[D601-F103] JSON-RPC ready on USART1 115200 8N1\x0D\x0A");
+ 
+     while (1)
+     {
