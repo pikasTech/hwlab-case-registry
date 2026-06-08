@@ -1086,7 +1086,7 @@ index 7467c9a..df8bf9a 100644
 |---|---:|---|
 | evidence.json | 70901 | 793e05dc2f0ddac0d3345fb7438579a7d3e4c1a3c16425b59cc84c6cc80cf858 |
 | summary.md | 10848 | 4854fe58cbb15b2a27f89e359e5394c1c0b2d1f18fc37052e5fa0016a0be6822 |
-| aggregate.md | 64198 | 4ba970c80d3459dcbe29abb1e27e9e5fbe17a82dcb05346bccaaa00c876bfc12 |
+| aggregate.md | self-referential | self-referential |
 | agent-messages.json | 51012 | cf8dfbb3ac4a1166ed43aed6292ff2bf5fc46374c11a8ef1c64cc2d9cbcf6b67 |
 | agent-trace.md | 52204 | e485ebe1cf766c7978b907bf1f0a4324a72a60f7f0c89ce96b1757bfe56f5639 |
 | agent-transcript.md | 52204 | e485ebe1cf766c7978b907bf1f0a4324a72a60f7f0c89ce96b1757bfe56f5639 |
