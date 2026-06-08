@@ -143,7 +143,7 @@ hwpodId: d601-f103-v2
 
 - renderer: tools/src/hwlab-cli/trace-renderer:traceDisplayRows
 - sourceEventCount: 210
-- renderedRowCount: 78
+- renderedRowCount: 75
 - hwpodCommandCount: 3
 - hwpodBuildCommandCount: 0
 
@@ -905,18 +905,6 @@ turn/plan/updated
 ```text
 turn/plan/updated
 ```
-
-- **16:26:04  助手消息**
-
---- ## 任务完成报告 ### 修改文件摘要 **1. `projects/01_baseline/User/main.c`** — 增改3行： - `d601_lcd.h` 之后插入 `#include "d601_arm2d_demo.h"` - `d601_gpio_init()` 之后插入 `d601_arm2d_demo_show()` - `while(1)` 内 `jsonrpc_process()` 之后插入 `d601_arm2d_demo_task()` **2. `projects/01_baseline/User/d601_arm2d_demo.c`** — 完整重新实现所有函数体： | 函数 | 实现说明 | |---|---| | `arm2d_wait()` | 调用 `ARM_2D_OP_WAIT_ASYNC(NULL)` 同步等待异步操作完成 | | `arm2d_tile_bind()` | 将 `s_pfb[][]` 包装为 `arm_2d_tile_t`，设置 `pchBuffer`、`tRegion.tSize` | | `arm2d_fill_local()` | 在
-
-- **16:26:07  助手消息**
-
-PFB tile 局部坐标系内填充矩形区域（含 clamp 到 tile 边界） | | `arm2d_fill_global()` | 将全局坐标矩形与当前 stripe 做交集，转调 `arm2d_fill_local()` | | `arm2d_render_stripe()` | 渲染一条 stripe：背景 → BANNER 顶栏 → CARD 区 → PANEL 区 → FOOTER
-
-- **16:26:13  助手消息**
-
-→ 通过 `d601_lcd_draw_bitmap()` 刷入 LCD | | `arm2d_fps_text()` | 整数 FPS → 数字字符（支持 0-999） | | `arm2d_draw_fps()` | 用 `d601_lcd_show_string()` 在画面底部叠加 FPS 标签 | | `d601_arm2d_demo_show()` | 初始化 ARM-2D → 清屏 → 逐 stripe 渲染 → 叠加文字标签 → 启动 FPS 计时 | | `d601_arm2d_demo_task()` | 每帧重绘 → FPS 计数 → 每秒更新 FPS 显示值 | ### 编译结果 | 指标 | 值 | |---|---| | **return_code** | **0** (成功) | | **0 Error(s)** | ✅ | | **Warning 数** | 26（全部来自 ARM-2D 库头文件/源码的预存在警告，如 `#1-D: last line of file ends without a newline`、`...
 
 - **16:26:14  助手最终消息，轮次完成（总耗时 00:06:55）**
 
