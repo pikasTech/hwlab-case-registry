@@ -21,7 +21,7 @@
 - diffPatchPath: /root/hwlab-v02/.state/hwlab-cli/caserun/d601-f103-v2-arm2d-integration-20260608115850-6d880ebc/agent-diff.patch
 - runnerHwpodSource: case-run-runner-post-agent-compile-check
 - hwpodExitCode: 0
-- agentBuildJobIds: 20260608_200204_42ce65c9, 20260608_200107_f1efc00b, 20260608_200425_c14bfe98
+- agentBuildJobIds: 20260608_200107_f1efc00b, 20260608_200204_42ce65c9, 20260608_200425_c14bfe98
 - postAgentCompileJobId: 20260608_200450_9a60df21
 - buildJobRelationship: agent-build-observed-plus-runner-post-agent-check
 - jobId: 20260608_200450_9a60df21
