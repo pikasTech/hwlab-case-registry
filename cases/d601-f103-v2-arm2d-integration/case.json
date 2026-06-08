@@ -18,14 +18,14 @@
     "providerProfile": "hy",
     "projectId": "prj_hwpod_workbench",
     "timeoutMs": 1200000,
-    "prompt": "请在隔离主体工作区中完成 D601-F103-V2 的 ARM-2D demo 最小集成。\n\n任务目标：\n1. 编辑 projects/01_baseline/User/main.c：在 d601_lcd.h 之后加入 d601_arm2d_demo.h，在 d601_gpio_init() 之后调用 d601_arm2d_demo_show()，并在 while(1) 循环中 jsonrpc_process() 之后调用 d601_arm2d_demo_task()。\n2. 编辑 projects/01_baseline/User/d601_arm2d_demo.c：先阅读 d601_arm2d_demo.h、d601_lcd.h 和 Middlewares/Arm-2D/Library/include/ 下的 ARM-2D 头文件，再从当前头文件和现有工程代码推导实现。至少完成 arm2d_wait()、arm2d_tile_bind()、arm2d_fill_local()、d601_arm2d_demo_show() 和 d601_arm2d_demo_task()。\n3. 完成后执行 compile-only 验证，并回报 diff 摘要、编译终态、return_code、artifact 路径、warning 数和仍需人工关注的问题。\n\n不要照搬历史 run trace、旧答案或记忆中的 API 形态；所有 ARM-2D 与 LCD API 以当前工作区内头文件和源码为准。",
+    "prompt": "请在隔离主体工作区中完成 D601-F103-V2 的 ARM-2D demo 最小集成。\n\n任务目标：\n1. 编辑 projects/01_baseline/User/main.c：在 d601_lcd.h 之后加入 d601_arm2d_demo.h，在 d601_gpio_init() 之后调用 d601_arm2d_demo_show()，并在 while(1) 循环中 jsonrpc_process() 之后调用 d601_arm2d_demo_task()。\n2. 编辑 projects/01_baseline/User/d601_arm2d_demo.c：先阅读 d601_arm2d_demo.h、d601_lcd.h，再读取 .agents/skills/arm2d-skill/ 下的 ARM-2D skill 参考（包含 ARM-2D API 用法、Tile/Framebuffer 操作模式和最佳实践），最后以工作区内的 arm_2d.h、arm_2d_types.h 等头文件为类型定义校验源推导实现。至少完成 arm2d_wait()、arm2d_tile_bind()、arm2d_fill_local()、d601_arm2d_demo_show() 和 d601_arm2d_demo_task()。\n3. 完成后执行 compile-only 验证，并回报 diff 摘要、编译终态、return_code、artifact 路径、warning 数和仍需人工关注的问题。\n\n不要照搬历史 run trace、旧答案或记忆中的 API 形态；所有 ARM-2D 与 LCD API 以当前工作区内头文件和 .agents/skills/arm2d-skill/ 为联合权威参考。",
     "constraints": [
+      "先在 .agents/skills/arm2d-skill/ 中按目录 depth-first 读取全部 skill 参考文件（ARM-2D API 用法、Tile 操作模式、PFB 刷新策略和最佳实践），再从工作区读取 projects/01_baseline/User/d601_arm2d_demo.h、d601_lcd.h 作为上下文；头文件类型定义以项目内的 arm_2d.h、arm_2d_types.h 为校验基准；不要把搜索范围扩成全仓库摸索",
       "只能修改 projects/01_baseline/User/main.c 和 projects/01_baseline/User/d601_arm2d_demo.c",
       "main.c 只加3行：include + show() + task()",
       "d601_arm2d_demo.c 需要重新实现函数体，不能只恢复原来的代码",
       "只做 compile-only build check，不要下载，也不要运行 UART",
       "ARM-2D 库已在 Middlewares/Arm-2D/，d601_lcd 已实现",
-      "优先读取 projects/01_baseline/User/d601_arm2d_demo.h、projects/01_baseline/User/d601_lcd.h、Middlewares/Arm-2D/Library/include/arm_2d.h 和 arm_2d_types.h；不要把搜索范围扩成全仓库摸索",
       "d601_lcd 已提供 bitmap/string 入口；实现时围绕 LCD bitmap 绘制、stripe/PFB 刷新、FPS 文本和 show()/task() 周期刷新组织代码"
     ]
   },
