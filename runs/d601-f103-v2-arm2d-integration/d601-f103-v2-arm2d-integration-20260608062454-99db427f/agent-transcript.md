@@ -1208,7 +1208,7 @@ commandExecution inProgress: /bin/sh -lc 'export PATH="$PWD/tools:$PATH"; hwpod 
 
 ## Final Response
 finalResponse=null
-reason: CaseRun agent polling timed out after 600000ms; result status=running at archive time, so no authoritative final assistant response was returned.
+reason: CaseRun agent polling timed out after 600000ms; result status=running, AgentRun runStatus=claimed, commandState=acknowledged at archive time, so no authoritative final assistant response was returned.
 
 ## Subject Diff
 

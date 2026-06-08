@@ -14,8 +14,10 @@ naturalEnd: false
 timedOut: true
 timeoutMs: 600000
 agentResultStatus: running
+agentRunStatus: claimed
+commandState: acknowledged
 
-reason: CaseRun agent polling timed out after 600000ms; result status=running at archive time, so no authoritative final assistant response was returned.
+reason: CaseRun agent polling timed out after 600000ms; result status=running, AgentRun runStatus=claimed, commandState=acknowledged at archive time, so no authoritative final assistant response was returned.
 
 ## Terminal/Error Rows
 _No terminal/error rows were rendered._
