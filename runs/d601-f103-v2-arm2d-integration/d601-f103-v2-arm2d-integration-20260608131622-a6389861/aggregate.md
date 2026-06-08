@@ -14,7 +14,7 @@
 - caseRepoRunDir: /root/hwlab-case-registry/runs/d601-f103-v2-arm2d-integration/d601-f103-v2-arm2d-integration-20260608131622-a6389861
 - sourceRunDir: /root/hwlab-v02/.state/hwlab-cli/caserun/d601-f103-v2-arm2d-integration-20260608131622-a6389861
 - createdAt: 2026-06-08T13:16:22.566Z
-- completedAt: 2026-06-08T13:17:34.758Z
+- completedAt: 2026-06-08T13:17:44.721Z
 - runnerPostAgentCompileCheck: recorded
 
 ## HWPOD 信息
@@ -126,7 +126,7 @@ hwpodId: d601-f103-v2
 ## 低噪声 Trace
 
 - renderer: tools/src/hwlab-cli/trace-renderer:traceDisplayRows
-- sourceEventCount: 484
+- sourceEventCount: 542
 - renderedRowCount: 19
 - hwpodCommandCount: 0
 - hwpodBuildCommandCount: 0
@@ -248,16 +248,16 @@ _agent-diff.patch artifact is missing._
 
 | Path | Bytes | SHA-256 |
 |---|---:|---|
-| evidence.json | 23068 | 5fcf0cc29b82be8318b3f0be1db96cd532cc2a4c9d5a1be2c70a9927a8b96267 |
+| evidence.json | 23068 | 3b1c76e8da9d86c15bbc5dd274fb55927db3508421c83d14c6b52838594f1a3e |
 | summary.md | 1536 | 41e95d8e13c049b16f5da9fcbfb5902a8bfe6e995d3631860f883fa231394262 |
 | aggregate.md | self-referential | self-referential |
-| agent-messages.json | 8018 | 8e9f28ea629eb4a075ac79f5cb8c1be131a75a4f6de20e0a2b8ad5e5da408bb8 |
+| agent-messages.json | 8018 | 60be4e080cbed55f192dbd5c01fad4316dd41a1b95aeb0ec743215d1a1bbbf3b |
 | agent-trace.md | 3628 | 7fb407a995daad93460a8b845fbe7ba2d145f5ab904ecc7984dc278dfe662373 |
 | agent-transcript.md | 3628 | 7fb407a995daad93460a8b845fbe7ba2d145f5ab904ecc7984dc278dfe662373 |
 | final-response.md | 1329 | 41bc2684232fb03135e7d1f138e014f6340b56bf9d2a0046290f6e0d7ed1cdcc |
-| run.json | 33315 | bc1fdb7ff888c00224fa79c9e0c053039722024d622ce8e727b6032d87e17d3b |
-| result.json | 11099 | 819600e1ae44bf9161f25fdf7d46433917b24e312d538cb4349d52ca05dc78cc |
-| agent-trace.json | 19283 | 8f1b3b3fac884012edc20b2f7655f64110e318e4ba22bd4787187719d80bafcf |
+| run.json | 33334 | 799387ebead88b99476f0a10dbe749f3a17980b3e751a45cb18e111684eea084 |
+| result.json | 44097 | fd571ed2e41db9eb69fcf7d506c20c70670e4f600e7e83433ea3b81461d3815f |
+| agent-trace.json | 19283 | a7f650751366f7665983c53967000e9a972e9c9dc80cc89b07b3b857656d57ef |
 | agent-prompt.md | 3063 | 2e716898f2bcf069001e4f425ce5709d560cddef6afb1d979b470afa7a02dcc3 |
 | agent-diff.patch | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
 | .hwlab/hwpod-spec.yaml | 763 | 8edaee3a8eb1f1ae9d815d642d5ee4fb4f1c3d52565ced891aee21bceb9df9c9 |
