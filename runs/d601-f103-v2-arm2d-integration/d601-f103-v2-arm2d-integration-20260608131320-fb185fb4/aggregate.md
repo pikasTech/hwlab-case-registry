@@ -126,7 +126,7 @@ hwpodId: d601-f103-v2
 ## 低噪声 Trace
 
 - renderer: tools/src/hwlab-cli/trace-renderer:traceDisplayRows
-- sourceEventCount: 566
+- sourceEventCount: 624
 - renderedRowCount: 19
 - hwpodCommandCount: 0
 - hwpodBuildCommandCount: 0
@@ -248,20 +248,20 @@ _agent-diff.patch artifact is missing._
 
 | Path | Bytes | SHA-256 |
 |---|---:|---|
-| evidence.json | 23068 | 176b622ab1734a53d9475a712c1dbc6bb1ac40390330b592ef73e9bc142c39f9 |
+| evidence.json | 23068 | 0c348ff6014523778d2b5c3b9dc10977897d83c513036349e054045aba2e9689 |
 | summary.md | 1536 | 01d504e59aff94da8adf5d7990cbdbb6d4d228c095deca09d6e5b35966c87691 |
 | aggregate.md | self-referential | self-referential |
-| agent-messages.json | 8018 | 16b5eb3efd4be1e502b3565841462d27c5c295e6e67f6fbd665591ea71724c2d |
+| agent-messages.json | 8018 | e86b9289fee33da1fe759778f4d956a7ff80d4a6864a88481a1edd9e95896f84 |
 | agent-trace.md | 3628 | 14d285d1498093c9f2fb1cc4cbf36f3d2ffde8ab5c5edfb0e21c6edd49ba2ba6 |
 | agent-transcript.md | 3628 | 14d285d1498093c9f2fb1cc4cbf36f3d2ffde8ab5c5edfb0e21c6edd49ba2ba6 |
 | final-response.md | 1329 | 643c909a19d3534260cf8444aa0fa1ec79fe71e0acabacb93cefd3ab35649e84 |
 | run.json | 33334 | 39ec8825a0a39ad031f3b3f63bcce560c885a3dfd5eb6c4558f17532345ecc46 |
-| result.json | 44097 | 5cbb35a77daa72f70e3d3219697abfb6ae43be2d6c0d17cd6bf1206f726e5118 |
-| agent-trace.json | 19283 | 466fa23a3bfd32bbd9c88516a15d60d52e03cf05628d51ca4c5ab03406e98c92 |
+| result.json | 44097 | ec9380c526e9c684cc7b78a35dfd092152a45071a5b2eaf24a21e2f9b4b7fc5d |
+| agent-trace.json | 19283 | 8d112734e4caf435062b613892c5503fecf922eb398b22189504519818af2a53 |
 | agent-prompt.md | 3063 | 478385680ebac4c3110df1ad4b1e211a3fb7b9c3c279b20be5da9821a419aa04 |
 | agent-diff.patch | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
 | .hwlab/hwpod-spec.yaml | 763 | 7bb12ab8ab20b5d82f26b85c24f56a3502fd11b20cbf513d0d513a3c4dfe0a95 |
-| worker.stdout.log | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
+| worker.stdout.log | 44870 | bc858c2678caf9898440169335bdb7596ac7fb014276cbdd51a288b1c28ec532 |
 | worker.stderr.log | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
 
 ## 说明
