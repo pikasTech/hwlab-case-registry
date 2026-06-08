@@ -1,0 +1,189 @@
+diff --git a/projects/01_baseline/User/d601_arm2d_demo.c b/projects/01_baseline/User/d601_arm2d_demo.c
+index f4400f9..463d7f9 100644
+--- a/projects/01_baseline/User/d601_arm2d_demo.c
++++ b/projects/01_baseline/User/d601_arm2d_demo.c
+@@ -1,10 +1,11 @@
+-﻿#include "d601_arm2d_demo.h"
++#include "d601_arm2d_demo.h"
+ #include "d601_lcd.h"
+ #include "stm32f1xx_hal.h"
+ #include "arm_2d.h"
+ 
+ #include <stdint.h>
+ #include <string.h>
++#include <stdio.h>
+ 
+ #define D601_ARM2D_PFB_WIDTH 240U
+ #define D601_ARM2D_PFB_LINES 32U
+@@ -27,41 +28,104 @@ static uint32_t s_fps_window_ms;
+ static uint32_t s_fps_frame_count;
+ static uint32_t s_fps_value;
+ 
++static uint16_t s_fill_colour;
++static arm_2d_tile_t s_fill_tile;
++
+ static void arm2d_wait(void)
+-{ }
++{
++    while (!arm_2d_op_wait_async(NULL)) { }
++}
+ 
+ static void arm2d_tile_bind(arm_2d_tile_t *ptTile, uint16_t width, uint16_t height)
+-{ }
++{
++    memset(ptTile, 0, sizeof(arm_2d_tile_t));
++    ptTile->tRegion.tSize.iWidth = (int16_t)width;
++    ptTile->tRegion.tSize.iHeight = (int16_t)height;
++    ptTile->pchBuffer = (uint8_t *)s_pfb[0];
++}
+ 
+ static void arm2d_fill_local(arm_2d_tile_t *ptTile,
+-                             int16_t x,
+-                             int16_t y,
+-                             int16_t width,
+-                             int16_t height,
++                             int16_t x, int16_t y,
++                             int16_t width, int16_t height,
+                              uint16_t colour)
+-{ }
++{
++    arm_2d_region_t tRegion;
++
++    s_fill_colour = colour;
++    tRegion.iX = x;
++    tRegion.iY = y;
++    tRegion.tSize.iWidth = width;
++    tRegion.tSize.iHeight = height;
++
++    arm_2d_rgb565_tile_fill_with_opacity_only(&s_fill_tile, ptTile, &tRegion, 255);
++    arm2d_wait();
++}
+ 
+ static void arm2d_fill_global(arm_2d_tile_t *ptTile,
+-                              uint16_t stripe_y,
+-                              uint16_t stripe_h,
+-                              uint16_t x,
+-                              uint16_t y,
+-                              uint16_t width,
+-                              uint16_t height,
++                              uint16_t stripe_y, uint16_t stripe_h,
++                              uint16_t x, uint16_t y,
++                              uint16_t width, uint16_t height,
+                               uint16_t colour)
+-{ }
++{
++    if ((int32_t)y + height <= (int32_t)stripe_y) return;
++    if (y >= stripe_y + stripe_h) return;
++
++    int16_t local_y = (int16_t)((int32_t)y - (int32_t)stripe_y);
++    int16_t local_h = (int16_t)height;
++
++    if (local_y < 0) {
++        local_h = (int16_t)(local_h + local_y);
++        local_y = 0;
++    }
++    if (local_y + local_h > (int16_t)stripe_h) {
++        local_h = (int16_t)(stripe_h - local_y);
++    }
++    if (local_h <= 0) return;
++
++    arm2d_fill_local(ptTile, (int16_t)x, local_y, (int16_t)width, local_h, colour);
++}
+ 
+ static void arm2d_render_stripe(uint16_t y, uint16_t stripe_h, uint16_t width, uint16_t height)
+-{ }
++{
++    arm_2d_tile_t tTile;
++
++    arm2d_tile_bind(&tTile, width, stripe_h);
++
++    arm2d_fill_local(&tTile, 0, 0, (int16_t)width, (int16_t)stripe_h, D601_C_BG);
++
++    arm2d_fill_global(&tTile, y, stripe_h, 0, 0, width, 60, D601_C_BANNER);
++    arm2d_fill_global(&tTile, y, stripe_h, 10, 70, width - 20, 90, D601_C_CARD);
++    arm2d_fill_global(&tTile, y, stripe_h, 10, 170, width - 20, 40, D601_C_PANEL);
++    arm2d_fill_global(&tTile, y, stripe_h, 0, height - 24, width, 24, D601_C_FOOT);
++
++    d601_lcd_draw_bitmap(0, y, width, stripe_h, (const uint16_t *)s_pfb[0]);
++}
+ 
+ static void arm2d_fps_text(char *text, uint32_t fps)
+-{ }
++{
++    snprintf(text, 20, "%lu FPS", (unsigned long)fps);
++}
+ 
+ static void arm2d_draw_fps(uint16_t height)
+-{ }
++{
++    if (s_fps_value > 0) {
++        char fps_str[20];
++        arm2d_fps_text(fps_str, s_fps_value);
++        d601_lcd_show_string(10, (uint16_t)(height - 22), fps_str, D601_C_GREEN, D601_C_FOOT, 1);
++    }
++}
+ 
+ void d601_arm2d_demo_show(void)
+-{ }
++{
++    uint16_t width, height;
++    uint16_t y;
++
++    if (!s_arm2d_ready) {
++        arm_2d_init();
++        arm2d_tile_bind(&s_fill_tile, 1, 1);
++        s_fill_tile.pchBuffer = (uint8_t *)&s_fill_colour;
++        s_arm2d_ready = 1;
++    }
+ 
+     width = d601_lcd_get_width();
+     height = d601_lcd_get_height();
+@@ -82,11 +146,21 @@ void d601_arm2d_demo_show(void)
+     d601_lcd_show_string(25, 128, "D601 F103", D601_LCD_WHITE, D601_C_CARD, 2);
+     d601_lcd_show_string(25, 198, "BASIC DEMO", D601_LCD_WHITE, D601_C_PANEL, 2);
+     arm2d_draw_fps(height);
++
++    s_fps_frame_count = 0;
++    s_fps_window_ms = HAL_GetTick();
+ }
+ 
+ void d601_arm2d_demo_task(void)
+-{ }
++{
++    uint32_t now = HAL_GetTick();
+ 
+     d601_arm2d_demo_show();
+     ++s_fps_frame_count;
++
++    if (now - s_fps_window_ms >= 1000) {
++        s_fps_value = s_fps_frame_count;
++        s_fps_frame_count = 0;
++        s_fps_window_ms = now;
++    }
+ }
+diff --git a/projects/01_baseline/User/main.c b/projects/01_baseline/User/main.c
+index 7467c9a..df8bf9a 100644
+--- a/projects/01_baseline/User/main.c
++++ b/projects/01_baseline/User/main.c
+@@ -4,6 +4,7 @@
+ #include "./BSP/LED/led.h"
+ #include "jsonrpc_handler.h"
+ #include "d601_lcd.h"
++#include "d601_arm2d_demo.h"
+ #include "d601_gpio.h"
+ 
+ int main(void)
+@@ -17,11 +18,13 @@ int main(void)
+ 
+     d601_lcd_init();
+     d601_gpio_init();
++    d601_arm2d_demo_show();
+     printf("[D601-F103] LCD ID=0x%04X\r\n", (unsigned int)d601_lcd_get_id());
+     printf("[D601-F103] JSON-RPC ready on USART1 115200 8N1\r\n");
+ 
+     while (1)
+     {
+         jsonrpc_process();
++        d601_arm2d_demo_task();
+     }
+ }
