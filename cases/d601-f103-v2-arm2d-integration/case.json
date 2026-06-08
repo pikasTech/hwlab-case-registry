@@ -1,7 +1,7 @@
 {
   "contractVersion": "hwpod-case-v1",
   "caseId": "d601-f103-v2-arm2d-integration",
-  "title": "D601-F103-V2 ARM-2D integration CaseRun",
+  "title": "D601-F103-V2 ARM-2D 集成 CaseRun",
   "mode": "agent-mutation-compile-only",
   "hwpodSpec": "hwpod-spec.yaml",
   "subject": {
@@ -18,7 +18,7 @@
     "providerProfile": "dsflash-go",
     "projectId": "prj_hwpod_workbench",
     "timeoutMs": 600000,
-    "prompt": "The subject workspace root is the repo root (contains projects/, docs/, tools/, .agents/). Before editing, read `.agents/skills/arm2d-skill/SKILL.md` and follow its ARM-2D standard integration method. If this file is missing, stop and report an AgentRun gitbundle/skill mount blocker; do not invent a replacement or remove the dependency. Use the CaseRun-provided `hwpodWorkspaceArgs` with every `hwpod` and `hwpod-ctl` command. Do not use runner-local `.hwlab/hwpod-spec.yaml`; if old help text mentions it, translate to the supplied `--hwpod-id` / `--workspace-path` arguments. Use `hwpod workspace rg` / `hwpod workspace search` for symbol lookup and `hwpod workspace cat` only when you need the full file body.\n\nThe workspace has an LCD driver (d601_lcd), GPIO, and the ARM-2D library under projects/01_baseline/Middlewares/Arm-2D/. The ARM-2D library headers (arm_2d.h, arm_2d_types.h, etc) are at projects/01_baseline/Middlewares/Arm-2D/Library/include/. d601_lcd.h is at projects/01_baseline/User/d601_lcd.h. The ARM-2D demo files exist but with EMPTY function bodies.\n\nYour task:\n\n1. Edit main.c to integrate ARM-2D: add #include \"d601_arm2d_demo.h\" after d601_lcd.h, call d601_arm2d_demo_show() after d601_gpio_init(), and d601_arm2d_demo_task() in the while(1) loop after jsonrpc_process().\n\n2. Implement d601_arm2d_demo.c function bodies. Study d601_arm2d_demo.h for the public API, use `hwpod workspace rg` / `hwpod workspace search` with `hwpodWorkspaceArgs` to inspect the ARM-2D library headers under Middlewares/Arm-2D/Library/include/ for arm_2d_init, arm_2d_op_wait_async, arm_2d_rgb16_fill_colour, and arm_2d_rgb565_t structures. Read d601_lcd.h for d601_lcd_get_width/height, d601_lcd_draw_bitmap, d601_lcd_fill_rect, d601_lcd_show_string. Implement at minimum: arm2d_wait(), arm2d_tile_bind(), arm2d_fill_local(), d601_arm2d_demo_show() (init ARM-2D, render one full-screen fill), and d601_arm2d_demo_task() (call show periodically). The existing #defines (D601_ARM2D_PFB_WIDTH/LINES, D601_RGB565, D601_C_*) and static variables (s_pfb, s_arm2d_ready) should be reused.\n\n3. After editing, run `hwpod-ctl spec validate`, `hwpod inspect`, and `hwpod build` with the CaseRun-provided `hwpodWorkspaceArgs`. Report diff summary and build result. Do not download or run UART.",
+    "prompt": "主体工作区根目录就是仓库根目录，包含 projects/、docs/、tools/ 和 .agents/。编辑前先读取 `.agents/skills/arm2d-skill/SKILL.md`，并遵循其中的 ARM-2D 标准集成方法。如果该文件缺失，停止并报告 AgentRun gitbundle/skill 挂载阻塞；不要自行编造替代内容，也不要移除这个依赖。每个 `hwpod` 和 `hwpod-ctl` 命令都必须使用 CaseRun 提供的 `hwpodWorkspaceArgs`。不要使用 runner 本地 `.hwlab/hwpod-spec.yaml`；如果旧帮助文本提到它，把它转换为本任务提供的 `--hwpod-id` / `--workspace-path` 参数。符号查找优先用 `hwpod workspace rg` / `hwpod workspace search`，只有需要完整文件正文时才用 `hwpod workspace cat`。\n\n工作区中已有 LCD 驱动 d601_lcd、GPIO，以及位于 projects/01_baseline/Middlewares/Arm-2D/ 的 ARM-2D 库。ARM-2D 头文件 arm_2d.h、arm_2d_types.h 等位于 projects/01_baseline/Middlewares/Arm-2D/Library/include/。d601_lcd.h 位于 projects/01_baseline/User/d601_lcd.h。ARM-2D demo 文件已经存在，但函数体为空。\n\n你的任务：\n\n1. 编辑 main.c 集成 ARM-2D：在 d601_lcd.h 之后加入 #include \"d601_arm2d_demo.h\"，在 d601_gpio_init() 之后调用 d601_arm2d_demo_show()，并在 while(1) 循环中 jsonrpc_process() 之后调用 d601_arm2d_demo_task()。\n\n2. 实现 d601_arm2d_demo.c 的函数体。先阅读 d601_arm2d_demo.h 了解公开 API；使用带 hwpodWorkspaceArgs 的 `hwpod workspace rg` / `hwpod workspace search` 检查 Middlewares/Arm-2D/Library/include/ 下的 ARM-2D 头文件，重点确认 arm_2d_init、arm_2d_op_wait_async、arm_2d_rgb16_fill_colour 和 arm_2d_rgb565_t 结构；阅读 d601_lcd.h 了解 d601_lcd_get_width/height、d601_lcd_draw_bitmap、d601_lcd_fill_rect、d601_lcd_show_string。至少实现 arm2d_wait()、arm2d_tile_bind()、arm2d_fill_local()、d601_arm2d_demo_show()（初始化 ARM-2D 并渲染一次全屏填充）和 d601_arm2d_demo_task()（周期性调用 show）。复用已有 #define（D601_ARM2D_PFB_WIDTH/LINES、D601_RGB565、D601_C_*）和静态变量（s_pfb、s_arm2d_ready）。\n\n3. 编辑完成后，使用 CaseRun 提供的 hwpodWorkspaceArgs 运行 `hwpod-ctl spec validate`、`hwpod inspect` 和 `hwpod build`。回报 diff 摘要和构建结果。不要下载，也不要运行 UART。",
     "constraints": [
       "可以修改 projects/01_baseline/User/main.c 和 projects/01_baseline/User/d601_arm2d_demo.c",
       "main.c 只加3行：include + show() + task()",
@@ -51,7 +51,7 @@
     },
     "download": {
       "skipped": true,
-      "reason": "ARM-2D integration validation is compile-only at this stage"
+      "reason": "ARM-2D 集成当前阶段只做仅编译验证"
     }
   }
 }

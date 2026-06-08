@@ -1,7 +1,7 @@
 {
   "contractVersion": "hwpod-case-v1",
   "caseId": "d601-f103-v2-leader-review",
-  "title": "D601-F103-V2 Leader-Coder-Reviewer pattern test",
+  "title": "D601-F103-V2 负责人-编码者-评审者模式测试",
   "mode": "agent-mutation-compile-only",
   "hwpodSpec": "hwpod-spec.yaml",
   "subject": {
@@ -18,13 +18,13 @@
     "providerProfile": "deepseek",
     "projectId": "prj_hwpod_workbench",
     "timeoutMs": 600000,
-    "prompt": "You are a Leader agent with the `hwlab-code-agent` tool available. Your task is to demonstrate the Leader-Coder-Reviewer pattern.\n\nThe subject workspace has .hwlab/hwpod-spec.yaml already. The subject files are under projects/01_baseline/User/.\n\n## Step 1: Spawn Coder\nUse `hwlab-code-agent spawn --message \"...\" ` to create a coder agent. Tell it:\n- Read projects/01_baseline/User/main.c via hwpod workspace cat\n- Add a single comment line `// case05-leader-test` after the existing `#include \"d601_lcd.h\"` line\n- Use `hwpod workspace insert-after` to make the edit\n- After editing, run `hwpod workspace cat projects/01_baseline/User/main.c` to verify\n- Report what you changed\n\nThe hwpod spec is at .hwlab/hwpod-spec.yaml — the coder will auto-inherit it.\n\n## Step 2: Wait for Coder\nUse `hwlab-code-agent poll <traceId> --timeout 300000` to wait for the coder to finish.\n\n## Step 3: Spawn Reviewer\nUse `hwlab-code-agent spawn --message \"...\" ` to create a reviewer agent. Tell it:\n- Read projects/01_baseline/User/main.c via hwpod workspace cat\n- Check if the file contains `// case05-leader-test` \n- Verify the comment is on its own line after `#include \"d601_lcd.h\"`\n- Report PASS if found correctly placed, FAIL otherwise\n\n## Step 4: Wait for Reviewer\nUse `hwlab-code-agent poll <reviewerTraceId> --timeout 300000`.\n\n## Output\nAfter both complete, report:\n1. Coder traceId and what it did\n2. Reviewer verdict (PASS/FAIL)\n3. Whether the Leader-Coder-Reviewer pattern worked correctly",
+    "prompt": "你是负责人代理，可使用 `hwlab-code-agent` 工具。你的任务是演示“负责人-编码者-评审者”协作模式。\n\n主体文件位于 projects/01_baseline/User/。所有 hwpod 或 hwpod-ctl 操作都必须使用 CaseRun 提供的 hwpodWorkspaceArgs，不要依赖 runner 本地 .hwlab/hwpod-spec.yaml。\n\n## 步骤 1：派生编码者\n使用 `hwlab-code-agent spawn --message \"...\"` 创建编码者代理。告诉它：\n- 通过 hwpod workspace cat 读取 projects/01_baseline/User/main.c，并携带 hwpodWorkspaceArgs。\n- 在已有 `#include \"d601_lcd.h\"` 行之后新增单独一行注释 `// case05-leader-test`。\n- 使用 `hwpod workspace insert-after` 或等价 HWPOD workspace 编辑入口完成修改。\n- 修改后运行 `hwpod workspace cat projects/01_baseline/User/main.c` 验证结果。\n- 回报它修改了什么。\n\n## 步骤 2：等待编码者\n使用 `hwlab-code-agent poll <traceId> --timeout 300000` 等待编码者完成。\n\n## 步骤 3：派生评审者\n使用 `hwlab-code-agent spawn --message \"...\"` 创建评审者代理。告诉它：\n- 通过 hwpod workspace cat 读取 projects/01_baseline/User/main.c，并携带 hwpodWorkspaceArgs。\n- 检查文件是否包含 `// case05-leader-test`。\n- 验证该注释是否位于 `#include \"d601_lcd.h\"` 之后的独立一行。\n- 如果位置正确则回报“通过”，否则回报“失败”并说明原因。\n\n## 步骤 4：等待评审者\n使用 `hwlab-code-agent poll <reviewerTraceId> --timeout 300000`。\n\n## 输出\n两个代理都完成后，回报：\n1. 编码者 traceId 和它做了什么。\n2. 评审者结论。\n3. 负责人-编码者-评审者模式是否按预期工作。",
     "constraints": [
-      "Leader 使用 hwlab-code-agent spawn/poll 调度 Coder 和 Reviewer",
-      "Coder 通过 hwpod 修改 subject worktree 中的文件",
-      "Reviewer 通过 hwpod 读取 subject worktree 验证改动",
-      "hwpod spec 通过 CWD 自动继承，无需显式 --spec-path",
-      "compile-only 模式，不下载不串口"
+      "负责人使用 hwlab-code-agent spawn/poll 调度编码者和评审者",
+      "编码者通过 hwpod 修改 subject worktree 中的文件，并携带 CaseRun 提供的 hwpodWorkspaceArgs",
+      "评审者通过 hwpod 读取 subject worktree 验证改动，并携带 CaseRun 提供的 hwpodWorkspaceArgs",
+      "不要依赖 runner 本地 .hwlab/hwpod-spec.yaml",
+      "仅编译模式，不下载、不读串口"
     ]
   },
   "expected": {

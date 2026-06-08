@@ -1,7 +1,7 @@
 {
   "contractVersion": "hwpod-case-v1",
   "caseId": "d601-f103-v2-main-marker",
-  "title": "D601-F103-V2 minimal main.c marker mutation CaseRun",
+  "title": "D601-F103-V2 main.c 最小标记变更 CaseRun",
   "mode": "agent-mutation-compile-only",
   "hwpodSpec": "hwpod-spec.yaml",
   "subject": {
@@ -17,7 +17,7 @@
     "workspace": "subjectWorktree",
     "providerProfile": "deepseek",
     "projectId": "prj_hwpod_workbench",
-    "prompt": "In the isolated subject worktree only, make the smallest compile-safe mutation to projects/01_baseline/User/main.c: add exactly one line after the existing printf(\"[D601-F103] JSON-RPC ready on USART1 115200 8N1\\\\r\\\\n\"); line: printf(\"[D601-F103] CaseRun marker stageB\\\\r\\\\n\");. Use the hwpod workspace apply-patch entry or an equivalent HWPOD workspace operation so the edit is applied through hwpod-node to subjectWorktreePath; do not edit from the Linux runner by cd'ing into the Windows path. After the edit, run hwpod-ctl spec validate, hwpod inspect, and hwpod build with .hwlab/hwpod-spec.yaml, then report the diff summary and build job/artifact summary. Do not modify any file other than projects/01_baseline/User/main.c.",
+    "prompt": "只在隔离主体工作区中，对 projects/01_baseline/User/main.c 做最小且可编译安全的变更：在已有 printf(\"[D601-F103] JSON-RPC ready on USART1 115200 8N1\\r\\n\"); 这一行之后，准确新增一行 printf(\"[D601-F103] CaseRun marker stageB\\r\\n\");。通过 hwpod workspace apply-patch 入口或等价的 HWPOD workspace 操作编辑，使变更经 hwpod-node 落到 subjectWorktreePath；不要从 Linux runner cd 到 Windows 路径直接编辑。编辑后使用 CaseRun 提供的 hwpodWorkspaceArgs 运行 hwpod-ctl spec validate、hwpod inspect 和 hwpod build，然后回报 diff 摘要以及构建 job/artifact 摘要。除 projects/01_baseline/User/main.c 外，不要修改任何文件。",
     "constraints": [
       "只允许修改 projects/01_baseline/User/main.c",
       "必须新增且只新增一行 printf marker，不做 Arm2D 移植",
@@ -44,7 +44,7 @@
     },
     "download": {
       "skipped": true,
-      "reason": "stageB validates minimal agent mutation plus compile-only evidence only"
+      "reason": "stageB 只验证最小 agent 变更和仅编译证据"
     }
   }
 }
