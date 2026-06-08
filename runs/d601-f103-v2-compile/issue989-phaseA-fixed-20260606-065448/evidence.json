@@ -1,0 +1,472 @@
+{
+  "contractVersion": "hwpod-case-run-evidence-v1",
+  "caseId": "d601-f103-v2-compile",
+  "runId": "issue989-phaseA-fixed-20260606-065448",
+  "compileOnly": true,
+  "autoEvaluation": false,
+  "status": "recorded",
+  "observedAt": "2026-06-06T06:55:46.085Z",
+  "apiUrl": "http://74.48.78.17:19667",
+  "subject": {
+    "repoLocalPath": "F:\\Work\\HWLAB-CASE-F103",
+    "commitId": "df7a4e6e551fa90d64bde5537cc000f89d63dd20",
+    "subdir": "projects/01_baseline",
+    "worktreePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue989-phasea-fixed-20260606-065448",
+    "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue989-phasea-fixed-20260606-065448",
+    "setup": {
+      "httpStatus": 200,
+      "planId": "case_subject_67b75ced-7bed-450f-a13f-ace6bf012159",
+      "nodeId": "node-d601-f103-v2",
+      "exitCode": 0,
+      "stdout": "HEAD is now at df7a4e6 chore: initialize D601 HWLAB subject repo\ndf7a4e6e551fa90d64bde5537cc000f89d63dd20",
+      "stderr": "Preparing worktree (detached HEAD df7a4e6)"
+    }
+  },
+  "agentTask": {
+    "workspace": "subjectWorktree",
+    "providerProfile": "deepseek",
+    "projectId": "prj_hwpod_workbench",
+    "promptSha256": "41fe81bf43effc854bcf270e6d04babed29ddc4ea8ae9e70b8a7fb8cd6d72267",
+    "constraints": [
+      "不得修改 case registry",
+      "不得修改原 subject repo checkout",
+      "只允许修改 isolated subject worktree",
+      "保持 compile-only 流程可继续执行"
+    ]
+  },
+  "agent": {
+    "stageStatus": "completed",
+    "baseUrl": "http://74.48.78.17:19666",
+    "projectId": "prj_hwpod_workbench",
+    "providerProfile": "deepseek",
+    "conversationId": "cnv_case_d601-f103-v2-compile_issue989-phasea-fixed-20260606-065448",
+    "sessionId": "ses_1dcfa482-1bf2-4f10-ab15-60264b46b7ff",
+    "traceId": "trc_case_d601-f103-v2-compile_aa69d5333f914ca1a6e5edef420447e5",
+    "promptPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/issue989-phaseA-fixed-20260606-065448/agent-prompt.md",
+    "promptSha256": "8abe351fb93454d0a06c9e1980ec74fd6d8dae679cfb916920c50c58773145dc",
+    "polls": 22,
+    "timedOut": false,
+    "lastHttpStatus": 200
+  },
+  "agentTrace": {
+    "traceId": "trc_case_d601-f103-v2-compile_aa69d5333f914ca1a6e5edef420447e5",
+    "status": "completed",
+    "httpStatus": 200,
+    "sourceEventCount": 661,
+    "commandCount": 30,
+    "hwpodCommandCount": 53,
+    "hwpodBuildCommandCount": 13,
+    "keilJobCandidates": [],
+    "terminalStatus": "completed",
+    "agentRun": {
+      "adapter": "agentrun-v01",
+      "runId": "run_4fc9439232f8460ab63fe527da7b9d22",
+      "commandId": "cmd_b5d21962b8884a07bacdfbe555f8a0d8",
+      "attemptId": "attempt_mq2006u5",
+      "runnerId": "runner_d4990e43082a",
+      "jobName": "agentrun-v01-runner-1c13377bbeeb",
+      "namespace": "agentrun-v01",
+      "terminalStatus": "completed",
+      "lastSeq": 58,
+      "valuesPrinted": false
+    },
+    "commands": [
+      {
+        "source": "trace-event",
+        "seq": 406,
+        "toolName": "commandExecution",
+        "status": "started",
+        "command": "/bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "commandExecution inProgress: /bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'"
+      },
+      {
+        "source": "trace-event",
+        "seq": 448,
+        "toolName": "commandExecution",
+        "status": "started",
+        "command": "/bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "commandExecution inProgress: /bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'"
+      },
+      {
+        "source": "trace-event",
+        "seq": 450,
+        "toolName": "commandExecution",
+        "status": "completed",
+        "command": "/bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "{ \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"intent\": \"debug.build\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"subprocess\", \"entrypoint\": \"tools/hwpod-compiler-cli.ts\", \"argv\": [ \"compile\", \"--spec\", \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"--intent\", \"debug.build\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_e3a68ffd-1153-4d9d-8ca1-8ea03ec1b3ca\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"specAuthority\": \"code-agent-workspace\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\", \"explicitOverride\": false, \"lane\": \"v02\", \"namespace\": \"hwlab-v02\", \"urlLane\": \"v02\", \"urlNamespace\": \"hwlab-v02\" }, \"body\": { \"ok\": true, \"status\": \"compl...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-event",
+        "seq": 493,
+        "toolName": "commandExecution",
+        "status": "started",
+        "command": "/bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "commandExecution inProgress: /bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'"
+      },
+      {
+        "source": "trace-event",
+        "seq": 495,
+        "toolName": "commandExecution",
+        "status": "completed",
+        "command": "/bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "{ \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"intent\": \"debug.build\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"subprocess\", \"entrypoint\": \"tools/hwpod-compiler-cli.ts\", \"argv\": [ \"compile\", \"--spec\", \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"--intent\", \"debug.build\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_e3a68ffd-1153-4d9d-8ca1-8ea03ec1b3ca\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"specAuthority\": \"code-agent-workspace\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\", \"explicitOverride\": false, \"lane\": \"v02\", \"namespace\": \"hwlab-v02\", \"urlLane\": \"v02\", \"urlNamespace\": \"hwlab-v02\" }, \"body\": { \"ok\": true, \"status\": \"compl...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-event",
+        "seq": 539,
+        "toolName": "commandExecution",
+        "status": "started",
+        "command": "/bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "commandExecution inProgress: /bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'"
+      },
+      {
+        "source": "trace-event",
+        "seq": 541,
+        "toolName": "commandExecution",
+        "status": "completed",
+        "command": "/bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "{ \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"intent\": \"debug.build\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"subprocess\", \"entrypoint\": \"tools/hwpod-compiler-cli.ts\", \"argv\": [ \"compile\", \"--spec\", \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"--intent\", \"debug.build\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_e3a68ffd-1153-4d9d-8ca1-8ea03ec1b3ca\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"specAuthority\": \"code-agent-workspace\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\", \"explicitOverride\": false, \"lane\": \"v02\", \"namespace\": \"hwlab-v02\", \"urlLane\": \"v02\", \"urlNamespace\": \"hwlab-v02\" }, \"body\": { \"ok\": true, \"status\": \"compl...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-event",
+        "seq": 586,
+        "toolName": "commandExecution",
+        "status": "started",
+        "command": "/bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "commandExecution inProgress: /bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'"
+      },
+      {
+        "source": "trace-event",
+        "seq": 588,
+        "toolName": "commandExecution",
+        "status": "completed",
+        "command": "/bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "{ \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"intent\": \"debug.build\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"subprocess\", \"entrypoint\": \"tools/hwpod-compiler-cli.ts\", \"argv\": [ \"compile\", \"--spec\", \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"--intent\", \"debug.build\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_e3a68ffd-1153-4d9d-8ca1-8ea03ec1b3ca\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"specAuthority\": \"code-agent-workspace\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\", \"explicitOverride\": false, \"lane\": \"v02\", \"namespace\": \"hwlab-v02\", \"urlLane\": \"v02\", \"urlNamespace\": \"hwlab-v02\" }, \"body\": { \"ok\": true, \"status\": \"compl...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-event",
+        "seq": 645,
+        "toolName": "commandExecution",
+        "status": "started",
+        "command": "/bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "commandExecution inProgress: /bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'"
+      },
+      {
+        "source": "trace-event",
+        "seq": 647,
+        "toolName": "commandExecution",
+        "status": "completed",
+        "command": "/bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "{ \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"intent\": \"debug.build\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"subprocess\", \"entrypoint\": \"tools/hwpod-compiler-cli.ts\", \"argv\": [ \"compile\", \"--spec\", \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"--intent\", \"debug.build\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_e3a68ffd-1153-4d9d-8ca1-8ea03ec1b3ca\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"specAuthority\": \"code-agent-workspace\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\", \"explicitOverride\": false, \"lane\": \"v02\", \"namespace\": \"hwlab-v02\", \"urlLane\": \"v02\", \"urlNamespace\": \"hwlab-v02\" }, \"body\": { \"ok\": true, \"status\": \"compl...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-event",
+        "seq": 703,
+        "toolName": "commandExecution",
+        "status": "started",
+        "command": "/bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "commandExecution inProgress: /bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'"
+      },
+      {
+        "source": "trace-event",
+        "seq": 705,
+        "toolName": "commandExecution",
+        "status": "completed",
+        "command": "/bin/sh -lc 'hwpod build --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "{ \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"intent\": \"debug.build\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"subprocess\", \"entrypoint\": \"tools/hwpod-compiler-cli.ts\", \"argv\": [ \"compile\", \"--spec\", \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"--intent\", \"debug.build\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_e3a68ffd-1153-4d9d-8ca1-8ea03ec1b3ca\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"specAuthority\": \"code-agent-workspace\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\", \"explicitOverride\": false, \"lane\": \"v02\", \"namespace\": \"hwlab-v02\", \"urlLane\": \"v02\", \"urlNamespace\": \"hwlab-v02\" }, \"body\": { \"ok\": true, \"status\": \"compl...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-event",
+        "seq": 247,
+        "toolName": "commandExecution",
+        "status": "started",
+        "command": "/bin/sh -lc 'hwpod-ctl spec validate --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "commandExecution inProgress: /bin/sh -lc 'hwpod-ctl spec validate --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'"
+      },
+      {
+        "source": "trace-event",
+        "seq": 248,
+        "toolName": "commandExecution",
+        "status": "completed",
+        "command": "/bin/sh -lc 'hwpod-ctl spec validate --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "{ \"ok\": true, \"action\": \"hwpod-ctl.spec.validate\", \"status\": \"succeeded\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"document\": { \"apiVersion\": \"hwlab.dev/v0alpha1\", \"kind\": \"Hwpod\", \"metadata\": { \"uid\": \"D601-F103-V2\", \"name\": \"d601-f103-v2\" }, \"spec\": { \"targetDevice\": { \"board\": \"D601-F103-V2\", \"mcu\": \"STM32F103\" }, \"workspace\": { \"path\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue989-phasea-fixed-20260606-065448\", \"toolchain\": \"keil-mdk\", \"keilProject\": \"projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx\", \"keilTarget\": \"USART\", \"keilCliPath\": \"C:\\\\Users\\\\liang\\\\.agents\\\\skills\\\\keil\\\\keil-cli.py\" }, \"debugProbe\": { \"type\": \"daplink\", \"adapter\": \"keil\", \"probeUid\": \"3FD750C63E342E24\", \"probeName\": \"MicroLink CMSIS-DAP\", \"programBackend\": \"keil\" }, \"ioProbe\": { \"uart\": { \"id\": \"uart/1\", \"port\": \"COM9\", \"baudrate\": 115200 } }, \"nodeBinding\": { \"nodeId\": \"node-d601-f103-v2\", \"nodeType\": \"pc-host\" } } }, \"fourElements\": [ \"targetDevice\", \"workspace\", \"debugProbe\", \"ioProbe\" ], \"nodeId\": \"node-d601-f103-v2\", \"observedAt\": \"2026-06-06T06:55:14.938Z\" }",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-event",
+        "seq": 280,
+        "toolName": "commandExecution",
+        "status": "started",
+        "command": "/bin/sh -lc 'hwpod-ctl spec validate --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "commandExecution inProgress: /bin/sh -lc 'hwpod-ctl spec validate --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'"
+      },
+      {
+        "source": "trace-event",
+        "seq": 281,
+        "toolName": "commandExecution",
+        "status": "completed",
+        "command": "/bin/sh -lc 'hwpod-ctl spec validate --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "{ \"ok\": true, \"action\": \"hwpod-ctl.spec.validate\", \"status\": \"succeeded\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"document\": { \"apiVersion\": \"hwlab.dev/v0alpha1\", \"kind\": \"Hwpod\", \"metadata\": { \"uid\": \"D601-F103-V2\", \"name\": \"d601-f103-v2\" }, \"spec\": { \"targetDevice\": { \"board\": \"D601-F103-V2\", \"mcu\": \"STM32F103\" }, \"workspace\": { \"path\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue989-phasea-fixed-20260606-065448\", \"toolchain\": \"keil-mdk\", \"keilProject\": \"projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx\", \"keilTarget\": \"USART\", \"keilCliPath\": \"C:\\\\Users\\\\liang\\\\.agents\\\\skills\\\\keil\\\\keil-cli.py\" }, \"debugProbe\": { \"type\": \"daplink\", \"adapter\": \"keil\", \"probeUid\": \"3FD750C63E342E24\", \"probeName\": \"MicroLink CMSIS-DAP\", \"programBackend\": \"keil\" }, \"ioProbe\": { \"uart\": { \"id\": \"uart/1\", \"port\": \"COM9\", \"baudrate\": 115200 } }, \"nodeBinding\": { \"nodeId\": \"node-d601-f103-v2\", \"nodeType\": \"pc-host\" } } }, \"fourElements\": [ \"targetDevice\", \"workspace\", \"debugProbe\", \"ioProbe\" ], \"nodeId\": \"node-d601-f103-v2\", \"observedAt\": \"2026-06-06T06:55:14.938Z\" }",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-event",
+        "seq": 316,
+        "toolName": "commandExecution",
+        "status": "started",
+        "command": "/bin/sh -lc 'hwpod-ctl spec validate --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "commandExecution inProgress: /bin/sh -lc 'hwpod-ctl spec validate --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'"
+      },
+      {
+        "source": "trace-event",
+        "seq": 317,
+        "toolName": "commandExecution",
+        "status": "completed",
+        "command": "/bin/sh -lc 'hwpod-ctl spec validate --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "{ \"ok\": true, \"action\": \"hwpod-ctl.spec.validate\", \"status\": \"succeeded\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"document\": { \"apiVersion\": \"hwlab.dev/v0alpha1\", \"kind\": \"Hwpod\", \"metadata\": { \"uid\": \"D601-F103-V2\", \"name\": \"d601-f103-v2\" }, \"spec\": { \"targetDevice\": { \"board\": \"D601-F103-V2\", \"mcu\": \"STM32F103\" }, \"workspace\": { \"path\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue989-phasea-fixed-20260606-065448\", \"toolchain\": \"keil-mdk\", \"keilProject\": \"projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx\", \"keilTarget\": \"USART\", \"keilCliPath\": \"C:\\\\Users\\\\liang\\\\.agents\\\\skills\\\\keil\\\\keil-cli.py\" }, \"debugProbe\": { \"type\": \"daplink\", \"adapter\": \"keil\", \"probeUid\": \"3FD750C63E342E24\", \"probeName\": \"MicroLink CMSIS-DAP\", \"programBackend\": \"keil\" }, \"ioProbe\": { \"uart\": { \"id\": \"uart/1\", \"port\": \"COM9\", \"baudrate\": 115200 } }, \"nodeBinding\": { \"nodeId\": \"node-d601-f103-v2\", \"nodeType\": \"pc-host\" } } }, \"fourElements\": [ \"targetDevice\", \"workspace\", \"debugProbe\", \"ioProbe\" ], \"nodeId\": \"node-d601-f103-v2\", \"observedAt\": \"2026-06-06T06:55:14.938Z\" }",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-event",
+        "seq": 321,
+        "toolName": "commandExecution",
+        "status": "started",
+        "command": "/bin/sh -lc 'hwpod inspect --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "commandExecution inProgress: /bin/sh -lc 'hwpod inspect --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'"
+      },
+      {
+        "source": "trace-event",
+        "seq": 323,
+        "toolName": "commandExecution",
+        "status": "completed",
+        "command": "/bin/sh -lc 'hwpod inspect --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "{ \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"intent\": \"inspect\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"subprocess\", \"entrypoint\": \"tools/hwpod-compiler-cli.ts\", \"argv\": [ \"compile\", \"--spec\", \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"--intent\", \"inspect\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_6ba986b6-1710-471f-aee3-893768d3c23a\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"specAuthority\": \"code-agent-workspace\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\", \"explicitOverride\": false, \"lane\": \"v02\", \"namespace\": \"hwlab-v02\", \"urlLane\": \"v02\", \"urlNamespace\": \"hwlab-v02\" }, \"body\": { \"ok\": true, \"status\": \"completed\", \"...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-event",
+        "seq": 355,
+        "toolName": "commandExecution",
+        "status": "started",
+        "command": "/bin/sh -lc 'hwpod-ctl spec validate --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "commandExecution inProgress: /bin/sh -lc 'hwpod-ctl spec validate --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'"
+      },
+      {
+        "source": "trace-event",
+        "seq": 356,
+        "toolName": "commandExecution",
+        "status": "completed",
+        "command": "/bin/sh -lc 'hwpod-ctl spec validate --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "{ \"ok\": true, \"action\": \"hwpod-ctl.spec.validate\", \"status\": \"succeeded\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"document\": { \"apiVersion\": \"hwlab.dev/v0alpha1\", \"kind\": \"Hwpod\", \"metadata\": { \"uid\": \"D601-F103-V2\", \"name\": \"d601-f103-v2\" }, \"spec\": { \"targetDevice\": { \"board\": \"D601-F103-V2\", \"mcu\": \"STM32F103\" }, \"workspace\": { \"path\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue989-phasea-fixed-20260606-065448\", \"toolchain\": \"keil-mdk\", \"keilProject\": \"projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx\", \"keilTarget\": \"USART\", \"keilCliPath\": \"C:\\\\Users\\\\liang\\\\.agents\\\\skills\\\\keil\\\\keil-cli.py\" }, \"debugProbe\": { \"type\": \"daplink\", \"adapter\": \"keil\", \"probeUid\": \"3FD750C63E342E24\", \"probeName\": \"MicroLink CMSIS-DAP\", \"programBackend\": \"keil\" }, \"ioProbe\": { \"uart\": { \"id\": \"uart/1\", \"port\": \"COM9\", \"baudrate\": 115200 } }, \"nodeBinding\": { \"nodeId\": \"node-d601-f103-v2\", \"nodeType\": \"pc-host\" } } }, \"fourElements\": [ \"targetDevice\", \"workspace\", \"debugProbe\", \"ioProbe\" ], \"nodeId\": \"node-d601-f103-v2\", \"observedAt\": \"2026-06-06T06:55:14.938Z\" }",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-event",
+        "seq": 360,
+        "toolName": "commandExecution",
+        "status": "started",
+        "command": "/bin/sh -lc 'hwpod inspect --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "commandExecution inProgress: /bin/sh -lc 'hwpod inspect --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'"
+      },
+      {
+        "source": "trace-event",
+        "seq": 362,
+        "toolName": "commandExecution",
+        "status": "completed",
+        "command": "/bin/sh -lc 'hwpod inspect --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "{ \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"intent\": \"inspect\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"subprocess\", \"entrypoint\": \"tools/hwpod-compiler-cli.ts\", \"argv\": [ \"compile\", \"--spec\", \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"--intent\", \"inspect\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_6ba986b6-1710-471f-aee3-893768d3c23a\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"specAuthority\": \"code-agent-workspace\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\", \"explicitOverride\": false, \"lane\": \"v02\", \"namespace\": \"hwlab-v02\", \"urlLane\": \"v02\", \"urlNamespace\": \"hwlab-v02\" }, \"body\": { \"ok\": true, \"status\": \"completed\", \"...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-event",
+        "seq": 396,
+        "toolName": "commandExecution",
+        "status": "started",
+        "command": "/bin/sh -lc 'hwpod-ctl spec validate --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "commandExecution inProgress: /bin/sh -lc 'hwpod-ctl spec validate --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'"
+      },
+      {
+        "source": "trace-event",
+        "seq": 397,
+        "toolName": "commandExecution",
+        "status": "completed",
+        "command": "/bin/sh -lc 'hwpod-ctl spec validate --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "{ \"ok\": true, \"action\": \"hwpod-ctl.spec.validate\", \"status\": \"succeeded\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"document\": { \"apiVersion\": \"hwlab.dev/v0alpha1\", \"kind\": \"Hwpod\", \"metadata\": { \"uid\": \"D601-F103-V2\", \"name\": \"d601-f103-v2\" }, \"spec\": { \"targetDevice\": { \"board\": \"D601-F103-V2\", \"mcu\": \"STM32F103\" }, \"workspace\": { \"path\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue989-phasea-fixed-20260606-065448\", \"toolchain\": \"keil-mdk\", \"keilProject\": \"projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx\", \"keilTarget\": \"USART\", \"keilCliPath\": \"C:\\\\Users\\\\liang\\\\.agents\\\\skills\\\\keil\\\\keil-cli.py\" }, \"debugProbe\": { \"type\": \"daplink\", \"adapter\": \"keil\", \"probeUid\": \"3FD750C63E342E24\", \"probeName\": \"MicroLink CMSIS-DAP\", \"programBackend\": \"keil\" }, \"ioProbe\": { \"uart\": { \"id\": \"uart/1\", \"port\": \"COM9\", \"baudrate\": 115200 } }, \"nodeBinding\": { \"nodeId\": \"node-d601-f103-v2\", \"nodeType\": \"pc-host\" } } }, \"fourElements\": [ \"targetDevice\", \"workspace\", \"debugProbe\", \"ioProbe\" ], \"nodeId\": \"node-d601-f103-v2\", \"observedAt\": \"2026-06-06T06:55:14.938Z\" }",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-event",
+        "seq": 401,
+        "toolName": "commandExecution",
+        "status": "started",
+        "command": "/bin/sh -lc 'hwpod inspect --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "commandExecution inProgress: /bin/sh -lc 'hwpod inspect --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'"
+      },
+      {
+        "source": "trace-event",
+        "seq": 403,
+        "toolName": "commandExecution",
+        "status": "completed",
+        "command": "/bin/sh -lc 'hwpod inspect --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "{ \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"intent\": \"inspect\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"subprocess\", \"entrypoint\": \"tools/hwpod-compiler-cli.ts\", \"argv\": [ \"compile\", \"--spec\", \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"--intent\", \"inspect\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_6ba986b6-1710-471f-aee3-893768d3c23a\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"/home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml\", \"specAuthority\": \"code-agent-workspace\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\", \"explicitOverride\": false, \"lane\": \"v02\", \"namespace\": \"hwlab-v02\", \"urlLane\": \"v02\", \"urlNamespace\": \"hwlab-v02\" }, \"body\": { \"ok\": true, \"status\": \"completed\", \"...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-event",
+        "seq": 438,
+        "toolName": "commandExecution",
+        "status": "started",
+        "command": "/bin/sh -lc 'hwpod-ctl spec validate --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'",
+        "bodyPreview": "commandExecution inProgress: /bin/sh -lc 'hwpod-ctl spec validate --spec /home/agentrun/workspaces/13b68c5088473a31/.hwlab/hwpod-spec.yaml'"
+      }
+    ]
+  },
+  "agentDiff": {
+    "statusShort": "",
+    "diffStat": "",
+    "diffPatchPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/issue989-phaseA-fixed-20260606-065448/agent-diff.patch",
+    "diffPatchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceRootStatusShort": "",
+    "requests": [
+      {
+        "label": "status",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 0,
+        "stderr": ""
+      },
+      {
+        "label": "diff-stat",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 0,
+        "stderr": ""
+      },
+      {
+        "label": "diff-patch",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 0,
+        "stderr": ""
+      },
+      {
+        "label": "source-root-status",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 0,
+        "stderr": ""
+      }
+    ]
+  },
+  "hwpod": {
+    "source": "case-run-runner-post-agent-compile-check",
+    "command": [
+      "bun",
+      "hwpod-cli.ts",
+      "build",
+      "--spec",
+      "hwpod-spec.yaml",
+      "--reason",
+      "case-run d601-f103-v2-compile issue989-phaseA-fixed-20260606-065448 compile-only"
+    ],
+    "exitCode": 0,
+    "stdoutJson": {
+      "ok": true,
+      "action": "hwpod-cli.invoke",
+      "status": "completed",
+      "results": [
+        {
+          "opId": "op_01_cmd_run",
+          "op": "cmd.run",
+          "ok": true,
+          "status": "completed",
+          "output": {
+            "cwd": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue989-phasea-fixed-20260606-065448",
+            "command": [
+              "cmd.exe",
+              "/d",
+              "/s",
+              "/c",
+              "py -3 C:\\Users\\liang\\.agents\\skills\\keil\\keil-cli.py build -p F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue989-phasea-fixed-20260606-065448\\projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103.uvprojx -t USART"
+            ],
+            "exitCode": 0,
+            "stdout": "{\r\n  \"accepted\": true,\r\n  \"command\": \"build\",\r\n  \"mode\": \"async\",\r\n  \"job_id\": \"20260606_145536_b3af2c36\",\r\n  \"status\": \"queued\",\r\n  \"state_file\": \"C:\\\\Users\\\\liang\\\\.agents\\\\skills\\\\keil\\\\.state\\\\jobs\\\\20260606_145536_b3af2c36.json\",\r\n  \"check_command\": \"py -3 keil-cli.py job-status 20260606_145536_b3af2c36\",\r\n  \"hex_file_preview\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue989-phasea-fixed-20260606-065448\\\\projects\\\\01_baseline\\\\Output\\\\atk_f103.hex\",\r\n  \"axf_file_preview\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue989-phasea-fixed-20260606-065448\\\\projects\\\\01_baseline\\\\Output\\\\atk_f103.axf\"\r\n}\r\n",
+            "stderr": "",
+            "ok": true,
+            "commandResolution": {
+              "requested": "cmd.exe",
+              "command": "cmd.exe",
+              "resolved": false,
+              "source": "process-path",
+              "candidates": []
+            }
+          }
+        }
+      ]
+    }
+  },
+  "keilJob": {
+    "status": "completed",
+    "returnCode": 0,
+    "success": true,
+    "artifacts": [
+      "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue989-phasea-fixed-20260606-065448\\projects\\01_baseline\\Output\\atk_f103.hex",
+      "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue989-phasea-fixed-20260606-065448\\projects\\01_baseline\\Output\\atk_f103.axf"
+    ],
+    "raw": {
+      "job_id": "20260606_145536_b3af2c36",
+      "command": "build",
+      "status": "completed",
+      "created_at": "2026-06-06T14:55:36.848710",
+      "started_at": "2026-06-06T14:55:37.082459",
+      "finished_at": "2026-06-06T14:55:40.709680",
+      "return_code": 0,
+      "success": true,
+      "params": {
+        "project": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue989-phasea-fixed-20260606-065448\\projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103.uvprojx",
+        "programmer": null,
+        "probe": null,
+        "target": "USART",
+        "program_backend": null,
+        "erase_mode": null
+      },
+      "result": {
+        "return_code": 0,
+        "success": true,
+        "message": "Build completed successfully",
+        "hex_file": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue989-phasea-fixed-20260606-065448\\projects\\01_baseline\\Output\\atk_f103.hex",
+        "axf_file": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue989-phasea-fixed-20260606-065448\\projects\\01_baseline\\Output\\atk_f103.axf",
+        "warning_count": 0,
+        "target": "USART",
+        "shared_output_cleanup": {
+          "performed": false,
+          "patterns": [],
+          "removed_count": 0,
+          "removed_files": []
+        },
+        "cleared_build_state_file": null,
+        "build_state_file": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue989-phasea-fixed-20260606-065448\\projects\\01_baseline\\Projects\\MDK-ARM\\output\\.keil_target_build_state.json",
+        "_log_file": "C:\\Users\\liang\\.agents\\skills\\keil\\logs\\20260606\\keil_build_20260606_145537.jsonl"
+      },
+      "log_file": "C:\\Users\\liang\\.agents\\skills\\keil\\logs\\20260606\\keil_build_20260606_145537.jsonl",
+      "state_file": "C:\\Users\\liang\\.agents\\skills\\keil\\.state\\jobs\\20260606_145536_b3af2c36.json"
+    },
+    "jobId": "20260606_145536_b3af2c36",
+    "polls": 3,
+    "timedOut": false
+  },
+  "artifacts": [
+    "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue989-phasea-fixed-20260606-065448\\projects\\01_baseline\\Output\\atk_f103.hex",
+    "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue989-phasea-fixed-20260606-065448\\projects\\01_baseline\\Output\\atk_f103.axf"
+  ],
+  "decisions": {
+    "downloadSkipped": true,
+    "reason": "flow-only run: CaseRun records agent, diff and compile evidence without auto-grading them"
+  }
+}

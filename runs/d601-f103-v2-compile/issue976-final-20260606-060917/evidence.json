@@ -1,0 +1,191 @@
+{
+  "contractVersion": "hwpod-case-run-evidence-v1",
+  "caseId": "d601-f103-v2-compile",
+  "runId": "issue976-final-20260606-060917",
+  "compileOnly": true,
+  "autoEvaluation": false,
+  "status": "recorded",
+  "observedAt": "2026-06-06T06:10:58.771Z",
+  "apiUrl": "http://74.48.78.17:19667",
+  "subject": {
+    "repoLocalPath": "F:\\Work\\HWLAB-CASE-F103",
+    "commitId": "df7a4e6e551fa90d64bde5537cc000f89d63dd20",
+    "subdir": "projects/01_baseline",
+    "worktreePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue976-final-20260606-060917",
+    "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue976-final-20260606-060917",
+    "setup": {
+      "httpStatus": 200,
+      "planId": "case_subject_8f0faa18-f758-49bd-9101-49b25028d18e",
+      "nodeId": "node-d601-f103-v2",
+      "exitCode": 0,
+      "stdout": "HEAD is now at df7a4e6 chore: initialize D601 HWLAB subject repo\ndf7a4e6e551fa90d64bde5537cc000f89d63dd20",
+      "stderr": "Preparing worktree (detached HEAD df7a4e6)"
+    }
+  },
+  "agentTask": {
+    "workspace": "subjectWorktree",
+    "providerProfile": "deepseek",
+    "projectId": "prj_hwpod_workbench",
+    "promptSha256": "41fe81bf43effc854bcf270e6d04babed29ddc4ea8ae9e70b8a7fb8cd6d72267",
+    "constraints": [
+      "不得修改 case registry",
+      "不得修改原 subject repo checkout",
+      "只允许修改 isolated subject worktree",
+      "保持 compile-only 流程可继续执行"
+    ]
+  },
+  "agent": {
+    "stageStatus": "completed",
+    "baseUrl": "http://74.48.78.17:19667",
+    "projectId": "prj_hwpod_workbench",
+    "providerProfile": "deepseek",
+    "conversationId": "cnv_case_d601-f103-v2-compile_issue976-final-20260606-060917",
+    "sessionId": "ses_b526e204-34b2-4e80-9c6b-1c47f542b7f7",
+    "traceId": "trc_case_d601-f103-v2-compile_d4a79e5b91c347eda0d6006b58721183",
+    "promptPath": "/root/hwlab-v02/.worktree/issue976-final-verify-ec7e24/.state/hwlab-cli/caserun/issue976-final-20260606-060917/agent-prompt.md",
+    "promptSha256": "bedcf6bd4b29522e8515ed71fbe9f1c313ded7d9411a931781f398d28f073fee",
+    "polls": 40,
+    "timedOut": false
+  },
+  "agentDiff": {
+    "statusShort": "",
+    "diffStat": "",
+    "diffPatchPath": "/root/hwlab-v02/.worktree/issue976-final-verify-ec7e24/.state/hwlab-cli/caserun/issue976-final-20260606-060917/agent-diff.patch",
+    "diffPatchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceRootStatusShort": "",
+    "requests": [
+      {
+        "label": "status",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 0,
+        "stderr": ""
+      },
+      {
+        "label": "diff-stat",
+        "httpStatus": 409,
+        "exitCode": 1,
+        "stdoutBytes": 0,
+        "stderr": ""
+      },
+      {
+        "label": "diff-patch",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 0,
+        "stderr": ""
+      },
+      {
+        "label": "source-root-status",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 0,
+        "stderr": ""
+      }
+    ]
+  },
+  "hwpod": {
+    "command": [
+      "bun",
+      "hwpod-cli.ts",
+      "build",
+      "--spec",
+      "hwpod-spec.yaml",
+      "--reason",
+      "case-run d601-f103-v2-compile issue976-final-20260606-060917 compile-only"
+    ],
+    "exitCode": 0,
+    "stdoutJson": {
+      "ok": true,
+      "action": "hwpod-cli.invoke",
+      "status": "completed",
+      "results": [
+        {
+          "opId": "op_01_cmd_run",
+          "op": "cmd.run",
+          "ok": true,
+          "status": "completed",
+          "output": {
+            "cwd": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue976-final-20260606-060917",
+            "command": [
+              "cmd.exe",
+              "/d",
+              "/s",
+              "/c",
+              "py -3 C:\\Users\\liang\\.agents\\skills\\keil\\keil-cli.py build -p F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue976-final-20260606-060917\\projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103.uvprojx -t USART"
+            ],
+            "exitCode": 0,
+            "stdout": "{\r\n  \"accepted\": true,\r\n  \"command\": \"build\",\r\n  \"mode\": \"async\",\r\n  \"job_id\": \"20260606_141047_a46aa356\",\r\n  \"status\": \"queued\",\r\n  \"state_file\": \"C:\\\\Users\\\\liang\\\\.agents\\\\skills\\\\keil\\\\.state\\\\jobs\\\\20260606_141047_a46aa356.json\",\r\n  \"check_command\": \"py -3 keil-cli.py job-status 20260606_141047_a46aa356\",\r\n  \"hex_file_preview\": null,\r\n  \"axf_file_preview\": null\r\n}\r\n",
+            "stderr": "",
+            "ok": true,
+            "commandResolution": {
+              "requested": "cmd.exe",
+              "command": "cmd.exe",
+              "resolved": false,
+              "source": "process-path",
+              "candidates": []
+            }
+          }
+        }
+      ]
+    }
+  },
+  "keilJob": {
+    "status": "completed",
+    "returnCode": 0,
+    "success": true,
+    "artifacts": [
+      "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue976-final-20260606-060917\\projects\\01_baseline\\Output\\atk_f103.hex",
+      "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue976-final-20260606-060917\\projects\\01_baseline\\Output\\atk_f103.axf"
+    ],
+    "raw": {
+      "job_id": "20260606_141047_a46aa356",
+      "command": "build",
+      "status": "completed",
+      "created_at": "2026-06-06T14:10:47.880352",
+      "started_at": "2026-06-06T14:10:48.192161",
+      "finished_at": "2026-06-06T14:10:53.888625",
+      "return_code": 0,
+      "success": true,
+      "params": {
+        "project": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue976-final-20260606-060917\\projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103.uvprojx",
+        "programmer": null,
+        "probe": null,
+        "target": "USART",
+        "program_backend": null,
+        "erase_mode": null
+      },
+      "result": {
+        "return_code": 0,
+        "success": true,
+        "message": "Build completed successfully",
+        "hex_file": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue976-final-20260606-060917\\projects\\01_baseline\\Output\\atk_f103.hex",
+        "axf_file": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue976-final-20260606-060917\\projects\\01_baseline\\Output\\atk_f103.axf",
+        "warning_count": 26,
+        "target": "USART",
+        "shared_output_cleanup": {
+          "performed": false,
+          "patterns": [],
+          "removed_count": 0,
+          "removed_files": []
+        },
+        "cleared_build_state_file": null,
+        "build_state_file": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue976-final-20260606-060917\\projects\\01_baseline\\Projects\\MDK-ARM\\output\\.keil_target_build_state.json",
+        "_log_file": "C:\\Users\\liang\\.agents\\skills\\keil\\logs\\20260606\\keil_build_20260606_141048.jsonl"
+      },
+      "log_file": "C:\\Users\\liang\\.agents\\skills\\keil\\logs\\20260606\\keil_build_20260606_141048.jsonl",
+      "state_file": "C:\\Users\\liang\\.agents\\skills\\keil\\.state\\jobs\\20260606_141047_a46aa356.json"
+    },
+    "jobId": "20260606_141047_a46aa356",
+    "polls": 3,
+    "timedOut": false
+  },
+  "artifacts": [
+    "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue976-final-20260606-060917\\projects\\01_baseline\\Output\\atk_f103.hex",
+    "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue976-final-20260606-060917\\projects\\01_baseline\\Output\\atk_f103.axf"
+  ],
+  "decisions": {
+    "downloadSkipped": true,
+    "reason": "flow-only run: CaseRun records agent, diff and compile evidence without auto-grading them"
+  }
+}
