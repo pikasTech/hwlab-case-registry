@@ -132,7 +132,7 @@ Your task:
 - CaseRun records trace/session/conversation, agent commandExecution, workspace diff and Keil build evidence without auto-grading them.
 ```
 
-## Trace
+## 低噪声 Trace
 
 - renderer: tools/src/hwlab-cli/trace-renderer:traceDisplayRows
 - sourceEventCount: 6000
@@ -155,7 +155,7 @@ initial-prompt-assembly
 Let me start by confirming the environment and the run-local HWPOD spec, then follow the flow.
 
 <details>
-<summary>已运行 ls -la .hwlab/hwpod-spec.yaml 2&gt;&amp;1 || echo "MISSING: .hwlab/hwpod-spec.yaml" stdout: -rw-r--r-- 1 root root 763 Jun 8 02:44 .hwlab/hwpod-spec.yaml exitCode=0</summary>
+<summary>已运行 ls -la .hwlab/hwpod-spec.yaml 2&gt;&amp;1 || echo "MISSING: .hwlab/hwpod-spec.yaml"</summary>
 
 ```text
 ls -la .hwlab/hwpod-spec.yaml 2>&1 || echo "MISSING: .hwlab/hwpod-spec.yaml" stdout: -rw-r--r-- 1 root root 763 Jun 8 02:44 .hwlab/hwpod-spec.yaml exitCode=0
@@ -165,7 +165,7 @@ rowId: tool:call_00_LFZErjnNL6rSZUa1frzj4256
 </details>
 
 <details>
-<summary>已运行 command -v hwpod-ctl 2&gt;/dev/null &amp;&amp; hwpod-ctl --help 2&gt;&amp;1 | head -10 || echo "hwpod-ctl not found" stdout: /usr/local/bin/hwpod-ctl { "ok": true, "action": "hwpod-ctl.help", "status": "succeeded", "contractVersion": "hwpod-ctl-v1", "usage": [ "bun tools/hwpod-ctl.ts spec init --spec .hwlab/hwpod-spec.yaml --node loc...</summary>
+<summary>已运行 command -v hwpod-ctl 2&gt;/dev/null &amp;&amp; hwpod-ctl --help 2&gt;&amp;1 | head -10 || echo "hwpod-ctl not found"</summary>
 
 ```text
 command -v hwpod-ctl 2>/dev/null && hwpod-ctl --help 2>&1 | head -10 || echo "hwpod-ctl not found" stdout: /usr/local/bin/hwpod-ctl { "ok": true, "action": "hwpod-ctl.help", "status": "succeeded", "contractVersion": "hwpod-ctl-v1", "usage": [ "bun tools/hwpod-ctl.ts spec init --spec .hwlab/hwpod-spec.yaml --node local-node", "bun tools/hwpod-ctl.ts spec validate --spec .hwlab/hwpod-spec.yaml", "bun tools/hwpod-ctl.ts spec set spec.workspace.path /workspace/firmware", "bun tools/hwpod-ctl.ts bind --node pc-host-1" exitCode=0
@@ -175,7 +175,7 @@ rowId: tool:call_02_hZ3jI8And69hG0OWjuQb6460
 </details>
 
 <details>
-<summary>已运行 command -v hwpod 2&gt;/dev/null &amp;&amp; hwpod --help 2&gt;&amp;1 | head -5 || echo "hwpod not found" stdout: /usr/local/bin/hwpod { "ok": true, "action": "hwpod-cli.help", "status": "succeeded", "contractVersion": "hwpod-node-ops-v1", exitCode=0</summary>
+<summary>已运行 command -v hwpod 2&gt;/dev/null &amp;&amp; hwpod --help 2&gt;&amp;1 | head -5 || echo "hwpod not found"</summary>
 
 ```text
 command -v hwpod 2>/dev/null && hwpod --help 2>&1 | head -5 || echo "hwpod not found" stdout: /usr/local/bin/hwpod { "ok": true, "action": "hwpod-cli.help", "status": "succeeded", "contractVersion": "hwpod-node-ops-v1", exitCode=0
@@ -187,7 +187,7 @@ rowId: tool:call_01_Cmo6icCysxCLYxv1N1ad2914
 Good — spec exists, tools are ready. Let me read the spec, the arm2d skill, and the source files.
 
 <details>
-<summary>已运行 cat .agents/skills/arm2d-skill/SKILL.md stdout: cat: can't open '.agents/skills/arm2d-skill/SKILL.md': No such file or directory exitCode=1</summary>
+<summary>已运行 cat .agents/skills/arm2d-skill/SKILL.md</summary>
 
 ```text
 cat .agents/skills/arm2d-skill/SKILL.md stdout: cat: can't open '.agents/skills/arm2d-skill/SKILL.md': No such file or directory exitCode=1
@@ -197,7 +197,7 @@ rowId: tool:call_01_n1VvO8Sq4v49RAa4VQWQ0999
 </details>
 
 <details>
-<summary>已运行 cat .hwlab/hwpod-spec.yaml stdout: apiVersion: hwlab.dev/v0alpha1 kind: Hwpod metadata: uid: D601-F103-V2 name: d601-f103-v2 spec: targetDevice: board: D601-F103-V2 mcu: STM32F103 workspace: path: "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608024351-d38032d1" toolchain: keil-m...</summary>
+<summary>已运行 cat .hwlab/hwpod-spec.yaml</summary>
 
 ```text
 cat .hwlab/hwpod-spec.yaml stdout: apiVersion: hwlab.dev/v0alpha1 kind: Hwpod metadata: uid: D601-F103-V2 name: d601-f103-v2 spec: targetDevice: board: D601-F103-V2 mcu: STM32F103 workspace: path: "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608024351-d38032d1" toolchain: keil-mdk keilProject: projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx keilTarget: USART keilCliPath: "C:\\Users\\liang\\.agents\\skills\\keil\\keil-cli.py" debugProbe: type: daplink adapter: keil probeUid: 95FFF39D3DB47E0D probeName: MicroKeenV4 CMSIS-DAP programBackend: keil ioProbe: uart: id: uart/1 port: COM9 ... exitCode=0
@@ -207,7 +207,7 @@ rowId: tool:call_00_tX5y5iJwB3cxIPEEqZc73780
 </details>
 
 <details>
-<summary>已运行 ls -la .agents/skills/ 2&gt;/dev/null || echo "no .agents/skills dir" stdout: total 24 drwxr-xr-x 6 root root 4096 Jun 8 02:44 . drwxr-xr-x 3 root root 4096 Jun 8 02:44 .. drwxr-xr-x 4 root root 4096 Jun 8 02:44 hwlab-agent-runtime drwxr-xr-x 3 root root 4096 Jun 8 02:44 hwlab-code-agent drwxr-xr-x 2 root root 4096 Jun...</summary>
+<summary>已运行 ls -la .agents/skills/ 2&gt;/dev/null || echo "no .agents/skills dir"</summary>
 
 ```text
 ls -la .agents/skills/ 2>/dev/null || echo "no .agents/skills dir" stdout: total 24 drwxr-xr-x 6 root root 4096 Jun 8 02:44 . drwxr-xr-x 3 root root 4096 Jun 8 02:44 .. drwxr-xr-x 4 root root 4096 Jun 8 02:44 hwlab-agent-runtime drwxr-xr-x 3 root root 4096 Jun 8 02:44 hwlab-code-agent drwxr-xr-x 2 root root 4096 Jun 8 02:44 hwpod-cli drwxr-xr-x 2 root root 4096 Jun 8 02:44 hwpod-ctl exitCode=0
@@ -217,7 +217,7 @@ rowId: tool:call_01_XuhkaEiDgdvUcDmjykns3931
 </details>
 
 <details>
-<summary>已运行 find .agents/skills -type f -name "SKILL.md" 2&gt;/dev/null | sort stdout: .agents/skills/hwlab-agent-runtime/SKILL.md .agents/skills/hwlab-code-agent/SKILL.md .agents/skills/hwpod-cli/SKILL.md .agents/skills/hwpod-ctl/SKILL.md exitCode=0</summary>
+<summary>已运行 find .agents/skills -type f -name "SKILL.md" 2&gt;/dev/null | sort</summary>
 
 ```text
 find .agents/skills -type f -name "SKILL.md" 2>/dev/null | sort stdout: .agents/skills/hwlab-agent-runtime/SKILL.md .agents/skills/hwlab-code-agent/SKILL.md .agents/skills/hwpod-cli/SKILL.md .agents/skills/hwpod-ctl/SKILL.md exitCode=0
@@ -229,7 +229,7 @@ rowId: tool:call_00_UX5Cgq567684BkU4m0fs4997
 The arm2d skill is in the subject workspace on the Windows host, accessible via `hwpod workspace cat`. Let me read the required files.
 
 <details>
-<summary>已运行 hwpod workspace cat .agents/skills/arm2d-skill/SKILL.md --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-com...</summary>
+<summary>已运行 hwpod workspace cat .agents/skills/arm2d-skill/SKILL.md --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1</summary>
 
 ```text
 hwpod workspace cat .agents/skills/arm2d-skill/SKILL.md --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subprocess", "entrypoint": "tools/hwpod-compiler-cli.ts", "argv": [ "compile", "--spec", ".hwlab/hwpod-spec.yaml", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_4902369f-aa03-4660-892c-df18d24c9a86", "source": { "compiler": "hwpod-compiler-... exitCode=0
@@ -241,7 +241,7 @@ rowId: tool:call_00_tYd26AfyPtkgZx8EOfTd2689
 ARM-2D skill loaded. Now let me read the source files I need to modify and understand.
 
 <details>
-<summary>已运行 hwpod workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compil...</summary>
+<summary>已运行 hwpod workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1</summary>
 
 ```text
 hwpod workspace cat projects/01_baseline/User/main.c --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subprocess", "entrypoint": "tools/hwpod-compiler-cli.ts", "argv": [ "compile", "--spec", ".hwlab/hwpod-spec.yaml", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_838d813b-4ce8-4a3d-9382-16490f77d3a2", "source": { "compiler": "hwpod-compiler-... exitCode=0
@@ -251,7 +251,7 @@ rowId: tool:call_02_GreGBHcn4KURpOAtKKHm9491
 </details>
 
 <details>
-<summary>已运行 hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.h --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -80 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "co...</summary>
+<summary>已运行 hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.h --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -80</summary>
 
 ```text
 hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.h --spec .hwlab/hwpod-spec.yaml 2>&1 | head -80 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subprocess", "entrypoint": "tools/hwpod-compiler-cli.ts", "argv": [ "compile", "--spec", ".hwlab/hwpod-spec.yaml", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_aa3476a4-df64-4707-b962-be67f15ba112", "source": { "compiler": "hwpod-compiler-... exitCode=0
@@ -261,7 +261,7 @@ rowId: tool:call_00_y8OsH0Ek2239r5MFELg15605
 </details>
 
 <details>
-<summary>已运行 hwpod workspace cat projects/01_baseline/User/d601_lcd.h --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -120 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler...</summary>
+<summary>已运行 hwpod workspace cat projects/01_baseline/User/d601_lcd.h --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -120</summary>
 
 ```text
 hwpod workspace cat projects/01_baseline/User/d601_lcd.h --spec .hwlab/hwpod-spec.yaml 2>&1 | head -120 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subprocess", "entrypoint": "tools/hwpod-compiler-cli.ts", "argv": [ "compile", "--spec", ".hwlab/hwpod-spec.yaml", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_aff4ced8-dd23-4481-9f11-ce813fae2275", "source": { "compiler": "hwpod-compiler-... exitCode=0
@@ -273,7 +273,7 @@ rowId: tool:call_01_Hg3lD2rBZEyvlBRIqhHj2159
 Now let me read the existing demo C file and the ARM-2D library headers.
 
 <details>
-<summary>已运行 hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.c --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "h...</summary>
+<summary>已运行 hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.c --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1</summary>
 
 ```text
 hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.c --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subprocess", "entrypoint": "tools/hwpod-compiler-cli.ts", "argv": [ "compile", "--spec", ".hwlab/hwpod-spec.yaml", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_f36725d6-a7dc-44c0-9b0a-5e12a7ed1ebc", "source": { "compiler": "hwpod-compiler-... exitCode=0
@@ -283,7 +283,7 @@ rowId: tool:call_00_gswuCRbtz1mNNZb5n9mQ7557
 </details>
 
 <details>
-<summary>已运行 hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d.h --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -120 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "comp...</summary>
+<summary>已运行 hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d.h --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -120</summary>
 
 ```text
 hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d.h --spec .hwlab/hwpod-spec.yaml 2>&1 | head -120 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subprocess", "entrypoint": "tools/hwpod-compiler-cli.ts", "argv": [ "compile", "--spec", ".hwlab/hwpod-spec.yaml", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_bc532fcc-050a-45ee-af7a-f056e009d5c0", "source": { "compiler": "hwpod-compiler-... exitCode=0
@@ -295,7 +295,7 @@ rowId: tool:call_01_qS65WzDX0ZC8PyiBND9X8985
 Let me read the ARM-2D types header and draw header for the key API structures.
 
 <details>
-<summary>已运行 hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -120 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1",...</summary>
+<summary>已运行 hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -120</summary>
 
 ```text
 hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h --spec .hwlab/hwpod-spec.yaml 2>&1 | head -120 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subprocess", "entrypoint": "tools/hwpod-compiler-cli.ts", "argv": [ "compile", "--spec", ".hwlab/hwpod-spec.yaml", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_10cc2230-800c-465b-a01f-e06250163cf6", "source": { "compiler": "hwpod-compiler-... exitCode=0
@@ -305,7 +305,7 @@ rowId: tool:call_00_nYTtzOOQ4tErgOqCNvkL1668
 </details>
 
 <details>
-<summary>已运行 hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_draw.h --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -120 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", ...</summary>
+<summary>已运行 hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_draw.h --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -120</summary>
 
 ```text
 hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_draw.h --spec .hwlab/hwpod-spec.yaml 2>&1 | head -120 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subprocess", "entrypoint": "tools/hwpod-compiler-cli.ts", "argv": [ "compile", "--spec", ".hwlab/hwpod-spec.yaml", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_11570e6e-0686-4c4f-9099-fc2d0d501f47", "source": { "compiler": "hwpod-compiler-... exitCode=0
@@ -317,7 +317,7 @@ rowId: tool:call_01_FoQH6QHHZPbh5X89WDS69799
 Let me also read the tile header and op header for key structures.
 
 <details>
-<summary>已运行 hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_tile.h --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -150 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", ...</summary>
+<summary>已运行 hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_tile.h --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -150</summary>
 
 ```text
 hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_tile.h --spec .hwlab/hwpod-spec.yaml 2>&1 | head -150 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subprocess", "entrypoint": "tools/hwpod-compiler-cli.ts", "argv": [ "compile", "--spec", ".hwlab/hwpod-spec.yaml", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_b752ea21-d080-4f61-a59f-f66b117293d4", "source": { "compiler": "hwpod-compiler-... exitCode=0
@@ -327,7 +327,7 @@ rowId: tool:call_00_NQKMj94SYfUO2Yebzmea1145
 </details>
 
 <details>
-<summary>已运行 hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_op.h --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -200 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "c...</summary>
+<summary>已运行 hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_op.h --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -200</summary>
 
 ```text
 hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_op.h --spec .hwlab/hwpod-spec.yaml 2>&1 | head -200 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subprocess", "entrypoint": "tools/hwpod-compiler-cli.ts", "argv": [ "compile", "--spec", ".hwlab/hwpod-spec.yaml", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_53bd2f5d-97fb-410c-b8f1-98b774b88606", "source": { "compiler": "hwpod-compiler-... exitCode=0
@@ -349,7 +349,7 @@ rowId: tool:call_00_KwFjvynUidJBs6f8oLt43540
 </details>
 
 <details>
-<summary>已运行 hwpod workspace grep "arm_fsm_rt_t arm_2d_init" projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d.h -B 2 -A 5 --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 stdout: { "ok": false, "action": "hwpod-cli", "status": "failed", "error": { "code": "unsupported_workspace_command", "message": "unsupported workspace command...</summary>
+<summary>已运行 hwpod workspace grep "arm_fsm_rt_t arm_2d_init" projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d.h -B 2 -A 5 --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1</summary>
 
 ```text
 hwpod workspace grep "arm_fsm_rt_t arm_2d_init" projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d.h -B 2 -A 5 --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": false, "action": "hwpod-cli", "status": "failed", "error": { "code": "unsupported_workspace_command", "message": "unsupported workspace command: grep", "details": {} }, "observedAt": "2026-06-08T02:44:57.256Z" } exitCode=1
@@ -359,7 +359,7 @@ rowId: tool:call_02_9p2gl76jv5UrvH2Ik70N8789
 </details>
 
 <details>
-<summary>已运行 hwpod workspace grep "typedef struct arm_2d_region_t" projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h -A 15 --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 stdout: { "ok": false, "action": "hwpod-cli", "status": "failed", "error": { "code": "unsupported_workspace_command", "message": "unsupported workspace...</summary>
+<summary>已运行 hwpod workspace grep "typedef struct arm_2d_region_t" projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h -A 15 --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1</summary>
 
 ```text
 hwpod workspace grep "typedef struct arm_2d_region_t" projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h -A 15 --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": false, "action": "hwpod-cli", "status": "failed", "error": { "code": "unsupported_workspace_command", "message": "unsupported workspace command: grep", "details": {} }, "observedAt": "2026-06-08T02:44:57.262Z" } exitCode=1
@@ -369,7 +369,7 @@ rowId: tool:call_01_NePCKEEsbbAe3TX6HShU7167
 </details>
 
 <details>
-<summary>已运行 hwpod workspace grep "typedef struct arm_2d_tile_t" projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h -A 25 --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 stdout: { "ok": false, "action": "hwpod-cli", "status": "failed", "error": { "code": "unsupported_workspace_command", "message": "unsupported workspace c...</summary>
+<summary>已运行 hwpod workspace grep "typedef struct arm_2d_tile_t" projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h -A 25 --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1</summary>
 
 ```text
 hwpod workspace grep "typedef struct arm_2d_tile_t" projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h -A 25 --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": false, "action": "hwpod-cli", "status": "failed", "error": { "code": "unsupported_workspace_command", "message": "unsupported workspace command: grep", "details": {} }, "observedAt": "2026-06-08T02:44:57.263Z" } exitCode=1
@@ -445,7 +445,7 @@ Good, I now have all the types and APIs. Let me update the plan and check the av
 turn/plan/updated
 
 <details>
-<summary>已运行 hwpod workspace --help 2&gt;&amp;1 || hwpod --help 2&gt;&amp;1 | head -40 stdout: { "ok": true, "action": "hwpod-cli.workspace.help", "status": "succeeded", "contractVersion": "hwpod-node-ops-v1", "command": "workspace", "subcommand": null, "usage": [ "hwpod workspace ls [path] --spec .hwlab/hwpod-spec.yaml", "hwpod workspace cat...</summary>
+<summary>已运行 hwpod workspace --help 2&gt;&amp;1 || hwpod --help 2&gt;&amp;1 | head -40</summary>
 
 ```text
 hwpod workspace --help 2>&1 || hwpod --help 2>&1 | head -40 stdout: { "ok": true, "action": "hwpod-cli.workspace.help", "status": "succeeded", "contractVersion": "hwpod-node-ops-v1", "command": "workspace", "subcommand": null, "usage": [ "hwpod workspace ls [path] --spec .hwlab/hwpod-spec.yaml", "hwpod workspace cat <path> --spec .hwlab/hwpod-spec.yaml", "hwpod workspace read <path> --spec .hwlab/hwpod-spec.yaml", "hwpod workspace cat --file <path> --spec .hwlab/hwpod-spec.yaml", "hwpod workspace cat --remote-path <path> --spec .hwlab/hwpod-spec.yaml", "hwpod workspace write --path <path> --content <text> --expected-sha <sha>", "hwpod workspace replace --pa... exitCode=0
@@ -523,7 +523,7 @@ rowId: tool:call_00_ode1CqxucHudKq8MNetE3384
 The patch engine had context matching issues. Let me use the simpler `workspace insert-after` for main.c:
 
 <details>
-<summary>已运行 # Insert #include after d601_lcd.h hwpod workspace insert-after --path projects/01_baseline/User/main.c --anchor '#include "d601_lcd.h"' --line '#include "d601_arm2d_demo.h"' --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | grep -E '"ok":|"status":|"summary":|"blocker"' | head -10 stdout: "ok": true, "status": "completed", "ok"...</summary>
+<summary>已运行 # Insert #include after d601_lcd.h hwpod workspace insert-after --path projects/01_baseline/User/main.c --anchor '#include "d601_lcd.h"' --line '#include "d601_arm2d_demo.h"' --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | grep -E '"ok":|"status":|"summary":|"blocker"' | head -10</summary>
 
 ```text
 # Insert #include after d601_lcd.h hwpod workspace insert-after --path projects/01_baseline/User/main.c --anchor '#include "d601_lcd.h"' --line '#include "d601_arm2d_demo.h"' --spec .hwlab/hwpod-spec.yaml 2>&1 | grep -E '"ok":|"status":|"summary":|"blocker"' | head -10 stdout: "ok": true, "status": "completed", "ok": true, "status": "completed", "ok": true, "status": "completed", "blocker": null, exitCode=0
@@ -533,7 +533,7 @@ rowId: tool:call_00_JaNWkpqV0ozqwbHGnOMq9293
 </details>
 
 <details>
-<summary>已运行 # Insert d601_arm2d_demo_show() after d601_gpio_init() hwpod workspace insert-after --path projects/01_baseline/User/main.c --anchor ' d601_gpio_init();' --line ' d601_arm2d_demo_show();' --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | grep -E '"ok":|"status":|"summary":|"blocker"' | head -10 stdout: "ok": true, "status": "com...</summary>
+<summary>已运行 # Insert d601_arm2d_demo_show() after d601_gpio_init() hwpod workspace insert-after --path projects/01_baseline/User/main.c --anchor ' d601_gpio_init();' --line ' d601_arm2d_demo_show();' --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | grep -E '"ok":|"status":|"summary":|"blocker"' | head -10</summary>
 
 ```text
 # Insert d601_arm2d_demo_show() after d601_gpio_init() hwpod workspace insert-after --path projects/01_baseline/User/main.c --anchor ' d601_gpio_init();' --line ' d601_arm2d_demo_show();' --spec .hwlab/hwpod-spec.yaml 2>&1 | grep -E '"ok":|"status":|"summary":|"blocker"' | head -10 stdout: "ok": true, "status": "completed", "ok": true, "status": "completed", "ok": true, "status": "completed", "blocker": null, exitCode=0
@@ -543,7 +543,7 @@ rowId: tool:call_00_rFkCmZlbjJN6WS52yNds2150
 </details>
 
 <details>
-<summary>已运行 # Insert d601_arm2d_demo_task() after jsonrpc_process() hwpod workspace insert-after --path projects/01_baseline/User/main.c --anchor ' jsonrpc_process();' --line ' d601_arm2d_demo_task();' --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | grep -E '"ok":|"status":|"summary":|"blocker"' | head -10 stdout: "ok": true, "status": "c...</summary>
+<summary>已运行 # Insert d601_arm2d_demo_task() after jsonrpc_process() hwpod workspace insert-after --path projects/01_baseline/User/main.c --anchor ' jsonrpc_process();' --line ' d601_arm2d_demo_task();' --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | grep -E '"ok":|"status":|"summary":|"blocker"' | head -10</summary>
 
 ```text
 # Insert d601_arm2d_demo_task() after jsonrpc_process() hwpod workspace insert-after --path projects/01_baseline/User/main.c --anchor ' jsonrpc_process();' --line ' d601_arm2d_demo_task();' --spec .hwlab/hwpod-spec.yaml 2>&1 | grep -E '"ok":|"status":|"summary":|"blocker"' | head -10 stdout: "ok": true, "status": "completed", "ok": true, "status": "completed", "ok": true, "status": "completed", "blocker": null, exitCode=0
@@ -579,7 +579,7 @@ rowId: tool:call_00_FFBIp5HXAT7e2InkhUbQ9199
 </details>
 
 <details>
-<summary>已运行 # Write the new d601_arm2d_demo.c using workspace write with piped content cat /tmp/new_demo.c | hwpod workspace write --path projects/01_baseline/User/d601_arm2d_demo.c --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | grep -E '"ok":|"status":|"summary":|"blocker"' | head -10 stdout: "ok": true, "status": "completed", "ok": tru...</summary>
+<summary>已运行 # Write the new d601_arm2d_demo.c using workspace write with piped content cat /tmp/new_demo.c | hwpod workspace write --path projects/01_baseline/User/d601_arm2d_demo.c --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | grep -E '"ok":|"status":|"summary":|"blocker"' | head -10</summary>
 
 ```text
 # Write the new d601_arm2d_demo.c using workspace write with piped content cat /tmp/new_demo.c | hwpod workspace write --path projects/01_baseline/User/d601_arm2d_demo.c --spec .hwlab/hwpod-spec.yaml 2>&1 | grep -E '"ok":|"status":|"summary":|"blocker"' | head -10 stdout: "ok": true, "status": "completed", "ok": true, "status": "completed", "ok": true, "status": "completed", "blocker": null, exitCode=0
@@ -605,7 +605,7 @@ Both files are modified successfully. Now let me proceed to the validation and b
 turn/plan/updated
 
 <details>
-<summary>已运行 # Step 1: Validate spec hwpod-ctl spec validate --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 stdout: { "ok": true, "action": "hwpod-ctl.spec.validate", "status": "succeeded", "specPath": ".hwlab/hwpod-spec.yaml", "document": { "apiVersion": "hwlab.dev/v0alpha1", "kind": "Hwpod", "metadata": { "uid": "D601-F103-V2", "name": "d...</summary>
+<summary>已运行 # Step 1: Validate spec hwpod-ctl spec validate --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1</summary>
 
 ```text
 # Step 1: Validate spec hwpod-ctl spec validate --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-ctl.spec.validate", "status": "succeeded", "specPath": ".hwlab/hwpod-spec.yaml", "document": { "apiVersion": "hwlab.dev/v0alpha1", "kind": "Hwpod", "metadata": { "uid": "D601-F103-V2", "name": "d601-f103-v2" }, "spec": { "targetDevice": { "board": "D601-F103-V2", "mcu": "STM32F103" }, "workspace": { "path": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608024351-d38032d1", "toolchain": "keil-mdk", "keilProject": "projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx", "keilTarget": "USART", "keilCliPath": "C:\\Users\\liang... exitCode=0
@@ -615,7 +615,7 @@ rowId: tool:call_00_ET_LmF5Ol1AufjwF7KSN69r3923
 </details>
 
 <details>
-<summary>已运行 # Step 2: Inspect hwpod inspect --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "inspect", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subproces...</summary>
+<summary>已运行 # Step 2: Inspect hwpod inspect --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1</summary>
 
 ```text
 # Step 2: Inspect hwpod inspect --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "inspect", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subprocess", "entrypoint": "tools/hwpod-compiler-cli.ts", "argv": [ "compile", "--spec", ".hwlab/hwpod-spec.yaml", "--intent", "inspect", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_138a83c7-4ea6-469b-8300-ee546260dab9", "source": { "compiler": "hwpod-compiler-cli", "specP... exitCode=0
@@ -627,7 +627,7 @@ rowId: tool:call_00_ln7t0nkyW9S8HWwI6i0O3997
 Good — spec validated, node healthy, workspace exists. Now triggering the build (async).
 
 <details>
-<summary>已运行 # Step 3: Submit build (async) hwpod build --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "debug.build", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mo...</summary>
+<summary>已运行 # Step 3: Submit build (async) hwpod build --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1</summary>
 
 ```text
 # Step 3: Submit build (async) hwpod build --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "debug.build", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subprocess", "entrypoint": "tools/hwpod-compiler-cli.ts", "argv": [ "compile", "--spec", ".hwlab/hwpod-spec.yaml", "--intent", "debug.build", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_527da52f-b7df-4f66-a7b2-4e7fbe85e92b", "source": { "compiler": "hwpod-compiler-cli"... exitCode=0
@@ -639,7 +639,7 @@ rowId: tool:call_00_wNeLTDdoOo5SxwpfqzQp1212
 Build submitted with job_id `20260608_104751_44ff3acc`. Now polling for completion.
 
 <details>
-<summary>已运行 hwpod job status 20260608_104751_44ff3acc --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 stdout: { "ok": false, "action": "hwpod-cli.invoke", "status": "failed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "debug.job-status", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "...</summary>
+<summary>已运行 hwpod job status 20260608_104751_44ff3acc --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1</summary>
 
 ```text
 hwpod job status 20260608_104751_44ff3acc --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": false, "action": "hwpod-cli.invoke", "status": "failed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "debug.job-status", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subprocess", "entrypoint": "tools/hwpod-compiler-cli.ts", "argv": [ "compile", "--spec", ".hwlab/hwpod-spec.yaml", "--intent", "debug.job-status", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_0a7ba362-3a8a-41c8-aa4c-5b332a44da9e", "source": { "compiler": "hwpod-compi... exitCode=1
@@ -651,7 +651,7 @@ rowId: tool:call_00_5dJQERIW7mFG8EB73Hzi6711
 Build completed but failed — no output file produced. Let me check the build log for details.
 
 <details>
-<summary>已运行 # Read the build log to see compiler errors hwpod workspace read "C:\Users\liang\.agents\skills\keil\.state\job-logs\20260608_104751_44ff3acc.stdout.txt" --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -100 stdout: { "ok": false, "action": "hwpod-cli.invoke", "status": "failed", "specPath": ".hwlab/hwpod-spec.yaml", "inte...</summary>
+<summary>已运行 # Read the build log to see compiler errors hwpod workspace read "C:\Users\liang\.agents\skills\keil\.state\job-logs\20260608_104751_44ff3acc.stdout.txt" --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -100</summary>
 
 ```text
 # Read the build log to see compiler errors hwpod workspace read "C:\Users\liang\.agents\skills\keil\.state\job-logs\20260608_104751_44ff3acc.stdout.txt" --spec .hwlab/hwpod-spec.yaml 2>&1 | head -100 stdout: { "ok": false, "action": "hwpod-cli.invoke", "status": "failed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subprocess", "entrypoint": "tools/hwpod-compiler-cli.ts", "argv": [ "compile", "--spec", ".hwlab/hwpod-spec.yaml", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_58379605-7c1a-4069-8175-01ccbbacca04", "source": { "compiler": "hwpod-compiler-cl... exitCode=0
@@ -661,7 +661,7 @@ rowId: tool:call_00_DSOUJqJ01m5LHywx8K1V8981
 </details>
 
 <details>
-<summary>已运行 # Read the build stdout log via cmd.run on the hwpod node cat &lt;&lt; 'ENDCMD' | hwpod workspace apply-patch --spec .hwlab/hwpod-spec.yaml --reason "read build log" 2&gt;&amp;1 | head -5 ENDCMD # Instead try getting build output from the node hwpod --help 2&gt;&amp;1 | grep -i "cmd\|exec\|run" stdout: { "ok": false, "action": "hwpod-c...</summary>
+<summary>已运行 # Read the build stdout log via cmd.run on the hwpod node cat &lt;&lt; 'ENDCMD' | hwpod workspace apply-patch --spec .hwlab/hwpod-spec.yaml --reason "read build log" 2&gt;&amp;1 | head -5 ENDCMD # Instead try getting build output from the node hwpod --help 2&gt;&amp;1 | grep -i "cmd\|exec\|run"</summary>
 
 ```text
 # Read the build stdout log via cmd.run on the hwpod node cat << 'ENDCMD' | hwpod workspace apply-patch --spec .hwlab/hwpod-spec.yaml --reason "read build log" 2>&1 | head -5 ENDCMD # Instead try getting build output from the node hwpod --help 2>&1 | grep -i "cmd\|exec\|run" stdout: { "ok": false, "action": "hwpod-cli.invoke", "status": "failed", "specPath": ".hwlab/hwpod-spec.yaml", "bun tools/hwpod-cli.ts inspect --dry-run", "bun tools/hwpod-cli.ts workspace ls . --dry-run", "bun tools/hwpod-cli.ts build --dry-run", "bun tools/hwpod-cli.ts download --dry-run", "bun tools/hwpod-cli.ts job status <jobId> --dry-run", "bun tools/hwpod-cli.ts uart read --port uart1 --dry-run", "write": "Write a whole file with optional --expected-sha, --line-ending preserve|lf|crlf and dry-run diff output.", "download": "Keil download compiles to a flash job through cmd.run, so build+prog... exitCode=0
@@ -671,7 +671,7 @@ rowId: tool:call_00_Avtd70TR3UTofY2Fv8S31273
 </details>
 
 <details>
-<summary>已运行 # Check for build output files in the workspace hwpod workspace ls projects/01_baseline/Projects/MDK-ARM/ --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -40 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.ls", "contractVersion": "hwpod-...</summary>
+<summary>已运行 # Check for build output files in the workspace hwpod workspace ls projects/01_baseline/Projects/MDK-ARM/ --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | head -40</summary>
 
 ```text
 # Check for build output files in the workspace hwpod workspace ls projects/01_baseline/Projects/MDK-ARM/ --spec .hwlab/hwpod-spec.yaml 2>&1 | head -40 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subprocess", "entrypoint": "tools/hwpod-compiler-cli.ts", "argv": [ "compile", "--spec", ".hwlab/hwpod-spec.yaml", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_e9f68d93-a20e-4900-b9a8-a8228431d6b8", "source": { "compiler": "hwpod-compiler-cl... exitCode=0
@@ -681,7 +681,7 @@ rowId: tool:call_00_pyQTpAywn1dHevlBa0124613
 </details>
 
 <details>
-<summary>已运行 # List MDK-ARM directory with full results hwpod workspace ls projects/01_baseline/Projects/MDK-ARM/ --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | node -e " const fs = require('fs'); const text = fs.readFileSync('/dev/stdin','utf8'); console.log(text.substring(0, 3000)); " stdout: { "ok": true, "action": "hwpod-cli.invoke", ...</summary>
+<summary>已运行 # List MDK-ARM directory with full results hwpod workspace ls projects/01_baseline/Projects/MDK-ARM/ --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 | node -e " const fs = require('fs'); const text = fs.readFileSync('/dev/stdin','utf8'); console.log(text.substring(0, 3000)); "</summary>
 
 ```text
 # List MDK-ARM directory with full results hwpod workspace ls projects/01_baseline/Projects/MDK-ARM/ --spec .hwlab/hwpod-spec.yaml 2>&1 | node -e " const fs = require('fs'); const text = fs.readFileSync('/dev/stdin','utf8'); console.log(text.substring(0, 3000)); " stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subprocess", "entrypoint": "tools/hwpod-compiler-cli.ts", "argv": [ "compile", "--spec", ".hwlab/hwpod-spec.yaml", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_7168e58f-fbf7-4e7d-b76b-457295c260dd", "source": { "compiler": "hwpod-compiler-cl... exitCode=0
@@ -691,7 +691,7 @@ rowId: tool:call_00_VQDFRc5wTQronMc8X2ra2170
 </details>
 
 <details>
-<summary>已运行 hwpod workspace ls projects/01_baseline/Projects/MDK-ARM/output/ --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "h...</summary>
+<summary>已运行 hwpod workspace ls projects/01_baseline/Projects/MDK-ARM/output/ --spec .hwlab/hwpod-spec.yaml 2&gt;&amp;1</summary>
 
 ```text
 hwpod workspace ls projects/01_baseline/Projects/MDK-ARM/output/ --spec .hwlab/hwpod-spec.yaml 2>&1 stdout: { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": ".hwlab/hwpod-spec.yaml", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "subprocess", "entrypoint": "tools/hwpod-compiler-cli.ts", "argv": [ "compile", "--spec", ".hwlab/hwpod-spec.yaml", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_45e3e848-1783-4505-95a2-554e035ad89d", "source": { "compiler": "hwpod-compiler-cl... exitCode=0
