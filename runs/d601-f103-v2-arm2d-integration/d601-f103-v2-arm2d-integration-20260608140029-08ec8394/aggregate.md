@@ -72,6 +72,7 @@ spec:
 ## Code Agent 信息
 
 - providerProfile: dsflash-go
+- requestedProviderProfile: dsflash-go
 - projectId: prj_hwpod_workbench
 - conversationId: cnv_case_d601-f103-v2-arm2d-integration_d601-f103-v2-arm2d-integration-20260608140029-08ec8394
 - sessionId: ses_0db1d25f-7c12-4565-84e1-7dbb96e363a2
@@ -1665,12 +1666,12 @@ index 7467c9a..df8bf9a 100644
 | agent-transcript.md | 96578 | 3decc225a3fba26f9fee6197b27db893b30334b83b583751451f81d5c314aca6 |
 | final-response.md | 2852 | 7a0df9b27b58959d0e0c9d3651e8f0a8adf43cd2996427061a0da789e2f93d4b |
 | run.json | 65270 | cebfdd3329a83fb8be3fac57cfbb48941bcb14d9d6747e19654cf3cbd63ab204 |
-| result.json | 108847 | 1d2e816077c661a3db5c337d8e71b2d776f8ecbbc67b2187a34714eab9e6764c |
-| agent-trace.json | 300284 | a0c9533776470149ccfae2094e10e52da6e6f3f0f8fcc25739576ce23a32cd0d |
+| result.json | 108847 | ae4dcb25ae75e0487f473891ff41190d4cc23c0112c13d82cf73abf56c746bbc |
+| agent-trace.json | 300284 | f62d66713ae42a487bbc2feae40e33dd90126a964b83e9eea5ac791421f6293e |
 | agent-prompt.md | 3274 | 1f1d62ad6a3d62b97fec66c7f50c6c9ed28e0c4ba49a3e87fa454bb29916dcd0 |
 | agent-diff.patch | 7894 | 1a8c6682a64ae9b87c2aa5a12f825d09817688b36202638bb436c831d84bb15d |
 | .hwlab/hwpod-spec.yaml | 763 | b86dee7a7c6af6ec687f72ea42501e98110452ab2d4f391ad3260a66271e12ee |
-| worker.stdout.log | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
+| worker.stdout.log | 109621 | 4304567ba86fc14359d2cacac4b1301aed772f90a95cd67d01b4b71108029c93 |
 | worker.stderr.log | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
 
 ## 说明
