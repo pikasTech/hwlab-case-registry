@@ -1,0 +1,1245 @@
+# HWPOD CaseRun Aggregate: d601-f103-v2-arm2d-integration
+
+- caseId: d601-f103-v2-arm2d-integration
+- runId: d601-f103-v2-arm2d-integration-20260608130649-d1b68651
+- generatedFrom: case registry artifacts
+- aggregationOnly: true
+- autoEvaluation: false
+- primaryEntry: aggregate.md
+
+## 运行环境信息
+
+- apiUrl: http://74.48.78.17:19667
+- compileOnly: true
+- caseRepoRunDir: /root/hwlab-case-registry/runs/d601-f103-v2-arm2d-integration/d601-f103-v2-arm2d-integration-20260608130649-d1b68651
+- sourceRunDir: /root/hwlab-v02/.state/hwlab-cli/caserun/d601-f103-v2-arm2d-integration-20260608130649-d1b68651
+- createdAt: 2026-06-08T13:06:49.519Z
+- completedAt: 2026-06-08T13:15:48.945Z
+- runnerPostAgentCompileCheck: recorded
+
+## HWPOD 信息
+
+- subjectRepoLocalPath: F:\Work\HWLAB-CASE-F103
+- subjectCommitId: 14a414da470013914b2a19229c36f2e9f8e2da4f
+- subjectSubdir: projects/01_baseline
+- subjectWorktreePath: F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651
+- sourceRootBaselineStatus: M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx
+- sourceRootAfterPrepareStatus: M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx
+- agentBuildJobIds: 20260608_211427_4e5795ac
+- postAgentCompileJobId: 20260608_211534_7936091d
+- buildJobRelationship: agent-build-observed-plus-runner-post-agent-check
+- keilJobId: 20260608_211534_7936091d
+- keilStatus: completed
+- keilWarningCount: 0
+- hwpodExitCode: 0
+<details>
+<summary>Run-local HWPOD spec</summary>
+
+```yaml
+apiVersion: hwlab.dev/v0alpha1
+kind: Hwpod
+metadata:
+  uid: D601-F103-V2
+  name: d601-f103-v2
+spec:
+  targetDevice:
+    board: D601-F103-V2
+    mcu: STM32F103
+  workspace:
+    path: "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651"
+    toolchain: keil-mdk
+    keilProject: projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx
+    keilTarget: USART
+    keilCliPath: "C:\\Users\\liang\\.agents\\skills\\keil\\keil-cli.py"
+  debugProbe:
+    type: daplink
+    adapter: keil
+    probeUid: 95FFF39D3DB47E0D
+    probeName: MicroKeenV4 CMSIS-DAP
+    programBackend: keil
+  ioProbe:
+    uart:
+      id: uart/1
+      port: COM9
+      baudrate: 115200
+  nodeBinding:
+    nodeId: node-d601-f103-v2
+    nodeType: pc-host
+```
+
+</details>
+
+## Code Agent 信息
+
+- providerProfile: hy
+- projectId: prj_hwpod_workbench
+- conversationId: cnv_case_d601-f103-v2-arm2d-integration_d601-f103-v2-arm2d-integration-20260608130649-d1b68651
+- sessionId: ses_54a6200a-a25a-4820-8009-9a728050f4fb
+- traceId: trc_case_d601-f103-v2-arm2d-integration_6a245c7047a5456f96a97f78dd3cd2ce
+- traceSource: hwlab-cli.client.agent.trace
+- traceCommand: hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-integration_6a245c7047a5456f96a97f78dd3cd2ce --render web
+- resultCommand: hwlab-cli client agent result trc_case_d601-f103-v2-arm2d-integration_6a245c7047a5456f96a97f78dd3cd2ce
+- inspectCommand: hwlab-cli client agent inspect --trace-id trc_case_d601-f103-v2-arm2d-integration_6a245c7047a5456f96a97f78dd3cd2ce
+
+## 输入 Prompt
+
+```markdown
+# HWPOD CaseRun 代码代理任务
+
+caseId: d601-f103-v2-arm2d-integration
+runId: d601-f103-v2-arm2d-integration-20260608130649-d1b68651
+主体仓库路径: F:\Work\HWLAB-CASE-F103
+主体提交ID: 14a414da470013914b2a19229c36f2e9f8e2da4f
+主体隔离工作区路径: F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651
+hwpodId: d601-f103-v2
+验证模式: 仅执行编译构建检查；除非案例明确要求，否则不下载、不做运行态冒烟验证。
+
+## 可用 HWPOD 命令
+- `hwpod-ctl spec validate`
+- `hwpod inspect`
+- `hwpod workspace ...`
+- `hwpod build`
+- `hwpod job status <jobId>`
+
+## 约束
+- 思维过程和输出消息一律使用中文
+- 只能修改 projects/01_baseline/User/main.c 和 projects/01_baseline/User/d601_arm2d_demo.c
+- main.c 只加3行：include + show() + task()
+- d601_arm2d_demo.c 需要重新实现函数体，不能只恢复原来的代码
+- 只做 compile-only build check，不要下载，也不要运行 UART
+- ARM-2D 库已在 Middlewares/Arm-2D/，d601_lcd 已实现
+- 优先读取 projects/01_baseline/User/d601_arm2d_demo.h、projects/01_baseline/User/d601_lcd.h、Middlewares/Arm-2D/Library/include/arm_2d.h 和 arm_2d_types.h；不要把搜索范围扩成全仓库摸索
+- d601_lcd 已提供 bitmap/string 入口；实现时围绕 LCD bitmap 绘制、stripe/PFB 刷新、FPS 文本和 show()/task() 周期刷新组织代码
+- 只能在主体隔离工作区内完成任务，不得修改 case registry repo 或原 subject repo checkout。
+- 使用 HWPOD 标准入口读取、编辑和验证主体隔离工作区。
+- 除非任务正文明确要求，否则只做 compile-only build check，不要下载，也不要运行 UART。
+
+## 任务
+请在隔离主体工作区中完成 D601-F103-V2 的 ARM-2D demo 最小集成。
+
+任务目标：
+1. 编辑 projects/01_baseline/User/main.c：在 d601_lcd.h 之后加入 d601_arm2d_demo.h，在 d601_gpio_init() 之后调用 d601_arm2d_demo_show()，并在 while(1) 循环中 jsonrpc_process() 之后调用 d601_arm2d_demo_task()。
+2. 编辑 projects/01_baseline/User/d601_arm2d_demo.c：先阅读 d601_arm2d_demo.h、d601_lcd.h 和 Middlewares/Arm-2D/Library/include/ 下的 ARM-2D 头文件，再从当前头文件和现有工程代码推导实现。至少完成 arm2d_wait()、arm2d_tile_bind()、arm2d_fill_local()、d601_arm2d_demo_show() 和 d601_arm2d_demo_task()。
+3. 完成后执行 compile-only 验证，并回报 diff 摘要、编译终态、return_code、artifact 路径、warning 数和仍需人工关注的问题。
+
+不要照搬历史 run trace、旧答案或记忆中的 API 形态；所有 ARM-2D 与 LCD API 以当前工作区内头文件和源码为准。
+```
+
+## 低噪声 Trace
+
+- renderer: tools/src/hwlab-cli/trace-renderer:traceDisplayRows
+- sourceEventCount: 6000
+- renderedRowCount: 78
+- hwpodCommandCount: 4
+- hwpodBuildCommandCount: 0
+
+- <details>
+  <summary>已运行 sed -n '1,220p' .agents/skills/arm2d-skill/SKILL.md</summary>
+
+  ```text
+  sed -n '1,220p' .agents/skills/arm2d-skill/SKILL.md
+  stdout:
+  --- name: arm2d-skyer description: 用于 ARM-2D 嵌入式 UI 开发工作：scene/PFB/generic loader/dirty region/RGB565 资源、GIF 精灵图与动画资源链路、Keil MDK/RTE/显示适配器集成、SRAM/Flash/帧率权衡，以及在 MCU 上实现伪 shader/demo-scene 特效。 --- # ARM-2D 嵌入式 UI 工作流 这是一个通用 ARM-2D 嵌入式 UI 技能。核心目标不是写通用教程，而是让助手按可移植、可维护、贴合硬件约束的方式处理 ARM-2D 工程。 ## 默认背景 - 常用语言：C。 - 常用图形栈：ARM-2D、PFB、Scene Player、Generic Loader。 - 常见工程环境：Keil MDK、CMSIS-Pack/RTE、RTOS 或裸机工程。 - 常见显示链路：LCD/OLED/RGB/MIPI/Framebuffer、SPI/QSPI/8080/LTDC 等显示接口。 - 常见像素格式：RGB565、RGB888、ARGB8888。 - 常见任务：动态 UI、GIF/动画素材、局部刷新、低 RAM 渲染、伪 shader 特效。 ## 总原则 - 优先写能在目标 MCU 上稳定跑起来的代码，不追求理论优雅。 - 每次涉及动画/特...
+  exitCode=0
+  rowId: tool:call_ORPSjDqBaMGwaHRLNPfGdCc7
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 sed -n '1,220p' .agents/skills/hwpod-cli/SKILL.md</summary>
+
+  ````text
+  sed -n '1,220p' .agents/skills/hwpod-cli/SKILL.md
+  stdout:
+  --- name: hwpod-cli description: Use HWLAB HWPOD from a code agent runner for hardware-development tasks. The hwpod-cli skill resolves an HWPOD by hwpod-id through the HWLAB runtime service, submits hwpod-node-ops through hwlab-api, and waits for hwpod-node results. --- # hwpod-cli This skill follows Skill(cli-spec). It is the standard task entry for operating an HWPOD from the HWLAB v0.2 Code Agent workspace. ## Standard Path ```text hwpod from PATH -> tools/hwpod-cli.ts -> runtime HWPOD registry by hwpod-id -> compiler-backed hwpod-node-ops plan -> /v1/hwpod-node-ops on hwlab-api -> hwpod...
+  exitCode=0
+  rowId: tool:call_b6JtBdDCP0ig0LOk8FX47ba7
+  ````
+
+  </details>
+
+- <details>
+  <summary>已运行 sed -n '1,220p' .agents/skills/hwpod-ctl/SKILL.md</summary>
+
+  ```text
+  sed -n '1,220p' .agents/skills/hwpod-ctl/SKILL.md
+  stdout:
+  --- name: hwpod-ctl description: Manage and validate HWLAB HWPOD runtime bindings from a code agent runner. The hwpod-ctl skill is separate from hwpod-cli and is used for hwpod-id validation, smoke checks, and explicit local spec import/export maintenance. --- # hwpod-ctl This skill follows Skill(cli-spec). It is the standard management entry for runtime-resolved HWPOD identity and node binding checks. ## Scope `hwpod-ctl` is a peer of `hwpod-cli`, not a fallback task path. Use it to validate a service-resolved `hwpod-id`, inspect the four HWPOD elements, check node binding, and run smoke o...
+  exitCode=0
+  rowId: tool:call_cNhzJz0OGbddbaAX9YPortx4
+  ```
+
+  </details>
+
+- **13:07:27  助手消息**
+
+先做 HWPOD 运行时校验和设备路径检查。这里不会触碰源码，只确认 `d601-f103-v2` 解析到当前隔离工作区。
+
+- <details>
+  <summary>已运行 hwpod-ctl spec validate --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F1...</summary>
+
+  ```text
+  hwpod-ctl spec validate --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  /bin/sh: hwpod-ctl: not found
+  exitCode=127
+  rowId: tool:call_r9mt39RbzBI2LuYae7fVTnJz
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 hwpod inspect --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktr...</summary>
+
+  ```text
+  hwpod inspect --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  /bin/sh: hwpod: not found
+  exitCode=127
+  rowId: tool:call_LrTzIrvewCQwo3T0MhaLDQL6
+  ```
+
+  </details>
+
+- **13:07:38  助手消息**
+
+当前 runner 的 `PATH` 里没有暴露 `hwpod`/`hwpod-ctl`，这不是源码问题。我会先定位随 gitbundle 挂载的工具入口，再继续走同一条 HWPOD 标准路径。
+
+- <details>
+  <summary>已运行 command -v hwpod || true</summary>
+
+  ```text
+  command -v hwpod || true
+  stdout:
+  commandExecution completed: /bin/sh -lc 'command -v hwpod || true' exit=0 durationMs=0
+  exitCode=0
+  rowId: tool:call_6KdNxdFtPHyuA1mIYJd5lyG2
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 command -v hwpod-ctl || true</summary>
+
+  ```text
+  command -v hwpod-ctl || true
+  stdout:
+  commandExecution completed: /bin/sh -lc 'command -v hwpod-ctl || true' exit=0 durationMs=0
+  exitCode=0
+  rowId: tool:call_JQpYYiVWqSWCOylgZ8Zfq4Nr
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 find tools -maxdepth 3 -type f | sort | sed -n '1,120p'</summary>
+
+  ```text
+  find tools -maxdepth 3 -type f | sort | sed -n '1,120p'
+  stdout:
+  tools/capture-issue-803-noise.mjs tools/hwlab-caserun.test.ts tools/hwlab-cli/bin/hwlab-cli.mjs tools/hwlab-cli/bin/hwlab-cli.ts tools/hwlab-cli/caserun.test.ts tools/hwlab-cli/client.test.ts tools/hwlab-cli/hwpod.test.ts tools/hwlab-cli/package.json tools/hwlab-code-agent tools/hwlab-code-agent-cli.ts tools/hwlab-gateway-shell.mjs tools/hwlab-gateway-tran.mjs tools/hwpod tools/hwpod-cli.ts tools/hwpod-compiler tools/hwpod-compiler-cli.ts tools/hwpod-ctl tools/hwpod-ctl.ts tools/hwpod-harness.test.ts tools/hwpod-node-runtime.test.ts tools/hwpod-node-runtime/d601/run-node-ws-detached.cmd too...
+  exitCode=0
+  rowId: tool:call_TgVxHip9qlDiXA2PP4AtdiDU
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ls -la</summary>
+
+  ```text
+  ls -la
+  stdout:
+  total 16 drwxr-xr-x 4 root root 4096 Jun 8 13:07 . drwxr-xr-x 4 root root 4096 Jun 8 13:07 .. drwxr-xr-x 3 root root 4096 Jun 8 13:07 .agents drwxr-xr-x 5 root root 4096 Jun 8 13:07 tools
+  exitCode=0
+  rowId: tool:call_MZMAPAH0HFlRQVpy2SNiSIV7
+  ```
+
+  </details>
+
+- **13:07:50  助手消息**
+
+工具在 `tools/` 下，但没有加入 `PATH`。我会直接调用 `./tools/hwpod` 和 `./tools/hwpod-ctl`，保持通过 runtime service 解析 HWPOD，不使用本地 spec 兜底。
+
+- <details>
+  <summary>已运行 ./tools/hwpod-ctl spec validate --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB...</summary>
+
+  ```text
+  ./tools/hwpod-ctl spec validate --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-ctl.spec.validate", "status": "succeeded", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "document": { "apiVersion": "hwlab.dev/v0alpha1", "kind": "Hwpod", "metadata": { "uid": "D601-F103-V2", "name": "d601-f103-v2" }, "spec": { "targetDevice": { "board": "D601-F103-V2", "mcu": "STM32F103" }, "workspace": { "path": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651", "toolchain": "keil-mdk", "keilProject": "projects/01_baseline/Projects/MDK-ARM/at...
+  exitCode=0
+  rowId: tool:call_AfraAtTpqP95ZpM4BD62xuo3
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod inspect --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103...</summary>
+
+  ```text
+  ./tools/hwpod inspect --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "inspect", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "inspect", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_91e54e87-6ed6-481e-906...
+  exitCode=0
+  rowId: tool:call_1TZeaBbDt7jA6EX1SxFayJeI
+  ```
+
+  </details>
+
+- **13:08:10  助手消息**
+
+HWPOD 已解析到目标隔离工作区，节点和目录都存在。接下来我只读取任务点名的头文件、当前 demo 源和 `main.c`，用这些接口反推实现。
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace cat --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CAS...</summary>
+
+  ```text
+  ./tools/hwpod workspace cat --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651' --file projects/01_baseline/User/d601_lcd.h
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_20178b5b-3...
+  exitCode=0
+  rowId: tool:call_RXu5sySx5kFwro1ZGkrBkjwV
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace cat --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CAS...</summary>
+
+  ```text
+  ./tools/hwpod workspace cat --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651' --file projects/01_baseline/User/d601_arm2d_demo.h
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_c7d27192-f...
+  exitCode=0
+  rowId: tool:call_YHMNtySJoiYiitAQ2FIBExZD
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace cat --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CAS...</summary>
+
+  ```text
+  ./tools/hwpod workspace cat --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651' --file projects/01_baseline/User/main.c
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_2ebe4256-9...
+  exitCode=0
+  rowId: tool:call_FX4RCV87duw6WwOqrN7NpKiZ
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace cat --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CAS...</summary>
+
+  ```text
+  ./tools/hwpod workspace cat --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651' --file projects/01_baseline/User/d601_arm2d_demo.c
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_9a0a054b-3...
+  exitCode=0
+  rowId: tool:call_OpIBNkrDQB0J9L7PT5KmqN45
+  ```
+
+  </details>
+
+- **13:08:26  助手消息**
+
+当前 `d601_arm2d_demo.c` 是明显断裂状态：空函数体后面还有游离语句，必须整体重写函数实现才能编译。现在我读取 ARM-2D 公开头文件，确认 tile 结构和 copy/fill/wait API 的真实声明。
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace cat --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CAS...</summary>
+
+  ```text
+  ./tools/hwpod workspace cat --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651' --file Middlewares/Arm-2D/Library/include/arm_2d_types.h
+  stdout:
+  { "ok": false, "action": "hwpod-cli.invoke", "status": "failed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_f7f512df-4bb...
+  exitCode=1
+  rowId: tool:call_uZ5Fo7nMpn0swCPpIPORa2Xd
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace rg "arm_2d_rgb16_fill_colour|arm_2d_rgb16_tile_copy|arm_2d_op_w...</summary>
+
+  ```text
+  ./tools/hwpod workspace rg "arm_2d_rgb16_fill_colour|arm_2d_rgb16_tile_copy|arm_2d_op_wait_async|arm_2d_init|ARM_2D_" Middlewares/Arm-2D/Library/include --context 2 --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": false, "action": "hwpod-cli.invoke", "status": "failed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_983fe6a6-f6fa-...
+  exitCode=1
+  rowId: tool:call_LzbFhSzL2fycL7C5P7Fjn3i6
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace cat --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CAS...</summary>
+
+  ```text
+  ./tools/hwpod workspace cat --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651' --file Middlewares/Arm-2D/Library/include/arm_2d.h
+  stdout:
+  { "ok": false, "action": "hwpod-cli.invoke", "status": "failed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_3fad8c1c-d01...
+  exitCode=1
+  rowId: tool:call_R1Mt52TddWWCVcMfwjOuFeUY
+  ```
+
+  </details>
+
+- **13:08:41  助手消息**
+
+任务给出的 ARM-2D 路径在当前隔离工作区根下不存在，HWPOD 返回 ENOENT。我会做窄范围目录定位，只看 `projects/01_baseline` 附近的 `Middlewares`/include 结构，不做全仓库摸索。
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE...</summary>
+
+  ```text
+  ./tools/hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651' --remote-path .
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_04bee7c8-614...
+  exitCode=0
+  rowId: tool:call_9cstCmrs91eSVDv1idsVqzw9
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE...</summary>
+
+  ```text
+  ./tools/hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651' --remote-path projects/01_baseline
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_82c8696a-8fd...
+  exitCode=0
+  rowId: tool:call_E5zOoU1wwNGWDBAsdTTphkQc
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE...</summary>
+
+  ```text
+  ./tools/hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651' --remote-path projects/01_baseline/Middlewares
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_d4823d53-34a...
+  exitCode=0
+  rowId: tool:call_XDU605wpmzCUOoc3RvSkI5vj
+  ```
+
+  </details>
+
+- **13:08:59  助手消息**
+
+`workspace ls --remote-path` 在这个 CLI 版本里看起来没有按预期传入路径，返回了根目录。我会查一次本地工具帮助，避免后续目录定位误判。
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace ls --help</summary>
+
+  ```text
+  ./tools/hwpod workspace ls --help
+  stdout:
+  { "ok": true, "action": "hwpod-cli.workspace.help", "status": "succeeded", "contractVersion": "hwpod-node-ops-v1", "command": "workspace", "subcommand": "ls", "usage": [ "hwpod workspace ls [path] --hwpod-id d601-f103-v2 --workspace-path <run-worktree>", "hwpod workspace cat <path> --hwpod-id d601-f103-v2 --workspace-path <run-worktree>", "hwpod workspace read <path> --hwpod-id d601-f103-v2 --workspace-path <run-worktree>", "hwpod workspace rg <pattern> [path] --context 3 --max-matches 20 --hwpod-id d601-f103-v2 --workspace-path <run-worktree>", "hwpod workspace write --path <path> --conten...
+  exitCode=0
+  rowId: tool:call_isVBmksVHrljuAJHqAoODwl3
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace rg --help</summary>
+
+  ```text
+  ./tools/hwpod workspace rg --help
+  stdout:
+  { "ok": true, "action": "hwpod-cli.workspace.help", "status": "succeeded", "contractVersion": "hwpod-node-ops-v1", "command": "workspace", "subcommand": "rg", "usage": [ "hwpod workspace ls [path] --hwpod-id d601-f103-v2 --workspace-path <run-worktree>", "hwpod workspace cat <path> --hwpod-id d601-f103-v2 --workspace-path <run-worktree>", "hwpod workspace read <path> --hwpod-id d601-f103-v2 --workspace-path <run-worktree>", "hwpod workspace rg <pattern> [path] --context 3 --max-matches 20 --hwpod-id d601-f103-v2 --workspace-path <run-worktree>", "hwpod workspace write --path <path> --conten...
+  exitCode=0
+  rowId: tool:call_AUSFe23st9YAuaZ3mp0oNxYv
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace cat --help</summary>
+
+  ```text
+  ./tools/hwpod workspace cat --help
+  stdout:
+  { "ok": true, "action": "hwpod-cli.workspace.help", "status": "succeeded", "contractVersion": "hwpod-node-ops-v1", "command": "workspace", "subcommand": "cat", "usage": [ "hwpod workspace ls [path] --hwpod-id d601-f103-v2 --workspace-path <run-worktree>", "hwpod workspace cat <path> --hwpod-id d601-f103-v2 --workspace-path <run-worktree>", "hwpod workspace read <path> --hwpod-id d601-f103-v2 --workspace-path <run-worktree>", "hwpod workspace rg <pattern> [path] --context 3 --max-matches 20 --hwpod-id d601-f103-v2 --workspace-path <run-worktree>", "hwpod workspace write --path <path> --conte...
+  exitCode=0
+  rowId: tool:call_fogmEx6ltWXtQdIAhvWxQsZF
+  ```
+
+  </details>
+
+- **13:09:09  助手消息**
+
+帮助确认路径应作为位置参数传入。我会重新按位置参数列目录，然后继续读取实际 ARM-2D 头文件。
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace ls projects/01_baseline --hwpod-id d601-f103-v2 --workspace-pat...</summary>
+
+  ```text
+  ./tools/hwpod workspace ls projects/01_baseline --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_df0b088d-e17...
+  exitCode=0
+  rowId: tool:call_OWHnt0ijOX9byirhaQ8336vR
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace ls projects/01_baseline/Middlewares/Arm-2D --hwpod-id d601-f103...</summary>
+
+  ```text
+  ./tools/hwpod workspace ls projects/01_baseline/Middlewares/Arm-2D --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_f6253ddd-b10...
+  exitCode=0
+  rowId: tool:call_ox9iEEzJ4dN2UotqAOUXD9P7
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace ls projects/01_baseline/Middlewares --hwpod-id d601-f103-v2 --w...</summary>
+
+  ```text
+  ./tools/hwpod workspace ls projects/01_baseline/Middlewares --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_f2f205f2-29f...
+  exitCode=0
+  rowId: tool:call_BCBIsPVkoXZ4lUMKxCYTOa8H
+  ```
+
+  </details>
+
+- **13:09:28  助手消息**
+
+实际 ARM-2D 位于 `projects/01_baseline/Middlewares/Arm-2D`。我会按这个当前工作区路径读取 `arm_2d.h`、`arm_2d_types.h`，并只在该 include 目录内查需要的公开符号。
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm...</summary>
+
+  ```text
+  ./tools/hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_5cc3da4b-6...
+  exitCode=0
+  rowId: tool:call_ksqD7FuUJTbq2dMEWhaoXfYx
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm...</summary>
+
+  ```text
+  ./tools/hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d.h --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_a16dfe16-1...
+  exitCode=0
+  rowId: tool:call_TtVHINiobzNKTCELH414lnZ1
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace rg "arm_2d_rgb16_fill_colour|arm_2d_rgb16_tile_copy|arm_2d_op_w...</summary>
+
+  ```text
+  ./tools/hwpod workspace rg "arm_2d_rgb16_fill_colour|arm_2d_rgb16_tile_copy|arm_2d_op_wait_async|arm_2d_init|ARM_2D_ERR_NONE|arm_2d_tile_t" projects/01_baseline/Middlewares/Arm-2D/Library/include --context 3 --max-matches 80 --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_126052ec-e45...
+  exitCode=0
+  rowId: tool:call_zkeeEK3PKSFDpds78gm7hZRH
+  ```
+
+  </details>
+
+- **13:09:32  助手消息**
+
+这些文件通过远端 HWPOD 读取时间略长，我在等节点返回。拿到声明后会再决定是否走 ARM-2D fill/copy API，避免靠猜。
+
+- **13:10:00  助手消息**
+
+`arm_2d.h` 确认版本为 1.2.6，`arm_2d_init()`、`arm_2d_op_wait_async()` 和默认异步等待接口存在。接下来我只再打开 `arm_2d_tile.h`、`arm_2d_draw.h` 中与 tile 绑定和 RGB565 填充有关的片段。
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace rg "rgb565_fill_colour|arm_2d_rgb16_fill|arm_2d_rgb565_fill|arm...</summary>
+
+  ```text
+  ./tools/hwpod workspace rg "rgb565_fill_colour|arm_2d_rgb16_fill|arm_2d_rgb565_fill|arm_2d_fill_colour|tile_copy" projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d.h --context 4 --max-matches 80 --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_7239e0d0-f2c...
+  exitCode=0
+  rowId: tool:call_zQPDmGMptPzOvO5xtEF4JST1
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace rg "rgb565_fill_colour|arm_2d_rgb16_fill|arm_2d_rgb565_fill|arm...</summary>
+
+  ```text
+  ./tools/hwpod workspace rg "rgb565_fill_colour|arm_2d_rgb16_fill|arm_2d_rgb565_fill|arm_2d_fill_colour|tile_copy" projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_draw.h --context 4 --max-matches 80 --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_7bb3b4c2-ae5...
+  exitCode=0
+  rowId: tool:call_2Rmkyr3oFaQwRutcRKdmJ5W6
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace rg "typedef struct arm_2d_tile_t|struct arm_2d_tile_t|tRegion|p...</summary>
+
+  ```text
+  ./tools/hwpod workspace rg "typedef struct arm_2d_tile_t|struct arm_2d_tile_t|tRegion|pchBuffer|phwBuffer|nAddress|tLocation|tSize|tColourInfo" projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h --context 4 --max-matches 80 --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_0840d596-e6d...
+  exitCode=0
+  rowId: tool:call_e1jYwICLSyvaNQ4AXIL0PKRB
+  ```
+
+  </details>
+
+- **13:10:23  助手消息**
+
+我已经确认 tile 公开结构可直接设置根 tile、区域尺寸和 `phwBuffer`；RGB565 填充宏在 `arm_2d_draw.h` 中可用。还需要看它的完整宏展开和返回类型，确保等待逻辑和错误处理不会引入编译问题。
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace rg "typedef struct arm_2d_location_t|typedef struct arm_2d_size...</summary>
+
+  ```text
+  ./tools/hwpod workspace rg "typedef struct arm_2d_location_t|typedef struct arm_2d_size_t|iWidth|iHeight|iX|iY" projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h --context 3 --max-matches 60 --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_864de881-e73...
+  exitCode=0
+  rowId: tool:call_tL4OIayV7Ecm0R0ZOxQ8RWOB
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace rg "#define arm_2d_rgb16_fill_colour|arm_2dp_rgb16_fill_colour"...</summary>
+
+  ```text
+  ./tools/hwpod workspace rg "#define arm_2d_rgb16_fill_colour|arm_2dp_rgb16_fill_colour" projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_draw.h --context 8 --max-matches 20 --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_ec49823f-100...
+  exitCode=0
+  rowId: tool:call_AxfHgbsBHBQTceXzuOTe8T4w
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace rg "#define arm_2d_rgb16_tile_copy|arm_2dp_rgb16_tile_copy|arm_...</summary>
+
+  ```text
+  ./tools/hwpod workspace rg "#define arm_2d_rgb16_tile_copy|arm_2dp_rgb16_tile_copy|arm_2d_rgb565_tile_copy" projects/01_baseline/Middlewares/Arm-2D/Library/include --context 6 --max-matches 40 --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_bb7b0e72-d36...
+  exitCode=0
+  rowId: tool:call_n2bX2I85DsDYVOBAOvxfJDKc
+  ```
+
+  </details>
+
+- **13:10:28  助手消息**
+
+API 片段还在返回中。我在并行查 `location/size` 字段名和 RGB16 fill/copy 宏，这决定 patch 里是否能使用具名初始化或需要逐字段赋值。
+
+- **13:10:49  助手消息**
+
+我会在 `d601_arm2d_demo.c` 里保留任务要求的 helper 函数名，但实现方式尽量简单：ARM-2D 负责 stripe 内矩形填充，LCD `draw_bitmap` 负责把每个 stripe 刷到屏幕，文本仍走已有 LCD string 入口。main.c 只做任务要求的三行集成。
+
+- **13:12:20  助手消息**
+
+准备写入两个受限文件：`main.c` 只加三行；`d601_arm2d_demo.c` 从现有断裂骨架重写 helper 和 show/task 函数体，不改头文件和工程文件。
+
+- <details>
+  <summary>已运行 "./tools/hwpod workspace apply-patch --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\...</summary>
+
+  ```text
+  "./tools/hwpod workspace apply-patch --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651' --reason arm2d-demo-minimal <<'PATCH' *** Begin Patch *** Update File: projects/01_baseline/User/main.c @@ #include "jsonrpc_handler.h" #include "d601_lcd.h" +#include "d601_arm2d_demo.h" #include "d601_gpio.h" @@ d601_lcd_init(); d601_gpio_init(); + d601_arm2d_demo_show(); printf("[D601-F103] LCD ID=0x%04X\r\n", (unsigned int)d601_lcd_get_id()); @@ { jsonrpc_process(); + d601_arm2d_demo_task(); } } *** Update File: projects/01_baseline/User/d601_arm2d_demo.c @@ -#define D601_ARM2D_PFB_WIDTH 240U -#define D601_ARM2D_PFB_LINES 32U -#define D601_RGB565(__R, __G, __B) \ - (uint16_t)((((uint16_t)(__R) & 0xF8U) << 8) | (((uint16_t)(__G) & 0xFCU) << 3) | ((uint16_t)(__B) >> 3)) - -#define...
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.apply-patch", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.apply-patch", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod...
+  exitCode=0
+  rowId: tool:call_fL2pu1lhv1bfG9OTUA5sNSMe
+  ```
+
+  </details>
+
+- **13:13:48  助手消息**
+
+补丁已提交给 HWPOD 节点，正在等远端 apply-patch 结果。之后会马上读回两个文件做约束核对，再编译。
+
+- **13:14:03  助手消息**
+
+补丁应用成功。现在我读回受影响文件并查看 diff，先确认只改了允许的两个文件、`main.c` 只新增三行。
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace cat projects/01_baseline/User/main.c --hwpod-id d601-f103-v2 --...</summary>
+
+  ```text
+  ./tools/hwpod workspace cat projects/01_baseline/User/main.c --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_d6da247d-d...
+  exitCode=0
+  rowId: tool:call_pv1p2sDF1VqPRxVLaqzWcWOF
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.c --hwpod-id d601...</summary>
+
+  ```text
+  ./tools/hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.c --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_538697c0-b...
+  exitCode=0
+  rowId: tool:call_JV1qHcpHvMHMerpQs0MfAxXh
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace rg "arm_2d_rgb16_fill_colour|arm_2d_op_wait_async|arm_2d_task|a...</summary>
+
+  ```text
+  ./tools/hwpod workspace rg "arm_2d_rgb16_fill_colour|arm_2d_op_wait_async|arm_2d_task|arm_2d_init|d601_lcd_draw_bitmap|d601_lcd_show_string" projects/01_baseline/User/d601_arm2d_demo.c --context 2 --max-matches 80 --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_24f4f5a5-16b...
+  exitCode=0
+  rowId: tool:call_8uCOEz1l54vpgb4Gny5WMOqM
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace rg "d601_arm2d_demo|arm2d_wait|arm2d_tile_bind|arm2d_fill_local...</summary>
+
+  ```text
+  ./tools/hwpod workspace rg "d601_arm2d_demo|arm2d_wait|arm2d_tile_bind|arm2d_fill_local|d601_arm2d_demo_show|d601_arm2d_demo_task" projects/01_baseline/User --context 2 --max-matches 80 --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_4d4f8470-aa8...
+  exitCode=0
+  rowId: tool:call_vfU667vgNqGI3PefB0mOnu88
+  ```
+
+  </details>
+
+- **13:07:03 total=00:00:05 run agentrun:backend:run-claimed**
+
+```text
+run-claimed
+```
+
+- **13:07:04 total=00:00:06 run agentrun:backend:resource-bundle-materialized**
+
+```text
+resource-bundle-materialized
+```
+
+- **13:07:04 total=00:00:06 run agentrun:backend:backend-turn-started**
+
+```text
+backend-turn-started
+```
+
+- **13:07:04  会话就绪**
+
+- **13:07:04 total=00:00:06 run agentrun:backend:codex-rollout-storage-mounted**
+
+```text
+codex-rollout-storage-mounted
+```
+
+- **13:07:04 total=00:00:06 run agentrun:backend:initial-prompt-assembly**
+
+```text
+initial-prompt-assembly
+```
+
+- **13:07:16  助手消息**
+
+我会按任务约束使用 `hwpod-cli`、`hwpod-ctl` 和 `arm2d-skyer` 技能：先确认隔离工作区与 HWPOD 入口，再只读指定头文件/API，最后只做 compile-only 构建验证。
+
+- **13:14:19  助手消息**
+
+读回内容符合限制：`main.c` 确实只新增 include、show 调用和 task 调用三行；`d601_arm2d_demo.c` 已经从断裂骨架变成完整函数体。现在开始 compile-only build，不会执行下载或 UART。
+
+- <details>
+  <summary>已运行 ./tools/hwpod build --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\....</summary>
+
+  ```text
+  ./tools/hwpod build --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "debug.build", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "debug.build", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_7db0b3a3-92e2-...
+  exitCode=0
+  rowId: tool:call_arBZyPZ9A6SFc5bylezBtMnm
+  ```
+
+  </details>
+
+- **13:14:33  助手消息**
+
+构建已发起，HWPOD 会通过 Keil 目标 `USART` 做编译检查。我等返回后如果是异步 job，会按要求用 `hwpod job status` 单步查询，不做轮询脚本。
+
+- **13:14:36  助手消息**
+
+Keil 构建已排队为异步 job `20260608_211427_4e5795ac`。我会用标准 `hwpod job status` 查询终态。
+
+- <details>
+  <summary>已运行 ./tools/hwpod job status 20260608_211427_4e5795ac --hwpod-id d601-f103-v2 --workspace-p...</summary>
+
+  ```text
+  ./tools/hwpod job status 20260608_211427_4e5795ac --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "debug.job-status", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "debug.job-status", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_6556...
+  exitCode=0
+  rowId: tool:call_TczNiSXyGsLGBvUV4FnDVKlv
+  ```
+
+  </details>
+
+- **13:14:43  助手消息**
+
+第一次 job status 请求还在返回中。若还未完成，我会隔一会儿再发一次独立状态查询。
+
+- **13:15:04  助手消息**
+
+编译已经成功完成：job `20260608_211427_4e5795ac` 返回 `return_code=0`，生成了 HEX 和 AXF。为了判断 warning 是否需要特别标注，我再读取一下构建输出目录/日志索引，不做任何运行态操作。
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace ls projects/01_baseline/Output --hwpod-id d601-f103-v2 --worksp...</summary>
+
+  ```text
+  ./tools/hwpod workspace ls projects/01_baseline/Output --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": false, "action": "hwpod-cli.invoke", "status": "blocked", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_71d739bd-d03e...
+  exitCode=1
+  rowId: tool:call_4LOYUqt1BIa5mNFIMDuSTMDX
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace ls projects/01_baseline/Projects/MDK-ARM/output --hwpod-id d601...</summary>
+
+  ```text
+  ./tools/hwpod workspace ls projects/01_baseline/Projects/MDK-ARM/output --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": false, "action": "hwpod-cli.invoke", "status": "blocked", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_533ad5b7-625b...
+  exitCode=1
+  rowId: tool:call_iDVPWj17ATPIFAb1tQ1GR8pL
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ./tools/hwpod workspace rg "warning:|Warning:|warning #|Warning #|\bwarning\b" projects...</summary>
+
+  ```text
+  ./tools/hwpod workspace rg "warning:|Warning:|warning #|Warning #|\bwarning\b" projects/01_baseline/Projects/MDK-ARM/output --context 1 --max-matches 80 --hwpod-id d601-f103-v2 --workspace-path 'F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651'
+  stdout:
+  { "ok": false, "action": "hwpod-cli.invoke", "status": "blocked", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_2ef81502-acf9...
+  exitCode=1
+  rowId: tool:call_SLsfQtO7GW9BPt6o1ihQIgkk
+  ```
+
+  </details>
+
+- **13:15:20  助手消息**
+
+已完成 D601-F103-V2 ARM-2D demo 最小集成，且只修改了允许的两个文件。 **Diff 摘要** - `projects/01_baseline/User/main.c` - 在 `d601_lcd.h` 后加入 `d601_arm2d_demo.h` - `d601_gpio_init()` 后调用 `d601_arm2d_demo_show()` - `jsonrpc_process()` 后调用 `d601_arm2d_demo_task()` - `projects/01_baseline/User/d601_arm2d_demo.c` - 重新实现 `arm2d_wait()`、`arm2d_tile_bind()`、`arm2d_fill_local()` - 基于 ARM-2D RGB565 fill、stripe/PFB、`d601_lcd_draw_bitmap()`、`d601_lcd_show_string()` 实现 show/task 周期刷新与 FPS 文本 **Compile-only 验证** - HWPOD
+
+- **13:15:24  助手消息**
+
+: `d601-f103-v2` - Keil target: `USART` - job_id: `20260608_211427_4e5795ac` - 终态: `completed` - success: `true` - return_code: `0` - warning_count: `26` - hex artifact: `F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651\projects\01_baseline\Output\atk_f103.hex` - axf artifact: `F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651\projects\01_baseline\Output\atk_f103.axf` 未执行下载、未运行 UART、未做运行态冒烟验证。 仍需人工关注
+
+- **13:15:25  助手最终消息，轮次完成（总耗时 00:08:27）**
+
+已完成 D601-F103-V2 ARM-2D demo 最小集成，且只修改了允许的两个文件。
+
+**Diff 摘要**
+- `projects/01_baseline/User/main.c`
+  - 在 `d601_lcd.h` 后加入 `d601_arm2d_demo.h`
+  - `d601_gpio_init()` 后调用 `d601_arm2d_demo_show()`
+  - `jsonrpc_process()` 后调用 `d601_arm2d_demo_task()`
+- `projects/01_baseline/User/d601_arm2d_demo.c`
+  - 重新实现 `arm2d_wait()`、`arm2d_tile_bind()`、`arm2d_fill_local()`
+  - 基于 ARM-2D RGB565 fill、stripe/PFB、`d601_lcd_draw_bitmap()`、`d601_lcd_show_string()` 实现 show/task 周期刷新与 FPS 文本
+
+**Compile-only 验证**
+- HWPOD: `d601-f103-v2`
+- Keil target: `USART`
+- job_id: `20260608_211427_4e5795ac`
+- 终态: `completed`
+- success: `true`
+- return_code: `0`
+- warning_count: `26`
+- hex artifact: `F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651\projects\01_baseline\Output\atk_f103.hex`
+- axf artifact: `F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608130649-d1b68651\projects\01_baseline\Output\atk_f103.axf`
+
+未执行下载、未运行 UART、未做运行态冒烟验证。
+
+仍需人工关注：构建后我尝试进一步展开 warning 明细时，HWPOD 节点后续查询出现 `hwpod_node_not_connected`，所以目前只能可靠回报 Keil job 结果里的 warning 总数 `26`，未能逐条归因。运行态画面和刷新效果也按任务约束未验证。
+
+## 最后 Diff
+
+- statusShort: M projects/01_baseline/User/d601_arm2d_demo.c  M projects/01_baseline/User/main.c
+- diffStat: projects/01_baseline/User/d601_arm2d_demo.c | 234 ++++++++++++++++++++++++++--  projects/01_baseline/User/main.c            |   3 +  2 files changed, 221 insertions(+), 16 deletions(-)
+- diffSha256: 9a74f1443f35f3be2585d4b70175f7476cafb06d03f9fde5bd7c4ccaa853beb5
+- sourceRootChangedAfterPrepare: false
+- sourceRootChangedAfterAgent: false
+```diff
+diff --git a/projects/01_baseline/User/d601_arm2d_demo.c b/projects/01_baseline/User/d601_arm2d_demo.c
+index f4400f9..5331620 100644
+--- a/projects/01_baseline/User/d601_arm2d_demo.c
++++ b/projects/01_baseline/User/d601_arm2d_demo.c
+@@ -8,6 +8,7 @@
+ 
+ #define D601_ARM2D_PFB_WIDTH 240U
+ #define D601_ARM2D_PFB_LINES 32U
++#define D601_ARM2D_FRAME_MS 33U
+ #define D601_RGB565(__R, __G, __B) \
+     (uint16_t)((((uint16_t)(__R) & 0xF8U) << 8) | (((uint16_t)(__G) & 0xFCU) << 3) | ((uint16_t)(__B) >> 3))
+ 
+@@ -26,12 +27,26 @@ static uint8_t s_arm2d_ready;
+ static uint32_t s_fps_window_ms;
+ static uint32_t s_fps_frame_count;
+ static uint32_t s_fps_value;
++static uint32_t s_last_frame_ms;
++static uint16_t s_frame_phase;
+ 
+ static void arm2d_wait(void)
+-{ }
++{
++    while (!arm_2d_op_wait_async(NULL)) {
++        (void)arm_2d_task(NULL);
++    }
++}
+ 
+ static void arm2d_tile_bind(arm_2d_tile_t *ptTile, uint16_t width, uint16_t height)
+-{ }
++{
++    (void)memset(ptTile, 0, sizeof(*ptTile));
++    ptTile->tInfo.bIsRoot = 1U;
++    ptTile->tRegion.tLocation.iX = 0;
++    ptTile->tRegion.tLocation.iY = 0;
++    ptTile->tRegion.tSize.iWidth = (int16_t)width;
++    ptTile->tRegion.tSize.iHeight = (int16_t)height;
++    ptTile->phwBuffer = &s_pfb[0][0];
++}
+ 
+ static void arm2d_fill_local(arm_2d_tile_t *ptTile,
+                              int16_t x,
+@@ -39,7 +54,42 @@ static void arm2d_fill_local(arm_2d_tile_t *ptTile,
+                              int16_t width,
+                              int16_t height,
+                              uint16_t colour)
+-{ }
++{
++    arm_2d_region_t tRegion;
++    int16_t x2;
++    int16_t y2;
++
++    if ((NULL == ptTile) || (width <= 0) || (height <= 0)) {
++        return;
++    }
++
++    x2 = (int16_t)(x + width);
++    y2 = (int16_t)(y + height);
++
++    if (x < 0) {
++        x = 0;
++    }
++    if (y < 0) {
++        y = 0;
++    }
++    if (x2 > ptTile->tRegion.tSize.iWidth) {
++        x2 = ptTile->tRegion.tSize.iWidth;
++    }
++    if (y2 > ptTile->tRegion.tSize.iHeight) {
++        y2 = ptTile->tRegion.tSize.iHeight;
++    }
++    if ((x >= x2) || (y >= y2)) {
++        return;
++    }
++
++    tRegion.tLocation.iX = x;
++    tRegion.tLocation.iY = y;
++    tRegion.tSize.iWidth = (int16_t)(x2 - x);
++    tRegion.tSize.iHeight = (int16_t)(y2 - y);
++
++    (void)arm_2d_rgb16_fill_colour(ptTile, &tRegion, colour);
++    arm2d_wait();
++}
+ 
+ static void arm2d_fill_global(arm_2d_tile_t *ptTile,
+                               uint16_t stripe_y,
+@@ -49,44 +99,196 @@ static void arm2d_fill_global(arm_2d_tile_t *ptTile,
+                               uint16_t width,
+                               uint16_t height,
+                               uint16_t colour)
+-{ }
++{
++    uint32_t stripe_end;
++    uint32_t rect_end;
++    uint16_t local_y;
++    uint16_t clipped_h;
++
++    if ((0U == width) || (0U == height) || (0U == stripe_h)) {
++        return;
++    }
++
++    stripe_end = (uint32_t)stripe_y + stripe_h;
++    rect_end = (uint32_t)y + height;
++    if (((uint32_t)y >= stripe_end) || (rect_end <= stripe_y)) {
++        return;
++    }
++
++    local_y = 0U;
++    if (y >= stripe_y) {
++        local_y = (uint16_t)(y - stripe_y);
++    }
++
++    if (y < stripe_y) {
++        height = (uint16_t)(rect_end - stripe_y);
++    }
++    if ((uint32_t)local_y + height > stripe_h) {
++        clipped_h = (uint16_t)(stripe_h - local_y);
++    } else {
++        clipped_h = height;
++    }
++
++    arm2d_fill_local(ptTile,
++                     (int16_t)x,
++                     (int16_t)local_y,
++                     (int16_t)width,
++                     (int16_t)clipped_h,
++                     colour);
++}
+ 
+ static void arm2d_render_stripe(uint16_t y, uint16_t stripe_h, uint16_t width, uint16_t height)
+-{ }
++{
++    static const uint16_t colours[] = {
++        D601_C_CYAN,
++        D601_C_GREEN,
++        D601_C_AMBER,
++        D601_C_ORANGE,
++    };
++    arm_2d_tile_t tTile;
++    uint16_t i;
++    uint16_t bar_x;
++    uint16_t bar_h;
++    uint16_t marker_x;
++    uint16_t footer_y;
++
++    arm2d_tile_bind(&tTile, width, stripe_h);
++    arm2d_fill_local(&tTile, 0, 0, (int16_t)width, (int16_t)stripe_h, D601_C_BG);
++
++    arm2d_fill_global(&tTile, y, stripe_h, 0U, 0U, width, 64U, D601_C_BANNER);
++    if (width > 24U) {
++        arm2d_fill_global(&tTile, y, stripe_h, 12U, 84U, (uint16_t)(width - 24U), 78U, D601_C_CARD);
++        arm2d_fill_global(&tTile, y, stripe_h, 12U, 176U, (uint16_t)(width - 24U), 52U, D601_C_PANEL);
++    }
++    if (height > 30U) {
++        footer_y = (uint16_t)(height - 28U);
++        arm2d_fill_global(&tTile, y, stripe_h, 0U, footer_y, width, 28U, D601_C_FOOT);
++    }
++
++    marker_x = 0U;
++    if (width > 36U) {
++        marker_x = (uint16_t)(s_frame_phase % (uint16_t)(width - 36U));
++    }
++    arm2d_fill_global(&tTile, y, stripe_h, marker_x, 58U, 36U, 4U, D601_C_CYAN);
++
++    for (i = 0U; i < 5U; ++i) {
++        bar_x = (uint16_t)(30U + (i * 34U));
++        bar_h = (uint16_t)(14U + ((s_frame_phase + (i * 9U)) % 30U));
++        if ((uint32_t)bar_x + 18U <= width) {
++            arm2d_fill_global(&tTile,
++                              y,
++                              stripe_h,
++                              bar_x,
++                              (uint16_t)(154U - bar_h),
++                              18U,
++                              bar_h,
++                              colours[i & 3U]);
++        }
++    }
++
++    arm2d_fill_global(&tTile, y, stripe_h, 24U, 206U, 48U, 5U, D601_C_AMBER);
++    arm2d_fill_global(&tTile, y, stripe_h, 84U, 206U, 48U, 5U, D601_C_GREEN);
++    arm2d_fill_global(&tTile, y, stripe_h, 144U, 206U, 48U, 5U, D601_C_CYAN);
++
++    d601_lcd_draw_bitmap(0U, y, width, stripe_h, &s_pfb[0][0]);
++}
+ 
+ static void arm2d_fps_text(char *text, uint32_t fps)
+-{ }
++{
++    if (fps > 999U) {
++        fps = 999U;
++    }
++
++    text[0] = 'F';
++    text[1] = 'P';
++    text[2] = 'S';
++    text[3] = ':';
++    text[4] = (char)('0' + (fps / 100U));
++    text[5] = (char)('0' + ((fps / 10U) % 10U));
++    text[6] = (char)('0' + (fps % 10U));
++    text[7] = '\0';
++}
+ 
+ static void arm2d_draw_fps(uint16_t height)
+-{ }
++{
++    char text[8];
++    uint16_t y;
++
++    y = 0U;
++    if (height > 18U) {
++        y = (uint16_t)(height - 18U);
++    }
++
++    arm2d_fps_text(text, s_fps_value);
++    d601_lcd_show_string(8U, y, text, D601_LCD_WHITE, D601_C_FOOT, 1U);
++}
+ 
+ void d601_arm2d_demo_show(void)
+-{ }
++{
++    uint16_t width;
++    uint16_t height;
++    uint16_t y;
++
++    if (!s_arm2d_ready) {
++        arm_2d_init();
++        s_arm2d_ready = 1U;
++        s_fps_window_ms = HAL_GetTick();
++        s_last_frame_ms = s_fps_window_ms;
++    }
+ 
+     width = d601_lcd_get_width();
+     height = d601_lcd_get_height();
++    if ((0U == width) || (0U == height)) {
++        return;
++    }
+     if (width > D601_ARM2D_PFB_WIDTH) {
+         width = D601_ARM2D_PFB_WIDTH;
+     }
+ 
+-    for (y = 0; y < height; y = (uint16_t)(y + D601_ARM2D_PFB_LINES)) {
+-        uint16_t stripe_h = D601_ARM2D_PFB_LINES;
++    y = 0U;
++    while (y < height) {
++        uint16_t stripe_h;
++
++        stripe_h = D601_ARM2D_PFB_LINES;
+         if ((uint32_t)y + stripe_h > height) {
+             stripe_h = (uint16_t)(height - y);
+         }
+         arm2d_render_stripe(y, stripe_h, width, height);
++        y = (uint16_t)(y + stripe_h);
+     }
+ 
+-    d601_lcd_show_string(20, 22, "ARM-2D", D601_LCD_WHITE, D601_C_BANNER, 3);
+-    d601_lcd_show_string(25, 102, "RGB565 PFB", D601_LCD_YELLOW, D601_C_CARD, 2);
+-    d601_lcd_show_string(25, 128, "D601 F103", D601_LCD_WHITE, D601_C_CARD, 2);
+-    d601_lcd_show_string(25, 198, "BASIC DEMO", D601_LCD_WHITE, D601_C_PANEL, 2);
++    d601_lcd_show_string(20U, 22U, "ARM-2D", D601_LCD_WHITE, D601_C_BANNER, 3U);
++    d601_lcd_show_string(25U, 102U, "RGB565 PFB", D601_LCD_YELLOW, D601_C_CARD, 2U);
++    d601_lcd_show_string(25U, 128U, "D601 F103", D601_LCD_WHITE, D601_C_CARD, 2U);
++    d601_lcd_show_string(25U, 198U, "BASIC DEMO", D601_LCD_WHITE, D601_C_PANEL, 2U);
+     arm2d_draw_fps(height);
+ }
+ 
+ void d601_arm2d_demo_task(void)
+-{ }
++{
++    uint32_t now;
++    uint32_t elapsed;
+ 
+-    d601_arm2d_demo_show();
++    now = HAL_GetTick();
++    if (!s_arm2d_ready) {
++        d601_arm2d_demo_show();
++        return;
++    }
++
++    if ((uint32_t)(now - s_last_frame_ms) < D601_ARM2D_FRAME_MS) {
++        return;
++    }
++
++    s_last_frame_ms = now;
++    s_frame_phase = (uint16_t)(s_frame_phase + 3U);
+     ++s_fps_frame_count;
++
++    elapsed = (uint32_t)(now - s_fps_window_ms);
++    if (elapsed >= 1000U) {
++        s_fps_value = (s_fps_frame_count * 1000U) / elapsed;
++        s_fps_frame_count = 0U;
++        s_fps_window_ms = now;
++    }
++
++    d601_arm2d_demo_show();
+ }
+diff --git a/projects/01_baseline/User/main.c b/projects/01_baseline/User/main.c
+index 7467c9a..df8bf9a 100644
+--- a/projects/01_baseline/User/main.c
++++ b/projects/01_baseline/User/main.c
+@@ -4,6 +4,7 @@
+ #include "./BSP/LED/led.h"
+ #include "jsonrpc_handler.h"
+ #include "d601_lcd.h"
++#include "d601_arm2d_demo.h"
+ #include "d601_gpio.h"
+ 
+ int main(void)
+@@ -17,11 +18,13 @@ int main(void)
+ 
+     d601_lcd_init();
+     d601_gpio_init();
++    d601_arm2d_demo_show();
+     printf("[D601-F103] LCD ID=0x%04X\r\n", (unsigned int)d601_lcd_get_id());
+     printf("[D601-F103] JSON-RPC ready on USART1 115200 8N1\r\n");
+ 
+     while (1)
+     {
+         jsonrpc_process();
++        d601_arm2d_demo_task();
+     }
+ }
+```
+
+## 原始产物索引
+
+| Path | Bytes | SHA-256 |
+|---|---:|---|
+| evidence.json | 53027 | e6c327cb570dc45d8ede23a8d5ccd4c01887ae7ef7511a357f82dc513d8ec3fd |
+| summary.md | 2335 | 38da9218f94fcef247502861f2505f9f206ed23d4da4c128e9b147e5504f2360 |
+| aggregate.md | self-referential | self-referential |
+| agent-messages.json | 65572 | e3c78d7b0a803e56f10d428be2d6870a82b4dbaa223c8ceea3ff7a364ee2fc71 |
+| agent-trace.md | 66101 | 70d87a22b19a0863dc234c95e0089d51734848e63e7934d27d9f9893baf6ea72 |
+| agent-transcript.md | 66101 | 70d87a22b19a0863dc234c95e0089d51734848e63e7934d27d9f9893baf6ea72 |
+| final-response.md | 1672 | 86560ddc5c2c37709fe29cbc933cc3cc0e91f0ee219cbbcef8f0dee8a5a953ee |
+| run.json | 72193 | 7a21cea99f451e731b742c3bd601264ef5580c3e756d478ac46777fcc90475bb |
+| result.json | 12167 | 14ffa1fe91559b0f6a0321d4c4ea2b55469182c6dbd097ee545168b56ed729e1 |
+| agent-trace.json | 204716 | 6b812a7ead11aeefad76ae457e3ac40be3594ae95b86019214b22747ce3f937f |
+| agent-prompt.md | 2714 | ee51fede78aca9ec1c5339e44ed1daa004b54b7d19e2f74826a82b82a254fd17 |
+| agent-diff.patch | 9375 | 9a74f1443f35f3be2585d4b70175f7476cafb06d03f9fde5bd7c4ccaa853beb5 |
+| .hwlab/hwpod-spec.yaml | 763 | 33d093515b081e2db8aed241843f6a3e0fcf7ff6a4803a9a318e83785f6400de |
+
+## 说明
+
+本文件只做已完成 CaseRun registry 产物的二次整理聚合，不新增自动结论、门禁或等级。
