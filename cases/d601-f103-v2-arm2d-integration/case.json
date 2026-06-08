@@ -15,17 +15,15 @@
   },
   "agentTask": {
     "workspace": "subjectWorktree",
-    "providerProfile": "dsflash-go",
+    "providerProfile": "hy",
     "projectId": "prj_hwpod_workbench",
-    "timeoutMs": 600000,
-    "prompt": "主体工作区根目录就是仓库根目录，包含 projects/、docs/、tools/ 和 .agents/。编辑前先读取 `.agents/skills/arm2d-skill/SKILL.md`，并遵循其中的 ARM-2D 标准集成方法。如果该文件缺失，停止并报告 AgentRun gitbundle/skill 挂载阻塞；不要自行编造替代内容，也不要移除这个依赖。每个 `hwpod` 和 `hwpod-ctl` 命令都必须使用 CaseRun 提供的 `hwpodWorkspaceArgs`。不要使用 runner 本地 `.hwlab/hwpod-spec.yaml`；如果旧帮助文本提到它，把它转换为本任务提供的 `--hwpod-id` / `--workspace-path` 参数。符号查找优先用 `hwpod workspace rg` / `hwpod workspace search`，只有需要完整文件正文时才用 `hwpod workspace cat`。\n\n工作区中已有 LCD 驱动 d601_lcd、GPIO，以及位于 projects/01_baseline/Middlewares/Arm-2D/ 的 ARM-2D 库。ARM-2D 头文件 arm_2d.h、arm_2d_types.h 等位于 projects/01_baseline/Middlewares/Arm-2D/Library/include/。d601_lcd.h 位于 projects/01_baseline/User/d601_lcd.h。ARM-2D demo 文件已经存在，但函数体为空。\n\n你的任务：\n\n1. 编辑 main.c 集成 ARM-2D：在 d601_lcd.h 之后加入 #include \"d601_arm2d_demo.h\"，在 d601_gpio_init() 之后调用 d601_arm2d_demo_show()，并在 while(1) 循环中 jsonrpc_process() 之后调用 d601_arm2d_demo_task()。\n\n2. 实现 d601_arm2d_demo.c 的函数体。先阅读 d601_arm2d_demo.h 了解公开 API；使用带 hwpodWorkspaceArgs 的 `hwpod workspace rg` / `hwpod workspace search` 检查 Middlewares/Arm-2D/Library/include/ 下的 ARM-2D 头文件，重点确认 arm_2d_init、arm_2d_op_wait_async、arm_2d_rgb16_fill_colour 和 arm_2d_rgb565_t 结构；阅读 d601_lcd.h 了解 d601_lcd_get_width/height、d601_lcd_draw_bitmap、d601_lcd_fill_rect、d601_lcd_show_string。至少实现 arm2d_wait()、arm2d_tile_bind()、arm2d_fill_local()、d601_arm2d_demo_show()（初始化 ARM-2D 并渲染一次全屏填充）和 d601_arm2d_demo_task()（周期性调用 show）。复用已有 #define（D601_ARM2D_PFB_WIDTH/LINES、D601_RGB565、D601_C_*）和静态变量（s_pfb、s_arm2d_ready）。\n\n3. 编辑完成后，使用 CaseRun 提供的 hwpodWorkspaceArgs 运行 `hwpod-ctl spec validate`、`hwpod inspect` 和 `hwpod build`。回报 diff 摘要和构建结果。不要下载，也不要运行 UART。",
+    "timeoutMs": 1200000,
+    "prompt": "请在隔离主体工作区中完成 D601-F103-V2 的 ARM-2D demo 最小集成。\n\n任务目标：\n1. 编辑 projects/01_baseline/User/main.c：在 d601_lcd.h 之后加入 d601_arm2d_demo.h，在 d601_gpio_init() 之后调用 d601_arm2d_demo_show()，并在 while(1) 循环中 jsonrpc_process() 之后调用 d601_arm2d_demo_task()。\n2. 编辑 projects/01_baseline/User/d601_arm2d_demo.c：先阅读 d601_arm2d_demo.h、d601_lcd.h 和 Middlewares/Arm-2D/Library/include/ 下的 ARM-2D 头文件，再从当前头文件和现有工程代码推导实现。至少完成 arm2d_wait()、arm2d_tile_bind()、arm2d_fill_local()、d601_arm2d_demo_show() 和 d601_arm2d_demo_task()。\n3. 完成后执行 compile-only 验证，并回报 diff 摘要、编译终态、return_code、artifact 路径、warning 数和仍需人工关注的问题。\n\n不要照搬历史 run trace、旧答案或记忆中的 API 形态；所有 ARM-2D 与 LCD API 以当前工作区内头文件和源码为准。",
     "constraints": [
-      "可以修改 projects/01_baseline/User/main.c 和 projects/01_baseline/User/d601_arm2d_demo.c",
+      "只能修改 projects/01_baseline/User/main.c 和 projects/01_baseline/User/d601_arm2d_demo.c",
       "main.c 只加3行：include + show() + task()",
       "d601_arm2d_demo.c 需要重新实现函数体，不能只恢复原来的代码",
-      "必须通过 HWPOD workspace/node 链路修改，并在每个 hwpod/hwpod-ctl 命令中使用 CaseRun 提供的 hwpodWorkspaceArgs",
-      "不要创建、复制或修补 runner-local .hwlab/hwpod-spec.yaml",
-      "只做 compile-only build check",
+      "只做 compile-only build check，不要下载，也不要运行 UART",
       "ARM-2D 库已在 Middlewares/Arm-2D/，d601_lcd 已实现"
     ]
   },
