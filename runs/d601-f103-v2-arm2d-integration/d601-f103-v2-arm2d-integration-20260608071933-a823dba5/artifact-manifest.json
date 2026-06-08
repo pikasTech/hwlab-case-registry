@@ -11,8 +11,7 @@
     "conversationId": "cnv_case_d601-f103-v2-arm2d-integration_d601-f103-v2-arm2d-integration-20260608071933-a823dba5",
     "providerProfile": "hy",
     "projectId": "prj_hwpod_workbench",
-    "source": "caserun-identity",
-    "lookupOnly": true,
+    "source": "hwlab-cli.client.agent.trace",
     "lookup": {
       "source": "hwlab-cli.client.agent",
       "strategy": "id_plus_existing_cli",
@@ -30,7 +29,8 @@
       }
     },
     "status": "completed",
-    "commandCount": 0,
+    "terminalStatus": "completed",
+    "commandCount": 35,
     "hwpodCommandCount": 0,
     "hwpodBuildCommandCount": 0
   },
@@ -157,23 +157,17 @@
     "traceRender": {
       "renderer": "tools/src/hwlab-cli/trace-renderer:traceDisplayRows",
       "status": "completed",
-      "sourceEventCount": 0,
-      "renderedRowCount": 0,
+      "sourceEventCount": 6000,
+      "renderedRowCount": 66,
       "noiseEventCount": 0
     },
     "finalResponse": {
-      "present": false,
-      "reason": "finalResponse=null; no authoritative final assistant response was returned by the trace/result payload",
-      "reasonCode": "final_response_missing",
+      "present": true,
       "status": "completed",
-      "terminalStatus": "completed",
-      "naturalEnd": true,
-      "timedOut": false,
-      "agentStageStatus": "completed",
-      "agentResultStatus": "completed",
-      "agentRunStatus": "claimed",
-      "commandState": "completed",
-      "terminalRows": []
+      "source": "agentrun-command-result",
+      "text": "已完成。\n\n修改摘要：\n- `projects/01_baseline/User/main.c` 只加了 3 行：\n  - `#include \"d601_arm2d_demo.h\"`\n  - `d601_arm2d_demo_show();`\n  - `d601_arm2d_demo_task();`\n- `projects/01_baseline/User/d601_arm2d_demo.c` 已重新实现：\n  - `arm2d_wait()`\n  - `arm2d_tile_bind()`\n  - `arm2d_fill_local()`\n  - `arm2d_fill_global()`\n  - stripe/PFB 渲染、FPS 文本、`show()` 初始化并渲染、`task()` 周期刷新\n  - 使用 `arm_2d_init()`、`ARM_2D_OP_WAIT_ASYNC()`、`arm_2d_rgb16_fill_colour()` 和 LCD bitmap/string API\n  - 头文件中确认实际 RGB565 类型名是 `arm_2d_color_rgb565_t`，不是 `arm_2d_rgb565_t`\n\n验证结果：\n- `hwpod-ctl spec validate`：通过\n- `hwpod inspect`：通过，workspace 存在\n- `hwpod build`：异步 job `20260608_152738_76fe5f06`\n- `hwpod job status`：构建完成成功，`return_code: 0`\n- Keil 构建产物：\n  - `projects/01_baseline/Output/atk_f103.hex`\n  - `projects/01_baseline/Output/atk_f103.axf`\n- warning 数：`26`\n- 未执行下载，未运行 UART。",
+      "textChars": 836,
+      "traceId": "trc_case_d601-f103-v2-arm2d-integration_a2844403df574ef9a5321dbbfe928b64"
     }
   },
   "aggregate": {
@@ -378,14 +372,14 @@
   "files": [
     {
       "path": "evidence.json",
-      "bytes": 24410,
-      "sha256": "609152b610c5e21b3633538ca64c1eee1ecf68d50f4d983bea9c0350539acb28",
+      "bytes": 62270,
+      "sha256": "a14c679d21c7d0160fbe650219ae4eaea4b3d9a3367c0a9e5fbc44ae3a5d40f6",
       "source": "evidence.json"
     },
     {
       "path": "summary.md",
-      "bytes": 1412,
-      "sha256": "6b1e7e46c870d92a2a47611e8e2fa4d7c9ac235a4781e75c77969c7006877220"
+      "bytes": 1413,
+      "sha256": "3a01772652e031361af6da0fe4c82b968b876cfcc7fb35a2cc0e828ef59e521b"
     },
     {
       "path": "aggregate.md",
@@ -394,40 +388,40 @@
     },
     {
       "path": "agent-messages.json",
-      "bytes": 2795,
-      "sha256": "ccbf7be70b7f803b7425f01cf36332f81f83e1a6d86004e2eaa84e1c9d4919a4"
+      "bytes": 51012,
+      "sha256": "e3b0e9c0017275e5b867b21a6300e1b8cd2fd894910ac193e66c5b6f966cee00"
     },
     {
       "path": "agent-trace.md",
-      "bytes": 11566,
-      "sha256": "c0ab388e8bc18a3c05dd6dc9a9327d660c0cf7d00e11b98fe8ddadd8f89c89cc"
+      "bytes": 50002,
+      "sha256": "6c264316cb6f8f53f86cacafb0defdc58bbd1cfedf8283f8fc3e5ce5bf7529b3"
     },
     {
       "path": "agent-transcript.md",
-      "bytes": 11566,
-      "sha256": "c0ab388e8bc18a3c05dd6dc9a9327d660c0cf7d00e11b98fe8ddadd8f89c89cc"
+      "bytes": 50002,
+      "sha256": "6c264316cb6f8f53f86cacafb0defdc58bbd1cfedf8283f8fc3e5ce5bf7529b3"
     },
     {
       "path": "final-response.md",
-      "bytes": 618,
-      "sha256": "3f915589fc2195b3221c1b99f3834f3d86e6d35d138e16a84a3670d14ea368eb"
+      "bytes": 1267,
+      "sha256": "383e800ee595b790c2442f4c5af3965bd5a82c69eaf435f99d8339298ee5be30"
     },
     {
       "path": "run.json",
-      "bytes": 35454,
-      "sha256": "0b375c9ded0bd8ab8825db99b12d6fe429b4cec5311f234ba88d3c9ff9e1a6b2",
+      "bytes": 35473,
+      "sha256": "faa0722a4328e7744440127c72e6a482d900c539be219ade1ac7d314f2d7a73f",
       "source": "run.json"
     },
     {
       "path": "result.json",
-      "bytes": 10708,
-      "sha256": "22429ad50b141132283c1e4e735b8ccc403805bc04bcdbab78db6844c4e6b9c4",
+      "bytes": 46061,
+      "sha256": "6dc6edf9f4bcd81632cdfa1cdf1a86c5b14ff604cbf9f3eb1fa0d6f42f9c1332",
       "source": "result.json"
     },
     {
       "path": "agent-trace.json",
-      "bytes": 1991,
-      "sha256": "42f9dc0ab3dd7d3fa30bba0d920e7690f4d4889a2456f90cdf3d583974a0c47c",
+      "bytes": 159209,
+      "sha256": "e968898355172fde3ba302f9616eebc1f11ea77885062102ed001fcb0f623138",
       "source": "agent-trace.json"
     },
     {
