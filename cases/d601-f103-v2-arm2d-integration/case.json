@@ -15,7 +15,7 @@
   },
   "agentTask": {
     "workspace": "subjectWorktree",
-    "providerProfile": "hy",
+    "providerProfile": "deepseek",
     "projectId": "prj_hwpod_workbench",
     "timeoutMs": 1200000,
     "prompt": "请在隔离主体工作区中完成 D601-F103-V2 的 ARM-2D demo 最小集成。\n\n任务目标：\n1. 编辑 projects/01_baseline/User/main.c：在 d601_lcd.h 之后加入 d601_arm2d_demo.h，在 d601_gpio_init() 之后调用 d601_arm2d_demo_show()，并在 while(1) 循环中 jsonrpc_process() 之后调用 d601_arm2d_demo_task()。\n2. 编辑 projects/01_baseline/User/d601_arm2d_demo.c：先阅读 d601_arm2d_demo.h、d601_lcd.h，再读取 .agents/skills/arm2d-skill/ 下的 ARM-2D skill 参考（包含 ARM-2D API 用法、Tile/Framebuffer 操作模式和最佳实践），最后以工作区内的 arm_2d.h、arm_2d_types.h 等头文件为类型定义校验源推导实现。至少完成 arm2d_wait()、arm2d_tile_bind()、arm2d_fill_local()、d601_arm2d_demo_show() 和 d601_arm2d_demo_task()。\n3. 完成后执行 compile-only 验证，并回报 diff 摘要、编译终态、return_code、artifact 路径、warning 数和仍需人工关注的问题。\n\n不要照搬历史 run trace、旧答案或记忆中的 API 形态；所有 ARM-2D 与 LCD API 以当前工作区内头文件和 .agents/skills/arm2d-skill/ 为联合权威参考。",
