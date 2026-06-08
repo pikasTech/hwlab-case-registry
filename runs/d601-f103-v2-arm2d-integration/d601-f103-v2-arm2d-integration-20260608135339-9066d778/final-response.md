@@ -8,11 +8,11 @@
 finalResponse=null
 
 reasonCode: final_response_missing
-status: failed
-terminalStatus: failed
+status: running
+terminalStatus: running
 naturalEnd: unknown
 timedOut: false
-agentResultStatus: failed
+agentResultStatus: running
 
 reason: finalResponse=null; no authoritative final assistant response was returned by the trace/result payload
 

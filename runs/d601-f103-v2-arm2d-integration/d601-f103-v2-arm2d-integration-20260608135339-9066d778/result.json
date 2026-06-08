@@ -333,8 +333,7 @@
       "conversationId": "cnv_case_d601-f103-v2-arm2d-integration_d601-f103-v2-arm2d-integration-20260608135339-9066d778",
       "providerProfile": "dsflash-go",
       "projectId": "prj_hwpod_workbench",
-      "source": "caserun-identity",
-      "lookupOnly": true,
+      "source": "hwlab-cli.client.agent.trace",
       "lookup": {
         "source": "hwlab-cli.client.agent",
         "strategy": "id_plus_existing_cli",
@@ -351,9 +350,9 @@
           "sessionStatus": "hwlab-cli client agent session status ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0"
         }
       },
-      "status": "failed",
-      "commandCount": 0,
-      "hwpodCommandCount": 0,
+      "status": "running",
+      "commandCount": 48,
+      "hwpodCommandCount": 31,
       "hwpodBuildCommandCount": 0,
       "keilJobCandidates": [],
       "agentBuildJobIds": []
@@ -376,8 +375,8 @@
     },
     "aggregate": {
       "path": "aggregate.md",
-      "bytes": 9943,
-      "sha256": "2e4dbb7bc0a047a48de249186434678633a0e55cd08dd8f7502a1ebcb3150343",
+      "bytes": 57304,
+      "sha256": "c7e93d0cd7dd6859d60a3cd57b70100717cf85ac5f58fc65c141b9e80ea0069f",
       "primaryEntry": true,
       "aggregationOnly": true,
       "autoEvaluation": false
@@ -385,8 +384,166 @@
     "agentStage": {
       "source": "agent-trace-commands",
       "autoEvaluation": false,
-      "commands": [],
-      "kinds": []
+      "commands": [
+        {
+          "kind": "spec-validate",
+          "seq": 38,
+          "exitCode": 127,
+          "command": "hwpod-ctl spec validate 2>&1",
+          "detail": "stdout: /bin/sh: hwpod-ctl: not found exitCode=127"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 40,
+          "exitCode": 0,
+          "command": "hwpod 2>&1 || true",
+          "detail": "stdout: /bin/sh: hwpod: not found exitCode=0"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 153,
+          "exitCode": 0,
+          "command": "bun tools/hwpod-cli.ts workspace rg \"#define implement_ex\" \"projects/01_baseline/Middlewares/Arm-2D/Library/Include\" --context 2 --hwpod-id d601-f103-v2 --workspace-path \"\"'$WS\" 2>&1",
+          "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_c649aa5c-8fe... exitCode=0"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 156,
+          "exitCode": 0,
+          "command": "bun tools/hwpod-cli.ts workspace rg \"#define __implement_ex\" \"projects/01_baseline/Middlewares/Arm-2D/Library/Include\" --context 3 --hwpod-id d601-f103-v2 --workspace-path \"\"'$WS\" 2>&1",
+          "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_a599cc9b-9e4... exitCode=0"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 159,
+          "exitCode": 0,
+          "command": "bun tools/hwpod-cli.ts workspace rg \"#define __implement_ex\\|#define implement\\|ARM_2D_ANONYMOUS\\|arm_2d_anonymous\" \"projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_utils.h\" --context 5 --hwpod-id d601-f103-v2 --workspace-path \"\"'$WS\" 2>&1",
+          "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_51782b05-c9d... exitCode=0"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 164,
+          "exitCode": 0,
+          "command": "bun tools/hwpod-cli.ts workspace rg \"__implement_ex\" \"projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_utils.h\" --context 5 --hwpod-id d601-f103-v2 --workspace-path \"\"'$WS\" 2>&1",
+          "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_3b522bf7-844... exitCode=0"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 169,
+          "exitCode": 0,
+          "command": "bun tools/hwpod-cli.ts workspace rg \"arm_2d_init\" \"projects/01_baseline\" --context 3 --hwpod-id d601-f103-v2 --workspace-path \"\"'$WS\" 2>&1",
+          "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_1bcb99a3-43e... exitCode=0"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 174,
+          "exitCode": 0,
+          "command": "bun tools/hwpod-cli.ts workspace insert-after --path \"projects/01_baseline/User/main.c\" --anchor '#include \"d601_lcd.h\"' --line '#include \"d601_arm2d_demo.h\"' --hwpod-id d601-f103-v2 --workspace-path \"\"'$WS\" 2>&1",
+          "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.insert-after\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.insert-after\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwp... exitCode=0"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 179,
+          "exitCode": 0,
+          "command": "bun tools/hwpod-cli.ts workspace insert-after --path \"projects/01_baseline/User/main.c\" --anchor ' d601_gpio_init();' --line ' d601_arm2d_demo_show();' --hwpod-id d601-f103-v2 --workspace-path \"\"'$WS\" 2>&1",
+          "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.insert-after\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.insert-after\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwp... exitCode=0"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 182,
+          "exitCode": 0,
+          "command": "bun tools/hwpod-cli.ts workspace insert-after --path \"projects/01_baseline/User/main.c\" --anchor ' jsonrpc_process();' --line ' d601_arm2d_demo_task();' --hwpod-id d601-f103-v2 --workspace-path \"\"'$WS\" 2>&1",
+          "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.insert-after\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.insert-after\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwp... exitCode=0"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 186,
+          "exitCode": 0,
+          "command": "bun tools/hwpod-cli.ts workspace cat \"projects/01_baseline/User/main.c\" --hwpod-id d601-f103-v2 --workspace-path \"\"'$WS\" 2>&1",
+          "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_96ebeb20-7... exitCode=0"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 190,
+          "exitCode": 1,
+          "command": "bun tools/hwpod-cli.ts workspace rg \"ARM_2D_COLOUR_RGB565\" \"projects/01_baseline/Middlewares/Arm-2D/Library/Include\" --context 2 --hwpod-id d601-f103-v2 --workspace-path \"\"'$WS\" 2>&1",
+          "detail": "stdout: { \"ok\": false, \"action\": \"hwpod-cli.invoke\", \"status\": \"blocked\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_268c8bd9-b24d... exitCode=1"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 42,
+          "exitCode": 0,
+          "command": "hwpod hwpod-ctl keil-cli 2>&1 || true",
+          "detail": "stdout: exitCode=0"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 63,
+          "exitCode": 1,
+          "command": "bun tools/hwpod-cli.ts inspect --hwpod-id d601-f103-v2 2>&1",
+          "detail": "stdout: { \"ok\": false, \"action\": \"hwpod-cli.invoke\", \"status\": \"blocked\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"inspect\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"inspect\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_3db8a225-dd75-47df-868b... exitCode=1"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 70,
+          "exitCode": 1,
+          "command": "bun tools/hwpod-cli.ts workspace ls . --hwpod-id d601-f103-v2 2>&1",
+          "detail": "stdout: { \"ok\": false, \"action\": \"hwpod-cli.invoke\", \"status\": \"failed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_47332285-0229-... exitCode=1"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 73,
+          "exitCode": 0,
+          "command": "bun tools/hwpod-cli.ts workspace ls . --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608135339-9066d778\" 2>&1",
+          "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_31894e14-f1e... exitCode=0"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 79,
+          "exitCode": 0,
+          "command": "bun tools/hwpod-cli.ts workspace ls \"projects/01_baseline/User\" --hwpod-id d601-f103-v2 --workspace-path \"\"'$WS\" 2>&1",
+          "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_c129118c-bb9... exitCode=0"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 81,
+          "exitCode": 0,
+          "command": "bun tools/hwpod-cli.ts workspace ls \"projects/01_baseline/Middlewares/Arm-2D\" --hwpod-id d601-f103-v2 --workspace-path \"\"'$WS\" 2>&1",
+          "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_29835ead-4bc... exitCode=0"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 90,
+          "exitCode": 0,
+          "command": "bun tools/hwpod-cli.ts workspace cat \"projects/01_baseline/User/d601_arm2d_demo.h\" --hwpod-id d601-f103-v2 --workspace-path \"\"'$WS\" 2>&1",
+          "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_fc71b8f5-2... exitCode=0"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 91,
+          "exitCode": 0,
+          "command": "bun tools/hwpod-cli.ts workspace cat \"projects/01_baseline/User/main.c\" --hwpod-id d601-f103-v2 --workspace-path \"\"'$WS\" 2>&1",
+          "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_00a8c93a-9... exitCode=0"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 92,
+          "exitCode": 0,
+          "command": "bun tools/hwpod-cli.ts workspace cat \"projects/01_baseline/User/d601_arm2d_demo.c\" --hwpod-id d601-f103-v2 --workspace-path \"\"'$WS\" 2>&1",
+          "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_f75ded35-7... exitCode=0"
+        },
+        {
+          "kind": "hwpod-other",
+          "seq": 94,
+          "exitCode": 0,
+          "command": "bun tools/hwpod-cli.ts workspace cat \"projects/01_baseline/User/d601_lcd.h\" --hwpod-id d601-f103-v2 --workspace-path \"\"'$WS\" 2>&1",
+          "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_12742f7e-c... exitCode=0"
+        }
+      ],
+      "kinds": [
+        "spec-validate",
+        "hwpod-other"
+      ]
     },
     "status": "recorded",
     "autoEvaluation": false
