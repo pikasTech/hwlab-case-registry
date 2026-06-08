@@ -178,8 +178,8 @@
   },
   "aggregate": {
     "path": "aggregate.md",
-    "bytes": 86580,
-    "sha256": "37ea19bc5c8e911a1119b5b2e08d0c7b2ff847e2a3690d3c9b2353f1a64ff35b",
+    "bytes": 86585,
+    "sha256": "d3db68c4bdcb54da9f105dad8044a4e7203a8ce555827116e8b3757b5dea5161",
     "primaryEntry": true,
     "aggregationOnly": true,
     "autoEvaluation": false
@@ -293,16 +293,16 @@
     "commands": [
       {
         "kind": "spec-validate",
-        "seq": 12432,
+        "seq": 12824,
         "exitCode": 0,
         "command": "hwpod-ctl spec validate --hwpod-id d601-f103-v2",
         "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-ctl.spec.validate\", \"status\": \"succeeded\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"document\": { \"apiVersion\": \"hwlab.dev/v0alpha1\", \"kind\": \"Hwpod\", \"metadata\": { \"uid\": \"D601-F103-V2\", \"name\": \"d601-f103-v2\" }, \"spec\": { \"targetDevice\": { \"board\": \"D601-F103-V2\", \"mcu\": \"STM32F103\" }, \"workspace\": { \"path\": \"F:\\\\Work\\\\D601-HWLAB\", \"toolchain\": \"keil-mdk\", \"keilProject\": \"projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx\", \"keilTarget\": \"USART\", \"keilCliPath\": \"C:\\\\Users\\\\liang\\\\.agent... exitCode=0"
       },
       {
         "kind": "workspace-edit",
-        "seq": 12548,
+        "seq": 12929,
         "exitCode": 0,
-        "command": "hwpod workspace insert-after '\"\\ --path \"projects/01_baseline/User/main.c\" \\ --anchor ' jsonrpc_process();' \\ --line ' d601_arm2d_demo_task();' \\ --hwpod-id d601-f103-v2 \\ --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" 2>&1",
+        "command": "hwpod workspace insert-after '\"\\ --path \"projects/01_baseline/User/main.c\" \\ --anchor '#include \"d601_lcd.h\"' \\ --line '#include \"d601_arm2d_demo.h\"' \\ --hwpod-id d601-f103-v2 \\ --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" 2>&1",
         "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.insert-after\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.insert-after\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwp... exitCode=0"
       },
       {
@@ -313,88 +313,67 @@
         "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"debug.build\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"debug.build\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_166b38bf-3958-... exitCode=0"
       },
       {
-        "kind": "workspace-edit",
-        "seq": 12365,
+        "kind": "hwpod-other",
+        "seq": 12826,
         "exitCode": 0,
-        "command": "hwpod workspace apply-patch '\"\\ --hwpod-id d601-f103-v2 \\ --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" \\ --reason \"Rewrite d601_arm2d_demo.c with full ARM-2D demo implementation\" 2>&1",
-        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.apply-patch\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.apply-patch\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod... exitCode=0"
+        "command": "hwpod workspace --help 2>&1 || hwpod --help 2>&1 | head -40",
+        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.workspace.help\", \"status\": \"succeeded\", \"contractVersion\": \"hwpod-node-ops-v1\", \"command\": \"workspace\", \"subcommand\": null, \"usage\": [ \"hwpod workspace ls [path] --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\", \"hwpod workspace cat <path> --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\", \"hwpod workspace read <path> --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\", \"hwpod workspace rg <pattern> [path] --context 3 --max-matches 20 --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\", \"hwpod workspace write --path <path> --conten... exitCode=0"
       },
       {
-        "kind": "workspace-edit",
-        "seq": 12359,
+        "kind": "hwpod-other",
+        "seq": 12831,
+        "exitCode": 0,
+        "command": "hwpod workspace ls projects/01_baseline/ --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\"",
+        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_e200051b-c38... exitCode=0"
+      },
+      {
+        "kind": "hwpod-other",
+        "seq": 12832,
+        "exitCode": 0,
+        "command": "hwpod workspace ls projects/01_baseline/User/ --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\"",
+        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_75bfe06e-0d2... exitCode=0"
+      },
+      {
+        "kind": "hwpod-other",
+        "seq": 12838,
+        "exitCode": 0,
+        "command": "hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.h --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\"",
+        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_a3115be7-1... exitCode=0"
+      },
+      {
+        "kind": "hwpod-other",
+        "seq": 12841,
+        "exitCode": 0,
+        "command": "hwpod workspace cat projects/01_baseline/User/d601_lcd.h --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\"",
+        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_c5cdcdbc-e... exitCode=0"
+      },
+      {
+        "kind": "hwpod-other",
+        "seq": 12842,
+        "exitCode": 0,
+        "command": "hwpod workspace cat projects/01_baseline/User/main.c --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\"",
+        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_5df33183-0... exitCode=0"
+      },
+      {
+        "kind": "hwpod-other",
+        "seq": 12848,
         "exitCode": 1,
-        "command": "hwpod workspace apply-patch \\ --hwpod-id d601-f103-v2 \\ --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" \\ --reason \"Rewrite d601_arm2d_demo.c with full ARM-2D demo implementation\" \\ --patch-content \"\"'$(cat)\" *** Update File: projects/01_baseline/User/d601_arm2d_demo.c @@ -1,104 +1,232 @@ +#include \"d601_arm2d_demo.h\" +#include \"d601_lcd.h\" +#include \"stm32f1xx_hal.h\" +#include \"arm_2d.h\" + +#include <stdint.h> +#include <string.h> +#include <stdio.h> + +/* PFB and display constants */ +#define D601_ARM2D_PFB_WIDTH 240U +#define D601_ARM2D_PFB_LINES 32U + +/* RGB565 colour helper macro */ +#define D601_RGB565(__R, __G, __B) '\"\\ + (uint16_t)((((uint16_t)(__R) & 0xF8U) << 8) | \\ + (((uint16_t)(__G) & 0xFCU) << 3) | \\ + ((uint16_t)(__B) >...",
-        "detail": "stdout: { \"ok\": false, \"action\": \"hwpod-cli.invoke\", \"status\": \"failed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.apply-patch\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in ... clipped ..."
+        "command": "hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" Middlewares/",
+        "detail": "stdout: { \"ok\": false, \"action\": \"hwpod-cli.invoke\", \"status\": \"failed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_bf7b418b-d5c0-... exitCode=1"
       },
       {
         "kind": "hwpod-other",
-        "seq": 12372,
+        "seq": 12849,
         "exitCode": 0,
-        "command": "hwpod workspace cat projects/01_baseline/User/main.c --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" 2>&1",
-        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_921bb276-7... exitCode=0"
+        "command": "hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.c --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\"",
+        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_182acba2-0... exitCode=0"
       },
       {
         "kind": "hwpod-other",
-        "seq": 12373,
+        "seq": 13006,
         "exitCode": 0,
-        "command": "hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.c --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" 2>&1",
-        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_cd0d96c3-3... exitCode=0"
-      },
-      {
-        "kind": "hwpod-other",
-        "seq": 12377,
-        "exitCode": 0,
-        "command": "hwpod workspace rg \"''^void d601_arm2d_demo_task\" --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" --context 3 --max-matches 10 projects/01_baseline/User/d601_arm2d_demo.c 2>&1",
-        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_21713733-903... exitCode=0"
-      },
-      {
-        "kind": "workspace-edit",
-        "seq": 12383,
-        "exitCode": 0,
-        "command": "hwpod workspace write '\"\\ --path \"projects/01_baseline/User/d601_arm2d_demo.c\" \\ --content \"\"'$(cat /tmp/new_demo.c)\" '\"\\ --hwpod-id d601-f103-v2 \\ --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" 2>&1",
-        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.write\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.write\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_1cd05d... exitCode=0"
-      },
-      {
-        "kind": "hwpod-other",
-        "seq": 12402,
-        "exitCode": 127,
         "command": "hwpod && command -v hwpod-ctl",
-        "detail": "stdout: exitCode=127"
-      },
-      {
-        "kind": "hwpod-other",
-        "seq": 12531,
-        "exitCode": 0,
-        "command": "hwpod workspace rg \"arm_2d_op_fill_cl_t\" --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" --context 5 --max-matches 5 projects/01_baseline/Middlewares/Arm-2D/Library/Include/ 2>&1",
-        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_2133ad5c-955... exitCode=0"
-      },
-      {
-        "kind": "workspace-edit",
-        "seq": 12537,
-        "exitCode": 0,
-        "command": "hwpod workspace insert-after '\"\\ --path \"projects/01_baseline/User/main.c\" \\ --anchor '#include \"d601_lcd.h\"' \\ --line '#include \"d601_arm2d_demo.h\"' \\ --hwpod-id d601-f103-v2 \\ --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" 2>&1",
-        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.insert-after\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.insert-after\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwp... exitCode=0"
-      },
-      {
-        "kind": "workspace-edit",
-        "seq": 12542,
-        "exitCode": 0,
-        "command": "hwpod workspace insert-after '\"\\ --path \"projects/01_baseline/User/main.c\" \\ --anchor ' d601_gpio_init();' \\ --line ' d601_arm2d_demo_show();' \\ --hwpod-id d601-f103-v2 \\ --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" 2>&1",
-        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.insert-after\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.insert-after\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwp... exitCode=0"
-      },
-      {
-        "kind": "hwpod-other",
-        "seq": 12545,
-        "exitCode": 0,
-        "command": "hwpod workspace cat projects/01_baseline/User/main.c --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" 2>&1",
-        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_02405a7e-1... exitCode=0"
-      },
-      {
-        "kind": "hwpod-other",
-        "seq": 12775,
-        "exitCode": 0,
-        "command": "hwpod workspace rg \"''^void d601_arm2d_demo_task|''^static void arm2d_wait|''^static void arm2d_tile_bind|''^static void arm2d_fill_local\" --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" --context 1 --max-matches 20 projects/01_baseline/User/d601_arm2d_demo.c 2>&1",
-        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_6d6e5dc9-e88... exitCode=0"
+        "detail": "stdout: /home/agentrun/workspaces/gitbundle-b4fc4ccdb18c58e2/workspace/tools/hwpod /home/agentrun/workspaces/gitbundle-b4fc4ccdb18c58e2/workspace/tools/hwpod-ctl exitCode=0"
       },
       {
         "kind": "hwpod-other",
@@ -419,66 +398,66 @@
       },
       {
         "kind": "hwpod-other",
-        "seq": 12416,
+        "seq": 12852,
         "exitCode": 0,
-        "command": "hwpod && command -v hwpod-ctl",
-        "detail": "stdout: /home/agentrun/workspaces/gitbundle-b4fc4ccdb18c58e2/workspace/tools/hwpod /home/agentrun/workspaces/gitbundle-b4fc4ccdb18c58e2/workspace/tools/hwpod-ctl exitCode=0"
+        "command": "hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" projects/01_baseline/Middlewares/",
+        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_741b7a98-e67... exitCode=0"
       },
       {
         "kind": "hwpod-other",
-        "seq": 12434,
+        "seq": 12855,
         "exitCode": 0,
-        "command": "hwpod workspace --help 2>&1 || hwpod --help 2>&1 | head -40",
-        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.workspace.help\", \"status\": \"succeeded\", \"contractVersion\": \"hwpod-node-ops-v1\", \"command\": \"workspace\", \"subcommand\": null, \"usage\": [ \"hwpod workspace ls [path] --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\", \"hwpod workspace cat <path> --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\", \"hwpod workspace read <path> --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\", \"hwpod workspace rg <pattern> [path] --context 3 --max-matches 20 --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\", \"hwpod workspace write --path <path> --conten... exitCode=0"
+        "command": "hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" projects/01_baseline/Middlewares/Arm-2D/ 2>&1 | head -80",
+        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_07add02c-842... exitCode=0"
       },
       {
         "kind": "hwpod-other",
-        "seq": 12439,
-        "exitCode": 0,
-        "command": "hwpod workspace ls projects/01_baseline/ --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\"",
-        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_e200051b-c38... exitCode=0"
-      },
-      {
-        "kind": "hwpod-other",
-        "seq": 12440,
-        "exitCode": 0,
-        "command": "hwpod workspace ls projects/01_baseline/User/ --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\"",
-        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_75bfe06e-0d2... exitCode=0"
-      },
-      {
-        "kind": "hwpod-other",
-        "seq": 12446,
-        "exitCode": 0,
-        "command": "hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.h --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\"",
-        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_a3115be7-1... exitCode=0"
-      },
-      {
-        "kind": "hwpod-other",
-        "seq": 12449,
-        "exitCode": 0,
-        "command": "hwpod workspace cat projects/01_baseline/User/d601_lcd.h --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\"",
-        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_c5cdcdbc-e... exitCode=0"
-      },
-      {
-        "kind": "hwpod-other",
-        "seq": 12450,
-        "exitCode": 0,
-        "command": "hwpod workspace cat projects/01_baseline/User/main.c --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\"",
-        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_5df33183-0... exitCode=0"
-      },
-      {
-        "kind": "hwpod-other",
-        "seq": 12456,
+        "seq": 12860,
         "exitCode": 1,
-        "command": "hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" Middlewares/",
-        "detail": "stdout: { \"ok\": false, \"action\": \"hwpod-cli.invoke\", \"status\": \"failed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_bf7b418b-d5c0-... exitCode=1"
+        "command": "hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" projects/01_baseline/Middlewares/Arm-2D/Acceleration/arm-2d/ 2>&1",
+        "detail": "stdout: { \"ok\": false, \"action\": \"hwpod-cli.invoke\", \"status\": \"failed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_a9b2870c-1039-... exitCode=1"
       },
       {
         "kind": "hwpod-other",
-        "seq": 12457,
+        "seq": 12861,
         "exitCode": 0,
-        "command": "hwpod workspace cat projects/01_baseline/User/d601_arm2d_demo.c --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\"",
-        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_182acba2-0... exitCode=0"
+        "command": "hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" projects/01_baseline/Middlewares/Arm-2D/Acceleration/ 2>&1",
+        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_4649498c-d17... exitCode=0"
+      },
+      {
+        "kind": "hwpod-other",
+        "seq": 12864,
+        "exitCode": 0,
+        "command": "hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" projects/01_baseline/Middlewares/Arm-2D/Acceleration/Arm/ 2>&1",
+        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_96d11e5c-0d6... exitCode=0"
+      },
+      {
+        "kind": "hwpod-other",
+        "seq": 12867,
+        "exitCode": 0,
+        "command": "hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" projects/01_baseline/Middlewares/Arm-2D/Acceleration/Arm/ACI/ 2>&1",
+        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_7098b87d-7b5... exitCode=0"
+      },
+      {
+        "kind": "hwpod-other",
+        "seq": 12871,
+        "exitCode": 0,
+        "command": "hwpod workspace rg \"arm_2d'\"\\.h\" --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" --context 0 --max-matches 30 projects/ 2>&1",
+        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_794e29c1-f89... exitCode=0"
+      },
+      {
+        "kind": "hwpod-other",
+        "seq": 12878,
+        "exitCode": 0,
+        "command": "hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d.h --hwpod-id d601-f103-v2 --workspace-path \"F:'\"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" 2>&1 | head -200",
+        "detail": "stdout: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-f103-v2\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_02ff4f09-9... exitCode=0"
+      },
+      {
+        "kind": "hwpod-other",
+        "seq": 12879,
+        "exitCode": 1,
+        "command": "hwpod workspace rg \"arm_2d_types'\"\\.h\" --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" --context 0 --max-matches 10 projects/ 2>&1 | grep -E \":(text|line)\"",
+        "detail": "stdout: commandExecution failed: /bin/sh -lc 'export PATH=\"$PWD/tools:$PATH\" && hwpod workspace rg \"arm_2d_types'\"\\\\.h\\\" --hwpod-id d601-f103-v2 --workspace-path \\\"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\\\" --context 0 --max-matches 10 projects/ 2>&1 | grep -E \\\":(text|line)\\\" \" exit=1 durationMs=604 exitCode=1"
       }
     ],
     "kinds": [
@@ -583,33 +562,33 @@
   "files": [
     {
       "path": "evidence.json",
-      "bytes": 78376,
-      "sha256": "f232b7a43f0d692ceb104798e3647279f791663053d44c2a6198e7f686aa3d37"
+      "bytes": 73079,
+      "sha256": "ad99a62ae217a4e7c67c879d13bed2e17f0a1e4738c6292271f8c24228be2db0"
     },
     {
       "path": "summary.md",
-      "bytes": 11898,
-      "sha256": "4b82c04768da10fc9756510ab84ceeba87ad5864975279dc844d92c4bccf4867"
+      "bytes": 10992,
+      "sha256": "827227ffba02dc9113d963473ca2f93811837ec197396214529635a39537164b"
     },
     {
       "path": "aggregate.md",
-      "bytes": 86580,
-      "sha256": "37ea19bc5c8e911a1119b5b2e08d0c7b2ff847e2a3690d3c9b2353f1a64ff35b"
+      "bytes": 86585,
+      "sha256": "d3db68c4bdcb54da9f105dad8044a4e7203a8ce555827116e8b3757b5dea5161"
     },
     {
       "path": "agent-messages.json",
       "bytes": 82400,
-      "sha256": "b80cffd6aabbe47b165562ab8b70ab1fc58f518ad9ba17581d4f0efe31f42c4b"
+      "sha256": "e5f76508a085b7be9b8c97389ed277e46adcefcae39310bef809606c8dee0a79"
     },
     {
       "path": "agent-trace.md",
       "bytes": 82532,
-      "sha256": "b74c28e5b1f2ca6a60a134104bb4a30d6f052fc1febc09194bb12b1b89dea702"
+      "sha256": "c2ce5608a4a3068f887f5a8a59a6fddda76a092f6a41e7311411b0d97190cf9d"
     },
     {
       "path": "agent-transcript.md",
       "bytes": 82532,
-      "sha256": "b74c28e5b1f2ca6a60a134104bb4a30d6f052fc1febc09194bb12b1b89dea702"
+      "sha256": "c2ce5608a4a3068f887f5a8a59a6fddda76a092f6a41e7311411b0d97190cf9d"
     },
     {
       "path": "final-response.md",
@@ -623,13 +602,13 @@
     },
     {
       "path": "result.json",
-      "bytes": 222159,
-      "sha256": "e041b94ae113ce5367d6c88c67e0c9d2849941fbdde95600e9e8f276f0bf3953"
+      "bytes": 211464,
+      "sha256": "950c415111ebf3b70e501520f8e27323cdac6426d05be875e292461fbb81d1bc"
     },
     {
       "path": "agent-trace.json",
       "bytes": 261161,
-      "sha256": "057b0616790b024e1e0d8f1f79d93a97bd90f78eb89d875743b93eeaf01f0bd2"
+      "sha256": "19748e062dbdb4c3a1919a401b88d94e007be6739a028359c5fa677014b59274"
     },
     {
       "path": "agent-prompt.md",
@@ -648,8 +627,8 @@
     },
     {
       "path": "worker.stdout.log",
-      "bytes": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "bytes": 219208,
+      "sha256": "be639f75ac5ec83c4d976a28624dc7181b5f8aae1295a24d5b02216125359e26"
     },
     {
       "path": "worker.stderr.log",
