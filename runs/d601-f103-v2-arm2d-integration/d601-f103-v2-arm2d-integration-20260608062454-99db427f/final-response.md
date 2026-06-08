@@ -13,11 +13,15 @@ terminalStatus: running
 naturalEnd: false
 timedOut: true
 timeoutMs: 600000
-agentResultStatus: running
+agentResultStatus: canceled
 agentRunStatus: claimed
 commandState: acknowledged
 
-reason: CaseRun agent polling timed out after 600000ms; result status=running, AgentRun runStatus=claimed, commandState=acknowledged at archive time, so no authoritative final assistant response was returned.
+reason: CaseRun agent polling timed out after 600000ms; result status=canceled, AgentRun runStatus=claimed, commandState=acknowledged at archive time, so no authoritative final assistant response was returned.
 
 ## Terminal/Error Rows
-_No terminal/error rows were rendered._
+### 06:38:49 total=00:13:44 fail agentrun:cancel:canceled
+
+- rowId: event:56016
+
+HWLAB forwarded cancel to AgentRun command cancel API.

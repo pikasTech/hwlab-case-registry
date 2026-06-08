@@ -28,7 +28,7 @@
         "sessionStatus": "hwlab-cli client agent session status ses_7bbd52e7-e458-4dbb-95d0-52f326fe6370"
       }
     },
-    "status": "running",
+    "status": "canceled",
     "commandCount": 117,
     "hwpodCommandCount": 0,
     "hwpodBuildCommandCount": 0
@@ -155,14 +155,14 @@
     "finalResponsePath": "final-response.md",
     "traceRender": {
       "renderer": "tools/src/hwlab-cli/trace-renderer:traceDisplayRows",
-      "status": "running",
+      "status": "canceled",
       "sourceEventCount": 6000,
-      "renderedRowCount": 140,
+      "renderedRowCount": 153,
       "noiseEventCount": 0
     },
     "finalResponse": {
       "present": false,
-      "reason": "CaseRun agent polling timed out after 600000ms; result status=running, AgentRun runStatus=claimed, commandState=acknowledged at archive time, so no authoritative final assistant response was returned.",
+      "reason": "CaseRun agent polling timed out after 600000ms; result status=canceled, AgentRun runStatus=claimed, commandState=acknowledged at archive time, so no authoritative final assistant response was returned.",
       "reasonCode": "agent_task_timeout",
       "status": "timeout",
       "terminalStatus": "running",
@@ -170,10 +170,18 @@
       "timedOut": true,
       "timeoutMs": 600000,
       "agentStageStatus": "timeout",
-      "agentResultStatus": "running",
+      "agentResultStatus": "canceled",
       "agentRunStatus": "claimed",
       "commandState": "acknowledged",
-      "terminalRows": [],
+      "terminalRows": [
+        {
+          "rowId": "event:56016",
+          "seq": 56016,
+          "tone": "blocked",
+          "header": "06:38:49 total=00:13:44 fail agentrun:cancel:canceled",
+          "body": "HWLAB forwarded cancel to AgentRun command cancel API."
+        }
+      ],
       "error": {
         "clipped": true,
         "bytes": 4739,
@@ -367,8 +375,8 @@
   "files": [
     {
       "path": "evidence.json",
-      "bytes": 66335,
-      "sha256": "19d442b191bde8431ae6f3148777a90b5487d0f0a7ced7a3f8f0bc1077c0df15",
+      "bytes": 66969,
+      "sha256": "9aee819d86025a5734c351d228b90b3d84a01f9682296147a1d1d142ff9edc73",
       "source": "evidence.json"
     },
     {
@@ -378,23 +386,23 @@
     },
     {
       "path": "agent-messages.json",
-      "bytes": 131148,
-      "sha256": "4f4ffc720505f6cef875922bfca0224f057c85bd9c3bbd443bea2109035cf1f0"
+      "bytes": 133646,
+      "sha256": "b32bd552d52e20f45fb5151e870c7b5014f0e5f6a501eec72666f60d80b562d1"
     },
     {
       "path": "agent-trace.md",
-      "bytes": 108860,
-      "sha256": "df0dea96aae9f2d67cab58e2d7e771d8cc3e23ce342a742787ec246859ac4246"
+      "bytes": 109547,
+      "sha256": "c0bae0ec9cde1148d094df55c5eb18d0c9bb60268d47500feffe338949c6aaf0"
     },
     {
       "path": "agent-transcript.md",
-      "bytes": 108860,
-      "sha256": "df0dea96aae9f2d67cab58e2d7e771d8cc3e23ce342a742787ec246859ac4246"
+      "bytes": 109547,
+      "sha256": "c0bae0ec9cde1148d094df55c5eb18d0c9bb60268d47500feffe338949c6aaf0"
     },
     {
       "path": "final-response.md",
-      "bytes": 727,
-      "sha256": "50ed8cfacd22fed708ecb2747a15e3312945ba4db8584f8f7097c43b4c7b4a7b"
+      "bytes": 825,
+      "sha256": "de6fdcb542ea34b4261cbdedf4da289c1c1c5f020518d3d988e9c37b492be694"
     },
     {
       "path": "run.json",
@@ -404,14 +412,15 @@
     },
     {
       "path": "result.json",
-      "bytes": 131452,
-      "sha256": "3d780f881a352e2a486f2de6bf844b8fe473ea7edb79bf0cfa188388addec1f4",
+      "bytes": 131476,
+      "sha256": "def151fc76089d04f5208e8e77430719165994ce867cc606b83d328af00aaec4",
       "source": "result.json"
     },
     {
       "path": "agent-trace.json",
-      "bytes": 381421,
-      "sha256": "dc3109ba4fde1cf191a5e104d28b5ffff3fdc11c0ba0c6cc4e009f811cfb2981"
+      "bytes": 388869,
+      "sha256": "8a1370256f635a4419dffddd5154f4d0ce01a1446486146875deb9e1a9ea2347",
+      "source": "agent-trace.json"
     },
     {
       "path": "agent-prompt.md",
@@ -433,8 +442,8 @@
     },
     {
       "path": "worker.stdout.log",
-      "bytes": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 132040,
+      "sha256": "15ef74448fe68ee7716dec9ee68c357a0c493575256e1536029139f70f26c4c3",
       "source": "worker.stdout.log"
     },
     {
