@@ -14,7 +14,7 @@
 - caseRepoRunDir: /root/hwlab-case-registry/runs/d601-f103-v2-arm2d-integration/d601-f103-v2-arm2d-integration-20260608131849-6756a891
 - sourceRunDir: /root/hwlab-v02/.state/hwlab-cli/caserun/d601-f103-v2-arm2d-integration-20260608131849-6756a891
 - createdAt: 2026-06-08T13:18:49.779Z
-- completedAt: 2026-06-08T13:24:56.081Z
+- completedAt: 2026-06-08T13:25:29.449Z
 - runnerPostAgentCompileCheck: recorded
 
 ## HWPOD 信息
@@ -133,296 +133,6 @@ hwpodId: d601-f103-v2
 - hwpodCommandCount: 44
 - hwpodBuildCommandCount: 1
 
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace ls --hwpod-id d601-f103-v2 --workspa...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" projects/01_baseline/Middlewares/Arm-2D/Acceleration/arm-2d/ 2>&1"
-  stdout:
-  { "ok": false, "action": "hwpod-cli.invoke", "status": "failed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_a9b2870c-1039-...
-  exitCode=1
-  rowId: tool:call_01_qLmhfwfhWucUrLGfSYkf7006
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace ls --hwpod-id d601-f103-v2 --workspa...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" projects/01_baseline/Middlewares/Arm-2D/Acceleration/ 2>&1"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_4649498c-d17...
-  exitCode=0
-  rowId: tool:call_00_d5Gor8AeMPezZc6wnl3p1181
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace ls --hwpod-id d601-f103-v2 --workspa...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" projects/01_baseline/Middlewares/Arm-2D/Acceleration/Arm/ 2>&1"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_96d11e5c-0d6...
-  exitCode=0
-  rowId: tool:call_00_Kf1p7UbIFNopyeazdNVQ1569
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace ls --hwpod-id d601-f103-v2 --workspa...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" projects/01_baseline/Middlewares/Arm-2D/Acceleration/Arm/ACI/ 2>&1"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_7098b87d-7b5...
-  exitCode=0
-  rowId: tool:call_00_UPMoD0HnBUc81eYmheW23307
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "arm_2d'"\.h" --hwpod-id d601-f10...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "arm_2d'"\.h" --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 0 --max-matches 30 projects/ 2>&1"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_794e29c1-f89...
-  exitCode=0
-  rowId: tool:call_00_144plyBU10flZQraOwEx4794
-  ```
-
-  </details>
-
-- **13:20:21  助手消息**
-
-找到 arm_2d.h 了。现在读取关键的 ARM-2D 头文件和 types 头文件。
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace cat projects/01_baseline/Middlewares...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d.h --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" 2>&1 | head -200"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_02ff4f09-9...
-  exitCode=0
-  rowId: tool:call_00_AXJ16092gUVj0urIC3NS8772
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "arm_2d_types'"\.h" --hwpod-id d6...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "arm_2d_types'"\.h" --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 0 --max-matches 10 projects/ 2>&1 | grep -E ":(text|line)" "
-  stdout:
-  commandExecution failed: /bin/sh -lc 'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "arm_2d_types'"\\.h\" --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" --context 0 --max-matches 10 projects/ 2>&1 | grep -E \":(text|line)\" " exit=1 durationMs=604
-  exitCode=1
-  rowId: tool:call_01_KWGOgpuID0PC6TtoJjd50700
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace cat projects/01_baseline/Middlewares...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_types.h --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" 2>&1"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_83c0e3d6-a...
-  exitCode=0
-  rowId: tool:call_00_dmGTJlNnKPeuXmhEgnCZ8031
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "arm_2d_rgb16_fill_colour" --hwpo...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "arm_2d_rgb16_fill_colour" --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 5 --max-matches 10 projects/01_baseline/Middlewares/Arm-2D/Library/Include/ 2>&1"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_9e3e38f4-1ff...
-  exitCode=0
-  rowId: tool:call_02_sVlm8IRnzFHTHOWuIFFV9082
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "typedef struct arm_2d_region_t" ...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "typedef struct arm_2d_region_t" --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 10 --max-matches 5 projects/01_baseline/Middlewares/Arm-2D/Library/Include/ 2>&1"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_4e56e1e5-53a...
-  exitCode=0
-  rowId: tool:call_01_hKIF1KwazG8ssBgw3wu21147
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "typedef struct arm_2d_tile_t" --...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "typedef struct arm_2d_tile_t" --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 20 --max-matches 5 projects/01_baseline/Middlewares/Arm-2D/Library/Include/ 2>&1"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_ac7f7d6a-03a...
-  exitCode=0
-  rowId: tool:call_00_oONzpa3nKzmOxf9BHQYV7013
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "struct arm_2d_tile_t" --hwpod-id...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "struct arm_2d_tile_t" --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 30 --max-matches 5 projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_types.h 2>&1"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_b20e4744-b76...
-  exitCode=0
-  rowId: tool:call_01_pjAPQHyjqcrgDbSWyCcb5144
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "arm_2dp_rgb16_fill_colour" --hwp...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "arm_2dp_rgb16_fill_colour" --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 10 --max-matches 5 projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_draw.h 2>&1"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_3447d9c5-f8d...
-  exitCode=0
-  rowId: tool:call_00_uWzdxa7v9uWguf0GMgVB4527
-  ```
-
-  </details>
-
-- **13:20:49  助手消息**
-
-现在看一下 Keil 工程文件的包含路径。
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace ls --hwpod-id d601-f103-v2 --workspa...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" projects/01_baseline/Projects/ 2>&1"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_a9ff89f3-022...
-  exitCode=0
-  rowId: tool:call_00_hdfmamfDEfPOKHmhDcX54379
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "arm_2d_location_t" --hwpod-id d6...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "arm_2d_location_t" --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 5 --max-matches 5 projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_types.h 2>&1"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_75b263c1-55c...
-  exitCode=0
-  rowId: tool:call_00_GG0mg53P3pOcaUGsiF4L1502
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "arm_2d_op_fill_cl_t" --hwpod-id ...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "arm_2d_op_fill_cl_t" --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 5 --max-matches 5 projects/01_baseline/Middlewares/Arm-2D/Library/Include/ 2>&1"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_2133ad5c-955...
-  exitCode=0
-  rowId: tool:call_01_4QzCuqhI2TSv8wGwofBl2891
-  ```
-
-  </details>
-
-- **13:21:19  助手消息**
-
-现在我已经掌握了所有必要的信息。让我更新计划并开始实现。
-
-- **13:21:19 total=00:02:20 run agentrun:backend:turn/plan/updated**
-
-```text
-turn/plan/updated
-```
-
-- **13:21:24  助手消息**
-
-开始编辑 main.c。我将使用 `insert-after` 添加三行。
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace insert-after '"\ --path "projects/01...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace insert-after '"\ --path "projects/01_baseline/User/main.c" \ --anchor '#include "d601_lcd.h"' \ --line '#include "d601_arm2d_demo.h"' \ --hwpod-id d601-f103-v2 \ --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" 2>&1"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.insert-after", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.insert-after", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwp...
-  exitCode=0
-  rowId: tool:call_00_N8ZEBo9Uh2OIDIZyrrQK3134
-  ```
-
-  </details>
-
-- **13:21:32  助手消息**
-
-第一行添加成功。继续添加 `d601_arm2d_demo_show();` 和 `d601_arm2d_demo_task();`。
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace insert-after '"\ --path "projects/01...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace insert-after '"\ --path "projects/01_baseline/User/main.c" \ --anchor ' d601_gpio_init();' \ --line ' d601_arm2d_demo_show();' \ --hwpod-id d601-f103-v2 \ --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" 2>&1"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.insert-after", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.insert-after", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwp...
-  exitCode=0
-  rowId: tool:call_00_LlRJepjXNasOsruuVhP03520
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace cat projects/01_baseline/User/main.c...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace cat projects/01_baseline/User/main.c --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" 2>&1"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_02405a7e-1...
-  exitCode=0
-  rowId: tool:call_00_VDQXXrub2JslvCrMgONU2239
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace insert-after '"\ --path "projects/01...</summary>
-
-  ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace insert-after '"\ --path "projects/01_baseline/User/main.c" \ --anchor ' jsonrpc_process();' \ --line ' d601_arm2d_demo_task();' \ --hwpod-id d601-f103-v2 \ --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" 2>&1"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.insert-after", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.insert-after", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwp...
-  exitCode=0
-  rowId: tool:call_00_DluQtSOGYLMrH1apHNGd9992
-  ```
-
-  </details>
-
-- **13:21:54  助手消息**
-
-main.c 已完成。现在重写 `d601_arm2d_demo.c`。
-
 - **13:21:54 total=00:02:55 run agentrun:backend:turn/plan/updated**
 
 ```text
@@ -515,6 +225,36 @@ turn/plan/updated
   { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_21713733-903...
   exitCode=0
   rowId: tool:call_00_8joTXpHke2zBVNRwglY51817
+  ```
+
+  </details>
+
+- **13:23:22  助手消息**
+
+文件有重复内容（新旧拼接）。需要完全重写文件。使用 `workspace write` 完全替换。
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; cat &gt; /tmp/new_demo.c &lt;&lt; '"'ENDCODE' #include "d601_...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && cat > /tmp/new_demo.c << '"'ENDCODE' #include "d601_arm2d_demo.h" #include "d601_lcd.h" #include "stm32f1xx_hal.h" #include "arm_2d.h" #include <stdint.h> #include <string.h> #include <stdio.h> #define D601_ARM2D_PFB_WIDTH 240U #define D601_ARM2D_PFB_LINES 32U #define D601_RGB565(__R, __G, __B) \ (uint16_t)((((uint16_t)(__R) & 0xF8U) << 8) | \ (((uint16_t)(__G) & 0xFCU) << 3) | \ ((uint16_t)(__B) >> 3)) #define D601_C_BG D601_RGB565( 2, 12, 28) #define D601_C_BANNER D601_RGB565( 6, 76, 118) #define D601_C_CARD D601_RGB565( 8, 36, 54) #define D601_C_PANEL D601_RGB565( 18, 34, 40) #define D601_C_FOOT D601_RGB565( 4, 22, 34) #define D601_C_AMBER D601_RGB565(248, 188, 54) #define D601_C_GREEN D601_RGB565( 44, 184, 118) #define D601_C_CYAN D601_RGB565( 42, 198, 216) #define D601_C_ORANGE D601_RGB565(238, 96, 54) #define D601_FPS_WIN...
+  stdout:
+  File written: 6500 bytes
+  exitCode=0
+  rowId: tool:call_00_6w01hVCBE2aoDgDIL5z96542
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace write '"\ --path "projects/01_baseli...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace write '"\ --path "projects/01_baseline/User/d601_arm2d_demo.c" \ --content ""'$(cat /tmp/new_demo.c)" '"\ --hwpod-id d601-f103-v2 \ --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" 2>&1"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.write", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.write", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_1cd05d...
+  exitCode=0
+  rowId: tool:call_00_MTajHkjuB8ixh9WSF5qu6577
   ```
 
   </details>
@@ -880,35 +620,295 @@ Skill 参考文件已读完。现在通过 HWPOD 读取项目头文件。
 
   </details>
 
-- **13:23:22  助手消息**
-
-文件有重复内容（新旧拼接）。需要完全重写文件。使用 `workspace write` 完全替换。
-
 - <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; cat &gt; /tmp/new_demo.c &lt;&lt; '"'ENDCODE' #include "d601_...</summary>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace ls --hwpod-id d601-f103-v2 --workspa...</summary>
 
   ```text
-  'export PATH="$PWD/tools:$PATH" && cat > /tmp/new_demo.c << '"'ENDCODE' #include "d601_arm2d_demo.h" #include "d601_lcd.h" #include "stm32f1xx_hal.h" #include "arm_2d.h" #include <stdint.h> #include <string.h> #include <stdio.h> #define D601_ARM2D_PFB_WIDTH 240U #define D601_ARM2D_PFB_LINES 32U #define D601_RGB565(__R, __G, __B) \ (uint16_t)((((uint16_t)(__R) & 0xF8U) << 8) | \ (((uint16_t)(__G) & 0xFCU) << 3) | \ ((uint16_t)(__B) >> 3)) #define D601_C_BG D601_RGB565( 2, 12, 28) #define D601_C_BANNER D601_RGB565( 6, 76, 118) #define D601_C_CARD D601_RGB565( 8, 36, 54) #define D601_C_PANEL D601_RGB565( 18, 34, 40) #define D601_C_FOOT D601_RGB565( 4, 22, 34) #define D601_C_AMBER D601_RGB565(248, 188, 54) #define D601_C_GREEN D601_RGB565( 44, 184, 118) #define D601_C_CYAN D601_RGB565( 42, 198, 216) #define D601_C_ORANGE D601_RGB565(238, 96, 54) #define D601_FPS_WIN...
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" projects/01_baseline/Middlewares/Arm-2D/Acceleration/arm-2d/ 2>&1"
   stdout:
-  File written: 6500 bytes
-  exitCode=0
-  rowId: tool:call_00_6w01hVCBE2aoDgDIL5z96542
+  { "ok": false, "action": "hwpod-cli.invoke", "status": "failed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_a9b2870c-1039-...
+  exitCode=1
+  rowId: tool:call_01_qLmhfwfhWucUrLGfSYkf7006
   ```
 
   </details>
 
 - <details>
-  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace write '"\ --path "projects/01_baseli...</summary>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace ls --hwpod-id d601-f103-v2 --workspa...</summary>
 
   ```text
-  'export PATH="$PWD/tools:$PATH" && hwpod workspace write '"\ --path "projects/01_baseline/User/d601_arm2d_demo.c" \ --content ""'$(cat /tmp/new_demo.c)" '"\ --hwpod-id d601-f103-v2 \ --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" 2>&1"
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" projects/01_baseline/Middlewares/Arm-2D/Acceleration/ 2>&1"
   stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.write", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.write", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_1cd05d...
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_4649498c-d17...
   exitCode=0
-  rowId: tool:call_00_MTajHkjuB8ixh9WSF5qu6577
+  rowId: tool:call_00_d5Gor8AeMPezZc6wnl3p1181
   ```
 
   </details>
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace ls --hwpod-id d601-f103-v2 --workspa...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" projects/01_baseline/Middlewares/Arm-2D/Acceleration/Arm/ 2>&1"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_96d11e5c-0d6...
+  exitCode=0
+  rowId: tool:call_00_Kf1p7UbIFNopyeazdNVQ1569
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace ls --hwpod-id d601-f103-v2 --workspa...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" projects/01_baseline/Middlewares/Arm-2D/Acceleration/Arm/ACI/ 2>&1"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_7098b87d-7b5...
+  exitCode=0
+  rowId: tool:call_00_UPMoD0HnBUc81eYmheW23307
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "arm_2d'"\.h" --hwpod-id d601-f10...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "arm_2d'"\.h" --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 0 --max-matches 30 projects/ 2>&1"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_794e29c1-f89...
+  exitCode=0
+  rowId: tool:call_00_144plyBU10flZQraOwEx4794
+  ```
+
+  </details>
+
+- **13:20:21  助手消息**
+
+找到 arm_2d.h 了。现在读取关键的 ARM-2D 头文件和 types 头文件。
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace cat projects/01_baseline/Middlewares...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d.h --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" 2>&1 | head -200"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_02ff4f09-9...
+  exitCode=0
+  rowId: tool:call_00_AXJ16092gUVj0urIC3NS8772
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "arm_2d_types'"\.h" --hwpod-id d6...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "arm_2d_types'"\.h" --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 0 --max-matches 10 projects/ 2>&1 | grep -E ":(text|line)" "
+  stdout:
+  commandExecution failed: /bin/sh -lc 'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "arm_2d_types'"\\.h\" --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891\" --context 0 --max-matches 10 projects/ 2>&1 | grep -E \":(text|line)\" " exit=1 durationMs=604
+  exitCode=1
+  rowId: tool:call_01_KWGOgpuID0PC6TtoJjd50700
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace cat projects/01_baseline/Middlewares...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_types.h --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" 2>&1"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_83c0e3d6-a...
+  exitCode=0
+  rowId: tool:call_00_dmGTJlNnKPeuXmhEgnCZ8031
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "arm_2d_rgb16_fill_colour" --hwpo...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "arm_2d_rgb16_fill_colour" --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 5 --max-matches 10 projects/01_baseline/Middlewares/Arm-2D/Library/Include/ 2>&1"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_9e3e38f4-1ff...
+  exitCode=0
+  rowId: tool:call_02_sVlm8IRnzFHTHOWuIFFV9082
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "typedef struct arm_2d_region_t" ...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "typedef struct arm_2d_region_t" --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 10 --max-matches 5 projects/01_baseline/Middlewares/Arm-2D/Library/Include/ 2>&1"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_4e56e1e5-53a...
+  exitCode=0
+  rowId: tool:call_01_hKIF1KwazG8ssBgw3wu21147
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "typedef struct arm_2d_tile_t" --...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "typedef struct arm_2d_tile_t" --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 20 --max-matches 5 projects/01_baseline/Middlewares/Arm-2D/Library/Include/ 2>&1"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_ac7f7d6a-03a...
+  exitCode=0
+  rowId: tool:call_00_oONzpa3nKzmOxf9BHQYV7013
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "struct arm_2d_tile_t" --hwpod-id...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "struct arm_2d_tile_t" --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 30 --max-matches 5 projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_types.h 2>&1"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_b20e4744-b76...
+  exitCode=0
+  rowId: tool:call_01_pjAPQHyjqcrgDbSWyCcb5144
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "arm_2dp_rgb16_fill_colour" --hwp...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "arm_2dp_rgb16_fill_colour" --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 10 --max-matches 5 projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_draw.h 2>&1"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_3447d9c5-f8d...
+  exitCode=0
+  rowId: tool:call_00_uWzdxa7v9uWguf0GMgVB4527
+  ```
+
+  </details>
+
+- **13:20:49  助手消息**
+
+现在看一下 Keil 工程文件的包含路径。
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace ls --hwpod-id d601-f103-v2 --workspa...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace ls --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" projects/01_baseline/Projects/ 2>&1"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.ls", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.ls", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_a9ff89f3-022...
+  exitCode=0
+  rowId: tool:call_00_hdfmamfDEfPOKHmhDcX54379
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "arm_2d_location_t" --hwpod-id d6...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "arm_2d_location_t" --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 5 --max-matches 5 projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_types.h 2>&1"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_75b263c1-55c...
+  exitCode=0
+  rowId: tool:call_00_GG0mg53P3pOcaUGsiF4L1502
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace rg "arm_2d_op_fill_cl_t" --hwpod-id ...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace rg "arm_2d_op_fill_cl_t" --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" --context 5 --max-matches 5 projects/01_baseline/Middlewares/Arm-2D/Library/Include/ 2>&1"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_2133ad5c-955...
+  exitCode=0
+  rowId: tool:call_01_4QzCuqhI2TSv8wGwofBl2891
+  ```
+
+  </details>
+
+- **13:21:19  助手消息**
+
+现在我已经掌握了所有必要的信息。让我更新计划并开始实现。
+
+- **13:21:19 total=00:02:20 run agentrun:backend:turn/plan/updated**
+
+```text
+turn/plan/updated
+```
+
+- **13:21:24  助手消息**
+
+开始编辑 main.c。我将使用 `insert-after` 添加三行。
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace insert-after '"\ --path "projects/01...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace insert-after '"\ --path "projects/01_baseline/User/main.c" \ --anchor '#include "d601_lcd.h"' \ --line '#include "d601_arm2d_demo.h"' \ --hwpod-id d601-f103-v2 \ --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" 2>&1"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.insert-after", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.insert-after", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwp...
+  exitCode=0
+  rowId: tool:call_00_N8ZEBo9Uh2OIDIZyrrQK3134
+  ```
+
+  </details>
+
+- **13:21:32  助手消息**
+
+第一行添加成功。继续添加 `d601_arm2d_demo_show();` 和 `d601_arm2d_demo_task();`。
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace insert-after '"\ --path "projects/01...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace insert-after '"\ --path "projects/01_baseline/User/main.c" \ --anchor ' d601_gpio_init();' \ --line ' d601_arm2d_demo_show();' \ --hwpod-id d601-f103-v2 \ --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" 2>&1"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.insert-after", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.insert-after", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwp...
+  exitCode=0
+  rowId: tool:call_00_LlRJepjXNasOsruuVhP03520
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace cat projects/01_baseline/User/main.c...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace cat projects/01_baseline/User/main.c --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" 2>&1"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.cat", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.cat", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_02405a7e-1...
+  exitCode=0
+  rowId: tool:call_00_VDQXXrub2JslvCrMgONU2239
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 'export PATH="$PWD/tools:$PATH" &amp;&amp; hwpod workspace insert-after '"\ --path "projects/01...</summary>
+
+  ```text
+  'export PATH="$PWD/tools:$PATH" && hwpod workspace insert-after '"\ --path "projects/01_baseline/User/main.c" \ --anchor ' jsonrpc_process();' \ --line ' d601_arm2d_demo_task();' \ --hwpod-id d601-f103-v2 \ --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608131849-6756a891" 2>&1"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.insert-after", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.insert-after", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwp...
+  exitCode=0
+  rowId: tool:call_00_DluQtSOGYLMrH1apHNGd9992
+  ```
+
+  </details>
+
+- **13:21:54  助手消息**
+
+main.c 已完成。现在重写 `d601_arm2d_demo.c`。
 
 - **13:23:32  助手消息**
 
@@ -1405,16 +1405,16 @@ index 7467c9a..bfb34d4 100644
 
 | Path | Bytes | SHA-256 |
 |---|---:|---|
-| evidence.json | 80797 | 29ebe7c7aa7de1eb1aa29f41741d48f2a411f99e0ec88f078c0f26dedae628ad |
-| summary.md | 13301 | be76d5302f7e04a5f4fcc5e5d11c475a04ec433d6b9b435a5fd2e32893e2c9bd |
+| evidence.json | 78376 | f232b7a43f0d692ceb104798e3647279f791663053d44c2a6198e7f686aa3d37 |
+| summary.md | 11898 | 4b82c04768da10fc9756510ab84ceeba87ad5864975279dc844d92c4bccf4867 |
 | aggregate.md | self-referential | self-referential |
-| agent-messages.json | 82400 | 492410327c680fbbcc54788133cfdd60b12f9fee2dd17c426fa37f14bacc18a9 |
-| agent-trace.md | 82532 | 509b746cfce8008b78eb8f0cf763f59f409a72f87efc6ff0e6b3d0b094a20c13 |
-| agent-transcript.md | 82532 | 509b746cfce8008b78eb8f0cf763f59f409a72f87efc6ff0e6b3d0b094a20c13 |
+| agent-messages.json | 82400 | b80cffd6aabbe47b165562ab8b70ab1fc58f518ad9ba17581d4f0efe31f42c4b |
+| agent-trace.md | 82532 | b74c28e5b1f2ca6a60a134104bb4a30d6f052fc1febc09194bb12b1b89dea702 |
+| agent-transcript.md | 82532 | b74c28e5b1f2ca6a60a134104bb4a30d6f052fc1febc09194bb12b1b89dea702 |
 | final-response.md | 3234 | f4d66fad07bc6849249190a88d79eb6421103dead18f7a2eac89c0dbc607edce |
-| run.json | 89418 | da2f5ff6da75b0284804f5745fc4415a4372ba6bcfbffcc817aec3d8bbd7debe |
-| result.json | 34487 | 42646c07fdc8fdcac2b8de8ab893f64929744d7d1d48f2e32cc83d902516fbf7 |
-| agent-trace.json | 261161 | 003aac75f09ba9500fdd1cde3d70b5e70abb72549dd47c2763a5f4196df2d779 |
+| run.json | 89437 | a1f0f5f0542b01e6712cc5d350c729739a93cc42769c18e3abf15b5afdf0df6f |
+| result.json | 222159 | e041b94ae113ce5367d6c88c67e0c9d2849941fbdde95600e9e8f276f0bf3953 |
+| agent-trace.json | 261161 | 057b0616790b024e1e0d8f1f79d93a97bd90f78eb89d875743b93eeaf01f0bd2 |
 | agent-prompt.md | 3063 | cbd9ffaa5d225fcc2aa87125faf0509435f089e6bfb3099bf5d526057bde4f35 |
 | agent-diff.patch | 9642 | 635ea9a0af5837a00eab885ed4bd1ce82d0f821f018465a29db1209a0e32d43c |
 | .hwlab/hwpod-spec.yaml | 763 | efc747f83c1d24cc218cd49d48fe8f8148182d47bbfbb9086d50ab8051920ddc |
