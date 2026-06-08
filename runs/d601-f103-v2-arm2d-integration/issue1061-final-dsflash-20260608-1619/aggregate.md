@@ -14,7 +14,7 @@
 - caseRepoRunDir: /root/hwlab-case-registry/runs/d601-f103-v2-arm2d-integration/issue1061-final-dsflash-20260608-1619
 - sourceRunDir: /root/hwlab-v02/.state/hwlab-cli/caserun/issue1061-final-dsflash-20260608-1619
 - createdAt: 2026-06-08T16:19:09.425Z
-- completedAt: 2026-06-08T16:26:31.860Z
+- completedAt: 2026-06-08T16:26:40.629Z
 - runnerPostAgentCompileCheck: recorded
 
 ## HWPOD 信息
@@ -1198,9 +1198,9 @@ index 7467c9a..86f7d99 100644
 | agent-trace.md | 68260 | 3d249d0eb39c4c63c09005fc2aace36c604eba62b7325c3502c0052cb8d02d9a |
 | agent-transcript.md | 68260 | 3d249d0eb39c4c63c09005fc2aace36c604eba62b7325c3502c0052cb8d02d9a |
 | final-response.md | 3072 | 534312e441c24f2c72aa340f5dce2ed7f1c954f6d33e3a98819d897eaf33cb5d |
-| run.json | 67044 | 2295660cb525fc3d760833e1bf511f9c661e2b5a39b3175fee9e7aade2d257fd |
-| result.json | 11527 | c9cf509d7b70c75b6483f221eee52d4c4898bca3ffe3fa01a82e34f281fa0a42 |
-| agent-trace.json | 220704 | 164208f36ccd2ad1c37f417caa48bbfa7ae652e0777f9569162e4a9cda9a9ef5 |
+| run.json | 67063 | 177c2c7723a09f1796c4886b284176960eae9620a507cc207eba46986d7f8092 |
+| result.json | 114863 | b34af41cc70e553d347cd2c86d06199ded5cbb0aeb66c23bcfcbd3513ff0408d |
+| agent-trace.json | 220704 | 610b8faf8c3334ae92256508fa39e6f74341109fd1a9a6486fc030aa9a99cee9 |
 | agent-prompt.md | 3240 | de0e578658a379dfb9ab6135dceb97f6e8b772970a934c5e075f36c91bda6811 |
 | agent-diff.patch | 6898 | c2e6f90ffc511dc2320d678c7aedbad28730999e84f99f019bb0aa8dda24c747 |
 | .hwlab/hwpod-spec.yaml | 746 | b727ca161f293413acb4a5ba817904dd8cb97afad07c7fffe4333743841c2df2 |
