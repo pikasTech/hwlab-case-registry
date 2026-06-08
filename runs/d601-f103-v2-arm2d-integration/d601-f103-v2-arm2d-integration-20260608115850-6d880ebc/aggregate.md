@@ -160,238 +160,13 @@ export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLAB-CASE-F103\.worktree\caserun-d60
 
 - renderer: tools/src/hwlab-cli/trace-renderer:traceDisplayRows
 - sourceEventCount: 6000
-- renderedRowCount: 140
+- renderedRowCount: 155
 - hwpodCommandCount: 3
 - hwpodBuildCommandCount: 0
 
-- **12:03:52  助手消息**
+- **11:59:28  助手消息**
 
-我来执行 D601-F103-V2 的 ARM-2D demo 最小集成任务。先从 HWPOD 验证和源码阅读开始。Good — tools are in `tools/` but not on PATH. Let me check PATH and use explicit paths.HWPOD env vars not set by runner. Let me set them from the case spec and retry.Spec validated. Now `inspect`:HWPOD 验证通过。注意 workspace 在 PC 主机上是 Windows 路径 `F:\Work\...`，而编译是通过 Keil 在 Windows 上完成。现在开始阅读源码。先看一下工作区里当前的项目文件结构：工作区是空的——HWPOD inspect 也报告了 `workspaceExists: false`。这说明主体仓库在远程 Windows 主机上，需要通过 HWPOD workspace 命令来读取和编辑。好，现在通过 `hwpod workspace` 远程操作 Windows 主机上的文件。先看关键头文件：Middlewares 不在 worktree 路径下。试试 listing worktree 看看有什么：好，文件都在。现在读取 main.c、现有的 d601_arm2d_demo.c、以及 ARM-2D 头文件：现在阅读 ARM-2D 的关键头文件。先看看 Middlewares 在仓库里的位置：Middlewares 不在 worktree 里，说明 ARM-2D 库在主仓库路径 `F:\Work\HWLAB-CASE-F103\` 下，而 worktree 只含项目文件。让我看看 worktree 根目录的结构：worktree 是 git worktree（.git 是文件），Middlewares 在主仓库里但不出现在 worktree 里——这是因为 git worktree 共享的是 `.git`，而 Middlewares 可能被忽略或不在该分支上。 查看一下 d601_arm2d_demo.c 的 include 路径 `arm_2d.h` — 先看项目的编译配置来确定头文件搜索路径：检查 uvprojx 的 include 路径设置：好的，include path 包含了 `..\..\Middlewares\Arm-2D\Library\Include` 和 `..\..\Middlewares\Arm-2D\Port`。但这些是相对于 `projects/01_baseline/Projects/MDK-ARM/` 的路径。Middlewares 不在 worktree 中——它是主仓库根目录的，编译
-
-- **12:03:53  助手消息**
-
-现在所有 API 定义都清楚了！让我理解 `arm_2d_tile_t` 的结构。 我看到第643行开始 `struct arm_2d_tile_t`。注意到 `implement_ex(struct {...})` 包裹了 tInfo 字段。`tInfo` 不是直接成员，它可能是通过某种宏嵌入的。 让我看看 `arm_2d_tile_t` 的完整结构：
-
-- <details>
-  <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLA...</summary>
-
-  ```text
-  export HWLAB_HWPOD_ID='d601-f103-v2' && export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608115850-6d880ebc' && tools/hwpod workspace cat "projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_types.h" 2>&1 | grep -o 'arm_2d_region_t.*' | head -5
-  stdout:
-  arm_2d_region_t {\r\n implement_ex(arm_2d_location_t, tLocation); //!< the location (top-left corner)\r\n implement_ex(arm_2d_size_t, tSize); //!< the size\r\n} arm_2d_region_t;\r\n\r\n/*!\r\n * \\brief the tile extension ID \r\n * \r\n */\r\nenum {\r\n ARM_2D_TILE_EXTENSION_NONE = 0, //!< no extension in the tile.tInfo.Extension field\r\n ARM_2D_TILE_EXTENSION_PFB, //!< contains PFB extension information\r\n ARM_2D_TILE_EXTENSION_VRES, //!< contains Virtual resource extension information\r\n};\r\n\r\n/*!\r\n * \\brief a type for tile\r\n *\r\n */\r\ntypedef struct arm_2d_tile_t arm_2d_tile...
-  exitCode=0
-  rowId: tool:call_00_VzSnDbADDQceSmepbMD80663
-  ```
-
-  </details>
-
-- **12:03:57  助手消息**
-
-关键结构明白了！`arm_2d_tile_t` 中 `tInfo` 是使用 `implement_ex()` 宏嵌入的。让我看看这个宏的定义：
-
-- <details>
-  <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLA...</summary>
-
-  ```text
-  export HWLAB_HWPOD_ID='d601-f103-v2' && export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608115850-6d880ebc' && tools/hwpod workspace rg "#define implement_ex" "projects/01_baseline/Middlewares/Arm-2D/Library/Include" --max-matches 5 2>&1
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_2396879f-ede...
-  exitCode=0
-  rowId: tool:call_00_AhQClVOv7cqqggMfjod10652
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLA...</summary>
-
-  ```text
-  export HWLAB_HWPOD_ID='d601-f103-v2' && export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608115850-6d880ebc' && tools/hwpod workspace rg "__implement_ex" "projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_utils.h" --context 2 2>&1
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_a7bb899f-be9...
-  exitCode=0
-  rowId: tool:call_00_9TmhaYdYDQGKaMgxe8G76072
-  ```
-
-  </details>
-
-- **12:04:07  助手消息**
-
-在 C 模式（非 C++）下，`implement_ex(type, name)` 展开为： ```c union { type name; }; ``` 所以 `arm_2d_tile_t` 中 `implement_ex(struct { uint8_t bIsRoot:1; ... }, tInfo)` 会变成： ```c union { struct { uint8_t bIsRoot:1; ... arm_2d_color_info_t tColourInfo; } tInfo; }; ``` 所以在 C 代码中可以用 `ptTile->tInfo.bIsRoot`、`ptTile->tInfo.tColourInfo.chScheme` 访问。 现在我完全理解了所有 API。关键修正： 1. `arm_2d_rgb16_fill_colour` 是宏，参数为 `(ptTarget, ptRegion, hwColour)` — 直接用 `uint16_t` 传 colour，不需要 `arm2d_color()` 包装 2. `ARM_2D_OP_WAIT_ASYNC()` 不传参（或传NULL指针），直接用宏 3. `tInfo` 是通过 `implement_ex` 宏嵌入的 union，用 `->tInfo.bIsRoot` 方式访问 让我更新代码：
-
-- **11:59:06 total=00:00:06 run agentrun:backend:run-claimed**
-
-```text
-run-claimed
-```
-
-- **11:59:07 total=00:00:06 run agentrun:backend:resource-bundle-materialized**
-
-```text
-resource-bundle-materialized
-```
-
-- **11:59:07 total=00:00:06 run agentrun:backend:backend-turn-started**
-
-```text
-backend-turn-started
-```
-
-- **11:59:07  会话就绪**
-
-- **11:59:07 total=00:00:06 run agentrun:backend:codex-rollout-storage-mounted**
-
-```text
-codex-rollout-storage-mounted
-```
-
-- **11:59:07 total=00:00:06 run agentrun:backend:initial-prompt-assembly**
-
-```text
-initial-prompt-assembly
-```
-
-- **11:59:09 total=00:00:08 run agentrun:backend:turn/plan/updated**
-
-```text
-turn/plan/updated
-```
-
-- <details>
-  <summary>已运行 hwpod-ctl spec validate 2&gt;&amp;1</summary>
-
-  ```text
-  hwpod-ctl spec validate 2>&1
-  stdout:
-  /bin/sh: hwpod-ctl: not found
-  exitCode=127
-  rowId: tool:call_00_r4Hk9CibiTlKiWmE3e6I2919
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 hwpod inspect 2&gt;&amp;1</summary>
-
-  ```text
-  hwpod inspect 2>&1
-  stdout:
-  /bin/sh: hwpod: not found
-  exitCode=127
-  rowId: tool:call_00_68dbSRVqedB13mo3Tw5w3754
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 ls tools/ 2&gt;&amp;1; echo "---"; ls .agents/skills/ 2&gt;&amp;1</summary>
-
-  ```text
-  ls tools/ 2>&1; echo "---"; ls .agents/skills/ 2>&1
-  stdout:
-  capture-issue-803-noise.mjs hwlab-caserun.test.ts hwlab-cli hwlab-code-agent hwlab-code-agent-cli.ts hwlab-gateway-shell.mjs hwlab-gateway-tran.mjs hwpod hwpod-cli.ts hwpod-compiler hwpod-compiler-cli.ts hwpod-ctl hwpod-ctl.ts hwpod-harness.test.ts hwpod-node-runtime hwpod-node-runtime.test.ts hwpod-node.test.ts hwpod-node.ts src tran.mjs unidesk-ssh unidesk-ssh.mjs --- arm2d-skill hwlab-agent-runtime hwlab-code-agent hwpod-cli hwpod-ctl
-  exitCode=0
-  rowId: tool:call_00_zcIxjVPucGNrr1jksP7U9561
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 echo "PATH=$PATH"; echo "---"; ls -la tools/hwpod-ctl tools/hwpod tools/hwpod-compiler ...</summary>
-
-  ```text
-  echo "PATH=$PATH"; echo "---"; ls -la tools/hwpod-ctl tools/hwpod tools/hwpod-compiler 2>&1
-  stdout:
-  PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin --- -rwxr-xr-x 1 root root 63 Jun 8 11:59 tools/hwpod -rwxr-xr-x 1 root root 72 Jun 8 11:59 tools/hwpod-compiler -rwxr-xr-x 1 root root 63 Jun 8 11:59 tools/hwpod-ctl
-  exitCode=0
-  rowId: tool:call_00_N4rjBYSAq6to667hNwAB4299
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 cat tools/hwpod-ctl</summary>
-
-  ```text
-  cat tools/hwpod-ctl
-  stdout:
-  #!/usr/bin/env sh exec bun "$(dirname "$0")/hwpod-ctl.ts" "$@"
-  exitCode=0
-  rowId: tool:call_00_eYojPtDlLQz1lHIU2tDz9584
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 tools/hwpod-ctl spec validate 2&gt;&amp;1</summary>
-
-  ```text
-  tools/hwpod-ctl spec validate 2>&1
-  stdout:
-  { "ok": false, "action": "hwpod-ctl", "status": "failed", "error": { "code": "required_option_missing", "message": "hwpodId is required", "details": { "name": "hwpodId" } }, "observedAt": "2026-06-08T11:59:17.885Z" }
-  exitCode=1
-  rowId: tool:call_00_trTGf73EsOwoXWU4WDhx2345
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='/home/agentr...</summary>
-
-  ```text
-  export HWLAB_HWPOD_ID='d601-f103-v2' && export HWLAB_HWPOD_WORKSPACE_PATH='/home/agentrun/workspaces/gitbundle-8614fbeafead2167/workspace' && tools/hwpod-ctl spec validate 2>&1
-  stdout:
-  { "ok": true, "action": "hwpod-ctl.spec.validate", "status": "succeeded", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "document": { "apiVersion": "hwlab.dev/v0alpha1", "kind": "Hwpod", "metadata": { "uid": "D601-F103-V2", "name": "d601-f103-v2" }, "spec": { "targetDevice": { "board": "D601-F103-V2", "mcu": "STM32F103" }, "workspace": { "path": "/home/agentrun/workspaces/gitbundle-8614fbeafead2167/workspace", "toolchain": "keil-mdk", "keilProject": "projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx", "keilTarget": "USART"...
-  exitCode=0
-  rowId: tool:call_00_jOcrQeImchDX7rg1xPLV6871
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='/home/agentr...</summary>
-
-  ```text
-  export HWLAB_HWPOD_ID='d601-f103-v2' && export HWLAB_HWPOD_WORKSPACE_PATH='/home/agentrun/workspaces/gitbundle-8614fbeafead2167/workspace' && tools/hwpod inspect 2>&1
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "inspect", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "inspect", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_37de8291-45f6-4145-bba...
-  exitCode=0
-  rowId: tool:call_00_jfRk0SeyExlZ4PmVsA8w5691
-  ```
-
-  </details>
-
-- **11:59:24 total=00:00:23 run agentrun:backend:turn/plan/updated**
-
-```text
-turn/plan/updated
-```
-
-- <details>
-  <summary>已运行 ls projects/01_baseline/User/ 2&gt;&amp;1</summary>
-
-  ```text
-  ls projects/01_baseline/User/ 2>&1
-  stdout:
-  ls: projects/01_baseline/User/: No such file or directory
-  exitCode=1
-  rowId: tool:call_00_wWtesDBvdVCYbJxGv3k01965
-  ```
-
-  </details>
-
-- <details>
-  <summary>已运行 find . -type f -name "d601_arm2d_demo*" -o -name "d601_lcd.h" -o -name "main.c" 2&gt;/dev/...</summary>
-
-  ```text
-  find . -type f -name "d601_arm2d_demo*" -o -name "d601_lcd.h" -o -name "main.c" 2>/dev/null | head -20
-  stdout:
-  commandExecution completed: /bin/sh -lc 'find . -type f -name "d601_arm2d_demo*" -o -name "d601_lcd.h" -o -name "main.c" 2>/dev/null | head -20' exit=0 durationMs=0
-  exitCode=0
-  rowId: tool:call_00_BfxQPGdpVi9B9nfTAAf49688
-  ```
-
-  </details>
+工作区是空的——HWPOD inspect 也报告了 `workspaceExists: false`。这说明主体仓库在远程 Windows 主机上，需要通过 HWPOD workspace 命令来读取和编辑。
 
 - <details>
   <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLA...</summary>
@@ -405,6 +180,10 @@ turn/plan/updated
   ```
 
   </details>
+
+- **11:59:30  助手消息**
+
+好，现在通过 `hwpod workspace` 远程操作 Windows 主机上的文件。先看关键头文件：
 
 - <details>
   <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLA...</summary>
@@ -445,6 +224,10 @@ turn/plan/updated
 
   </details>
 
+- **11:59:38  助手消息**
+
+Middlewares 不在 worktree 路径下。试试 listing worktree 看看有什么：
+
 - <details>
   <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLA...</summary>
 
@@ -457,6 +240,10 @@ turn/plan/updated
   ```
 
   </details>
+
+- **11:59:41  助手消息**
+
+好，文件都在。现在读取 main.c、现有的 d601_arm2d_demo.c、以及 ARM-2D 头文件：
 
 - <details>
   <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLA...</summary>
@@ -484,6 +271,10 @@ turn/plan/updated
 
   </details>
 
+- **11:59:46  助手消息**
+
+现在阅读 ARM-2D 的关键头文件。先看看 Middlewares 在仓库里的位置：
+
 - <details>
   <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLA...</summary>
 
@@ -496,6 +287,10 @@ turn/plan/updated
   ```
 
   </details>
+
+- **11:59:49  助手消息**
+
+Middlewares 不在 worktree 里，说明 ARM-2D 库在主仓库路径 `F:\Work\HWLAB-CASE-F103\` 下，而 worktree 只含项目文件。让我看看 worktree 根目录的结构：
 
 - <details>
   <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLA...</summary>
@@ -510,6 +305,10 @@ turn/plan/updated
 
   </details>
 
+- **11:59:52  助手消息**
+
+worktree 是 git worktree（.git 是文件），Middlewares 在主仓库里但不出现在 worktree 里——这是因为 git worktree 共享的是 `.git`，而 Middlewares 可能被忽略或不在该分支上。 查看一下 d601_arm2d_demo.c 的 include 路径 `arm_2d.h` — 先看项目的编译配置来确定头文件搜索路径：
+
 - <details>
   <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLA...</summary>
 
@@ -522,6 +321,10 @@ turn/plan/updated
   ```
 
   </details>
+
+- **11:59:54  助手消息**
+
+检查 uvprojx 的 include 路径设置：
 
 - <details>
   <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLA...</summary>
@@ -565,6 +368,10 @@ turn/plan/updated
   ```
 
   </details>
+
+- **12:00:05  助手消息**
+
+好的，include path 包含了 `..\..\Middlewares\Arm-2D\Library\Include` 和 `..\..\Middlewares\Arm-2D\Port`。但这些是相对于 `projects/01_baseline/Projects/MDK-ARM/` 的路径。Middlewares 不在 worktree 中——它是主仓库根目录的，编译
 
 - **12:00:06  助手消息**
 
@@ -1361,6 +1168,57 @@ grep -A5 只显示了 grep 输出中的"content"行。我需要用 rg 来看周�
 
   </details>
 
+- **12:03:53  助手消息**
+
+现在所有 API 定义都清楚了！让我理解 `arm_2d_tile_t` 的结构。 我看到第643行开始 `struct arm_2d_tile_t`。注意到 `implement_ex(struct {...})` 包裹了 tInfo 字段。`tInfo` 不是直接成员，它可能是通过某种宏嵌入的。 让我看看 `arm_2d_tile_t` 的完整结构：
+
+- <details>
+  <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLA...</summary>
+
+  ```text
+  export HWLAB_HWPOD_ID='d601-f103-v2' && export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608115850-6d880ebc' && tools/hwpod workspace cat "projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_types.h" 2>&1 | grep -o 'arm_2d_region_t.*' | head -5
+  stdout:
+  arm_2d_region_t {\r\n implement_ex(arm_2d_location_t, tLocation); //!< the location (top-left corner)\r\n implement_ex(arm_2d_size_t, tSize); //!< the size\r\n} arm_2d_region_t;\r\n\r\n/*!\r\n * \\brief the tile extension ID \r\n * \r\n */\r\nenum {\r\n ARM_2D_TILE_EXTENSION_NONE = 0, //!< no extension in the tile.tInfo.Extension field\r\n ARM_2D_TILE_EXTENSION_PFB, //!< contains PFB extension information\r\n ARM_2D_TILE_EXTENSION_VRES, //!< contains Virtual resource extension information\r\n};\r\n\r\n/*!\r\n * \\brief a type for tile\r\n *\r\n */\r\ntypedef struct arm_2d_tile_t arm_2d_tile...
+  exitCode=0
+  rowId: tool:call_00_VzSnDbADDQceSmepbMD80663
+  ```
+
+  </details>
+
+- **12:03:57  助手消息**
+
+关键结构明白了！`arm_2d_tile_t` 中 `tInfo` 是使用 `implement_ex()` 宏嵌入的。让我看看这个宏的定义：
+
+- <details>
+  <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLA...</summary>
+
+  ```text
+  export HWLAB_HWPOD_ID='d601-f103-v2' && export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608115850-6d880ebc' && tools/hwpod workspace rg "#define implement_ex" "projects/01_baseline/Middlewares/Arm-2D/Library/Include" --max-matches 5 2>&1
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_2396879f-ede...
+  exitCode=0
+  rowId: tool:call_00_AhQClVOv7cqqggMfjod10652
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLA...</summary>
+
+  ```text
+  export HWLAB_HWPOD_ID='d601-f103-v2' && export HWLAB_HWPOD_WORKSPACE_PATH='F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608115850-6d880ebc' && tools/hwpod workspace rg "__implement_ex" "projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_utils.h" --context 2 2>&1
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "workspace.rg", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "workspace.rg", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_a7bb899f-be9...
+  exitCode=0
+  rowId: tool:call_00_9TmhaYdYDQGKaMgxe8G76072
+  ```
+
+  </details>
+
+- **12:04:07  助手消息**
+
+在 C 模式（非 C++）下，`implement_ex(type, name)` 展开为： ```c union { type name; }; ``` 所以 `arm_2d_tile_t` 中 `implement_ex(struct { uint8_t bIsRoot:1; ... }, tInfo)` 会变成： ```c union { struct { uint8_t bIsRoot:1; ... arm_2d_color_info_t tColourInfo; } tInfo; }; ``` 所以在 C 代码中可以用 `ptTile->tInfo.bIsRoot`、`ptTile->tInfo.tColourInfo.chScheme` 访问。 现在我完全理解了所有 API。关键修正： 1. `arm_2d_rgb16_fill_colour` 是宏，参数为 `(ptTarget, ptRegion, hwColour)` — 直接用 `uint16_t` 传 colour，不需要 `arm2d_color()` 包装 2. `ARM_2D_OP_WAIT_ASYNC()` 不传参（或传NULL指针），直接用宏 3. `tInfo` 是通过 `implement_ex` 宏嵌入的 union，用 `->tInfo.bIsRoot` 方式访问 让我更新代码：
+
 - <details>
   <summary>已运行 "cat &gt; /tmp/d601_arm2d_demo.c &lt;&lt; 'CODEEOF' #include "d601_arm2d_demo.h" #include "d601_...</summary>
 
@@ -1370,6 +1228,204 @@ grep -A5 只显示了 grep 输出中的"content"行。我需要用 rg 来看周�
   Written: 5245 bytes
   exitCode=0
   rowId: tool:call_00_jeE4CY9Kv6Czl085a5oV3028
+  ```
+
+  </details>
+
+- **11:59:06 total=00:00:06 run agentrun:backend:run-claimed**
+
+```text
+run-claimed
+```
+
+- **11:59:07 total=00:00:06 run agentrun:backend:resource-bundle-materialized**
+
+```text
+resource-bundle-materialized
+```
+
+- **11:59:07 total=00:00:06 run agentrun:backend:backend-turn-started**
+
+```text
+backend-turn-started
+```
+
+- **11:59:07  会话就绪**
+
+- **11:59:07 total=00:00:06 run agentrun:backend:codex-rollout-storage-mounted**
+
+```text
+codex-rollout-storage-mounted
+```
+
+- **11:59:07 total=00:00:06 run agentrun:backend:initial-prompt-assembly**
+
+```text
+initial-prompt-assembly
+```
+
+- **11:59:08  助手消息**
+
+我来执行 D601-F103-V2 的 ARM-2D demo 最小集成任务。先从 HWPOD 验证和源码阅读开始。
+
+- **11:59:09 total=00:00:08 run agentrun:backend:turn/plan/updated**
+
+```text
+turn/plan/updated
+```
+
+- <details>
+  <summary>已运行 hwpod-ctl spec validate 2&gt;&amp;1</summary>
+
+  ```text
+  hwpod-ctl spec validate 2>&1
+  stdout:
+  /bin/sh: hwpod-ctl: not found
+  exitCode=127
+  rowId: tool:call_00_r4Hk9CibiTlKiWmE3e6I2919
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 hwpod inspect 2&gt;&amp;1</summary>
+
+  ```text
+  hwpod inspect 2>&1
+  stdout:
+  /bin/sh: hwpod: not found
+  exitCode=127
+  rowId: tool:call_00_68dbSRVqedB13mo3Tw5w3754
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 ls tools/ 2&gt;&amp;1; echo "---"; ls .agents/skills/ 2&gt;&amp;1</summary>
+
+  ```text
+  ls tools/ 2>&1; echo "---"; ls .agents/skills/ 2>&1
+  stdout:
+  capture-issue-803-noise.mjs hwlab-caserun.test.ts hwlab-cli hwlab-code-agent hwlab-code-agent-cli.ts hwlab-gateway-shell.mjs hwlab-gateway-tran.mjs hwpod hwpod-cli.ts hwpod-compiler hwpod-compiler-cli.ts hwpod-ctl hwpod-ctl.ts hwpod-harness.test.ts hwpod-node-runtime hwpod-node-runtime.test.ts hwpod-node.test.ts hwpod-node.ts src tran.mjs unidesk-ssh unidesk-ssh.mjs --- arm2d-skill hwlab-agent-runtime hwlab-code-agent hwpod-cli hwpod-ctl
+  exitCode=0
+  rowId: tool:call_00_zcIxjVPucGNrr1jksP7U9561
+  ```
+
+  </details>
+
+- **11:59:14  助手消息**
+
+Good — tools are in `tools/` but not on PATH. Let me check PATH and use explicit paths.
+
+- <details>
+  <summary>已运行 echo "PATH=$PATH"; echo "---"; ls -la tools/hwpod-ctl tools/hwpod tools/hwpod-compiler ...</summary>
+
+  ```text
+  echo "PATH=$PATH"; echo "---"; ls -la tools/hwpod-ctl tools/hwpod tools/hwpod-compiler 2>&1
+  stdout:
+  PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin --- -rwxr-xr-x 1 root root 63 Jun 8 11:59 tools/hwpod -rwxr-xr-x 1 root root 72 Jun 8 11:59 tools/hwpod-compiler -rwxr-xr-x 1 root root 63 Jun 8 11:59 tools/hwpod-ctl
+  exitCode=0
+  rowId: tool:call_00_N4rjBYSAq6to667hNwAB4299
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 cat tools/hwpod-ctl</summary>
+
+  ```text
+  cat tools/hwpod-ctl
+  stdout:
+  #!/usr/bin/env sh exec bun "$(dirname "$0")/hwpod-ctl.ts" "$@"
+  exitCode=0
+  rowId: tool:call_00_eYojPtDlLQz1lHIU2tDz9584
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 tools/hwpod-ctl spec validate 2&gt;&amp;1</summary>
+
+  ```text
+  tools/hwpod-ctl spec validate 2>&1
+  stdout:
+  { "ok": false, "action": "hwpod-ctl", "status": "failed", "error": { "code": "required_option_missing", "message": "hwpodId is required", "details": { "name": "hwpodId" } }, "observedAt": "2026-06-08T11:59:17.885Z" }
+  exitCode=1
+  rowId: tool:call_00_trTGf73EsOwoXWU4WDhx2345
+  ```
+
+  </details>
+
+- **11:59:19  助手消息**
+
+HWPOD env vars not set by runner. Let me set them from the case spec and retry.
+
+- <details>
+  <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='/home/agentr...</summary>
+
+  ```text
+  export HWLAB_HWPOD_ID='d601-f103-v2' && export HWLAB_HWPOD_WORKSPACE_PATH='/home/agentrun/workspaces/gitbundle-8614fbeafead2167/workspace' && tools/hwpod-ctl spec validate 2>&1
+  stdout:
+  { "ok": true, "action": "hwpod-ctl.spec.validate", "status": "succeeded", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "document": { "apiVersion": "hwlab.dev/v0alpha1", "kind": "Hwpod", "metadata": { "uid": "D601-F103-V2", "name": "d601-f103-v2" }, "spec": { "targetDevice": { "board": "D601-F103-V2", "mcu": "STM32F103" }, "workspace": { "path": "/home/agentrun/workspaces/gitbundle-8614fbeafead2167/workspace", "toolchain": "keil-mdk", "keilProject": "projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx", "keilTarget": "USART"...
+  exitCode=0
+  rowId: tool:call_00_jOcrQeImchDX7rg1xPLV6871
+  ```
+
+  </details>
+
+- **11:59:20  助手消息**
+
+Spec validated. Now `inspect`:
+
+- <details>
+  <summary>已运行 export HWLAB_HWPOD_ID='d601-f103-v2' &amp;&amp; export HWLAB_HWPOD_WORKSPACE_PATH='/home/agentr...</summary>
+
+  ```text
+  export HWLAB_HWPOD_ID='d601-f103-v2' && export HWLAB_HWPOD_WORKSPACE_PATH='/home/agentrun/workspaces/gitbundle-8614fbeafead2167/workspace' && tools/hwpod inspect 2>&1
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "intent": "inspect", "contractVersion": "hwpod-node-ops-v1", "compilerInvocation": { "compiler": "hwpod-compiler-cli", "mode": "in-process", "entrypoint": "tools/src/hwpod-harness-lib.ts", "argv": [ "compile", "--hwpod-id", "d601-f103-v2", "--intent", "inspect", "--args", "<json>" ], "exitCode": 0, "action": "hwpod-compiler.compile", "contractVersion": "hwpod-node-ops-v1", "planId": "hwpod_plan_37de8291-45f6-4145-bba...
+  exitCode=0
+  rowId: tool:call_00_jfRk0SeyExlZ4PmVsA8w5691
+  ```
+
+  </details>
+
+- **11:59:23  助手消息**
+
+HWPOD 验证通过。注意 workspace 在 PC 主机上是 Windows 路径 `F:\Work\...`，而编译是通过 Keil 在 Windows 上完成。现在开始阅读源码。
+
+- **11:59:24 total=00:00:23 run agentrun:backend:turn/plan/updated**
+
+```text
+turn/plan/updated
+```
+
+- **11:59:25  助手消息**
+
+先看一下工作区里当前的项目文件结构：
+
+- <details>
+  <summary>已运行 ls projects/01_baseline/User/ 2&gt;&amp;1</summary>
+
+  ```text
+  ls projects/01_baseline/User/ 2>&1
+  stdout:
+  ls: projects/01_baseline/User/: No such file or directory
+  exitCode=1
+  rowId: tool:call_00_wWtesDBvdVCYbJxGv3k01965
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 find . -type f -name "d601_arm2d_demo*" -o -name "d601_lcd.h" -o -name "main.c" 2&gt;/dev/...</summary>
+
+  ```text
+  find . -type f -name "d601_arm2d_demo*" -o -name "d601_lcd.h" -o -name "main.c" 2>/dev/null | head -20
+  stdout:
+  commandExecution completed: /bin/sh -lc 'find . -type f -name "d601_arm2d_demo*" -o -name "d601_lcd.h" -o -name "main.c" 2>/dev/null | head -20' exit=0 durationMs=0
+  exitCode=0
+  rowId: tool:call_00_BfxQPGdpVi9B9nfTAAf49688
   ```
 
   </details>
@@ -1474,6 +1530,10 @@ turn/plan/updated
 ```text
 AgentRun error
 ```
+
+- **12:04:39  助手消息**
+
+工作区是空的——HWPOD inspect 也报告了 `workspaceExists: false`。这说明主体仓库在远程 Windows 主机上，需要通过 HWPOD workspace 命令来读取和编辑。好，现在通过 `hwpod workspace` 远程操作 Windows 主机上的文件。先看关键头文件：Middlewares 不在 worktree 路径下。试试 listing worktree 看看有什么：好，文件都在。现在读取 main.c、现有的 d601_arm2d_demo.c、以及 ARM-2D 头文件：现在阅读 ARM-2D 的关键头文件。先看看 Middlewares 在仓库里的位置：Middlewares 不在 worktree 里，说明 ARM-2D 库在主仓库路径 `F:\Work\HWLAB-CASE-F103\` 下，而 worktree 只含项目文件。让我看看 worktree 根目录的结构：worktree 是 git worktree（.git 是文件），Middlewares 在主仓库里但不出现在 worktree 里——这是因为 git worktree 共享的是 `.git`，而 Middlewares 可能被忽略或不在该分支上。 查看一下 d601_arm2d_demo.c 的 include 路径 `arm_2d.h` — 先看项目的编译配置来确定头文件搜索路径：检查 uvprojx 的 include 路径设置：好的，include path 包含了 `..\..\Middlewares\Arm-2D\Library\Include` 和 `..\..\Middlewares\Arm-2D\Port`。但这些是相对于 `projects/01_baseline/Projects/MDK-ARM/` 的路径。Middlewares 不在 worktree 中——它是主仓库根目录的，编译
 
 - **12:04:39 total=00:05:39 fail agentrun:terminal:failed**
 
@@ -1684,16 +1744,16 @@ index 7467c9a..df8bf9a 100644
 
 | Path | Bytes | SHA-256 |
 |---|---:|---|
-| evidence.json | 57345 | 1fa0e44f43a203df22b95df966cdd842f0ca470f667a1bdc82917c23e7e9f360 |
+| evidence.json | 59725 | fc009fd70f6a637955390601b69bf41d9f9f27f441878bb09568b17dd0405c74 |
 | summary.md | 2168 | 5b25113285e9e0e8dc085b75da9e4541dcb7c4a35444dbfa616e52ad3049e4c5 |
 | aggregate.md | self-referential | self-referential |
-| agent-messages.json | 113891 | 62d01b2a84d082f3a16f921810afa19d81f3871497bfc1ac5306e953d26e594a |
-| agent-trace.md | 105482 | 276b66140dcf19e59d4450bda75520ddb8d5312e3ce672e1b19f7d3a927941d5 |
-| agent-transcript.md | 105482 | 276b66140dcf19e59d4450bda75520ddb8d5312e3ce672e1b19f7d3a927941d5 |
+| agent-messages.json | 117890 | 05d101068020b84ec0ba0e146c84f2fe4b4411383e90ca99369b0b0a4f2d9daf |
+| agent-trace.md | 107339 | c2bc2e0285fb8a886f6a7fe6f44df5b9f9b0af8746e0e7bfd8fa82eb99a94f46 |
+| agent-transcript.md | 107339 | c2bc2e0285fb8a886f6a7fe6f44df5b9f9b0af8746e0e7bfd8fa82eb99a94f46 |
 | final-response.md | 1155 | 55bfca21cc7fa1533980807358496bfdac0001f602916a9b600b8f2322113198 |
 | run.json | 70611 | 8c008e02ef032a6be6550da248f93901e8dc5861af4afe448d289a439cebb34a |
-| result.json | 136733 | 183e30ad8439c4836f3b259f6cbaa1821fb53850c5a56c59e78a9bf35c81f0f9 |
-| agent-trace.json | 342647 | 6cbc37bd585e88dd3c0e18ccc5f750368e0d0d5d7db82d9428e64fa28cf5c6d3 |
+| result.json | 136733 | 47a3ad8a451a65080866645ac216e7aa58d159d6cfd639939b2777cfb1d33b60 |
+| agent-trace.json | 355365 | 98ddc86461a06adf5a47dfd69f05493ff97aee3ac571ba09379f9cfb6b2da4cb |
 | agent-prompt.md | 6642 | b717e6c87b352ae2103dd420b4aff7ec5ee41ba5d0b1f1ba3d287a4d569f44f0 |
 | agent-diff.patch | 5365 | c6cda165485ca5e45c4a5e5588ff35cd9ac3b6672e275a7ccb8fe84035167ce6 |
 | .hwlab/hwpod-spec.yaml | 763 | 3640f6b29d3caa01d5c2d87847c727e17c7dbdbe874a1203fa22a0291b947ae1 |
