@@ -1,0 +1,636 @@
+{
+  "caseId": "d601-f103-v2-arm2d-integration",
+  "runId": "d601-f103-v2-arm2d-integration-20260608135339-9066d778",
+  "runDir": "/root/hwlab-v02/.state/hwlab-cli/caserun/d601-f103-v2-arm2d-integration-20260608135339-9066d778",
+  "caseRepo": "/root/hwlab-case-registry",
+  "caseDir": "/root/hwlab-case-registry/cases/d601-f103-v2-arm2d-integration",
+  "caseFile": "/root/hwlab-case-registry/cases/d601-f103-v2-arm2d-integration/case.json",
+  "sourceSpecPath": "/root/hwlab-case-registry/cases/d601-f103-v2-arm2d-integration/hwpod-spec.yaml",
+  "specPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/d601-f103-v2-arm2d-integration-20260608135339-9066d778/.hwlab/hwpod-spec.yaml",
+  "apiUrl": "http://74.48.78.17:19667",
+  "compileOnly": true,
+  "createdAt": "2026-06-08T13:53:39.712Z",
+  "updatedAt": "2026-06-08T13:59:31.476Z",
+  "definition": {
+    "contractVersion": "hwpod-case-v1",
+    "caseId": "d601-f103-v2-arm2d-integration",
+    "title": "D601-F103-V2 ARM-2D 集成 CaseRun",
+    "mode": "agent-mutation-compile-only",
+    "hwpodSpec": "hwpod-spec.yaml",
+    "subject": {
+      "repoLocalPath": "F:\\Work\\HWLAB-CASE-F103",
+      "commitId": "14a414da470013914b2a19229c36f2e9f8e2da4f",
+      "subdir": "projects/01_baseline"
+    },
+    "runtime": {
+      "apiUrl": "http://74.48.78.17:19667",
+      "webUrl": "http://74.48.78.17:19666"
+    },
+    "agentTask": {
+      "workspace": "subjectWorktree",
+      "providerProfile": "dsflash-go",
+      "projectId": "prj_hwpod_workbench",
+      "timeoutMs": 1200000,
+      "prompt": "请在隔离主体工作区中完成 D601-F103-V2 的 ARM-2D demo 最小集成。\n\n任务目标：\n1. 编辑 projects/01_baseline/User/main.c：在 d601_lcd.h 之后加入 d601_arm2d_demo.h，在 d601_gpio_init() 之后调用 d601_arm2d_demo_show()，并在 while(1) 循环中 jsonrpc_process() 之后调用 d601_arm2d_demo_task()。\n2. 编辑 projects/01_baseline/User/d601_arm2d_demo.c：先阅读 d601_arm2d_demo.h、d601_lcd.h，再读取 .agents/skills/arm2d-skill/ 下的 ARM-2D skill 参考（包含 ARM-2D API 用法、Tile/Framebuffer 操作模式和最佳实践），最后以工作区内的 arm_2d.h、arm_2d_types.h 等头文件为类型定义校验源推导实现。至少完成 arm2d_wait()、arm2d_tile_bind()、arm2d_fill_local()、d601_arm2d_demo_show() 和 d601_arm2d_demo_task()。\n3. 完成后执行 compile-only 验证，并回报 diff 摘要、编译终态、return_code、artifact 路径、warning 数和仍需人工关注的问题。\n\n不要照搬历史 run trace、旧答案或记忆中的 API 形态；所有 ARM-2D 与 LCD API 以当前工作区内头文件和 .agents/skills/arm2d-skill/ 为联合权威参考。",
+      "constraints": [
+        "hwpod 与 hwpod-ctl 已在 PATH 中（通过工具链装配），不要运行 command -v、find / -name 或 ls tools/ 探测工具位置；直接运行 hwpod-ctl spec validate 和 hwpod workspace 开始工作",
+        "先在 .agents/skills/arm2d-skill/ 中按目录 depth-first 读取全部 skill 参考文件（ARM-2D API 用法、Tile 操作模式、PFB 刷新策略和最佳实践），再从工作区读取 projects/01_baseline/User/d601_arm2d_demo.h、d601_lcd.h 作为上下文；头文件类型定义以项目内的 arm_2d.h、arm_2d_types.h 为校验基准；不要把搜索范围扩成全仓库摸索",
+        "只能修改 projects/01_baseline/User/main.c 和 projects/01_baseline/User/d601_arm2d_demo.c",
+        "main.c 只加3行：include + show() + task()",
+        "d601_arm2d_demo.c 需要重新实现函数体，不能只恢复原来的代码",
+        "只做 compile-only build check，不要下载，也不要运行 UART",
+        "ARM-2D 库已在 Middlewares/Arm-2D/，d601_lcd 已实现",
+        "d601_lcd 已提供 bitmap/string 入口；实现时围绕 LCD bitmap 绘制、stripe/PFB 刷新、FPS 文本和 show()/task() 周期刷新组织代码"
+      ]
+    },
+    "expected": {
+      "diff": {
+        "files": [
+          "projects/01_baseline/User/main.c",
+          "projects/01_baseline/User/d601_arm2d_demo.c"
+        ],
+        "contains": [
+          "d601_arm2d_demo.h",
+          "d601_arm2d_demo_show",
+          "d601_arm2d_demo_task",
+          "arm_2d_init"
+        ]
+      },
+      "compile": {
+        "success": true,
+        "artifactSuffixes": [
+          "projects/01_baseline/Output/atk_f103.hex",
+          "projects/01_baseline/Output/atk_f103.axf"
+        ]
+      },
+      "download": {
+        "skipped": true,
+        "reason": "ARM-2D 集成当前阶段只做仅编译验证"
+      }
+    }
+  },
+  "subject": {
+    "repoLocalPath": "F:\\Work\\HWLAB-CASE-F103",
+    "commitId": "14a414da470013914b2a19229c36f2e9f8e2da4f",
+    "subdir": "projects/01_baseline",
+    "worktreePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608135339-9066d778",
+    "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608135339-9066d778",
+    "setup": {
+      "httpStatus": 200,
+      "planId": "case_subject_ae327f7c-cacd-457f-9b5d-3f60a345c2e4",
+      "nodeId": "node-d601-f103-v2",
+      "exitCode": 0,
+      "stdout": "HEAD is now at 14a414d feat: add arm2d-skill to subject repo for case 04 agent reference\n14a414da470013914b2a19229c36f2e9f8e2da4f\ncaseRunKeilSidecars {\"copied\":1,\"copiedFiles\":[{\"ext\":\".uvoptx\",\"source\":\"projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103.uvoptx\",\"destination\":\".worktree\\\\caserun-d601-f103-v2-arm2d-integration-20260608135339-9066d778\\\\projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103.uvoptx\"}],\"missing\":[\"projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103.uvopt\"],\"sourceBase\":\"projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103\",\"destinationBase\":\".worktree\\\\caserun-d601-f103-v2-arm2d-integration-20260608135339-9066d778\\\\projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103\"}",
+      "stderr": "Preparing worktree (detached HEAD 14a414d)",
+      "keilSidecars": {
+        "copied": 1,
+        "copiedFiles": [
+          {
+            "ext": ".uvoptx",
+            "source": "projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103.uvoptx",
+            "destination": ".worktree\\caserun-d601-f103-v2-arm2d-integration-20260608135339-9066d778\\projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103.uvoptx"
+          }
+        ],
+        "missing": [
+          "projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103.uvopt"
+        ],
+        "sourceBase": "projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103",
+        "destinationBase": ".worktree\\caserun-d601-f103-v2-arm2d-integration-20260608135339-9066d778\\projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103",
+        "line": "caseRunKeilSidecars {\"copied\":1,\"copiedFiles\":[{\"ext\":\".uvoptx\",\"source\":\"projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103.uvoptx\",\"destination\":\".worktree\\\\caserun-d601-f103-v2-arm2d-integration-20260608135339-9066d778\\\\projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103.uvoptx\"}],\"missing\":[\"projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103.uvopt\"],\"sourceBase\":\"projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103\",\"destinationBase\":\".worktree\\\\caserun-d601-f103-v2-arm2d-integration-20260608135339-9066d778\\\\projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103\"}"
+      }
+    },
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "statusShort": "M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx",
+      "diffStat": ".../01_baseline/Projects/MDK-ARM/atk_f103.uvprojx   | 21 ++++++++++++++-------\n 1 file changed, 14 insertions(+), 7 deletions(-)",
+      "diffSha256": "a847e886c801a597d96f40017f41c70262b024d5b6208bcc7ae343824c3c8d99",
+      "diffBytes": 2029,
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 56,
+          "stderr": ""
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 128,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 2029,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        }
+      }
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "statusShort": "M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx",
+      "diffStat": ".../01_baseline/Projects/MDK-ARM/atk_f103.uvprojx   | 21 ++++++++++++++-------\n 1 file changed, 14 insertions(+), 7 deletions(-)",
+      "diffSha256": "a847e886c801a597d96f40017f41c70262b024d5b6208bcc7ae343824c3c8d99",
+      "diffBytes": 2029,
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 56,
+          "stderr": ""
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 128,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 2029,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        }
+      }
+    }
+  },
+  "agentTask": {
+    "prompt": "请在隔离主体工作区中完成 D601-F103-V2 的 ARM-2D demo 最小集成。\n\n任务目标：\n1. 编辑 projects/01_baseline/User/main.c：在 d601_lcd.h 之后加入 d601_arm2d_demo.h，在 d601_gpio_init() 之后调用 d601_arm2d_demo_show()，并在 while(1) 循环中 jsonrpc_process() 之后调用 d601_arm2d_demo_task()。\n2. 编辑 projects/01_baseline/User/d601_arm2d_demo.c：先阅读 d601_arm2d_demo.h、d601_lcd.h，再读取 .agents/skills/arm2d-skill/ 下的 ARM-2D skill 参考（包含 ARM-2D API 用法、Tile/Framebuffer 操作模式和最佳实践），最后以工作区内的 arm_2d.h、arm_2d_types.h 等头文件为类型定义校验源推导实现。至少完成 arm2d_wait()、arm2d_tile_bind()、arm2d_fill_local()、d601_arm2d_demo_show() 和 d601_arm2d_demo_task()。\n3. 完成后执行 compile-only 验证，并回报 diff 摘要、编译终态、return_code、artifact 路径、warning 数和仍需人工关注的问题。\n\n不要照搬历史 run trace、旧答案或记忆中的 API 形态；所有 ARM-2D 与 LCD API 以当前工作区内头文件和 .agents/skills/arm2d-skill/ 为联合权威参考。",
+    "workspace": "subjectWorktree",
+    "constraints": [
+      "hwpod 与 hwpod-ctl 已在 PATH 中（通过工具链装配），不要运行 command -v、find / -name 或 ls tools/ 探测工具位置；直接运行 hwpod-ctl spec validate 和 hwpod workspace 开始工作",
+      "先在 .agents/skills/arm2d-skill/ 中按目录 depth-first 读取全部 skill 参考文件（ARM-2D API 用法、Tile 操作模式、PFB 刷新策略和最佳实践），再从工作区读取 projects/01_baseline/User/d601_arm2d_demo.h、d601_lcd.h 作为上下文；头文件类型定义以项目内的 arm_2d.h、arm_2d_types.h 为校验基准；不要把搜索范围扩成全仓库摸索",
+      "只能修改 projects/01_baseline/User/main.c 和 projects/01_baseline/User/d601_arm2d_demo.c",
+      "main.c 只加3行：include + show() + task()",
+      "d601_arm2d_demo.c 需要重新实现函数体，不能只恢复原来的代码",
+      "只做 compile-only build check，不要下载，也不要运行 UART",
+      "ARM-2D 库已在 Middlewares/Arm-2D/，d601_lcd 已实现",
+      "d601_lcd 已提供 bitmap/string 入口；实现时围绕 LCD bitmap 绘制、stripe/PFB 刷新、FPS 文本和 show()/task() 周期刷新组织代码"
+    ],
+    "providerProfile": "dsflash-go",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 1200000
+  },
+  "stage": "completed",
+  "agent": {
+    "stageStatus": "result_request_failed",
+    "baseUrl": "http://74.48.78.17:19666",
+    "projectId": "prj_hwpod_workbench",
+    "providerProfile": "dsflash-go",
+    "conversationId": "cnv_case_d601-f103-v2-arm2d-integration_d601-f103-v2-arm2d-integration-20260608135339-9066d778",
+    "sessionId": "ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0",
+    "traceId": "trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+    "promptPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/d601-f103-v2-arm2d-integration-20260608135339-9066d778/agent-prompt.md",
+    "promptSha256": "6acdfc4ca3dedf43b343535fa2a2bdf3dad08c9eca9df7e90d54e05e169164bf",
+    "accepted": {
+      "accepted": true,
+      "status": "running",
+      "shortConnection": true,
+      "controlSemantics": "submit-and-poll",
+      "traceId": "trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+      "workspaceId": null,
+      "workspaceRevision": null,
+      "conversationId": "cnv_case_d601-f103-v2-arm2d-integration_d601-f103-v2-arm2d-integration-20260608135339-9066d778",
+      "sessionId": "ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0",
+      "traceUrl": "/v1/agent/chat/trace/trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+      "resultUrl": "/v1/agent/chat/result/trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+      "streamUrl": "/v1/agent/chat/trace/trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785/stream",
+      "cancelUrl": "/v1/agent/chat/cancel",
+      "polling": {
+        "resultIntervalMs": 1000,
+        "traceIntervalMs": 1000
+      },
+      "runnerTrace": {
+        "traceId": "trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+        "status": "missing",
+        "createdAt": null,
+        "updatedAt": null,
+        "startedAt": null,
+        "finishedAt": null,
+        "eventCount": 0,
+        "events": [],
+        "assistantStreams": [],
+        "eventLabels": [],
+        "lastEvent": null,
+        "elapsedMs": null,
+        "waitingFor": null,
+        "runnerKind": null,
+        "workspace": null,
+        "sandbox": null,
+        "sessionMode": null,
+        "implementationType": null,
+        "sessionId": null,
+        "sessionStatus": null,
+        "sessionLifecycleStatus": null,
+        "turn": null,
+        "outputTruncated": false,
+        "valuesPrinted": false
+      }
+    },
+    "result": {
+      "status": "failed",
+      "error": {
+        "code": "cloud_api_proxy_failed",
+        "layer": "proxy",
+        "category": "proxy",
+        "retryable": true,
+        "userMessage": "Code Agent 代理暂时无法连接 cloud-api；输入已保留，可稍后重试。",
+        "message": "Code Agent 代理暂时无法连接 cloud-api；输入已保留，可稍后重试。",
+        "timeoutMs": null,
+        "traceId": null,
+        "route": "/v1/agent/chat/result/trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+        "blocker": {
+          "code": "cloud_api_proxy_failed",
+          "layer": "proxy",
+          "category": "proxy",
+          "retryable": true,
+          "summary": "Code Agent 代理暂时无法连接 cloud-api；输入已保留，可稍后重试。",
+          "userMessage": "Code Agent 代理暂时无法连接 cloud-api；输入已保留，可稍后重试。",
+          "traceId": null,
+          "route": "/v1/agent/chat/result/trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785"
+        }
+      },
+      "serviceId": "hwlab-cloud-web",
+      "target": "http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667/v1/agent/chat/result/trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+      "traceId": null,
+      "reason": "Code Agent 代理暂时无法连接 cloud-api；输入已保留，可稍后重试。"
+    },
+    "polls": 90,
+    "timedOut": false,
+    "timeoutMs": 1200000,
+    "pollIntervalMs": 1000,
+    "resultUrl": "http://74.48.78.17:19666/v1/agent/chat/result/trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+    "lastPollAt": "2026-06-08T13:59:27.121Z",
+    "lastHttpStatus": 502,
+    "nextPollCommand": "hwlab-cli client agent result trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+    "traceCommand": "hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785 --render web",
+    "inspectCommand": "hwlab-cli client agent inspect --trace-id trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+    "sessionCommand": "hwlab-cli client agent session status ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0",
+    "traceLookup": {
+      "source": "hwlab-cli.client.agent",
+      "strategy": "id_plus_existing_cli",
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "baseUrl": "http://74.48.78.17:19666",
+      "traceId": "trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+      "sessionId": "ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0",
+      "conversationId": "cnv_case_d601-f103-v2-arm2d-integration_d601-f103-v2-arm2d-integration-20260608135339-9066d778",
+      "commands": {
+        "result": "hwlab-cli client agent result trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+        "trace": "hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785 --render web",
+        "traceFull": "hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785 --render web --full",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+        "sessionStatus": "hwlab-cli client agent session status ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0"
+      }
+    },
+    "sessionResponse": {
+      "ok": true,
+      "status": "created",
+      "contractVersion": "code-agent-manual-session-v1",
+      "session": {
+        "sessionId": "ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0",
+        "projectId": "prj_hwpod_workbench",
+        "agentId": "hwlab-code-agent",
+        "status": "idle",
+        "usable": true,
+        "conversationId": "cnv_case_d601-f103-v2-arm2d-integration_d601-f103-v2-arm2d-integration-20260608135339-9066d778",
+        "threadId": null,
+        "lastTraceId": null,
+        "providerProfile": "dsflash-go",
+        "createdAt": "2026-06-08T13:54:07.149Z",
+        "updatedAt": "2026-06-08T13:54:07.149Z",
+        "valuesRedacted": true,
+        "secretMaterialStored": false
+      },
+      "workspace": {
+        "workspaceId": "wsp_1ad43cb1f9a369d1993c1e3b",
+        "ownerUserId": "usr_v02_admin",
+        "projectId": "prj_hwpod_workbench",
+        "name": "Default Workbench",
+        "status": "active",
+        "isDefault": true,
+        "revision": 319,
+        "selectedConversationId": "cnv_case_d601-f103-v2-arm2d-integration_d601-f103-v2-arm2d-integration-20260608135339-9066d778",
+        "selectedAgentSessionId": "ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0",
+        "activeTraceId": null,
+        "providerProfile": "dsflash-go",
+        "selectedConversation": {
+          "conversationId": "cnv_case_d601-f103-v2-arm2d-integration_d601-f103-v2-arm2d-integration-20260608135339-9066d778",
+          "sessionId": "ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0",
+          "threadId": null,
+          "status": "idle",
+          "projectId": "prj_hwpod_workbench",
+          "agentId": "hwlab-code-agent",
+          "ownerUserId": "usr_v02_admin",
+          "lastTraceId": "",
+          "updatedAt": "2026-06-08T13:54:07.149Z",
+          "startedAt": "2026-06-08T13:54:07.149Z",
+          "endedAt": null,
+          "session": {
+            "sessionId": "ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0",
+            "status": "idle"
+          },
+          "messages": [],
+          "messageCount": 0,
+          "firstUserMessagePreview": null,
+          "snapshot": {
+            "sessionStatus": "idle",
+            "source": "manual-session-create",
+            "valuesRedacted": true
+          },
+          "valuesRedacted": true
+        },
+        "workspace": {
+          "selectedConversationId": "cnv_case_d601-f103-v2-arm2d-integration_d601-f103-v2-arm2d-integration-20260608135339-9066d778",
+          "selectedAgentSessionId": "ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0",
+          "previousActiveTraceId": "trc_mq58z5al_oppj2olu",
+          "providerProfile": "dsflash-go",
+          "sessionStatus": "idle",
+          "lastTraceId": "trc_mq48f10t_tcu2si5y",
+          "workspaceRevisionConflict": true,
+          "expectedWorkspaceRevision": 313,
+          "staleContinuationCleared": false,
+          "messages": [
+            {
+              "id": "msg_mq58wcny_8ryaw5v8",
+              "role": "user",
+              "title": "用户",
+              "text": "看看有什么hwpod可用?",
+              "status": "sent",
+              "traceId": "trc_mq58wcny_4gas8mif",
+              "conversationId": "cnv_b0dde4f2-723e-4c81-acfe-6216776ee9c0",
+              "sessionId": "ses_b0dde4f2-723e-4c81-acfe-6216776ee9c0",
+              "createdAt": "2026-06-08T13:27:08.062Z"
+            },
+            {
+              "id": "msg_mq58wcny_3qkq3yl2",
+              "role": "agent",
+              "title": "Code Agent 处理中",
+              "text": "正在处理这次 Code Agent 请求；复杂问题可能需要几分钟。",
+              "status": "running",
+              "traceId": "trc_mq58wcny_4gas8mif",
+              "conversationId": "cnv_b0dde4f2-723e-4c81-acfe-6216776ee9c0",
+              "sessionId": "ses_b0dde4f2-723e-4c81-acfe-6216776ee9c0",
+              "createdAt": "2026-06-08T13:27:08.062Z"
+            }
+          ],
+          "actor": {
+            "id": "usr_v02_admin",
+            "username": "admin",
+            "displayName": "HWLAB v0.2 Admin",
+            "role": "admin",
+            "status": "active"
+          },
+          "updatedAt": "2026-06-08T13:54:07.153Z",
+          "secretMaterialStored": false,
+          "valuesRedacted": true
+        },
+        "updatedBySessionId": "key_master_server_admin",
+        "updatedByClient": "hwlab-cli.case-run",
+        "createdAt": "2026-06-05T10:15:11.551Z",
+        "updatedAt": "2026-06-08T13:54:07.153Z",
+        "valuesRedacted": true,
+        "secretMaterialStored": false
+      },
+      "nextCommands": [
+        "hwlab-cli client agent send --session-id ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0 --message TEXT",
+        "hwlab-cli client agent session status ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0"
+      ],
+      "valuesRedacted": true,
+      "secretMaterialStored": false
+    },
+    "error": {
+      "code": "agent_task_result",
+      "httpStatus": 502,
+      "body": {
+        "status": "failed",
+        "error": {
+          "code": "cloud_api_proxy_failed",
+          "layer": "proxy",
+          "category": "proxy",
+          "retryable": true,
+          "userMessage": "Code Agent 代理暂时无法连接 cloud-api；输入已保留，可稍后重试。",
+          "message": "Code Agent 代理暂时无法连接 cloud-api；输入已保留，可稍后重试。",
+          "timeoutMs": null,
+          "traceId": null,
+          "route": "/v1/agent/chat/result/trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+          "blocker": {
+            "code": "cloud_api_proxy_failed",
+            "layer": "proxy",
+            "category": "proxy",
+            "retryable": true,
+            "summary": "Code Agent 代理暂时无法连接 cloud-api；输入已保留，可稍后重试。",
+            "userMessage": "Code Agent 代理暂时无法连接 cloud-api；输入已保留，可稍后重试。",
+            "traceId": null,
+            "route": "/v1/agent/chat/result/trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785"
+          }
+        },
+        "serviceId": "hwlab-cloud-web",
+        "target": "http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667/v1/agent/chat/result/trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+        "traceId": null,
+        "reason": "Code Agent 代理暂时无法连接 cloud-api；输入已保留，可稍后重试。"
+      }
+    }
+  },
+  "agentTrace": {
+    "traceId": "trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+    "status": "failed",
+    "httpStatus": 0,
+    "source": "caserun-identity",
+    "lookupOnly": true,
+    "lookup": {
+      "source": "hwlab-cli.client.agent",
+      "strategy": "id_plus_existing_cli",
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "baseUrl": "http://74.48.78.17:19666",
+      "traceId": "trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+      "sessionId": "ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0",
+      "conversationId": "cnv_case_d601-f103-v2-arm2d-integration_d601-f103-v2-arm2d-integration-20260608135339-9066d778",
+      "commands": {
+        "result": "hwlab-cli client agent result trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+        "trace": "hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785 --render web",
+        "traceFull": "hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785 --render web --full",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+        "sessionStatus": "hwlab-cli client agent session status ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0"
+      }
+    },
+    "commandCount": 0,
+    "hwpodCommandCount": 0,
+    "hwpodBuildCommandCount": 0,
+    "keilJobCandidates": [],
+    "agentBuildJobIds": [],
+    "commands": []
+  },
+  "agentDiff": {
+    "statusShort": "",
+    "diffStat": "",
+    "diffPatchPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/d601-f103-v2-arm2d-integration-20260608135339-9066d778/agent-diff.patch",
+    "diffPatchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceRootStatusShort": "",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "statusShort": "M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx",
+      "diffStat": ".../01_baseline/Projects/MDK-ARM/atk_f103.uvprojx   | 21 ++++++++++++++-------\n 1 file changed, 14 insertions(+), 7 deletions(-)",
+      "diffSha256": "a847e886c801a597d96f40017f41c70262b024d5b6208bcc7ae343824c3c8d99",
+      "diffBytes": 2029,
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 56,
+          "stderr": ""
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 128,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 2029,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        }
+      }
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "statusShort": "M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx",
+      "diffStat": ".../01_baseline/Projects/MDK-ARM/atk_f103.uvprojx   | 21 ++++++++++++++-------\n 1 file changed, 14 insertions(+), 7 deletions(-)",
+      "diffSha256": "a847e886c801a597d96f40017f41c70262b024d5b6208bcc7ae343824c3c8d99",
+      "diffBytes": 2029,
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 56,
+          "stderr": ""
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 128,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 2029,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        }
+      }
+    },
+    "sourceRootAfterAgent": {
+      "label": "after-agent",
+      "statusShort": "",
+      "diffStat": "",
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "diffBytes": 0,
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "httpStatus": 502,
+          "exitCode": 1,
+          "stdoutBytes": 0,
+          "stderr": ""
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "httpStatus": 502,
+          "exitCode": 1,
+          "stdoutBytes": 0,
+          "stderr": ""
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "httpStatus": 502,
+          "exitCode": 1,
+          "stdoutBytes": 0,
+          "stderr": ""
+        }
+      }
+    },
+    "sourceRootChangedAfterPrepare": false,
+    "sourceRootChangedAfterAgent": true,
+    "requests": [
+      {
+        "label": "status",
+        "httpStatus": 502,
+        "exitCode": 1,
+        "stdoutBytes": 0,
+        "stderr": ""
+      },
+      {
+        "label": "diff-stat",
+        "httpStatus": 502,
+        "exitCode": 1,
+        "stdoutBytes": 0,
+        "stderr": ""
+      },
+      {
+        "label": "diff-patch",
+        "httpStatus": 502,
+        "exitCode": 1,
+        "stdoutBytes": 0,
+        "stderr": ""
+      },
+      {
+        "label": "source-root-baseline",
+        "statusShort": "M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx",
+        "diffSha256": "a847e886c801a597d96f40017f41c70262b024d5b6208bcc7ae343824c3c8d99"
+      },
+      {
+        "label": "source-root-after-prepare",
+        "statusShort": "M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx",
+        "diffSha256": "a847e886c801a597d96f40017f41c70262b024d5b6208bcc7ae343824c3c8d99"
+      },
+      {
+        "label": "source-root-after-agent",
+        "statusShort": "",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "_control": {
+    "status": "completed",
+    "stage": "completed",
+    "stdoutPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/d601-f103-v2-arm2d-integration-20260608135339-9066d778/worker.stdout.log",
+    "stderrPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/d601-f103-v2-arm2d-integration-20260608135339-9066d778/worker.stderr.log",
+    "startedAt": "2026-06-08T13:53:39.711Z",
+    "command": [
+      "bun",
+      "hwlab-cli.mjs",
+      "case",
+      "run",
+      "worker",
+      "d601-f103-v2-arm2d-integration",
+      "--run-id",
+      "d601-f103-v2-arm2d-integration-20260608135339-9066d778",
+      "--run-dir",
+      "d601-f103-v2-arm2d-integration-20260608135339-9066d778",
+      "--case-repo",
+      "hwlab-case-registry",
+      "--provider-profile",
+      "dsflash-go"
+    ],
+    "updatedAt": "2026-06-08T13:59:31.476Z",
+    "pid": 1023311,
+    "evidencePath": "/root/hwlab-v02/.state/hwlab-cli/caserun/d601-f103-v2-arm2d-integration-20260608135339-9066d778/evidence.json",
+    "completedAt": "2026-06-08T13:59:31.476Z",
+    "resultPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/d601-f103-v2-arm2d-integration-20260608135339-9066d778/result.json"
+  },
+  "status": "completed",
+  "evidencePath": "/root/hwlab-v02/.state/hwlab-cli/caserun/d601-f103-v2-arm2d-integration-20260608135339-9066d778/evidence.json"
+}

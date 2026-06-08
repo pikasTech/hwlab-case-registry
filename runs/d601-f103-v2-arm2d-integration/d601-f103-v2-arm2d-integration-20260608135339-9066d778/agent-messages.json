@@ -1,0 +1,78 @@
+{
+  "contractVersion": "hwpod-case-run-agent-messages-v1",
+  "renderer": "tools/src/hwlab-cli/trace-renderer:traceDisplayRows",
+  "traceSource": "caserun-identity",
+  "lookupOnly": true,
+  "traceLookup": {
+    "source": "hwlab-cli.client.agent",
+    "strategy": "id_plus_existing_cli",
+    "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+    "baseUrl": "http://74.48.78.17:19666",
+    "traceId": "trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+    "sessionId": "ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0",
+    "conversationId": "cnv_case_d601-f103-v2-arm2d-integration_d601-f103-v2-arm2d-integration-20260608135339-9066d778",
+    "commands": {
+      "result": "hwlab-cli client agent result trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+      "trace": "hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785 --render web",
+      "traceFull": "hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785 --render web --full",
+      "inspect": "hwlab-cli client agent inspect --trace-id trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+      "sessionStatus": "hwlab-cli client agent session status ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0"
+    }
+  },
+  "traceId": "trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+  "conversationId": "cnv_case_d601-f103-v2-arm2d-integration_d601-f103-v2-arm2d-integration-20260608135339-9066d778",
+  "sessionId": "ses_719adf27-3279-40ed-a0fb-2c6889ebdcb0",
+  "status": "failed",
+  "sourceEventCount": 0,
+  "renderedRowCount": 0,
+  "noiseEventCount": 0,
+  "finalResponse": {
+    "present": false,
+    "reason": "finalResponse=null; no authoritative final assistant response was returned by the trace/result payload",
+    "reasonCode": "final_response_missing",
+    "status": "failed",
+    "terminalStatus": "failed",
+    "timedOut": false,
+    "agentStageStatus": "result_request_failed",
+    "agentResultStatus": "failed",
+    "terminalRows": [],
+    "error": {
+      "code": "agent_task_result",
+      "httpStatus": 502,
+      "body": {
+        "status": "failed",
+        "error": {
+          "code": "cloud_api_proxy_failed",
+          "layer": "proxy",
+          "category": "proxy",
+          "retryable": true,
+          "userMessage": "Code Agent 代理暂时无法连接 cloud-api；输入已保留，可稍后重试。",
+          "message": "Code Agent 代理暂时无法连接 cloud-api；输入已保留，可稍后重试。",
+          "timeoutMs": null,
+          "traceId": null,
+          "route": "/v1/agent/chat/result/trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+          "blocker": {
+            "code": "cloud_api_proxy_failed",
+            "layer": "proxy",
+            "category": "proxy",
+            "retryable": true,
+            "summary": "Code Agent 代理暂时无法连接 cloud-api；输入已保留，可稍后重试。",
+            "userMessage": "Code Agent 代理暂时无法连接 cloud-api；输入已保留，可稍后重试。",
+            "traceId": null,
+            "route": "/v1/agent/chat/result/trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785"
+          }
+        },
+        "serviceId": "hwlab-cloud-web",
+        "target": "http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667/v1/agent/chat/result/trc_case_d601-f103-v2-arm2d-integration_382f9608d56c44da9005142d94f9e785",
+        "traceId": null,
+        "reason": "Code Agent 代理暂时无法连接 cloud-api；输入已保留，可稍后重试。"
+      }
+    }
+  },
+  "rows": [],
+  "diff": {
+    "path": "agent-diff.patch",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "patchIncludedInTranscript": true
+  }
+}
