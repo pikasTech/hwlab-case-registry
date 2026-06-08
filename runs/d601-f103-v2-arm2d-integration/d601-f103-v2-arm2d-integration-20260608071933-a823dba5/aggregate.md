@@ -25,6 +25,9 @@
 - subjectWorktreePath: F:\Work\HWLAB-CASE-F103\.worktree\caserun-d601-f103-v2-arm2d-integration-20260608071933-a823dba5
 - sourceRootBaselineStatus: M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx
 - sourceRootAfterPrepareStatus: M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx
+- agentBuildJobIds: 20260608_152738_76fe5f06
+- postAgentCompileJobId: 20260608_152837_982edb8f
+- buildJobRelationship: agent-build-observed-plus-runner-post-agent-check
 - keilJobId: 20260608_152837_982edb8f
 - keilStatus: completed
 - hwpodExitCode: 0
@@ -148,8 +151,8 @@ AgentRun 通过 ResourceBundleRef kind=gitbundle 装配 HWLAB 运行时资源：
 - renderer: tools/src/hwlab-cli/trace-renderer:traceDisplayRows
 - sourceEventCount: 6000
 - renderedRowCount: 66
-- hwpodCommandCount: 0
-- hwpodBuildCommandCount: 0
+- hwpodCommandCount: 26
+- hwpodBuildCommandCount: 1
 
 - <details>
   <summary>已运行 'PATH="$PWD/tools:$PATH" hwpod workspace rg "arm_2d_init|arm_2d_op_wait_async|arm_2d_rg...</summary>
@@ -1081,12 +1084,12 @@ index 7467c9a..df8bf9a 100644
 
 | Path | Bytes | SHA-256 |
 |---|---:|---|
-| evidence.json | 57082 | cae26c2cc6b9d0f98546b71605d5f8cd8c4de93515be2b87a91565d6ba3c269d |
-| summary.md | 1413 | 3a01772652e031361af6da0fe4c82b968b876cfcc7fb35a2cc0e828ef59e521b |
-| aggregate.md | 36709 | e71a2206685f632ec34b51f836b03382916993d719ae190a493c711d17bf415a |
+| evidence.json | 70901 | 793e05dc2f0ddac0d3345fb7438579a7d3e4c1a3c16425b59cc84c6cc80cf858 |
+| summary.md | 10848 | 4854fe58cbb15b2a27f89e359e5394c1c0b2d1f18fc37052e5fa0016a0be6822 |
+| aggregate.md | 64198 | 4ba970c80d3459dcbe29abb1e27e9e5fbe17a82dcb05346bccaaa00c876bfc12 |
 | agent-messages.json | 51012 | cf8dfbb3ac4a1166ed43aed6292ff2bf5fc46374c11a8ef1c64cc2d9cbcf6b67 |
-| agent-trace.md | 50002 | 6d02256dad0474c936ca1c9e626e80239aa827698761b727d66300d8ce284d13 |
-| agent-transcript.md | 50002 | 6d02256dad0474c936ca1c9e626e80239aa827698761b727d66300d8ce284d13 |
+| agent-trace.md | 52204 | e485ebe1cf766c7978b907bf1f0a4324a72a60f7f0c89ce96b1757bfe56f5639 |
+| agent-transcript.md | 52204 | e485ebe1cf766c7978b907bf1f0a4324a72a60f7f0c89ce96b1757bfe56f5639 |
 | final-response.md | 1267 | 383e800ee595b790c2442f4c5af3965bd5a82c69eaf435f99d8339298ee5be30 |
 | run.json | 35473 | faa0722a4328e7744440127c72e6a482d900c539be219ade1ac7d314f2d7a73f |
 | result.json | 46061 | 6dc6edf9f4bcd81632cdfa1cdf1a86c5b14ff604cbf9f3eb1fa0d6f42f9c1332 |
