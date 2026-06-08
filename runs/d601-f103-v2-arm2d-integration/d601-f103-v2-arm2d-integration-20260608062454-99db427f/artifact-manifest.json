@@ -29,7 +29,7 @@
       }
     },
     "status": "running",
-    "commandCount": 116,
+    "commandCount": 117,
     "hwpodCommandCount": 0,
     "hwpodBuildCommandCount": 0
   },
@@ -157,12 +157,12 @@
       "renderer": "tools/src/hwlab-cli/trace-renderer:traceDisplayRows",
       "status": "running",
       "sourceEventCount": 6000,
-      "renderedRowCount": 151,
+      "renderedRowCount": 140,
       "noiseEventCount": 0
     },
     "finalResponse": {
       "present": false,
-      "reason": "'export PATH=\"$PWD/tools:$PATH\"; hwpod workspace cat --hwpod-id d601-f103-v2 --workspace-path '\"'F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608062454-99db427f' --path 'projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h' 2>&1 | python3 -c \" import sys, json data = sys.stdin.read() # Extract content between 'content' markers start = data.find('\\\"content\\\":\\\"') if start >= 0: start += len('\\\"content\\\":\\\"') end = data.find('\\\"', start) content = data[start:end] content = content.replace('\\\\\\\\n', '\\n').replace('\\\\\\\\r', '\\r').replace('\\\\\\\\t', '\\t').replace('\\\\\\\\\\\"', '\\\"').replace('\\\\\\\\\\\\\\\\', '\\\\\\\\') lines = content.split('\\\\n') for i, line in enumerate(lines[620:635], start=621): print(f'{i}: {line}') \" 2>&1\"\nstdout:\ncommandExecution failed: /bin/sh -lc 'export PATH=\"$PWD/tools:$PATH\"; hwpod workspace cat --hwpod-id d601-f103-v2 --workspace-path '\"'F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-d601-f103-v2-arm2d-integration-20260608062454-99db427f' --path 'projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h' 2>&1 | python3 -c \\\" import sys, json data = sys.stdin.read() # Extract content between 'content' markers st\n... clipped ...",
+      "reason": "'export PATH=\"$PWD/tools:$PATH\"; hwpod workspace cat --hwpod-id d601-f103-v2 --workspace-path '\"'F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-d601-f103-v2-arm2d-integration-20260608062454-99db427f' --path 'projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h' 2>&1 | node -e \" let data = ''; process.stdin.on('data', (chunk) => data += chunk); process.stdin.on('end', () => { try { const parsed = JSON.parse(data); const content = parsed.body.results[0].output.content; const lines = content.split('\\n'); for (let i = 619; i < 645 && i < lines.length; i++) { console.log((i+1) + ': ' + lines[i].replace(/\\r/g, '')); } } catch(e) { console.log('Parse error:', e.message); } });\" 2>&1\"\nstdout:\ncommandExecution inProgress: /bin/sh -lc 'export PATH=\"$PWD/tools:$PATH\"; hwpod workspace cat --hwpod-id d601-f103-v2 --workspace-path '\"'F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-d601-f103-v2-arm2d-integration-20260608062454-99db427f' --path 'projects/01_baseline/Middlewares/Arm-2D/Library/include/arm_2d_types.h' 2>&1 | node -e \\\" let data = ''; process.stdin.on('data', (chunk) => data += chunk); process.stdin.on('end', () => { try { const parsed = JSON.parse(data); const content = p\n... clipped ...",
       "status": "running",
       "terminalRows": [],
       "error": {
@@ -358,51 +358,51 @@
   "files": [
     {
       "path": "evidence.json",
-      "bytes": 66647,
-      "sha256": "a8c20916984b9342ac22a8718d6ce74596e134a94128abdcb01257765edf5b9b",
+      "bytes": 67249,
+      "sha256": "d6b3f0bf6e2ca113ff6a8fcc4b1afb4e95d03fc94cc5b6a1b7fdf7698c264e55",
       "source": "evidence.json"
     },
     {
       "path": "summary.md",
       "bytes": 1414,
-      "sha256": "cf7d6d7e270e5d8bd5d0996b0a4ed4db7cd5b5519b95e1edbb83756c746a4e80"
+      "sha256": "3c557002e00635ca5b95d5fc33d886b44b7e9d33bc3c6f4664e159457ab0e593"
     },
     {
       "path": "agent-messages.json",
-      "bytes": 132413,
-      "sha256": "8d321eeb54adec011880b51083af56a2d44e91f58adb632534d23614f36b82dd"
+      "bytes": 131907,
+      "sha256": "8bb171a5eebe09144c0f3c750b914783e632cf5502b105eef022e8219117ca9d"
     },
     {
       "path": "agent-trace.md",
-      "bytes": 109018,
-      "sha256": "2234f83daba8a3030a030603b739f359f19dff247d6058ca47678d25d01b93b7"
+      "bytes": 109876,
+      "sha256": "594e09d1d4525f7a1139fcd1b2284d7271193aaa2c3b1760c21d9189430c1b93"
     },
     {
       "path": "agent-transcript.md",
-      "bytes": 109018,
-      "sha256": "2234f83daba8a3030a030603b739f359f19dff247d6058ca47678d25d01b93b7"
+      "bytes": 109876,
+      "sha256": "594e09d1d4525f7a1139fcd1b2284d7271193aaa2c3b1760c21d9189430c1b93"
     },
     {
       "path": "final-response.md",
       "bytes": 1542,
-      "sha256": "34356658d9782bf341ec32f577a1b57760accb94871778a1d0efbe04317d3487"
+      "sha256": "4dc0af656f3b21f987791626d7b6ab3b77995ff5bbc987d4224edc2920a414eb"
     },
     {
       "path": "run.json",
-      "bytes": 77288,
-      "sha256": "84821ac45ccc50e4e8f18b460f745e94cb0763027ce11bc6a058209ca413b84e",
+      "bytes": 77307,
+      "sha256": "c35377a268c0963fcb73232336f6a6c6ab581ae834f166ff977a233906a123b4",
       "source": "run.json"
     },
     {
       "path": "result.json",
-      "bytes": 10679,
-      "sha256": "18b377067ed928a6771d109616074d9183336ef52526f4d14ba25b06c806d43b",
+      "bytes": 131452,
+      "sha256": "3d780f881a352e2a486f2de6bf844b8fe473ea7edb79bf0cfa188388addec1f4",
       "source": "result.json"
     },
     {
       "path": "agent-trace.json",
-      "bytes": 383320,
-      "sha256": "944ec81b2de034f2a56f19c5d04df93de7d2763da55e14609a4ae63af5ba565a",
+      "bytes": 381421,
+      "sha256": "33d08630bcfd29787d964818c1eb431111068cb2c65daf92247d5eea84d97f17",
       "source": "agent-trace.json"
     },
     {

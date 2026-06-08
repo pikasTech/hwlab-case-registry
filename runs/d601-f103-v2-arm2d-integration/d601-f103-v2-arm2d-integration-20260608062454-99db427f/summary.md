@@ -13,7 +13,7 @@
 - traceCommand: hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-integration_166c613eb6034d7697634e890485f850 --render web
 - resultCommand: hwlab-cli client agent result trc_case_d601-f103-v2-arm2d-integration_166c613eb6034d7697634e890485f850
 - inspectCommand: hwlab-cli client agent inspect --trace-id trc_case_d601-f103-v2-arm2d-integration_166c613eb6034d7697634e890485f850
-- agentTraceCommandCount: 116
+- agentTraceCommandCount: 117
 - agentTraceHwpodCommandCount: 0
 - agentTraceHwpodBuildCommandCount: 0
 - agentStageCommandCount: 0
