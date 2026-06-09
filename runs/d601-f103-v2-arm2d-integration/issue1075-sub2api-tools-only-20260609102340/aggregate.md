@@ -26,11 +26,14 @@
 - sourceRootBaselineStatus: M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx
 - sourceRootAfterPrepareStatus: M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx
 - agentBuildJobIds: 20260609_182839_7d92796e
+- agentReportedBuildJobId: 20260609_182839_7d92796e
+- agentReportedReturnCode: 0
+- agentReportedWarningCount: 26
 - postAgentCompileJobId: 20260609_182926_b7f6ed35
+- runnerPostAgentCompileStatus: completed
+- runnerPostAgentCompileReturnCode: 0
+- runnerPostAgentCompileWarningCount: 0
 - buildJobRelationship: agent-build-observed-plus-runner-post-agent-check
-- keilJobId: 20260609_182926_b7f6ed35
-- keilStatus: completed
-- keilWarningCount: 0
 - hwpodExitCode: 0
 <details>
 <summary>Run-local HWPOD spec</summary>
