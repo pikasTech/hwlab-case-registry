@@ -14,7 +14,7 @@
 - caseRepoRunDir: /root/hwlab-case-registry/runs/d601-f103-v2-arm2d-integration/issue996-sub2api-nonoverfit-202606090945
 - sourceRunDir: /root/hwlab-v02/.state/hwlab-cli/caserun/issue996-sub2api-nonoverfit-202606090945
 - createdAt: 2026-06-09T09:41:09.592Z
-- completedAt: 2026-06-09T09:46:27.482Z
+- completedAt: 2026-06-09T09:46:36.348Z
 - runnerPostAgentCompileCheck: recorded
 
 ## HWPOD 信息
@@ -537,9 +537,9 @@ _agent-diff.patch artifact is missing._
 | agent-trace.md | 22732 | d02cea1c094d1422e7c25c640de46df8e1219c7a03adea7f4df3a12951a5f40c |
 | agent-transcript.md | 22732 | d02cea1c094d1422e7c25c640de46df8e1219c7a03adea7f4df3a12951a5f40c |
 | final-response.md | 1064 | d9349a155ac627047830e49f3ed52558781c8ed8842428ae1e624cbc5d0ff9d0 |
-| run.json | 59104 | 4e20a39b785c8fb8a44a18d648bf7c145a19726115476398660c9d40db763283 |
-| result.json | 23874 | 25986a450d39bc1dcefe24c6955fb956d222f7fed24e11f65876cbd153ecc3d7 |
-| agent-trace.json | 88549 | c68ef1206da131a7a68be716c4d0c40d2fe85ae93314eedc15cf77f38f6d7171 |
+| run.json | 59123 | 4635c7d4647be6d6448aa0d3faf5739d9b9243afac122cfea5ebce8a29d5f801 |
+| result.json | 120748 | b938b551d5abcd17f6e8fe505105a8fc6b09ab6e9a5a561b7a4799c6cce9dbaf |
+| agent-trace.json | 88549 | 43bc8506a0f5ac5aca250d401558845f52b78e9e948b1d82804c7c9b30d1583c |
 | agent-prompt.md | 4170 | 54340d8113af3c70645a2f5e8dd4b57beea2548c6d1d12d369171e5309e5b522 |
 | agent-diff.patch | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
 | .hwlab/hwpod-spec.yaml | 749 | 8742fc033f21ff6e56f79d4af9d84acab0e50281bc0dff0c3f2d6fd3af700069 |
