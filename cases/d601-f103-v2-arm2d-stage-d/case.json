@@ -27,6 +27,7 @@
       "只允许修改主体隔离工作区，不得修改 case registry repo、HWLAB repo 或原 subject repo checkout",
       "arm2d-skill 必须来自 AgentRun gitbundle 装配的 .agents/skills/arm2d-skill，不得复制或新增到 subject repo 的 .agents/skills 下",
       "subject 裸基线不包含 Arm-2D 源码；如果需要 Arm-2D 源码，必须由 agent 自行获取、生成或通过受控 HWPOD workspace 写入，并在最终回复说明 provenance",
+      "Arm-2D 源码获取必须有界：优先使用官方 URL/tag/tree/content metadata 或最小必要文件；如果全量 clone/archive 下载失败或长时间无进展，立即收敛为可解释的最小 RGB565 兼容源集，并在 subject 中记录官方 URL/ref 与生成方式 provenance，不得把等待完整仓库下载作为唯一成功路径",
       "所有 subject 文本修改必须通过 HWPOD workspace apply-patch 或等价 HWPOD workspace 写入入口完成，不得从 Linux runner 直接 cd 到 Windows 路径编辑",
       "必须更新 Keil uvprojx；新增 C 源文件后不能只改源文件而漏掉 Keil 工程",
       "必须尝试 hwpod build、hwpod download 和 hwpod uart read 原入口命令，并保留原始错误或 job id",
