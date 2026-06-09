@@ -1141,12 +1141,12 @@ index 7467c9a..df8bf9a 100644
 | agent-transcript.md | 59849 | ac57d7f233f2a4676ea98feec155c1f603a34f0fabbadfd450851db74407da96 |
 | final-response.md | 3088 | 34000a293994752a6ba8e7f8c9073d8162c1a5ad8a16194926159397992c9720 |
 | run.json | 81473 | 5c1b36bd92ea348fca84b3df7c3fda2423aa8fb7017e2fcb121d5ac5754e27e5 |
-| result.json | 186140 | d55cb3350bea2dc55fcdad3b28952e1c3fc5ab7476729731b712b65de47768a1 |
-| agent-trace.json | 195724 | b08dd594e01bfaedac21e4f109703547b081c8d5af33ad0786190b797784027e |
+| result.json | 186742 | 90cd7ce1c56d6f837217ff9dc28d6e1f1a8e4a54ec76f546a7c3664a1773e6ac |
+| agent-trace.json | 195724 | fcdbf5b2482bf0649b8acd665f55992f4bfceb6c6ec7e75d3defb587949cea42 |
 | agent-prompt.md | 3574 | ff0f09c1abaf4d30682581ad832cbcc9d85bc71de7c25697fb6f12c6229d3b57 |
 | agent-diff.patch | 7032 | b2ebe3b62fa86f84ade3a1d04b191aaabb0d36dbfbd0e754213292f1ece93eec |
 | .hwlab/hwpod-spec.yaml | 744 | ccb002dff24158129a1d025425895505c0c0d5629bb72b7d5f428671f6fe32dd |
-| worker.stdout.log | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
+| worker.stdout.log | 186838 | ee60ff1f98e4065cdcac89d2fc3bf6a288a9f97cb6c1fb27f9c6f171a3f8103f |
 | worker.stderr.log | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
 
 ## 说明
