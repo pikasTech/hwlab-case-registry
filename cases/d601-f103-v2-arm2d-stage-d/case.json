@@ -20,6 +20,14 @@
       {
         "pattern": "projects/01_baseline/Middlewares/Arm-2D/**",
         "reason": "repo-relative form of the same large real Arm-2D upstream source directory"
+      },
+      {
+        "pattern": "Middlewares/CMSIS-DSP/**",
+        "reason": "large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted"
+      },
+      {
+        "pattern": "projects/01_baseline/Middlewares/CMSIS-DSP/**",
+        "reason": "repo-relative form of the same large real CMSIS-DSP upstream dependency directory"
       }
     ]
   },
@@ -41,6 +49,7 @@
       "subject 裸基线不包含 Arm-2D 源码；必须从 ARM-software Arm-2D upstream、官方发布包、CMSIS-Pack/RTE 或目标节点已验证缓存取得真实源码/组件，并在最终回复说明 provenance",
       "允许用 sparse checkout、filter clone、archive path、Pack/RTE 组件或最小必要文件清单降低体积；复制到 subject 的 upstream source 文件必须保持原始内容，板级配置、display port、demo 和 adapter 放在 project-local 文件中",
       "禁止自写同名替代实现、mock/stub、API veneer 或 subset 冒充 Arm-2D；禁止把只读取 upstream metadata/tag 当作已经集成；真实来源获取或集成失败时必须报告 blocker",
+      "若真实 Arm-2D 编译需要 arm_math.h/CMSIS-DSP，必须从 ARM-software/CMSIS-DSP、官方 CMSIS-Pack/RTE 或目标节点已验证缓存取得真实 CMSIS-DSP 依赖并记录 provenance；禁止使用 Arm-2D PC 示例 platform/math/arm_math.h、手写 arm_math.h 或最小 stub 冒充 CMSIS-DSP",
       "所有 project-local 文本修改必须通过 HWPOD workspace apply-patch 或等价 HWPOD workspace 写入入口完成，不得从 Linux runner 直接 cd 到 Windows 路径编辑；第三方 upstream/vendor source 物化必须通过 HWPOD cmd/git/archive/Pack/RTE/已验证缓存，不得用 apply-patch 或 workspace write 重写源码",
       "必须更新 Keil uvprojx；新增 C 源文件后不能只改源文件而漏掉 Keil 工程",
       "必须尝试 hwpod build、hwpod download 和 hwpod uart read 原入口命令，并保留原始错误或 job id",
@@ -103,6 +112,6 @@
     "skillSource": "HWLAB repo skills/arm2d-skill via AgentRun gitbundle resourceBundlePolicy=caserun-with-skills",
     "subjectBaseline": "subject repo deliberately does not contain Arm2D skill or Arm-2D source",
     "purpose": "验证 Code Agent 能从裸基线真实集成 Arm-2D upstream/Pack/RTE，并通过 build/download/UART/LCD 运行态证据收口",
-    "middlewareSourcePolicy": "real-upstream-required; no local substitute implementation"
+    "middlewareSourcePolicy": "real-upstream-required; no local substitute implementation; real dependency required for CMSIS-DSP/arm_math.h"
   }
 }
