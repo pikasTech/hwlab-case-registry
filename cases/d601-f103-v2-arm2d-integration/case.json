@@ -22,7 +22,7 @@
     "constraints": [
       "hwpod 与 hwpod-ctl 已在 PATH 中（通过工具链装配），不要运行 command -v、find / -name 或 ls tools/ 探测工具位置；直接运行 hwpod-ctl spec validate 和 hwpod workspace 开始工作",
       "上下文读取必须服务于当前最小实现：优先读取目标源码、相关 LCD API 和必要 ARM-2D 符号；需要确认符号时可以用 hwpod workspace rg/cat 读取最小相关片段",
-      "不要 depth-first 通读 .agents/skills/arm2d-skill/ 或 Middlewares；不要把完整参考阅读、全仓库搜索或无边界递归搜索作为 patch 前置门槛",
+      "不要 depth-first 通读完整 skill/reference 或 Middlewares；不要把完整参考阅读、全仓库搜索或无边界递归搜索作为 patch 前置门槛",
       "只能修改 projects/01_baseline/User/main.c 和 projects/01_baseline/User/d601_arm2d_demo.c",
       "尽早用 hwpod workspace apply-patch 提交最小 patch 并运行 hwpod build；编译失败后按具体错误做窄范围二次查询和修复，不要降级为 workspace write",
       "main.c 只加3行：include + show() + task()",
