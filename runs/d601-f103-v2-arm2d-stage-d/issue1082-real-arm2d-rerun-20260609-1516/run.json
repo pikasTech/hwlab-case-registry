@@ -1,0 +1,930 @@
+{
+  "caseId": "d601-f103-v2-arm2d-stage-d",
+  "runId": "issue1082-real-arm2d-rerun-20260609-1516",
+  "runDir": "/root/hwlab-v02/.state/hwlab-cli/caserun/issue1082-real-arm2d-rerun-20260609-1516",
+  "caseRepo": "/root/hwlab-case-registry",
+  "caseDir": "/root/hwlab-case-registry/cases/d601-f103-v2-arm2d-stage-d",
+  "caseFile": "/root/hwlab-case-registry/cases/d601-f103-v2-arm2d-stage-d/case.json",
+  "sourceSpecPath": "/root/hwlab-case-registry/cases/d601-f103-v2-arm2d-stage-d/hwpod-spec.yaml",
+  "specPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/issue1082-real-arm2d-rerun-20260609-1516/.hwlab/hwpod-spec.yaml",
+  "apiUrl": "http://74.48.78.17:19667",
+  "compileOnly": true,
+  "createdAt": "2026-06-09T15:16:06.349Z",
+  "updatedAt": "2026-06-09T15:31:13.723Z",
+  "definition": {
+    "contractVersion": "hwpod-case-v1",
+    "caseId": "d601-f103-v2-arm2d-stage-d",
+    "title": "D601-F103-V2 Arm2D 阶段D：裸基线真实集成 Arm-2D 并运行态验证",
+    "mode": "agent-mutation-build-download-uart",
+    "hwpodSpec": "hwpod-spec.yaml",
+    "subject": {
+      "repoLocalPath": "F:\\Work\\HWLAB-CASE-F103",
+      "repoUrl": "https://github.com/pikasTech/HWLAB-CASE-F103.git",
+      "ref": "issue1077-naked-baseline-20260609",
+      "commitId": "76bce7c2d73b687473223bbbdebc7d69124ebac6",
+      "subdir": "projects/01_baseline"
+    },
+    "diffCollection": {
+      "ignore": [
+        {
+          "pattern": "Middlewares/Arm-2D/**",
+          "reason": "large real Arm-2D upstream source is represented by provenance/hash; patch body omitted"
+        }
+      ]
+    },
+    "runtime": {
+      "apiUrl": "http://74.48.78.17:19667",
+      "webUrl": "http://74.48.78.17:19666"
+    },
+    "agentTask": {
+      "workspace": "subjectWorktree",
+      "providerProfile": "sub2api",
+      "projectId": "prj_hwpod_workbench",
+      "resourceBundlePolicy": "caserun-with-skills",
+      "timeoutMs": 3600000,
+      "pollIntervalMs": 2000,
+      "prompt": "请在隔离主体工作区中完成 D601-F103-V2 Arm2D 阶段D：从裸基线真实集成 Arm-2D 中间件源码，并用真实 build、download、UART 运行态证据收口。\n\n任务背景：当前 subject commit 是裸基线，已经不包含 subject repo 内置的 .agents/skills/arm2d-skill、Middlewares/Arm-2D、d601_arm2d_demo.c/.h 或 Keil Arm2D 工程项。Arm2D skill 由 CaseRun/AgentRun gitbundle 提供在 runner 的 .agents/skills/arm2d-skill；不要把 skill 目录复制进 subject repo。\n\n真实性底线：本 case 验收的是“真实已有 Arm-2D 中间件集成”，不是同名 API 替代层。必须从 ARM-software Arm-2D upstream、官方发布包、CMSIS-Pack/RTE 或目标节点已验证缓存取得真实源码/组件。首选官方仓库 https://github.com/ARM-software/Arm-2D.git 的受控 tag/ref；本次优先使用 tag v1.2.4（目标 Windows host 已验证 git ls-remote 可见 refs/tags/v1.2.4=deda1c31efa35f5b0b3cfc3ef44a04110983ceca）。可以用 sparse checkout、filter clone、archive path、Pack/RTE 组件或最小必要文件清单降低体积，但 copied upstream source 必须保持原始内容。工程本地配置、display port、demo、adapter、board glue 可以新增在 project-local 位置；不要改写 upstream source 文件来适配板级代码。禁止通过 apply-patch/workspace write 手工粘贴或整文件重写 Arm-2D upstream 源码；上游文件必须由 HWPOD cmd/git/archive/Pack/RTE/已验证缓存在目标工作区真实物化，并记录 hash/ref。\n\n任务目标：\n1. 通过 HWPOD 标准入口操作主体隔离工作区，必要时读取 .agents/skills/arm2d-skill/SKILL.md 和最小相关 reference，理解 Arm2D/Keil/PFB 接入约束。\n2. 获取真实 Arm-2D upstream/Pack/RTE 源码或组件，把必要真实文件加入 projects/01_baseline 的合适位置；首选通过 `hwpod cmd git ls-remote --tags https://github.com/ARM-software/Arm-2D.git refs/tags/v1.2.4` 先核对 tag，再用 HWPOD cmd 在目标 Windows host 内 clone/archive/checkout-index/export 到 projectRoot 下，避免把 .git 目录留在 subject 源码树中；记录来源 URL、tag/ref/version、获取方式、文件清单和 provenance。若真实来源不可获取或无法集成，停止并报告 blocker，不要提交替代实现。\n3. 修改 Keil 工程 projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx，把真实 Arm2D 源码、include path、本地配置和应用 glue 纳入 USART target。\n4. 新增或恢复应用层 demo 文件，并修改 main.c 接入 show/task 路径。demo 至少要通过 Arm-2D API/LCD 绘制可辨识的 RGB565 画面，并在 loop 中维护帧计数或心跳。\n5. 在 UART 中输出可采集的运行态证据：启动标记、runId、Arm-2D 来源 tag/ref、loop heartbeat、frame counter，以及 LCD/framebuffer/cache 或 tile dump 摘要。串口单行不要过长，可拆成多行 printf。\n6. 依次运行 hwpod-ctl spec validate、hwpod inspect、hwpod build、hwpod job status、hwpod download、hwpod job status、hwpod uart read --port uart1 --max-bytes 8192。若 download 返回 job id，必须轮询 job status 到终态或报告仍在 running 的具体 job id。\n7. 最终回报：Arm2D 真实源码来源、复制的 upstream 文件清单和本地 glue 文件清单、Keil 工程变更摘要、build/download job id 与终态、UART 原始尾部、LCD/framebuffer/cache dump 摘要，以及仍需人工关注的问题。",
+      "constraints": [
+        "只允许修改主体隔离工作区，不得修改 case registry repo、HWLAB repo 或原 subject repo checkout",
+        "arm2d-skill 必须来自 AgentRun gitbundle 装配的 .agents/skills/arm2d-skill，不得复制或新增到 subject repo 的 .agents/skills 下",
+        "subject 裸基线不包含 Arm-2D 源码；必须从 ARM-software Arm-2D upstream、官方发布包、CMSIS-Pack/RTE 或目标节点已验证缓存取得真实源码/组件，并在最终回复说明 provenance",
+        "允许用 sparse checkout、filter clone、archive path、Pack/RTE 组件或最小必要文件清单降低体积；复制到 subject 的 upstream source 文件必须保持原始内容，板级配置、display port、demo 和 adapter 放在 project-local 文件中",
+        "禁止自写同名替代实现、mock/stub、API veneer 或 subset 冒充 Arm-2D；禁止把只读取 upstream metadata/tag 当作已经集成；真实来源获取或集成失败时必须报告 blocker",
+        "所有 project-local 文本修改必须通过 HWPOD workspace apply-patch 或等价 HWPOD workspace 写入入口完成，不得从 Linux runner 直接 cd 到 Windows 路径编辑；第三方 upstream/vendor source 物化必须通过 HWPOD cmd/git/archive/Pack/RTE/已验证缓存，不得用 apply-patch 或 workspace write 重写源码",
+        "必须更新 Keil uvprojx；新增 C 源文件后不能只改源文件而漏掉 Keil 工程",
+        "必须尝试 hwpod build、hwpod download 和 hwpod uart read 原入口命令，并保留原始错误或 job id",
+        "UART 输出必须包含本次 runId 和 Arm-2D 真实来源 tag/ref，避免旧串口输出或伪实现混淆",
+        "结果只作为 raw trace/evidence 记录，不做自动评价或自动门禁"
+      ]
+    },
+    "flow": [
+      {
+        "id": "agent-mutation",
+        "kind": "agent"
+      },
+      {
+        "id": "build",
+        "kind": "hwpod.build"
+      },
+      {
+        "id": "download",
+        "kind": "hwpod.download"
+      },
+      {
+        "id": "uart-read",
+        "kind": "hwpod.uart.read",
+        "port": "uart1",
+        "maxBytes": 8192
+      }
+    ],
+    "expected": {
+      "diff": {
+        "contains": [
+          "arm_2d",
+          "d601_arm2d",
+          "runId",
+          "ARM-software"
+        ]
+      },
+      "compile": {
+        "success": true,
+        "artifactSuffixes": [
+          "projects/01_baseline/Output/atk_f103.hex",
+          "projects/01_baseline/Output/atk_f103.axf"
+        ]
+      },
+      "download": {
+        "attempted": true
+      },
+      "uart": {
+        "port": "uart1",
+        "contains": [
+          "ARM2D",
+          "runId",
+          "frame",
+          "ARM-software"
+        ]
+      }
+    },
+    "notes": {
+      "autoEvaluation": false,
+      "stage": "D",
+      "skillSource": "HWLAB repo skills/arm2d-skill via AgentRun gitbundle resourceBundlePolicy=caserun-with-skills",
+      "subjectBaseline": "subject repo deliberately does not contain Arm2D skill or Arm-2D source",
+      "purpose": "验证 Code Agent 能从裸基线真实集成 Arm-2D upstream/Pack/RTE，并通过 build/download/UART/LCD 运行态证据收口",
+      "middlewareSourcePolicy": "real-upstream-required; no local substitute implementation"
+    }
+  },
+  "subject": {
+    "repoLocalPath": "F:\\Work\\HWLAB-CASE-F103",
+    "commitId": "76bce7c2d73b687473223bbbdebc7d69124ebac6",
+    "subdir": "projects/01_baseline",
+    "worktreePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516",
+    "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516",
+    "defaultWorkspacePath": "F:\\Work\\HWLAB-CASE-F103",
+    "projectRootPath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\\projects\\01_baseline",
+    "setup": {
+      "httpStatus": 200,
+      "planId": "case_subject_c7ead7f5-cfd7-4e6c-a75b-9e7f106cc7b6",
+      "nodeId": "node-d601-f103-v2",
+      "exitCode": 0,
+      "stdout": "HEAD is now at 76bce7c baseline: remove Arm2D from issue1077 subject\n76bce7c2d73b687473223bbbdebc7d69124ebac6\ncaseRunKeilSidecars {\"copied\":1,\"copiedFiles\":[{\"ext\":\".uvoptx\",\"source\":\"projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103.uvoptx\",\"destination\":\".worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\\\\projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103.uvoptx\"}],\"missing\":[\"projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103.uvopt\"],\"sourceBase\":\"projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103\",\"destinationBase\":\".worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\\\\projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103\"}",
+      "stderr": "Preparing worktree (detached HEAD 76bce7c)",
+      "keilSidecars": {
+        "copied": 1,
+        "copiedFiles": [
+          {
+            "ext": ".uvoptx",
+            "source": "projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103.uvoptx",
+            "destination": ".worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\\projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103.uvoptx"
+          }
+        ],
+        "missing": [
+          "projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103.uvopt"
+        ],
+        "sourceBase": "projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103",
+        "destinationBase": ".worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\\projects\\01_baseline\\Projects\\MDK-ARM\\atk_f103",
+        "line": "caseRunKeilSidecars {\"copied\":1,\"copiedFiles\":[{\"ext\":\".uvoptx\",\"source\":\"projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103.uvoptx\",\"destination\":\".worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\\\\projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103.uvoptx\"}],\"missing\":[\"projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103.uvopt\"],\"sourceBase\":\"projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103\",\"destinationBase\":\".worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\\\\projects\\\\01_baseline\\\\Projects\\\\MDK-ARM\\\\atk_f103\"}"
+      }
+    },
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "statusShort": "M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx",
+      "diffStat": ".../01_baseline/Projects/MDK-ARM/atk_f103.uvprojx   | 21 ++++++++++++++-------\n 1 file changed, 14 insertions(+), 7 deletions(-)",
+      "diffSha256": "a847e886c801a597d96f40017f41c70262b024d5b6208bcc7ae343824c3c8d99",
+      "diffBytes": 2029,
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 56,
+          "stderr": ""
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 128,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 2029,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        }
+      }
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "statusShort": "M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx",
+      "diffStat": ".../01_baseline/Projects/MDK-ARM/atk_f103.uvprojx   | 21 ++++++++++++++-------\n 1 file changed, 14 insertions(+), 7 deletions(-)",
+      "diffSha256": "a847e886c801a597d96f40017f41c70262b024d5b6208bcc7ae343824c3c8d99",
+      "diffBytes": 2029,
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 56,
+          "stderr": ""
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 128,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 2029,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        }
+      }
+    }
+  },
+  "agentTask": {
+    "prompt": "请在隔离主体工作区中完成 D601-F103-V2 Arm2D 阶段D：从裸基线真实集成 Arm-2D 中间件源码，并用真实 build、download、UART 运行态证据收口。\n\n任务背景：当前 subject commit 是裸基线，已经不包含 subject repo 内置的 .agents/skills/arm2d-skill、Middlewares/Arm-2D、d601_arm2d_demo.c/.h 或 Keil Arm2D 工程项。Arm2D skill 由 CaseRun/AgentRun gitbundle 提供在 runner 的 .agents/skills/arm2d-skill；不要把 skill 目录复制进 subject repo。\n\n真实性底线：本 case 验收的是“真实已有 Arm-2D 中间件集成”，不是同名 API 替代层。必须从 ARM-software Arm-2D upstream、官方发布包、CMSIS-Pack/RTE 或目标节点已验证缓存取得真实源码/组件。首选官方仓库 https://github.com/ARM-software/Arm-2D.git 的受控 tag/ref；本次优先使用 tag v1.2.4（目标 Windows host 已验证 git ls-remote 可见 refs/tags/v1.2.4=deda1c31efa35f5b0b3cfc3ef44a04110983ceca）。可以用 sparse checkout、filter clone、archive path、Pack/RTE 组件或最小必要文件清单降低体积，但 copied upstream source 必须保持原始内容。工程本地配置、display port、demo、adapter、board glue 可以新增在 project-local 位置；不要改写 upstream source 文件来适配板级代码。禁止通过 apply-patch/workspace write 手工粘贴或整文件重写 Arm-2D upstream 源码；上游文件必须由 HWPOD cmd/git/archive/Pack/RTE/已验证缓存在目标工作区真实物化，并记录 hash/ref。\n\n任务目标：\n1. 通过 HWPOD 标准入口操作主体隔离工作区，必要时读取 .agents/skills/arm2d-skill/SKILL.md 和最小相关 reference，理解 Arm2D/Keil/PFB 接入约束。\n2. 获取真实 Arm-2D upstream/Pack/RTE 源码或组件，把必要真实文件加入 projects/01_baseline 的合适位置；首选通过 `hwpod cmd git ls-remote --tags https://github.com/ARM-software/Arm-2D.git refs/tags/v1.2.4` 先核对 tag，再用 HWPOD cmd 在目标 Windows host 内 clone/archive/checkout-index/export 到 projectRoot 下，避免把 .git 目录留在 subject 源码树中；记录来源 URL、tag/ref/version、获取方式、文件清单和 provenance。若真实来源不可获取或无法集成，停止并报告 blocker，不要提交替代实现。\n3. 修改 Keil 工程 projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx，把真实 Arm2D 源码、include path、本地配置和应用 glue 纳入 USART target。\n4. 新增或恢复应用层 demo 文件，并修改 main.c 接入 show/task 路径。demo 至少要通过 Arm-2D API/LCD 绘制可辨识的 RGB565 画面，并在 loop 中维护帧计数或心跳。\n5. 在 UART 中输出可采集的运行态证据：启动标记、runId、Arm-2D 来源 tag/ref、loop heartbeat、frame counter，以及 LCD/framebuffer/cache 或 tile dump 摘要。串口单行不要过长，可拆成多行 printf。\n6. 依次运行 hwpod-ctl spec validate、hwpod inspect、hwpod build、hwpod job status、hwpod download、hwpod job status、hwpod uart read --port uart1 --max-bytes 8192。若 download 返回 job id，必须轮询 job status 到终态或报告仍在 running 的具体 job id。\n7. 最终回报：Arm2D 真实源码来源、复制的 upstream 文件清单和本地 glue 文件清单、Keil 工程变更摘要、build/download job id 与终态、UART 原始尾部、LCD/framebuffer/cache dump 摘要，以及仍需人工关注的问题。",
+    "workspace": "subjectWorktree",
+    "constraints": [
+      "只允许修改主体隔离工作区，不得修改 case registry repo、HWLAB repo 或原 subject repo checkout",
+      "arm2d-skill 必须来自 AgentRun gitbundle 装配的 .agents/skills/arm2d-skill，不得复制或新增到 subject repo 的 .agents/skills 下",
+      "subject 裸基线不包含 Arm-2D 源码；必须从 ARM-software Arm-2D upstream、官方发布包、CMSIS-Pack/RTE 或目标节点已验证缓存取得真实源码/组件，并在最终回复说明 provenance",
+      "允许用 sparse checkout、filter clone、archive path、Pack/RTE 组件或最小必要文件清单降低体积；复制到 subject 的 upstream source 文件必须保持原始内容，板级配置、display port、demo 和 adapter 放在 project-local 文件中",
+      "禁止自写同名替代实现、mock/stub、API veneer 或 subset 冒充 Arm-2D；禁止把只读取 upstream metadata/tag 当作已经集成；真实来源获取或集成失败时必须报告 blocker",
+      "所有 project-local 文本修改必须通过 HWPOD workspace apply-patch 或等价 HWPOD workspace 写入入口完成，不得从 Linux runner 直接 cd 到 Windows 路径编辑；第三方 upstream/vendor source 物化必须通过 HWPOD cmd/git/archive/Pack/RTE/已验证缓存，不得用 apply-patch 或 workspace write 重写源码",
+      "必须更新 Keil uvprojx；新增 C 源文件后不能只改源文件而漏掉 Keil 工程",
+      "必须尝试 hwpod build、hwpod download 和 hwpod uart read 原入口命令，并保留原始错误或 job id",
+      "UART 输出必须包含本次 runId 和 Arm-2D 真实来源 tag/ref，避免旧串口输出或伪实现混淆",
+      "结果只作为 raw trace/evidence 记录，不做自动评价或自动门禁"
+    ],
+    "providerProfile": "sub2api",
+    "projectId": "prj_hwpod_workbench",
+    "resourceBundlePolicy": "caserun-with-skills",
+    "timeoutMs": 3600000,
+    "pollIntervalMs": 2000
+  },
+  "stage": "completed",
+  "agent": {
+    "stageStatus": "canceled",
+    "baseUrl": "http://74.48.78.17:19666",
+    "projectId": "prj_hwpod_workbench",
+    "providerProfile": "sub2api",
+    "conversationId": "cnv_case_d601-f103-v2-arm2d-stage-d_issue1082-real-arm2d-rerun-20260609-1516",
+    "sessionId": "ses_3647eb07-8c25-4830-a362-4d98bc1a5f30",
+    "traceId": "trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f",
+    "promptPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/issue1082-real-arm2d-rerun-20260609-1516/agent-prompt.md",
+    "promptSha256": "aa1ec9eb373471b933b7434c6dc94d80657a20facb13893f1d15e8f9039bb23e",
+    "accepted": {
+      "accepted": true,
+      "status": "running",
+      "shortConnection": true,
+      "controlSemantics": "submit-and-poll",
+      "traceId": "trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f",
+      "workspaceId": null,
+      "workspaceRevision": null,
+      "conversationId": "cnv_case_d601-f103-v2-arm2d-stage-d_issue1082-real-arm2d-rerun-20260609-1516",
+      "sessionId": "ses_3647eb07-8c25-4830-a362-4d98bc1a5f30",
+      "traceUrl": "/v1/agent/chat/trace/trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f",
+      "resultUrl": "/v1/agent/chat/result/trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f",
+      "streamUrl": "/v1/agent/chat/trace/trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f/stream",
+      "cancelUrl": "/v1/agent/chat/cancel",
+      "polling": {
+        "resultIntervalMs": 1000,
+        "traceIntervalMs": 1000
+      },
+      "runnerTrace": {
+        "traceId": "trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f",
+        "status": "missing",
+        "createdAt": null,
+        "updatedAt": null,
+        "startedAt": null,
+        "finishedAt": null,
+        "eventCount": 0,
+        "events": [],
+        "assistantStreams": [],
+        "eventLabels": [],
+        "lastEvent": null,
+        "elapsedMs": null,
+        "waitingFor": null,
+        "runnerKind": null,
+        "workspace": null,
+        "sandbox": null,
+        "sessionMode": null,
+        "implementationType": null,
+        "sessionId": null,
+        "sessionStatus": null,
+        "sessionLifecycleStatus": null,
+        "turn": null,
+        "outputTruncated": false,
+        "valuesPrinted": false
+      }
+    },
+    "polls": 262,
+    "timedOut": false,
+    "timeoutMs": 3600000,
+    "pollIntervalMs": 2000,
+    "resultUrl": "http://74.48.78.17:19666/v1/agent/chat/result/trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f",
+    "lastPollAt": "2026-06-09T15:30:54.410Z",
+    "lastHttpStatus": 200,
+    "nextPollCommand": "hwlab-cli client agent result trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f",
+    "traceCommand": "hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f --render web",
+    "inspectCommand": "hwlab-cli client agent inspect --trace-id trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f",
+    "sessionCommand": "hwlab-cli client agent session status ses_3647eb07-8c25-4830-a362-4d98bc1a5f30",
+    "traceLookup": {
+      "source": "hwlab-cli.client.agent",
+      "strategy": "id_plus_existing_cli",
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "baseUrl": "http://74.48.78.17:19666",
+      "traceId": "trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f",
+      "sessionId": "ses_3647eb07-8c25-4830-a362-4d98bc1a5f30",
+      "conversationId": "cnv_case_d601-f103-v2-arm2d-stage-d_issue1082-real-arm2d-rerun-20260609-1516",
+      "commands": {
+        "result": "hwlab-cli client agent result trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f",
+        "trace": "hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f --render web",
+        "traceFull": "hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f --render web --full",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f",
+        "sessionStatus": "hwlab-cli client agent session status ses_3647eb07-8c25-4830-a362-4d98bc1a5f30"
+      }
+    },
+    "sessionResponse": {
+      "ok": true,
+      "status": "created",
+      "contractVersion": "code-agent-manual-session-v1",
+      "session": {
+        "sessionId": "ses_3647eb07-8c25-4830-a362-4d98bc1a5f30",
+        "projectId": "prj_hwpod_workbench",
+        "agentId": "hwlab-code-agent",
+        "status": "idle",
+        "usable": true,
+        "conversationId": "cnv_case_d601-f103-v2-arm2d-stage-d_issue1082-real-arm2d-rerun-20260609-1516",
+        "threadId": null,
+        "lastTraceId": null,
+        "providerProfile": "sub2api",
+        "createdAt": "2026-06-09T15:16:14.592Z",
+        "updatedAt": "2026-06-09T15:16:14.592Z",
+        "valuesRedacted": true,
+        "secretMaterialStored": false
+      },
+      "workspace": {
+        "workspaceId": "wsp_1ad43cb1f9a369d1993c1e3b",
+        "ownerUserId": "usr_v02_admin",
+        "projectId": "prj_hwpod_workbench",
+        "name": "Default Workbench",
+        "status": "active",
+        "isDefault": true,
+        "revision": 347,
+        "selectedConversationId": "cnv_case_d601-f103-v2-arm2d-stage-d_issue1082-real-arm2d-rerun-20260609-1516",
+        "selectedAgentSessionId": "ses_3647eb07-8c25-4830-a362-4d98bc1a5f30",
+        "activeTraceId": null,
+        "providerProfile": "sub2api",
+        "selectedConversation": {
+          "conversationId": "cnv_case_d601-f103-v2-arm2d-stage-d_issue1082-real-arm2d-rerun-20260609-1516",
+          "sessionId": "ses_3647eb07-8c25-4830-a362-4d98bc1a5f30",
+          "threadId": null,
+          "status": "idle",
+          "projectId": "prj_hwpod_workbench",
+          "agentId": "hwlab-code-agent",
+          "ownerUserId": "usr_v02_admin",
+          "lastTraceId": "",
+          "updatedAt": "2026-06-09T15:16:14.592Z",
+          "startedAt": "2026-06-09T15:16:14.592Z",
+          "endedAt": null,
+          "session": {
+            "sessionId": "ses_3647eb07-8c25-4830-a362-4d98bc1a5f30",
+            "status": "idle"
+          },
+          "messages": [],
+          "messageCount": 0,
+          "firstUserMessagePreview": null,
+          "snapshot": {
+            "sessionStatus": "idle",
+            "source": "manual-session-create",
+            "valuesRedacted": true
+          },
+          "valuesRedacted": true
+        },
+        "workspace": {
+          "selectedConversationId": "cnv_case_d601-f103-v2-arm2d-stage-d_issue1082-real-arm2d-rerun-20260609-1516",
+          "selectedAgentSessionId": "ses_3647eb07-8c25-4830-a362-4d98bc1a5f30",
+          "providerProfile": "sub2api",
+          "sessionStatus": "idle",
+          "lastTraceId": "trc_mq48f10t_tcu2si5y",
+          "workspaceRevisionConflict": false,
+          "expectedWorkspaceRevision": 321,
+          "staleContinuationCleared": false,
+          "actor": {
+            "id": "usr_v02_admin",
+            "username": "admin",
+            "displayName": "HWLAB v0.2 Admin",
+            "role": "admin",
+            "status": "active"
+          },
+          "updatedAt": "2026-06-09T15:16:14.600Z",
+          "secretMaterialStored": false,
+          "valuesRedacted": true
+        },
+        "updatedBySessionId": "key_master_server_admin",
+        "updatedByClient": "hwlab-cli.case-run",
+        "createdAt": "2026-06-05T10:15:11.551Z",
+        "updatedAt": "2026-06-09T15:16:14.600Z",
+        "valuesRedacted": true,
+        "secretMaterialStored": false
+      },
+      "nextCommands": [
+        "hwlab-cli client agent send --session-id ses_3647eb07-8c25-4830-a362-4d98bc1a5f30 --message TEXT",
+        "hwlab-cli client agent session status ses_3647eb07-8c25-4830-a362-4d98bc1a5f30"
+      ],
+      "valuesRedacted": true,
+      "secretMaterialStored": false
+    },
+    "requestedProviderProfile": "sub2api",
+    "resolvedBackendProfile": "sub2api",
+    "provider": "sub2api",
+    "model": "sub2api",
+    "backend": "agentrun-v01/sub2api",
+    "infrastructureBackend": "agentrun-v01/sub2api",
+    "providerTrace": {
+      "transport": "agentrun-v01",
+      "protocol": "agentrun-v01-jsonrpc",
+      "wireApi": "agentrun-v01-command-result",
+      "source": "agentrun-v01",
+      "backendProfile": "sub2api",
+      "model": "sub2api",
+      "runId": "run_6bd975d6d6074baf96c47361c3596145",
+      "commandId": "cmd_76ccd0189776449692eb936cff9beba3",
+      "terminalStatus": "cancelled",
+      "valuesPrinted": false
+    },
+    "result": {
+      "clipped": true,
+      "bytes": 184391,
+      "preview": "{\"accepted\":true,\"status\":\"canceled\",\"shortConnection\":true,\"traceId\":\"trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f\",\"conversationId\":\"cnv_case_d601-f103-v2-arm2d-stage-d_issue1082-real-arm2d-rerun-20260609-1516\",\"sessionId\":\"ses_3647eb07-8c25-4830-a362-4d98bc1a5f30\",\"threadId\":null,\"messageId\":\"msg_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f\",\"createdAt\":\"2026-06-09T15:16:16.214Z\",\"updatedAt\":\"2026-06-09T15:30:54.669Z\",\"provider\":\"sub2api\",\"model\":\"sub2api\",\"backend\":\"agentrun-v01/sub2api\",\"infrastructureBackend\":\"agentrun-v01/sub2api\",\"capabilityLevel\":\"agentrun-v01-shared-code-agent-session\",\"sessionMode\":\"agentrun-v01-durable-session\",\"implementationType\":\"agentrun-v01-shared-execution-infra\",\"threadContinuityPolicy\":\"hwlab-agentrun-v01-reuse-runner-thread\",\"agentRun\":{\"adapter\":\"agentrun-v01\",\"managerUrl\":\"http://agentrun-mgr.agentrun-v01.svc.cluster.local:8080\",\"backendProfile\":\"sub2api\",\"providerId\":\"G14\",\"runId\":\"run_6bd975d6d6074baf96c47361c3596145\",\"commandId\":\"cmd_76ccd0189776449692eb936cff9beba3\",\"attemptId\":\"attempt_mq6s8jd9\",\"runnerId\":\"runner_fd3ada5cb5a0\",\"runnerJobId\":null,\"jobName\":\"agentrun-v01-runner-7892e24b24f9\",\"namespace\":\"agentrun-v01\",\"status\":\"cancelled\",\"runStatus\":\"claimed\",\"commandState\":\"cancelled\",\"terminalStatus\":\"cancelled\",\"lastSeq\":141,\"traceId\":\"trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f\",\"sessionId\":\"ses_agentrun_sub2api_3647eb07_8c25_4830_a362_4d98bc1a5f30\",\"conversationId\":\"cnv_case_d601-f103-v2-arm2d-stage-d_issue1082-real-arm2d-rerun-20260609-1516\",\"threadId\":\"019eacf4-bbc0-77d3-80f5-7bbef45ed676\",\"runnerReused\":false,\"threadReused\":false,\"persistentResume\":false,\"reused\":false,\"reuseEligible\":false,\"createdAt\":\"2026-06-09T15:16:15.125Z\",\"updatedAt\":\"2026-06-09T15:30:54.669Z\",\"valuesPrinted\":false,\"runnerJobCount\":1,\"completed\":false,\"providerTrace\":{\"transport\":\"agentrun-v01\",\"protocol\":\"agentrun-v01-jsonrpc\",\"wireApi\":\"agentrun-v01-command-result\",\"runnerKind\":\"agentrun-v01-shared-runner\",\"implementationType\":\"agentrun-v01-shared-execution-infra\",\"command\":\"agentrun.v01.command.turn\",\"toolName\":\"agentrun.v01.command.turn\",\"source\":\"agentrun-v01\",\"backendProfile\":\"sub2api\",\"model\":\"sub2api\",\"runId\":\"run_6bd975d6d6074baf96c47361c3596145\",\"commandId\":\"cmd_76ccd0189776449692eb936cff9beba3\",\"runnerId\":\"runner_fd3ada5cb5a0\",\"jobName\":\"agentrun-v01-runner-7892e24b24f9\",\"namespace\":\"agentrun-v01\",\"traceId\":\"trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f\",\"threadId\":\"019eacf4-bbc0-77d3-80f5-7bbef45ed676\",\"turnId\":null,\"terminalStatus\":\"cancelled\",\"failureKind\":\"cancelled\",\"failureMessage\":\"cancel requested\",\"valuesPrinted\":false}},\"valuesPrinted\":false,\"session\":{\"sessionId\":\"ses_3647eb07-8c25-4830-a362-4d98bc1a5f30\",\"conversationId\":\"cnv_case_d601-f103-v2-arm2d-stage-d_issue1082-real-arm2d-rerun-20260609-1516\",\"threadId\":\"019eacf4-bbc0-77d3-80f5-7bbef45ed676\",\"status\":\"canceled\",\"sessionMode\":\"agentrun-v01-durable-session\",\"runnerKind\":\"agentrun-v01-shared-runner\",\"lastTraceId\":\"trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f\",\"longLivedSession\":true,\"codexStdio\":false,\"delegatedToAgentRun\":true,\"writeCapable\":true,\"durable\":true,\"durableSession\":true,\"idleTimeoutMs\":600000,\"secretMaterialStored\":false,\"valuesRedacted\":true,\"lifecycleStatus\":\"interrupted\",\"lifecycle\":{\"status\":\"interrupted\",\"rawStatus\":\"canceled\",\"label\":\"会话已取消\",\"action\":\"retry\",\"reusable\":false,\"reused\":null,\"newSession\":false,\"busy\":false,\"requiresNewSession\":true,\"degraded\":false,\"unsupported\":false,\"reasonCode\":null,\"reason\":null,\"userMessage\":\"当前 Code Agent session 已中断；输入和 trace 已保留，可重试或重新发送。\"}},\"sessionReuse\":{\"sessionId\":\"ses_3647eb07-8c25-4830-a362-4d98bc1a5f30\",\"conversationId\":\"cnv_case_d601-f103-v2-arm2d-stage-d_issue1082-real-arm2d-rerun-20260609-1516\",\"threadId\":\"019eacf4-bbc0-77d3-80f5-7bbef45ed676\",\"reused\":false,\"status\":\"new\",\"runnerReused\":false,\"threadReused\":false,\"persistentResume\":false,\"val"
+    }
+  },
+  "agentTrace": {
+    "traceId": "trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f",
+    "status": "canceled",
+    "httpStatus": 200,
+    "source": "hwlab-cli.client.agent.trace",
+    "lookup": {
+      "source": "hwlab-cli.client.agent",
+      "strategy": "id_plus_existing_cli",
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "baseUrl": "http://74.48.78.17:19666",
+      "traceId": "trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f",
+      "sessionId": "ses_3647eb07-8c25-4830-a362-4d98bc1a5f30",
+      "conversationId": "cnv_case_d601-f103-v2-arm2d-stage-d_issue1082-real-arm2d-rerun-20260609-1516",
+      "commands": {
+        "result": "hwlab-cli client agent result trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f",
+        "trace": "hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f --render web",
+        "traceFull": "hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f --render web --full",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_case_d601-f103-v2-arm2d-stage-d_e1de4587de0d43a3bb2203200f1c605f",
+        "sessionStatus": "hwlab-cli client agent session status ses_3647eb07-8c25-4830-a362-4d98bc1a5f30"
+      }
+    },
+    "sourceEventCount": 140,
+    "renderedRowCount": 61,
+    "commandCount": 25,
+    "hwpodCommandCount": 13,
+    "hwpodBuildCommandCount": 0,
+    "keilJobCandidates": [],
+    "agentBuildJobIds": [],
+    "commands": [
+      {
+        "source": "trace-row",
+        "seq": 35,
+        "rowId": "tool:call_rCzm8ZDmll9MfSDw6AEHhkXX",
+        "header": "15:17:12 total=00:00:57 ok commandExecution",
+        "command": "hwpod-ctl spec validate --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"",
+        "normalizedCommand": "hwpod-ctl spec validate --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516",
+        "bodyPreview": "hwpod-ctl spec validate --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"\nstdout:\n{ \"ok\": true, \"action\": \"hwpod-ctl.spec.validate\", \"status\": \"succeeded\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"resolvedAuthority\": { \"hwpodId\": \"d601-f103-v2\", \"specPath\": \"hwpod://d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"workspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"effectiveWorkspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"defaultWorkspacePath\": \"F:\\\\Work\\\\D601-HWLAB\", \"requeste...\nexitCode=0\ndurationMs=0\noutputBytes=2928\nsourceSeq=30",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 39,
+        "rowId": "tool:call_26zx581H7uhiWYCkCmYYGpv6",
+        "header": "15:17:22 total=00:01:07 ok commandExecution",
+        "command": "hwpod inspect --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"",
+        "normalizedCommand": "hwpod inspect --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516",
+        "bodyPreview": "hwpod inspect --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"\nstdout:\n{ \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"resolvedAuthority\": { \"hwpodId\": \"d601-f103-v2\", \"specPath\": \"hwpod://d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"workspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"effectiveWorkspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"defaultWorkspacePath\": \"F:\\\\Work\\\\D601-HWLAB\", \"requestedWorksp...\nexitCode=0\ndurationMs=423\noutputBytes=4020\noutputTruncated=true\nsourceSeq=34",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 28,
+        "rowId": "tool:call_O0rPcO5SM4usUBMfeTW5BVkH",
+        "header": "15:17:02 total=00:00:47 ok commandExecution",
+        "command": "sed -n '1,220p' .agents/skills/hwpod-ctl/SKILL.md",
+        "normalizedCommand": "sed -n '1,220p' .agents/skills/hwpod-ctl/SKILL.md",
+        "bodyPreview": "sed -n '1,220p' .agents/skills/hwpod-ctl/SKILL.md\nstdout:\n--- name: hwpod-ctl description: Manage and validate HWLAB HWPOD runtime bindings from a code agent runner. The hwpod-ctl skill is separate from hwpod-cli and is used for hwpod-id validation, smoke checks, and explicit local spec import/export maintenance. --- # hwpod-ctl This skill follows Skill(cli-spec). It is the standard management entry for runtime-resolved HWPOD identity and node binding checks. ## Scope `hwpod-ctl` is a peer of `hwpod-cli`, not a fallback task path. Use it to validate a service-resolved `hwpod-id`, inspect the four HWPOD elements, check node binding, and run smoke o...\nexitCode=0\ndurationMs=0\noutputBytes=1971\nsourceSeq=23",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 30,
+        "rowId": "tool:call_cUz4yw82Ozzphz5hLjkr6O3S",
+        "header": "15:17:02 total=00:00:47 ok commandExecution",
+        "command": "sed -n '1,240p' .agents/skills/arm2d-skill/SKILL.md",
+        "normalizedCommand": "sed -n '1,240p' .agents/skills/arm2d-skill/SKILL.md",
+        "bodyPreview": "sed -n '1,240p' .agents/skills/arm2d-skill/SKILL.md\nstdout:\n--- name: arm2d-skyer description: 用于 ARM-2D 嵌入式 UI 开发工作：scene/PFB/generic loader/dirty region/RGB565 资源、GIF 精灵图与动画资源链路、Keil MDK/RTE/显示适配器集成、SRAM/Flash/帧率权衡，以及在 MCU 上实现伪 shader/demo-scene 特效。 --- # ARM-2D 嵌入式 UI 工作流 这是一个通用 ARM-2D 嵌入式 UI 技能。核心目标不是写通用教程，而是让助手按可移植、可维护、贴合硬件约束的方式处理 ARM-2D 工程。 ## 默认背景 - 常用语言：C。 - 常用图形栈：ARM-2D、PFB、Scene Player、Generic Loader。 - 常见工程环境：Keil MDK、CMSIS-Pack/RTE、RTOS 或裸机工程。 - 常见显示链路：LCD/OLED/RGB/MIPI/Framebuffer、SPI/QSPI/8080/LTDC 等显示接口。 - 常见像素格式：RGB565、RGB888、ARGB8888。 - 常见任务：动态 UI、GIF/动画素材、局部刷新、低 RAM 渲染、伪 shader 特效。 ## 总原则 - 优先写能在目标 MCU 上稳定跑起来的代码，不追求理论优雅。 - 每次涉及动画/特...\nexitCode=0\ndurationMs=0\noutputBytes=7283\noutputTruncated=true\nsourceSeq=25",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 32,
+        "rowId": "tool:call_oqycyytZhrm8OkxoksMhVeAO",
+        "header": "15:17:02 total=00:00:47 ok commandExecution",
+        "command": "sed -n '1,240p' .agents/skills/hwpod-cli/SKILL.md",
+        "normalizedCommand": "sed -n '1,240p' .agents/skills/hwpod-cli/SKILL.md",
+        "bodyPreview": "sed -n '1,240p' .agents/skills/hwpod-cli/SKILL.md\nstdout:\n--- name: hwpod-cli description: Use HWLAB HWPOD from a code agent runner for hardware-development tasks. The hwpod-cli skill resolves an HWPOD by hwpod-id through the HWLAB runtime service, submits hwpod-node-ops through hwlab-api, and waits for hwpod-node results. --- # hwpod-cli This skill follows Skill(cli-spec). It is the standard task entry for operating an HWPOD from the HWLAB v0.2 Code Agent workspace. ## Standard Path ```text hwpod from PATH -> tools/hwpod-cli.ts -> runtime HWPOD registry by hwpod-id -> compiler-backed hwpod-node-ops plan -> /v1/hwpod-node-ops on hwlab-api -> hwpod...\nexitCode=0\ndurationMs=0\noutputBytes=4119\noutputTruncated=true\nsourceSeq=27",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 50,
+        "rowId": "tool:call_Be3LaAUDva7AXJZkmRoj6FWI",
+        "header": "15:17:52 total=00:01:36 ok commandExecution",
+        "command": "hwpod workspace ls projects/01_baseline --recursive --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"",
+        "normalizedCommand": "hwpod workspace ls projects/01_baseline --recursive --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516",
+        "bodyPreview": "hwpod workspace ls projects/01_baseline --recursive --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"\nstdout:\n{ \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"resolvedAuthority\": { \"hwpodId\": \"d601-f103-v2\", \"specPath\": \"hwpod://d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"workspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"effectiveWorkspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"defaultWorkspacePath\": \"F:\\\\Work\\\\D601-HWLAB\", \"requestedWorksp...\nexitCode=0\ndurationMs=526\noutputBytes=4255\noutputTruncated=true\nsourceSeq=45",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 51,
+        "rowId": "tool:call_syMLHfBvCo0y3PBRMTPYSwsn",
+        "header": "15:17:52 total=00:01:36 ok commandExecution",
+        "command": "hwpod cmd git ls-remote --tags https://github.com/ARM-software/Arm-2D.git refs/tags/v1.2.4 --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"",
+        "normalizedCommand": "hwpod cmd git ls-remote --tags https://github.com/ARM-software/Arm-2D.git refs/tags/v1.2.4 --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516",
+        "bodyPreview": "hwpod cmd git ls-remote --tags https://github.com/ARM-software/Arm-2D.git refs/tags/v1.2.4 --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"\nstdout:\n{ \"ok\": false, \"action\": \"hwpod-cli.invoke\", \"status\": \"failed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"resolvedAuthority\": { \"hwpodId\": \"d601-f103-v2\", \"specPath\": \"hwpod://d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"workspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"effectiveWorkspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"defaultWorkspacePath\": \"F:\\\\Work\\\\D601-HWLAB\", \"requestedWorkspac...\nexitCode=1\ndurationMs=581\noutputBytes=4291\noutputTruncated=true\nsourceSeq=46",
+        "exitCode": 1
+      },
+      {
+        "source": "trace-row",
+        "seq": 65,
+        "rowId": "tool:call_KoyVoacFFHdPOrRfSeIHcODa",
+        "header": "15:17:52 total=00:01:37 ok commandExecution",
+        "command": "hwpod workspace rg -e \"int main\" -e \"d601_lcd\" -e \"printf\" -e \"LCD\" projects/01_baseline --context 2 --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"",
+        "normalizedCommand": "hwpod workspace rg -e \"int main\" -e \"d601_lcd\" -e \"printf\" -e \"LCD\" projects/01_baseline --context 2 --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516",
+        "bodyPreview": "hwpod workspace rg -e \"int main\" -e \"d601_lcd\" -e \"printf\" -e \"LCD\" projects/01_baseline --context 2 --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"\nstdout:\n{ \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"resolvedAuthority\": { \"hwpodId\": \"d601-f103-v2\", \"specPath\": \"hwpod://d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"workspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"effectiveWorkspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"defaultWorkspacePath\": \"F:\\\\Work\\\\D601-HWLAB\", \"requestedWorksp...\nexitCode=0\ndurationMs=789\noutputBytes=4312\noutputTruncated=true\nsourceSeq=60",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 68,
+        "rowId": "tool:call_KNGJI8Nj8X9GblouwJYy8v1G",
+        "header": "15:18:45 total=00:02:30 ok commandExecution",
+        "command": "hwpod cmd --help",
+        "normalizedCommand": "hwpod cmd --help",
+        "bodyPreview": "hwpod cmd --help\nstdout:\n{ \"ok\": true, \"action\": \"hwpod-cli.cmd.help\", \"status\": \"succeeded\", \"contractVersion\": \"hwpod-node-ops-v1\", \"usage\": [ \"hwpod cmd <command> [...argv]\" ], \"boundary\": \"cmd.run is the full-capability host execution op; add compiler/CLI combinations before considering new hwpod-node ops.\", \"observedAt\": \"2026-06-09T15:18:45.290Z\" }\nexitCode=0\ndurationMs=0\noutputBytes=438\nsourceSeq=63",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 71,
+        "rowId": "tool:call_q5yRR4GEFtp6uxjdCnb5NUUR",
+        "header": "15:19:12 total=00:02:57 ok commandExecution",
+        "command": "hwpod cmd git ls-remote https://github.com/ARM-software/Arm-2D.git refs/tags/v1.2.4 --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"",
+        "normalizedCommand": "hwpod cmd git ls-remote https://github.com/ARM-software/Arm-2D.git refs/tags/v1.2.4 --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516",
+        "bodyPreview": "hwpod cmd git ls-remote https://github.com/ARM-software/Arm-2D.git refs/tags/v1.2.4 --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"\nstdout:\n{ \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"resolvedAuthority\": { \"hwpodId\": \"d601-f103-v2\", \"specPath\": \"hwpod://d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"workspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"effectiveWorkspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"defaultWorkspacePath\": \"F:\\\\Work\\\\D601-HWLAB\", \"requestedWorksp...\nexitCode=0\ndurationMs=5546\noutputBytes=4288\noutputTruncated=true\nsourceSeq=66",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 94,
+        "rowId": "tool:call_P8NDHaJ8Uq3cN3g7pzhIG1pT",
+        "header": "15:22:01 total=00:05:46 run commandExecution",
+        "command": "hwpod cmd cmd /c \"git clone --depth 1 --branch v1.2.4 https://github.com/ARM-software/Arm-2D.git projects\\01_baseline\\Middlewares\\Arm-2D\" --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"",
+        "normalizedCommand": "hwpod cmd cmd /c \"git clone --depth 1 --branch v1.2.4 https://github.com/ARM-software/Arm-2D.git projects\\01_baseline\\Middlewares\\Arm-2D\" --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516",
+        "bodyPreview": "hwpod cmd cmd /c \"git clone --depth 1 --branch v1.2.4 https://github.com/ARM-software/Arm-2D.git projects\\01_baseline\\Middlewares\\Arm-2D\" --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"\nstdout:\ncommandExecution inProgress: /bin/sh -lc \"hwpod cmd cmd /c \\\"git clone --depth 1 --branch v1.2.4 https://github.com/ARM-software/Arm-2D.git projects\\\\01_baseline\\\\Middlewares\\\\Arm-2D\\\" --hwpod-id d601-f103-v2 --workspace-path \\\"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\\\"\"\noutputBytes=317\nsourceSeq=89"
+      },
+      {
+        "source": "trace-row",
+        "seq": 95,
+        "rowId": "tool:95",
+        "header": "15:22:17 total=00:06:02 run agentrun:backend:item/commandExecution/terminalInteraction",
+        "command": "sourceSeq=90",
+        "normalizedCommand": "sourceSeq=90",
+        "bodyPreview": "sourceSeq=90"
+      },
+      {
+        "source": "trace-row",
+        "seq": 97,
+        "rowId": "tool:97",
+        "header": "15:22:30 total=00:06:15 run agentrun:backend:item/commandExecution/terminalInteraction",
+        "command": "sourceSeq=92",
+        "normalizedCommand": "sourceSeq=92",
+        "bodyPreview": "sourceSeq=92"
+      },
+      {
+        "source": "trace-row",
+        "seq": 99,
+        "rowId": "tool:99",
+        "header": "15:22:42 total=00:06:27 run agentrun:backend:item/commandExecution/terminalInteraction",
+        "command": "sourceSeq=94",
+        "normalizedCommand": "sourceSeq=94",
+        "bodyPreview": "sourceSeq=94"
+      },
+      {
+        "source": "trace-row",
+        "seq": 101,
+        "rowId": "tool:101",
+        "header": "15:22:59 total=00:06:44 run agentrun:backend:item/commandExecution/terminalInteraction",
+        "command": "sourceSeq=96",
+        "normalizedCommand": "sourceSeq=96",
+        "bodyPreview": "sourceSeq=96"
+      },
+      {
+        "source": "trace-row",
+        "seq": 103,
+        "rowId": "tool:103",
+        "header": "15:24:05 total=00:07:50 run agentrun:backend:item/commandExecution/terminalInteraction",
+        "command": "sourceSeq=98",
+        "normalizedCommand": "sourceSeq=98",
+        "bodyPreview": "sourceSeq=98"
+      },
+      {
+        "source": "trace-row",
+        "seq": 105,
+        "rowId": "tool:105",
+        "header": "15:24:42 total=00:08:27 run agentrun:backend:item/commandExecution/terminalInteraction",
+        "command": "sourceSeq=100",
+        "normalizedCommand": "sourceSeq=100",
+        "bodyPreview": "sourceSeq=100"
+      },
+      {
+        "source": "trace-row",
+        "seq": 108,
+        "rowId": "tool:108",
+        "header": "15:25:34 total=00:09:19 run agentrun:backend:item/commandExecution/terminalInteraction",
+        "command": "sourceSeq=103",
+        "normalizedCommand": "sourceSeq=103",
+        "bodyPreview": "sourceSeq=103"
+      },
+      {
+        "source": "trace-row",
+        "seq": 110,
+        "rowId": "tool:110",
+        "header": "15:26:52 total=00:10:37 run agentrun:backend:item/commandExecution/terminalInteraction",
+        "command": "sourceSeq=105",
+        "normalizedCommand": "sourceSeq=105",
+        "bodyPreview": "sourceSeq=105"
+      },
+      {
+        "source": "trace-row",
+        "seq": 113,
+        "rowId": "tool:call_RQMs3BEcYql2R87v7jJFGDez",
+        "header": "15:27:10 total=00:10:55 ok commandExecution",
+        "command": "ps -ef | rg \"hwpod cmd cmd|git clone --depth 1 --branch v1.2.4|node.*hwpod\"",
+        "normalizedCommand": "ps -ef | rg \"hwpod cmd cmd|git clone --depth 1 --branch v1.2.4|node.*hwpod",
+        "bodyPreview": "ps -ef | rg \"hwpod cmd cmd|git clone --depth 1 --branch v1.2.4|node.*hwpod\"\nstdout:\n452 root 4:39 bun /home/agentrun/workspaces/gitbundle-ac9a22bf54a77200/workspace/tools/hwpod-cli.ts cmd cmd /c git clone --depth 1 --branch v1.2.4 https://github.com/ARM-software/Arm-2D.git projects\\01_baseline\\Middlewares\\Arm-2D --hwpod-id d601-f103-v2 --workspace-path F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516 515 root 0:00 /bin/sh -c ps -ef | rg \"hwpod cmd cmd|git clone --depth 1 --branch v1.2.4|node.*hwpod\" 517 root 0:00 rg hwpod cmd cmd|git clone --depth 1 --branch v1.2.4|node.*hwpod\nexitCode=0\ndurationMs=0\noutputBytes=700\nsourceSeq=108",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 75,
+        "rowId": "tool:call_ZmXcjG9IfSfhsgygs7YqKOMK",
+        "header": "15:20:30 total=00:04:15 ok commandExecution",
+        "command": "hwpod cmd cmd /c \"if exist projects\\01_baseline\\Middlewares\\Arm-2D rmdir /s /q projects\\01_baseline\\Middlewares\\Arm-2D & git clone --depth 1 --branch v1.2.4 https://github.com/ARM-software/Arm-2D.git projects\\01_baseline\\Middlewares\\Arm-2D & git -C projects\\01_baseline\\Middlewares\\Arm-2D rev-parse HEAD & rmdir /s /q projects\\01_baseline\\Middlewares\\Arm-2D\\.git\" --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"",
+        "normalizedCommand": "hwpod cmd cmd /c \"if exist projects\\01_baseline\\Middlewares\\Arm-2D rmdir /s /q projects\\01_baseline\\Middlewares\\Arm-2D & git clone --depth 1 --branch v1.2.4 https://github.com/ARM-software/Arm-2D.git projects\\01_baseline\\Middlewares\\Arm-2D & git -C projects\\01_baseline\\Middlewares\\Arm-2D rev-parse HEAD & rmdir /s /q projects\\01_baseline\\Middlewares\\Arm-2D\\.git\" --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516",
+        "bodyPreview": "hwpod cmd cmd /c \"if exist projects\\01_baseline\\Middlewares\\Arm-2D rmdir /s /q projects\\01_baseline\\Middlewares\\Arm-2D & git clone --depth 1 --branch v1.2.4 https://github.com/ARM-software/Arm-2D.git projects\\01_baseline\\Middlewares\\Arm-2D & git -C projects\\01_baseline\\Middlewares\\Arm-2D rev-parse HEAD & rmdir /s /q projects\\01_baseline\\Middlewares\\Arm-2D\\.git\" --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"\nstdout:\n{ \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"resolvedAuthority\": { \"hwpodId\": \"d601-f103-v2\", \"specPath\": \"hwpod://d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"workspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"effectiveWorkspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"defaultWorkspacePath\": \"F:\\\\Work\\\\D601-HWLAB\", \"requestedWorksp...\nexitCode=0\ndurationMs=459\noutputBytes=4585\noutputTruncated=true\nsourceSeq=70",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 79,
+        "rowId": "tool:call_V2ONZQ1czArHppVGZ8JCc3WK",
+        "header": "15:20:50 total=00:04:35 ok commandExecution",
+        "command": "hwpod workspace ls projects/01_baseline/Middlewares/Arm-2D --recursive --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"",
+        "normalizedCommand": "hwpod workspace ls projects/01_baseline/Middlewares/Arm-2D --recursive --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516",
+        "bodyPreview": "hwpod workspace ls projects/01_baseline/Middlewares/Arm-2D --recursive --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"\nstdout:\n{ \"ok\": false, \"action\": \"hwpod-cli.invoke\", \"status\": \"failed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"resolvedAuthority\": { \"hwpodId\": \"d601-f103-v2\", \"specPath\": \"hwpod://d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"workspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"effectiveWorkspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"defaultWorkspacePath\": \"F:\\\\Work\\\\D601-HWLAB\", \"requestedWorkspac...\nexitCode=1\ndurationMs=713\noutputBytes=4144\noutputTruncated=true\nsourceSeq=74",
+        "exitCode": 1
+      },
+      {
+        "source": "trace-row",
+        "seq": 85,
+        "rowId": "tool:call_UxCKEAvef7ttcDMOduOBHTcD",
+        "header": "15:20:50 total=00:04:35 ok commandExecution",
+        "command": "hwpod workspace cat projects/01_baseline/User/main.c projects/01_baseline/User/d601_lcd.h projects/01_baseline/User/d601_lcd.c projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"",
+        "normalizedCommand": "hwpod workspace cat projects/01_baseline/User/main.c projects/01_baseline/User/d601_lcd.h projects/01_baseline/User/d601_lcd.c projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516",
+        "bodyPreview": "hwpod workspace cat projects/01_baseline/User/main.c projects/01_baseline/User/d601_lcd.h projects/01_baseline/User/d601_lcd.c projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"\nstdout:\n{ \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"resolvedAuthority\": { \"hwpodId\": \"d601-f103-v2\", \"specPath\": \"hwpod://d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"workspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"effectiveWorkspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"defaultWorkspacePath\": \"F:\\\\Work\\\\D601-HWLAB\", \"requestedWorksp...\nexitCode=0\ndurationMs=903\noutputBytes=4385\noutputTruncated=true\nsourceSeq=80",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 89,
+        "rowId": "tool:call_i138xeU6mj9ajWwU2szkVYlq",
+        "header": "15:21:10 total=00:04:54 ok commandExecution",
+        "command": "hwpod cmd cmd /c \"echo HELLO_ARM2D && git --version && cd\" --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"",
+        "normalizedCommand": "hwpod cmd cmd /c \"echo HELLO_ARM2D && git --version && cd\" --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516",
+        "bodyPreview": "hwpod cmd cmd /c \"echo HELLO_ARM2D && git --version && cd\" --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"\nstdout:\n{ \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"resolvedAuthority\": { \"hwpodId\": \"d601-f103-v2\", \"specPath\": \"hwpod://d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"workspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"effectiveWorkspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"defaultWorkspacePath\": \"F:\\\\Work\\\\D601-HWLAB\", \"requestedWorksp...\nexitCode=0\ndurationMs=488\noutputBytes=4215\noutputTruncated=true\nsourceSeq=84",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 92,
+        "rowId": "tool:call_vLqwOae1kcwCjSlm1RzDrwb3",
+        "header": "15:21:44 total=00:05:29 ok commandExecution",
+        "command": "hwpod cmd cmd /c \"if exist projects\\01_baseline\\Middlewares\\Arm-2D (rmdir /s /q projects\\01_baseline\\Middlewares\\Arm-2D) & git clone --depth 1 --branch v1.2.4 https://github.com/ARM-software/Arm-2D.git projects\\01_baseline\\Middlewares\\Arm-2D && git -C projects\\01_baseline\\Middlewares\\Arm-2D rev-parse HEAD && rmdir /s /q projects\\01_baseline\\Middlewares\\Arm-2D\\.git\" --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"",
+        "normalizedCommand": "hwpod cmd cmd /c \"if exist projects\\01_baseline\\Middlewares\\Arm-2D (rmdir /s /q projects\\01_baseline\\Middlewares\\Arm-2D) & git clone --depth 1 --branch v1.2.4 https://github.com/ARM-software/Arm-2D.git projects\\01_baseline\\Middlewares\\Arm-2D && git -C projects\\01_baseline\\Middlewares\\Arm-2D rev-parse HEAD && rmdir /s /q projects\\01_baseline\\Middlewares\\Arm-2D\\.git\" --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516",
+        "bodyPreview": "hwpod cmd cmd /c \"if exist projects\\01_baseline\\Middlewares\\Arm-2D (rmdir /s /q projects\\01_baseline\\Middlewares\\Arm-2D) & git clone --depth 1 --branch v1.2.4 https://github.com/ARM-software/Arm-2D.git projects\\01_baseline\\Middlewares\\Arm-2D && git -C projects\\01_baseline\\Middlewares\\Arm-2D rev-parse HEAD && rmdir /s /q projects\\01_baseline\\Middlewares\\Arm-2D\\.git\" --hwpod-id d601-f103-v2 --workspace-path \"F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-rerun-20260609-1516\"\nstdout:\n{ \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-f103-v2\", \"hwpodId\": \"d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"resolvedAuthority\": { \"hwpodId\": \"d601-f103-v2\", \"specPath\": \"hwpod://d601-f103-v2\", \"specAuthority\": \"preinstalled-verified-spec\", \"workspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"effectiveWorkspacePath\": \"F:\\\\Work\\\\HWLAB-CASE-F103\\\\.worktree\\\\caserun-issue1082-real-arm2d-rerun-20260609-1516\", \"defaultWorkspacePath\": \"F:\\\\Work\\\\D601-HWLAB\", \"requestedWorksp...\nexitCode=0\ndurationMs=549\noutputBytes=4589\noutputTruncated=true\nsourceSeq=87",
+        "exitCode": 0
+      }
+    ]
+  },
+  "agentDiff": {
+    "statusShort": "?? projects/01_baseline/Middlewares/Arm-2D/",
+    "diffStat": "",
+    "diffPatchPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/issue1082-real-arm2d-rerun-20260609-1516/agent-diff.patch",
+    "diffPatchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diffCollection": {
+      "contractVersion": "hwpod-case-run-diff-collection-v1",
+      "included": [
+        {
+          "path": "projects/01_baseline/Middlewares/Arm-2D",
+          "source": "untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "rule": "default-include-untracked"
+        }
+      ],
+      "omitted": [],
+      "config": {
+        "include": [],
+        "ignore": [
+          {
+            "pattern": "Middlewares/Arm-2D/**",
+            "reason": "large real Arm-2D upstream source is represented by provenance/hash; patch body omitted"
+          }
+        ]
+      },
+      "tracked": {
+        "paths": [],
+        "diffStat": "",
+        "diffPatchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "untracked": {
+        "total": 1,
+        "included": 1,
+        "omitted": 0
+      }
+    },
+    "sourceRootStatusShort": "M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "statusShort": "M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx",
+      "diffStat": ".../01_baseline/Projects/MDK-ARM/atk_f103.uvprojx   | 21 ++++++++++++++-------\n 1 file changed, 14 insertions(+), 7 deletions(-)",
+      "diffSha256": "a847e886c801a597d96f40017f41c70262b024d5b6208bcc7ae343824c3c8d99",
+      "diffBytes": 2029,
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 56,
+          "stderr": ""
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 128,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 2029,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        }
+      }
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "statusShort": "M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx",
+      "diffStat": ".../01_baseline/Projects/MDK-ARM/atk_f103.uvprojx   | 21 ++++++++++++++-------\n 1 file changed, 14 insertions(+), 7 deletions(-)",
+      "diffSha256": "a847e886c801a597d96f40017f41c70262b024d5b6208bcc7ae343824c3c8d99",
+      "diffBytes": 2029,
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 56,
+          "stderr": ""
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 128,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 2029,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        }
+      }
+    },
+    "sourceRootAfterAgent": {
+      "label": "after-agent",
+      "statusShort": "M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx",
+      "diffStat": ".../01_baseline/Projects/MDK-ARM/atk_f103.uvprojx   | 21 ++++++++++++++-------\n 1 file changed, 14 insertions(+), 7 deletions(-)",
+      "diffSha256": "a847e886c801a597d96f40017f41c70262b024d5b6208bcc7ae343824c3c8d99",
+      "diffBytes": 2029,
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 56,
+          "stderr": ""
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 128,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 2029,
+          "stderr": "warning: in the working copy of 'projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx', LF will be replaced by CRLF the next time Git touches it"
+        }
+      }
+    },
+    "sourceRootChangedAfterPrepare": false,
+    "sourceRootChangedAfterAgent": false,
+    "requests": [
+      {
+        "label": "status",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 43,
+        "stderr": ""
+      },
+      {
+        "label": "diff-stat",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 0,
+        "stderr": ""
+      },
+      {
+        "label": "diff-patch",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 0,
+        "stderr": ""
+      },
+      {
+        "label": "untracked-ls-files",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 40,
+        "stderr": ""
+      },
+      {
+        "label": "untracked-file-metadata",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 107,
+        "stderr": ""
+      },
+      {
+        "label": "untracked-diff-stat:projects/01_baseline/Middlewares/Arm-2D",
+        "httpStatus": 409,
+        "exitCode": 1,
+        "stdoutBytes": 0,
+        "stderr": "error: Could not access 'projects/01_baseline/Middlewares/Arm-2D/null'"
+      },
+      {
+        "label": "untracked-diff-patch:projects/01_baseline/Middlewares/Arm-2D",
+        "httpStatus": 409,
+        "exitCode": 1,
+        "stdoutBytes": 0,
+        "stderr": "error: Could not access 'projects/01_baseline/Middlewares/Arm-2D/null'"
+      },
+      {
+        "label": "source-root-baseline",
+        "statusShort": "M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx",
+        "diffSha256": "a847e886c801a597d96f40017f41c70262b024d5b6208bcc7ae343824c3c8d99"
+      },
+      {
+        "label": "source-root-after-prepare",
+        "statusShort": "M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx",
+        "diffSha256": "a847e886c801a597d96f40017f41c70262b024d5b6208bcc7ae343824c3c8d99"
+      },
+      {
+        "label": "source-root-after-agent",
+        "statusShort": "M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx",
+        "diffSha256": "a847e886c801a597d96f40017f41c70262b024d5b6208bcc7ae343824c3c8d99"
+      }
+    ]
+  },
+  "_control": {
+    "status": "completed",
+    "stage": "completed",
+    "stdoutPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/issue1082-real-arm2d-rerun-20260609-1516/worker.stdout.log",
+    "stderrPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/issue1082-real-arm2d-rerun-20260609-1516/worker.stderr.log",
+    "startedAt": "2026-06-09T15:16:06.347Z",
+    "command": [
+      "bun",
+      "hwlab-cli.mjs",
+      "case",
+      "run",
+      "worker",
+      "d601-f103-v2-arm2d-stage-d",
+      "--run-id",
+      "issue1082-real-arm2d-rerun-20260609-1516",
+      "--run-dir",
+      "issue1082-real-arm2d-rerun-20260609-1516",
+      "--case-repo",
+      "hwlab-case-registry",
+      "--agent-timeout-ms",
+      "3600000",
+      "--job-timeout-ms",
+      "120000"
+    ],
+    "updatedAt": "2026-06-09T15:31:13.723Z",
+    "pid": 3386442,
+    "evidencePath": "/root/hwlab-v02/.state/hwlab-cli/caserun/issue1082-real-arm2d-rerun-20260609-1516/evidence.json",
+    "completedAt": "2026-06-09T15:31:13.722Z",
+    "resultPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/issue1082-real-arm2d-rerun-20260609-1516/result.json"
+  },
+  "status": "completed",
+  "evidencePath": "/root/hwlab-v02/.state/hwlab-cli/caserun/issue1082-real-arm2d-rerun-20260609-1516/evidence.json"
+}
