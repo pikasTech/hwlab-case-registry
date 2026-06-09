@@ -1,0 +1,72 @@
+diff --git a/projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx b/projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx
+index fadb5e0..9852612 100644
+--- a/projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx
++++ b/projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx
+@@ -337,7 +337,7 @@
+               <MiscControls></MiscControls>
+               <Define>USE_HAL_DRIVER,STM32F103xE</Define>
+               <Undefine></Undefine>
+-              <IncludePath>..\..\Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\..\Drivers\STM32F1xx_HAL_Driver\Inc;..\..\Drivers\CMSIS\Include;..\..\Drivers\;..\..\User;..\..\Middlewares</IncludePath>
++              <IncludePath>..\..\Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\..\Drivers\STM32F1xx_HAL_Driver\Inc;..\..\Drivers\CMSIS\Include;..\..\Drivers\;..\..\User;..\..\Middlewares;..\..\Middlewares\Arm-2D\Include;..\..\Middlewares\Arm-2D\Config</IncludePath>
+             </VariousControls>
+           </Cads>
+           <Aads>
+@@ -436,6 +436,26 @@
+               <FileType>1</FileType>
+               <FilePath>..\..\User\d601_gpio.c</FilePath>
+             </File>
++            <File>
++              <FileName>d601_arm2d_demo.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\User\d601_arm2d_demo.c</FilePath>
++            </File>
++          </Files>
++        </Group>
++        <Group>
++          <GroupName>Middlewares/Arm-2D</GroupName>
++          <Files>
++            <File>
++              <FileName>arm_2d.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Source\arm_2d.c</FilePath>
++            </File>
++            <File>
++              <FileName>PROVENANCE.txt</FileName>
++              <FileType>5</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\PROVENANCE.txt</FilePath>
++            </File>
+           </Files>
+         </Group>
+         <Group>
+@@ -555,4 +575,4 @@
+       </Layer>
+     </Layers>
+   </LayerInfo>
+-</Project>
+\ No newline at end of file
++</Project>
+diff --git a/projects/01_baseline/User/main.c b/projects/01_baseline/User/main.c
+index 7467c9a..68ac313 100644
+--- a/projects/01_baseline/User/main.c
++++ b/projects/01_baseline/User/main.c
+@@ -5,6 +5,7 @@
+ #include "jsonrpc_handler.h"
+ #include "d601_lcd.h"
+ #include "d601_gpio.h"
++#include "d601_arm2d_demo.h"
+ 
+ int main(void)
+ {
+@@ -18,10 +19,12 @@ int main(void)
+     d601_lcd_init();
+     d601_gpio_init();
+     printf("[D601-F103] LCD ID=0x%04X\r\n", (unsigned int)d601_lcd_get_id());
++    d601_arm2d_demo_init();
+     printf("[D601-F103] JSON-RPC ready on USART1 115200 8N1\r\n");
+ 
+     while (1)
+     {
+         jsonrpc_process();
++        d601_arm2d_demo_task();
+     }
+ }
