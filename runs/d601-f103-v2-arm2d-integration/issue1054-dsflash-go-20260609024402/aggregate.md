@@ -1221,12 +1221,12 @@ index 7467c9a..df8bf9a 100644
 | agent-transcript.md | 69458 | add49b33a80fe1c24e64a189e3d708d2d7d6db1436d14fda9ddd4b4bcf9b9c81 |
 | final-response.md | 2736 | fb0498420e5c25ceeecc5ef08d0d64fd08d2fc28cb3f6371a30ccf91524af250 |
 | run.json | 81359 | 1baf76c7ffed4ab63d03ed908bdeed5500e76e89d5d49cc1f4efd966d6b63f17 |
-| result.json | 184945 | f0afd438befd825ce7705162b890d3ea0900f78234f178df064c1022070e8313 |
-| agent-trace.json | 219277 | e706af1b4fa3d1e3d72b2bc15e7e98e4b7c13cc47c39ea6b9efc1331c3fcc7dc |
+| result.json | 184945 | 8ee4664ef28c64241e6b69a1495bd40c1f09978fe7716bf5b67161a5426146d8 |
+| agent-trace.json | 219277 | be6257ebaea86916620a72cc56a8e87970d82c6b7dcd821a285c1ebddfeff90f |
 | agent-prompt.md | 3236 | 1676b83cf6349579adcae18eaf86b69b311f063bb356dc248aeace1553a5cbdb |
 | agent-diff.patch | 9020 | 7aea200aa6e9f036b7dfc5442220af2cc44beba070799d50bb1a6216a4c7ce50 |
 | .hwlab/hwpod-spec.yaml | 744 | 83ffd1d06dabb6274da06adc3a3f0f6a09af9592b092e6847681770d7b339e86 |
-| worker.stdout.log | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
+| worker.stdout.log | 185643 | df89881e02ec97ae8b33bb7bd1d08c8393a80f67257a908e85bc39140ab92eea |
 | worker.stderr.log | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
 
 ## 说明
