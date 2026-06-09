@@ -1,0 +1,1754 @@
+# CaseRun Agent Transcript
+
+- caseId: d601-f103-v2-arm2d-stage-d
+- runId: issue1082-real-arm2d-cmsisdsp-run7-20260609-1720
+- traceId: trc_case_d601-f103-v2-arm2d-stage-d_b2a49946da6847e1a35317916d2eb9db
+- conversationId: cnv_case_d601-f103-v2-arm2d-stage-d_issue1082-real-arm2d-cmsisdsp-run7-20260609-1720
+- sessionId: ses_95872834-3bd3-4348-b575-a3247c68ba22
+- threadId: 
+- renderer: tools/src/hwlab-cli/trace-renderer:traceDisplayRows
+- traceLookupStrategy: id_plus_existing_cli
+- traceCommand: hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-stage-d_b2a49946da6847e1a35317916d2eb9db --render web
+- resultCommand: hwlab-cli client agent result trc_case_d601-f103-v2-arm2d-stage-d_b2a49946da6847e1a35317916d2eb9db
+- inspectCommand: hwlab-cli client agent inspect --trace-id trc_case_d601-f103-v2-arm2d-stage-d_b2a49946da6847e1a35317916d2eb9db
+- lookupOnly: false
+- finalResponse: null
+- autoEvaluation: false
+
+## Messages
+- **17:19:41  请求接受**
+
+- **17:19:41 total=00:00:00 run agentrun:run:reuse-skipped**
+
+```text
+AgentRun run reuse was skipped because this request requires the CaseRun caserun-with-skills resource bundle.
+```
+
+- **17:19:41 total=00:00:00 run agentrun:run:created**
+
+```text
+AgentRun run run_c8c93b69d73b4a91995bea4739e8437d created through internal k3s Service DNS.
+```
+
+- **17:19:41 total=00:00:00 run agentrun:command:created**
+
+```text
+AgentRun command cmd_2c9e51bd3fb14d27830797d071dc0087 created; hwlab-cloud-api will start a runner Job explicitly without relying on scheduler automation.
+```
+
+- **17:19:42 total=00:00:01 run agentrun:runner-job:created**
+
+```text
+AgentRun runner Job agentrun-v01-runner-7e0f5ddaf1de created in namespace agentrun-v01.
+```
+
+- **17:19:46 total=00:00:05 run agentrun:backend:run-claimed**
+
+```text
+run-claimed
+```
+
+- **17:19:47 total=00:00:06 run agentrun:backend:resource-bundle-materialized**
+
+```text
+resource-bundle-materialized
+```
+
+- **17:19:47 total=00:00:06 run agentrun:backend:backend-turn-started**
+
+```text
+backend-turn-started
+```
+
+- **17:19:47  会话就绪**
+
+- **17:19:47 total=00:00:06 run agentrun:backend:codex-rollout-storage-mounted**
+
+```text
+codex-rollout-storage-mounted
+```
+
+- **17:19:47 total=00:00:06 run agentrun:backend:initial-prompt-assembly**
+
+```text
+initial-prompt-assembly
+```
+
+- **17:19:47 total=00:00:06 run agentrun:backend:active-turn-control-ready**
+
+```text
+active-turn-control-ready
+```
+
+- **17:19:48 total=00:00:07 fail agentrun:error:provider-stream-disconnected**
+
+```text
+AgentRun error
+```
+
+- **17:19:50 total=00:00:09 fail agentrun:error:provider-stream-disconnected**
+
+```text
+AgentRun error
+```
+
+- **17:19:51 total=00:00:09 fail agentrun:error:provider-stream-disconnected**
+
+```text
+AgentRun error
+```
+
+- **17:19:52 total=00:00:11 fail agentrun:error:provider-stream-disconnected**
+
+```text
+AgentRun error
+```
+
+- **17:20:13  助手消息**
+
+我会先按 CaseRun 约束走 HWPOD 标准入口，先验证本次 `hwpodId` 和隔离工作区绑定，然后再读取最小的 Arm-2D 接入说明并检查工程结构。
+
+- <details>
+  <summary>已运行 hwpod-ctl spec validate --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F1...</summary>
+
+  ```text
+  hwpod-ctl spec validate --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-ctl.spec.validate", "status": "succeeded", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-H...
+  exitCode=0
+  durationMs=0
+  outputBytes=2976
+  sourceSeq=24
+  rowId: tool:call_mozJuIUSww0Nq4aXfUpouog3
+  ```
+
+  </details>
+
+- **17:20:31  助手消息**
+
+已确认 HWPOD 绑定到了本次隔离工作区，不会切到默认工作区。接下来我会用装配的 `hwpod-cli`、`hwpod-ctl` 和 `arm2d-skyer` 技能，只读取和 Arm-2D/Keil 接入直接相关的说明。
+
+- <details>
+  <summary>已运行 sed -n '1,220p' .agents/skills/arm2d-skill/SKILL.md</summary>
+
+  ```text
+  sed -n '1,220p' .agents/skills/arm2d-skill/SKILL.md
+  stdout:
+  --- name: arm2d-skyer description: 用于 ARM-2D 嵌入式 UI 开发工作：scene/PFB/generic loader/dirty region/RGB565 资源、GIF 精灵图与动画资源链路、Keil MDK/RTE/显示适配器集成、SRAM/Flash/帧率权衡，以及在 MCU 上实现伪 shader/demo-scene 特效。 --- # ARM-2D 嵌入式 UI 工作流 这是一个通用 ARM-2D 嵌入式 UI 技能。核心目标不是写通用教程，而是让助手按可移植、可维护、贴合硬件约束的方式处理 ARM-2D 工程。 ## 默认背景 - 常用语言：C。 - 常用图形栈：ARM-2D、PFB、Scene Player、Generic Loader。 - 常见工程环境：Keil MDK、CMSIS-Pack/RTE、RTOS 或裸机工程。 - 常见显示链路：LCD/OLED/RGB/MIPI/Framebuffer、SPI/QSPI/8080/LTDC 等显示接口。 - 常见像素格式：RGB565、RGB888、ARGB8888。 - 常见任务：动态 UI、GIF/动画素材、局部刷新、低 RAM 渲染、伪 shader 特效。 ## 总原则 - 优先写能在目标 MCU 上稳定跑起来的代码，不追求理论优雅。 - 每次涉及动画/特...
+  exitCode=0
+  durationMs=0
+  outputBytes=7283
+  outputTruncated=true
+  sourceSeq=27
+  rowId: tool:call_IfqLlAzT1qFNYDpxQN0vjRef
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 sed -n '1,180p' .agents/skills/hwpod-cli/SKILL.md</summary>
+
+  ````text
+  sed -n '1,180p' .agents/skills/hwpod-cli/SKILL.md
+  stdout:
+  --- name: hwpod-cli description: Use HWLAB HWPOD from a code agent runner for hardware-development tasks. The hwpod-cli skill resolves an HWPOD by hwpod-id through the HWLAB runtime service, submits hwpod-node-ops through hwlab-api, and waits for hwpod-node results. --- # hwpod-cli This skill follows Skill(cli-spec). It is the standard task entry for operating an HWPOD from the HWLAB v0.2 Code Agent workspace. ## Standard Path ```text hwpod from PATH -> tools/hwpod-cli.ts -> runtime HWPOD registry by hwpod-id -> compiler-backed hwpod-node-ops plan -> /v1/hwpod-node-ops on hwlab-api -> hwpod...
+  exitCode=0
+  durationMs=0
+  outputBytes=4119
+  outputTruncated=true
+  sourceSeq=29
+  rowId: tool:call_GmxT0g1r0E35dE5nmeacZTvg
+  ````
+
+  </details>
+
+- <details>
+  <summary>已运行 sed -n '1,180p' .agents/skills/hwpod-ctl/SKILL.md</summary>
+
+  ```text
+  sed -n '1,180p' .agents/skills/hwpod-ctl/SKILL.md
+  stdout:
+  --- name: hwpod-ctl description: Manage and validate HWLAB HWPOD runtime bindings from a code agent runner. The hwpod-ctl skill is separate from hwpod-cli and is used for hwpod-id validation, smoke checks, and explicit local spec import/export maintenance. --- # hwpod-ctl This skill follows Skill(cli-spec). It is the standard management entry for runtime-resolved HWPOD identity and node binding checks. ## Scope `hwpod-ctl` is a peer of `hwpod-cli`, not a fallback task path. Use it to validate a service-resolved `hwpod-id`, inspect the four HWPOD elements, check node binding, and run smoke o...
+  exitCode=0
+  durationMs=0
+  outputBytes=1971
+  sourceSeq=31
+  rowId: tool:call_LO1oSTgxlkedzn8WsnpgDqvV
+  ```
+
+  </details>
+
+- **17:20:47  助手消息**
+
+技能说明的关键点和任务要求一致：项目文本修改走 `workspace apply-patch`，第三方真实源码要在目标 host 内通过 git/archive/缓存物化。现在先检查 HWPOD 和 `projects/01_baseline` 的实际文件形态，再决定最小集成路径。
+
+- <details>
+  <summary>已运行 hwpod inspect --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktr...</summary>
+
+  ```text
+  hwpod inspect --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=429
+  outputBytes=4068
+  outputTruncated=true
+  sourceSeq=38
+  rowId: tool:call_3yZSHSbua8Qbk6uDvNqcFt9K
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 hwpod workspace ls projects/01_baseline --hwpod-id d601-f103-v2 --workspace-path "F:\Wo...</summary>
+
+  ```text
+  hwpod workspace ls projects/01_baseline --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=443
+  outputBytes=4251
+  outputTruncated=true
+  sourceSeq=39
+  rowId: tool:call_JBYwsd9QtnWF543kpe8iAHbd
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 hwpod workspace rg -e "int main|main\(" -e "printf" -e "LCD" -e "lcd" projects/01_basel...</summary>
+
+  ```text
+  hwpod workspace rg -e "int main|main\(" -e "printf" -e "LCD" -e "lcd" projects/01_baseline --context 2 --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=1178
+  outputBytes=4324
+  outputTruncated=true
+  sourceSeq=68
+  rowId: tool:call_FCBFQ4iqFe7W8xhzNk1GcCMl
+  ```
+
+  </details>
+
+- **17:20:55  助手消息**
+
+`projects/01_baseline` 存在并包含 `Middlewares`、`Drivers`、`User` 和 Keil 工程目录。源码检索还在目标 host 上跑，我先等它返回，避免基于不完整结构改工程。
+
+- **17:21:00 total=00:01:19 run agentrun:steer:accepted**
+
+```text
+HWLAB accepted an in-flight steer request and will create an AgentRun type=steer command on the existing run.
+```
+
+- **17:21:00 total=00:01:19 run agentrun:steer:command-created**
+
+```text
+AgentRun steer command cmd_ecfe8af692674beca4a2f99cf0a716ae created on run run_c8c93b69d73b4a91995bea4739e8437d; runner will apply it if the target Codex turn is still active.
+```
+
+- **17:21:11  助手消息**
+
+裸基线里已有 LCD 和 USART 基础 glue，`main.c` 当前只做 LCD bring-up 和 JSON-RPC loop。下一步先在目标 Windows host 上核对 Arm-2D v1.2.4 tag，再用同一个 host 物化真实上游源码。
+
+- <details>
+  <summary>已运行 'hwpod cmd git ls-remote https://github.com/ARM-software/Arm-2D.git refs/tags/v1.2.4 "r...</summary>
+
+  ```text
+  'hwpod cmd git ls-remote https://github.com/ARM-software/Arm-2D.git refs/tags/v1.2.4 "refs/tags/v1.2.4''^{}" --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720""
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=2075
+  outputBytes=4321
+  outputTruncated=true
+  sourceSeq=78
+  rowId: tool:call_vjaGoeFsGveGXQS3j53LMpQA
+  ```
+
+  </details>
+
+- **17:21:34  助手消息**
+
+收到，run7 会把 CMSIS-DSP 当作真实依赖一起集成并记录来源；不会使用 Arm-2D 示例里的 `platform/math/arm_math.h`，也不会写 stub。当前 `git ls-remote` 已在 HWPOD host 上执行中，我先收它的 tag 校验结果。
+
+- **17:22:07  助手消息**
+
+Arm-2D tag 校验通过，tag object 和 peeled commit 与任务给定值一致。现在我会读取工程关键文件和 Keil 工程片段，确认 include path、当前源文件分组、LCD API 以及主循环接入点。
+
+- <details>
+  <summary>已运行 hwpod workspace cat projects/01_baseline/User/main.c projects/01_baseline/User/d601_lcd...</summary>
+
+  ```text
+  hwpod workspace cat projects/01_baseline/User/main.c projects/01_baseline/User/d601_lcd.h projects/01_baseline/User/d601_lcd.c --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=518
+  outputBytes=4338
+  outputTruncated=true
+  sourceSeq=92
+  rowId: tool:call_tq7s8X2aCpKt27uXjS4BHfpa
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 hwpod workspace ls projects/01_baseline/Middlewares --hwpod-id d601-f103-v2 --workspace...</summary>
+
+  ```text
+  hwpod workspace ls projects/01_baseline/Middlewares --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=507
+  outputBytes=3963
+  sourceSeq=93
+  rowId: tool:call_nroLTpH4DpmFCMkVCYLo1adr
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 hwpod workspace cat projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx --hwpod-id d...</summary>
+
+  ```text
+  hwpod workspace cat projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=514
+  outputBytes=4286
+  outputTruncated=true
+  sourceSeq=94
+  rowId: tool:call_AJsr6wE4E59PBTdfYEVLAksk
+  ```
+
+  </details>
+
+- **17:22:34  助手消息**
+
+工程是 ARMCC 5、Cortex-M3、64KB SRAM、512KB Flash，已有 LCD 画点/矩形/bitmap API。我的集成策略会保持上游文件原样：Arm-2D 放到 `Middlewares/Arm-2D`，CMSIS-DSP 官方头文件放到 `Middlewares/CMSIS-DSP`，板级配置和 demo 只放 `User`。
+
+- <details>
+  <summary>已运行 'hwpod cmd git ls-remote https://github.com/ARM-software/CMSIS-DSP.git refs/tags/v1.16....</summary>
+
+  ```text
+  'hwpod cmd git ls-remote https://github.com/ARM-software/CMSIS-DSP.git refs/tags/v1.16.2 "refs/tags/v1.16.2''^{}" refs/tags/v1.15.0 "refs/tags/v1.15.0''^{}" --hwpod-id d601-f103-v2 --workspace-path "F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720""
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=2829
+  outputBytes=4369
+  outputTruncated=true
+  sourceSeq=98
+  rowId: tool:call_PJkFBFFG0UrPjCWvtoLNsTOG
+  ```
+
+  </details>
+
+- **17:23:30  助手消息**
+
+CMSIS-DSP 的 v1.16.2 和 v1.15.0 tag 都能从官方仓库解析；我选 v1.16.2，记录 tag object `bc31945...` 和 peeled commit `d5717e...`。接下来会在 HWPOD Windows host 内 clone 到临时目录，再复制必要上游目录到 subject，确保 subject 里不留下 `.git`。
+
+- <details>
+  <summary>已运行 'hwpod cmd powershell -NoProfile -ExecutionPolicy Bypass -Command "$ErrorActionPreferen...</summary>
+
+  ```text
+  'hwpod cmd powershell -NoProfile -ExecutionPolicy Bypass -Command "$ErrorActionPreference='"'Stop'; "'$root='"'F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720\projects\01_baseline'; "'$tmp=Join-Path $env:TEMP '"'hwlab_run7_arm2d_cmsisdsp'; Remove-Item -Recurse -Force "'$tmp -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Force $tmp | Out-Null; git clone --depth 1 --branch v1.2.4 https://github.com/ARM-software/Arm-2D.git (Join-Path $tmp '"'Arm-2D'); git -C (Join-Path "'$tmp '"'Arm-2D') rev-parse HEAD; git clone --depth 1 --branch v1.16.2 --filter=blob:none --sparse https://github.com/ARM-software/CMSIS-DSP.git (Join-Path "'$tmp '"'CMSIS-DSP'); git -C (Join-Path "'$tmp '"'CMSIS-DSP') sparse-checkout set Include PrivateInclude; git -C (Join-Path "'$tmp '"'CMSIS-DSP') rev-parse HEAD; Remove-Item -Recurse -Force (Jo...
+  stdout:
+  { "ok": false, "action": "hwpod-cli.invoke", "status": "failed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", "r...
+  exitCode=1
+  durationMs=1618
+  outputBytes=6657
+  outputTruncated=true
+  sourceSeq=104
+  rowId: tool:call_60n6OT7l5aE3qLYjeZVAyhx2
+  ```
+
+  </details>
+
+- **17:24:09  助手消息**
+
+上游源码物化正在目标 host 内进行，包含 Arm-2D v1.2.4 的 `Library` 和 CMSIS-DSP v1.16.2 的官方 `Include`/`PrivateInclude`。我会等这一步完成后再更新工程文件。
+
+- **17:24:34  助手消息**
+
+刚才的物化命令失败在本地 shell 把 PowerShell `$变量` 提前展开了，目标 host 没有实际完成复制；这是命令转义问题，不是上游源不可用。我会用单引号保护 PowerShell 脚本重新执行。
+
+- <details>
+  <summary>已运行 sourceSeq=108</summary>
+
+  ```text
+  sourceSeq=108
+  rowId: tool:111
+  ```
+
+  </details>
+
+- **17:26:21  助手消息**
+
+重新物化命令已在目标 host 上继续运行，当前看起来是在 clone/copy 阶段，还没有返回错误。
+
+- <details>
+  <summary>已运行 sourceSeq=110</summary>
+
+  ```text
+  sourceSeq=110
+  rowId: tool:113
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 sourceSeq=111</summary>
+
+  ```text
+  sourceSeq=111
+  rowId: tool:114
+  ```
+
+  </details>
+
+- **17:26:42  助手消息**
+
+目标 host 的 git/copy 还在执行，可能是 CMSIS-DSP sparse clone 等待网络或 checkout。我会继续等它完成；如果超时或失败，再切换为 archive/缓存路径。
+
+- <details>
+  <summary>已运行 sourceSeq=113</summary>
+
+  ```text
+  sourceSeq=113
+  rowId: tool:116
+  ```
+
+  </details>
+
+- **17:26:54  助手消息**
+
+这一步超过二十秒但仍未返回，说明目标 host 进程还活着。因为这是第三方源码真实物化的关键步骤，我会再等一轮，避免中断后留下半成品。
+
+- <details>
+  <summary>已运行 sourceSeq=115</summary>
+
+  ```text
+  sourceSeq=115
+  rowId: tool:118
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 sourceSeq=116</summary>
+
+  ```text
+  sourceSeq=116
+  rowId: tool:119
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 sourceSeq=117</summary>
+
+  ```text
+  sourceSeq=117
+  rowId: tool:120
+  ```
+
+  </details>
+
+- **17:27:29  助手消息**
+
+源码物化仍未结束，最可能卡在 GitHub clone/checkout。任务允许用 archive path 或已验证缓存降低体积；如果这次再不返回，我会改成 `git archive` 从本地临时 clone 导出最小目录，减少 checkout 负担。
+
+- <details>
+  <summary>已运行 sourceSeq=119</summary>
+
+  ```text
+  sourceSeq=119
+  rowId: tool:122
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 sourceSeq=120</summary>
+
+  ```text
+  sourceSeq=120
+  rowId: tool:123
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 sourceSeq=121</summary>
+
+  ```text
+  sourceSeq=121
+  rowId: tool:124
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 sourceSeq=122</summary>
+
+  ```text
+  sourceSeq=122
+  rowId: tool:125
+  ```
+
+  </details>
+
+- **17:28:44  助手消息**
+
+物化命令已经挂住超过一分钟，我会中断这次长命令并改用更小的步骤：先分别 clone/export Arm-2D 和 CMSIS-DSP，再检查每一步结果，避免一次长脚本吞掉故障点。
+
+- <details>
+  <summary>已运行 sourceSeq=124</summary>
+
+  ```text
+  sourceSeq=124
+  rowId: tool:127
+  ```
+
+  </details>
+
+- **17:29:38  助手消息**
+
+这个本地 `hwpod` 调用的 stdin 已关闭，无法用 Ctrl-C 传递中断。我会在 runner 上定位并终止这一个挂起的 `hwpod cmd powershell` 进程，然后按更小粒度重试。
+
+- <details>
+  <summary>已运行 ps -ef | rg "hwpod cmd powershell|hwlab_run7_arm2d_cmsisdsp|hwpod-cli|hwpod"</summary>
+
+  ```text
+  ps -ef | rg "hwpod cmd powershell|hwlab_run7_arm2d_cmsisdsp|hwpod-cli|hwpod"
+  stdout:
+  413 root 3:07 bun /home/agentrun/workspaces/gitbundle-55472586cb9aadd8/workspace/tools/hwpod-cli.ts cmd powershell -NoProfile -ExecutionPolicy Bypass -Command $ErrorActionPreference="Stop"; $root="F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720\projects\01_baseline"; $tmp=Join-Path $env:TEMP "hwlab_run7_arm2d_cmsisdsp"; Remove-Item -Recurse -Force $tmp -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Force $tmp | Out-Null; git clone --depth 1 --branch v1.2.4 https://github.com/ARM-software/Arm-2D.git (Join-Path $tmp "Arm-2D"); git -C (J...
+  exitCode=0
+  durationMs=0
+  outputBytes=2391
+  sourceSeq=127
+  rowId: tool:call_s5JBRT9xekSEaZkVa7eayTA5
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 kill 413 &amp;&amp; ps -p 413 -o pid=,stat=,cmd=</summary>
+
+  ```text
+  kill 413 && ps -p 413 -o pid=,stat=,cmd=
+  stdout:
+  ps: unrecognized option: p BusyBox v1.36.1 (2024-06-10 07:11:47 UTC) multi-call binary. Usage: ps [-o COL1,COL2=HEADER] [-T] Show list of processes -o COL1,COL2=HEADER Select columns for display -T Show threads
+  exitCode=1
+  durationMs=0
+  outputBytes=325
+  sourceSeq=129
+  rowId: tool:call_KUYobkXOoni88nMU6M6rGeM7
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 "hwpod cmd powershell -NoProfile -ExecutionPolicy Bypass -Command '"'$ErrorActionPrefer...</summary>
+
+  ```text
+  "hwpod cmd powershell -NoProfile -ExecutionPolicy Bypass -Command '"'$ErrorActionPreference="Stop"; $root="F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720\projects\01_baseline"; "'$tmp=Join-Path $env:TEMP "hwlab_run7_arm2d_cmsisdsp"; Remove-Item -Recurse -Force $tmp -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Force $tmp | Out-Null; git clone --depth 1 --branch v1.2.4 https://github.com/ARM-software/Arm-2D.git (Join-Path $tmp "Arm-2D"); git -C (Join-Path $tmp "Arm-2D") rev-parse HEAD; git clone --depth 1 --branch v1.16.2 --filter=blob:none --sparse https://github.com/ARM-software/CMSIS-DSP.git (Join-Path $tmp "CMSIS-DSP"); git -C (Join-Path $tmp "CMSIS-DSP") sparse-checkout set Include PrivateInclude; git -C (Join-Path $tmp "CMSIS-DSP") rev-parse HEAD; Remove-Item -Recurse -Force (Join-Path $root "Middlewa...
+  stdout:
+  commandExecution failed: /bin/sh -lc "hwpod cmd powershell -NoProfile -ExecutionPolicy Bypass -Command '"'$ErrorActionPreference="Stop"; $root="F:'"\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720\\projects\\01_baseline\"; "'$tmp=Join-Path $env:TEMP "hwlab_run7_arm2d_cmsisdsp"; Remove-Item -Recurse -Force $tmp -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Force $tmp | Out-Null; git clone --depth 1 --branch v1.2.4 https://github.com/ARM-software/Arm-2D.git (Join-Path $tmp "Arm-2D"); git -C (Join-Path $tmp "Arm-2D") rev-parse HEAD; gi...
+  exitCode=-1
+  durationMs=223637
+  outputBytes=2646
+  sourceSeq=130
+  rowId: tool:call_MpsCYVY6uyFbu1qKK6wJaIWC
+  ```
+
+  </details>
+
+- **17:29:55  助手消息**
+
+已终止 runner 上挂起的 `hwpod` CLI 进程。接下来改成小命令逐步执行，先验证工作区里是否有半成品，再清理重来。
+
+- <details>
+  <summary>已运行 hwpod workspace ls projects/01_baseline/Middlewares --hwpod-id d601-f103-v2 --workspace...</summary>
+
+  ```text
+  hwpod workspace ls projects/01_baseline/Middlewares --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=761
+  outputBytes=3963
+  sourceSeq=135
+  rowId: tool:call_6zdyMF4J1RdD6KDrsbFT1fmJ
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 hwpod cmd powershell -NoProfile -ExecutionPolicy Bypass -Command 'Get-ChildItem -Force ...</summary>
+
+  ```text
+  hwpod cmd powershell -NoProfile -ExecutionPolicy Bypass -Command 'Get-ChildItem -Force ""'$env:TEMP'"\hwlab_run7_arm2d_cmsisdsp" -ErrorAction SilentlyContinue | Select-Object Name,Length,Mode | Format-Table -AutoSize' --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=1067
+  outputBytes=4433
+  outputTruncated=true
+  sourceSeq=137
+  rowId: tool:call_i0MMaOm4MuZtJZg1YqoofSRu
+  ```
+
+  </details>
+
+- **17:30:35  助手消息**
+
+检查到 subject 里没有半成品，目标临时目录里只有已 clone 的 Arm-2D；卡点是在 CMSIS-DSP 获取。为了满足新增硬约束，我先查目标节点是否已有官方 CMSIS-DSP/Pack 缓存，再决定从缓存物化还是改用 archive 下载。
+
+- <details>
+  <summary>已运行 hwpod cmd powershell -NoProfile -ExecutionPolicy Bypass -Command '"'$paths=@("C:'"\User...</summary>
+
+  ```text
+  hwpod cmd powershell -NoProfile -ExecutionPolicy Bypass -Command '"'$paths=@("C:'"\Users\liang\AppData\Local\Arm\Packs","C:\Users\liang\.cache","C:\Keil_v5\ARM\PACK","F:\Work"); foreach("'$p in $paths){ if(Test-Path $p){ Write-Host "SEARCH $p"; Get-ChildItem -Path $p -Filter arm_math.h -Recurse -ErrorAction SilentlyContinue | Select-Object -First 20 FullName } }'"' --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=13153
+  outputBytes=4601
+  outputTruncated=true
+  sourceSeq=141
+  rowId: tool:call_aXvPo2JqfZ4yeWsxsnzDl0KK
+  ```
+
+  </details>
+
+- **17:31:08  助手消息**
+
+目标节点有官方 Pack 缓存：`ARM/CMSIS-DSP/1.14.2` 和 `ARM/CMSIS/5.9.0`，包含真实 `arm_math.h`。我会使用这个已安装官方 Pack 作为 CMSIS-DSP provenance，而不是继续卡在 GitHub clone。
+
+- <details>
+  <summary>已运行 hwpod cmd powershell -NoProfile -ExecutionPolicy Bypass -Command '"'$p="C:'"\Users\lian...</summary>
+
+  ```text
+  hwpod cmd powershell -NoProfile -ExecutionPolicy Bypass -Command '"'$p="C:'"\Users\liang\AppData\Local\Arm\Packs\ARM\CMSIS-DSP\1.14.2"; Get-ChildItem -Force "'$p | Select-Object Name,Mode,Length | Format-Table -AutoSize; Write-Host "arm_math hash"; Get-FileHash (Join-Path $p "Include'"\arm_math.h") -Algorithm SHA256; Write-Host "headers"; Get-ChildItem -Recurse (Join-Path "'$p "Include") -File | Select-Object -First 60 FullName | Format-Table -AutoSize'"' --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=814
+  outputBytes=4685
+  outputTruncated=true
+  sourceSeq=146
+  rowId: tool:call_9w4sCIpJV1uLdt46KwBeXWnb
+  ```
+
+  </details>
+
+- **17:31:26  助手消息**
+
+已记录 Pack 里的 `arm_math.h` SHA256（`F170E01C...B32C8ED`）。现在把 Arm-2D 已 clone 的 `Library` 和 Pack 的 CMSIS-DSP `Include/PrivateInclude` 复制进 `projects/01_baseline/Middlewares`。
+
+- <details>
+  <summary>已运行 "hwpod cmd powershell -NoProfile -ExecutionPolicy Bypass -Command '"'$ErrorActionPrefer...</summary>
+
+  ```text
+  "hwpod cmd powershell -NoProfile -ExecutionPolicy Bypass -Command '"'$ErrorActionPreference="Stop"; $root="F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720\projects\01_baseline"; "'$tmp=Join-Path $env:TEMP "hwlab_run7_arm2d_cmsisdsp'"\Arm-2D"; "'$dsp="C:'"\Users\liang\AppData\Local\Arm\Packs\ARM\CMSIS-DSP\1.14.2"; Write-Host "Arm2D HEAD"; git -C "'$tmp rev-parse HEAD; Write-Host "Arm2D arm_2d.h hash"; Get-FileHash (Join-Path $tmp "Library'"\Include\arm_2d.h") -Algorithm SHA256; Remove-Item -Recurse -Force (Join-Path "'$root "Middlewares'"\Arm-2D") -ErrorAction SilentlyContinue; Remove-Item -Recurse -Force (Join-Path "'$root "Middlewares'"\CMSIS-DSP") -ErrorAction SilentlyContinue; New-Item -ItemType Directory -Force (Join-Path "'$root "Middlewares'"\Arm-2D") | Out-Null; New-Item -ItemType Directory -...
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=1038
+  outputBytes=6382
+  outputTruncated=true
+  sourceSeq=150
+  rowId: tool:call_mCVcOHkVAPoJ3AY4ikOYVlsj
+  ```
+
+  </details>
+
+- **17:32:26  助手消息**
+
+上游文件已进 subject：Arm-2D `Library` 复制了 35 个 `.c`，CMSIS-DSP Pack 复制了 46 个官方 include 文件。下一步确认 Arm-2D 编译配置入口和源文件清单，然后新增本地配置/demo 并更新 Keil。
+
+- <details>
+  <summary>已运行 hwpod workspace rg -e "#include &lt;arm_math.h&gt;|#include \"arm_math.h\"|arm_math" projects...</summary>
+
+  ```text
+  hwpod workspace rg -e "#include <arm_math.h>|#include \"arm_math.h\"|arm_math" projects/01_baseline/Middlewares/Arm-2D/Library --context 2 --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=768
+  outputBytes=4356
+  outputTruncated=true
+  sourceSeq=203
+  rowId: tool:call_0ySmY1ZPos3erYDKGpvr0F48
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 hwpod workspace rg -e "ARM_2D_CFG|__ARM_2D|arm_2d_init|arm_2d_fill_colour|tile_t|arm_2d...</summary>
+
+  ```text
+  hwpod workspace rg -e "ARM_2D_CFG|__ARM_2D|arm_2d_init|arm_2d_fill_colour|tile_t|arm_2d_rgb565" projects/01_baseline/Middlewares/Arm-2D/Library/Include projects/01_baseline/Middlewares/Arm-2D/Library/Source --context 2 --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=767
+  outputBytes=4432
+  outputTruncated=true
+  sourceSeq=204
+  rowId: tool:call_iH1Jx0SaPD03XV92KteVXTZR
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 hwpod cmd powershell -NoProfile -ExecutionPolicy Bypass -Command '"'$root="F:'"\Work\HW...</summary>
+
+  ```text
+  hwpod cmd powershell -NoProfile -ExecutionPolicy Bypass -Command '"'$root="F:'"\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720\projects\01_baseline"; Write-Host "Arm2D sources"; Get-ChildItem -Recurse (Join-Path "'$root "Middlewares'"\Arm-2D\Library\Source") -File -Filter *.c | ForEach-Object { "'$_.FullName.Substring($root.Length+1) }; Write-Host "Arm2D includes top"; Get-ChildItem (Join-Path $root "Middlewares'"\Arm-2D\Library\Include") -File | ForEach-Object { "'$_.Name }'"' --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=845
+  outputBytes=4752
+  outputTruncated=true
+  sourceSeq=205
+  rowId: tool:call_SMKMZqviQfzEh0LKaRjmNYrb
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 hwpod workspace rg -e "arm_2d_rgb565_fill_colour\(|arm_2d_rgb565_tile_copy|arm_2d_op_wa...</summary>
+
+  ```text
+  hwpod workspace rg -e "arm_2d_rgb565_fill_colour\(|arm_2d_rgb565_tile_copy|arm_2d_op_wait_async|arm_fsm_rt_cpl" projects/01_baseline/Middlewares/Arm-2D/Library/Include --context 3 --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=557
+  outputBytes=4394
+  outputTruncated=true
+  sourceSeq=253
+  rowId: tool:call_5osUBkwrUk0XTpadPWVJrLn3
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 hwpod workspace rg -e "arm_2d_cfg.h|__ARM_2D_CFG|__ARM_2D_HAS_ASYNC|__ARM_2D_HAS_HELIUM...</summary>
+
+  ```text
+  hwpod workspace rg -e "arm_2d_cfg.h|__ARM_2D_CFG|__ARM_2D_HAS_ASYNC|__ARM_2D_HAS_HELIUM|__ARM_2D_HAS_CDE" projects/01_baseline/Middlewares/Arm-2D/Library/Include --context 3 --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=597
+  outputBytes=4387
+  outputTruncated=true
+  sourceSeq=254
+  rowId: tool:call_Rgi5Xjl6lzE39FJlOluUAIil
+  ```
+
+  </details>
+
+- **17:33:15  助手消息**
+
+Arm-2D 需要 `arm_2d_cfg.h`，上游只提供 template；我会新增 project-local `User/arm_2d_cfg.h`，关闭异步/HW 加速/Helium 路径并启用纯软件 RGB565。接入 demo 会用 Arm-2D tile 在小 framebuffer 上绘制，再通过现有 LCD bitmap API 输出。
+
+- <details>
+  <summary>已运行 hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/Include/template/ar...</summary>
+
+  ```text
+  hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/Include/template/arm_2d_cfg.h --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=459
+  outputBytes=4309
+  outputTruncated=true
+  sourceSeq=274
+  rowId: tool:call_QOdpToREg77qbqYeXyJpvQNf
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 hwpod workspace rg -e "arm_2d_rgb565_fill_colour" projects/01_baseline/Middlewares/Arm-...</summary>
+
+  ```text
+  hwpod workspace rg -e "arm_2d_rgb565_fill_colour" projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_draw.h --context 4 --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=506
+  outputBytes=4345
+  outputTruncated=true
+  sourceSeq=275
+  rowId: tool:call_Z8nkMFUI3bJJbAjYhEP7hXkS
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_type...</summary>
+
+  ```text
+  hwpod workspace cat projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_types.h projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_draw.h --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=493
+  outputBytes=4372
+  outputTruncated=true
+  sourceSeq=276
+  rowId: tool:call_uRTQYvEfQWSTFPopP3azhUbp
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 hwpod workspace rg -e "typedef struct arm_2d_tile_t|arm_2d_tile_t" projects/01_baseline...</summary>
+
+  ```text
+  hwpod workspace rg -e "typedef struct arm_2d_tile_t|arm_2d_tile_t" projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_types.h --context 8 --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=448
+  outputBytes=4363
+  outputTruncated=true
+  sourceSeq=295
+  rowId: tool:call_NJhIsCDUeNl80lw4nX5XdBsM
+  ```
+
+  </details>
+
+- **17:34:31  助手消息**
+
+我现在有足够的类型信息：`arm_2d_tile_t` 可用 root tile + `phwBuffer` 表达 RGB565 小帧缓冲。接下来会通过 HWPOD `workspace apply-patch` 新增配置/demo，并把 Keil 的 include path 和源文件分组同步进去。
+
+- <details>
+  <summary>已运行 hwpod workspace rg -e "ARM_2D_COLOUR_RGB565|COLOUR_RGB565|ARM_2D_COLOUR" projects/01_ba...</summary>
+
+  ```text
+  hwpod workspace rg -e "ARM_2D_COLOUR_RGB565|COLOUR_RGB565|ARM_2D_COLOUR" projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_types.h --context 4 --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=487
+  outputBytes=4369
+  outputTruncated=true
+  sourceSeq=318
+  rowId: tool:call_hq8FR2TquLkwLktC1Fgbw66r
+  ```
+
+  </details>
+
+- <details>
+  <summary>已运行 hwpod workspace rg -e "typedef struct arm_2d_color_info_t|arm_2d_color_info_t" projects...</summary>
+
+  ```text
+  hwpod workspace rg -e "typedef struct arm_2d_color_info_t|arm_2d_color_info_t" projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_types.h --context 6 --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=469
+  outputBytes=4375
+  outputTruncated=true
+  sourceSeq=323
+  rowId: tool:call_qzc9ftCL30IsCBzswKpZqc5C
+  ```
+
+  </details>
+
+- **17:35:51  助手消息**
+
+准备写入的 project-local 文件包括 `User/arm_2d_cfg.h`、`User/d601_arm2d_demo.c/.h`，并改 `main.c`；Keil 只纳入非 Helium 的 Arm-2D scalar `.c`，避免 Cortex-M3/ARMCC5 编译无关 MVE 路径。
+
+- **17:38:59 total=00:19:18 run agentrun:steer:accepted**
+
+```text
+HWLAB accepted an in-flight steer request and will create an AgentRun type=steer command on the existing run.
+```
+
+- **17:38:59 total=00:19:18 run agentrun:steer:command-created**
+
+```text
+AgentRun steer command cmd_a03c26fba20541c4add51ca7b2dd5279 created on run run_c8c93b69d73b4a91995bea4739e8437d; runner will apply it if the target Codex turn is still active.
+```
+
+- <details>
+  <summary>已运行 "cat &lt;&lt;'PATCH' | hwpod workspace apply-patch --reason "integrate real Arm-2D and CMSIS-...</summary>
+
+  ```text
+  "cat <<'PATCH' | hwpod workspace apply-patch --reason "integrate real Arm-2D and CMSIS-DSP with D601 demo" --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720" *** Begin Patch *** Add File: projects/01_baseline/User/arm_2d_cfg.h +#ifndef D601_ARM_2D_CFG_H +#define D601_ARM_2D_CFG_H + +#define __ARM_2D_HAS_ASYNC__ 0 +#define __ARM_2D_HAS_HW_ACC__ 0 +#define __ARM_2D_HAS_HELIUM__ 0 +#define __ARM_2D_HAS_HELIUM_INTEGER__ 0 +#define __ARM_2D_HAS_HELIUM_FLOAT__ 0 +#define __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__ 0 +#define __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__ 0 +#define __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ 0 +#define __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__ 0 +#define __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__ 0 +#define __ARM_2D_CFG_ENABLE_LOG__ 0 +#define __ARM_2D...
+  stdout:
+  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "hwpod://d601-f103-v2", "hwpodId": "d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "resolvedAuthority": { "hwpodId": "d601-f103-v2", "specPath": "hwpod://d601-f103-v2", "specAuthority": "preinstalled-verified-spec", "workspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "effectiveWorkspacePath": "F:\\Work\\HWLAB-CASE-F103\\.worktree\\caserun-issue1082-real-arm2d-cmsisdsp-run7-20260609-1720", "defaultWorkspacePath": "F:\\Work\\D601-HWLAB", ...
+  exitCode=0
+  durationMs=955
+  outputBytes=19418
+  outputTruncated=true
+  sourceSeq=332
+  rowId: tool:call_MzqGTgAnBiAsQRQAIj8H8wlg
+  ```
+
+  </details>
+
+- **17:39:41  助手消息**
+
+收到，我不再做泛化 API 浏览。当前已经用真实 Arm-2D v1.2.4 和官方 CMSIS-DSP Pack 物化到 subject；我先把 demo 文件名对齐到 `User/arm2d_demo.c/.h`，然后立即跑 `hwpod build --wait`，之后只按真实编译错误迭代。
+
+- **17:39:47 total=00:20:06 fail agentrun:error:backend-timeout**
+
+```text
+codex stdio turn hard timed out after 1200000ms
+```
+
+- **17:39:47 total=00:20:06 run agentrun:backend:turn-interrupt-requested**
+
+```text
+turn-interrupt-requested
+```
+
+- **17:39:47 total=00:20:06 run agentrun:backend:turn/interrupt completed**
+
+```text
+turn/interrupt:completed
+```
+
+- **17:39:47 total=00:20:06 fail agentrun:terminal:failed**
+
+```text
+codex stdio turn hard timed out after 1200000ms
+```
+
+- **17:39:47 total=00:20:06 fail agentrun:result:failed**
+
+```text
+codex stdio turn hard timed out after 1200000ms
+```
+
+- **17:39:47 total=00:20:06 fail agentrun:result:failed**
+
+```text
+codex stdio turn hard timed out after 1200000ms
+```
+
+## Final Response
+finalResponse=null
+reason: finalResponse=null; no authoritative final assistant response was returned by the trace/result payload
+
+## Subject Diff
+
+statusShort:
+```text
+M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx
+ M projects/01_baseline/User/main.c
+?? projects/01_baseline/Middlewares/Arm-2D/
+?? projects/01_baseline/Middlewares/CMSIS-DSP/
+?? projects/01_baseline/User/arm_2d_cfg.h
+?? projects/01_baseline/User/d601_arm2d_demo.c
+?? projects/01_baseline/User/d601_arm2d_demo.h
+```
+
+diffStat:
+```text
+.../01_baseline/Projects/MDK-ARM/atk_f103.uvprojx  | 119 ++++++++++++++++++++-
+ projects/01_baseline/User/main.c                   |   3 +
+ 2 files changed, 120 insertions(+), 2 deletions(-)
+.../null => projects/01_baseline/User/arm_2d_cfg.h | 25 ++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+.../01_baseline/User/d601_arm2d_demo.c             | 173 +++++++++++++++++++++
+ 1 file changed, 173 insertions(+)
+/dev/null => projects/01_baseline/User/d601_arm2d_demo.h | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+[omitted by CaseRun diffCollection]
+ projects/01_baseline/Middlewares/Arm-2D/LICENSE | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11547 sha256=130396f9455f80ddb506f48e64099cc5f99b40976893287df04df76844d52ffe
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/README.md | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=6093 sha256=c1103b647525c121c384ca07bb5c33abeba1f282e35796eaf1f1e8a6c3e77cd7
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_direct.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=702618 sha256=4e20aefa89552cf17d4167964c28b75978ca675eeeef912ee89561e566ec83cc
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_fill_colour_with_alpha_gradient.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=50196 sha256=571d66e07011770d9ff35b2c99d8e55653b81d4b3f36246dd8ad64e9d1d4466c
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_fill_colour_with_alpha_gradient_and_mask.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=57001 sha256=09e2987ce098ba23a60fdc52d901f26532c5ab7af8b2d8ad8883804e4a766aae
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_fill_colour_with_horizontal_line_mask.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=14191 sha256=91413cec7defbb011d83afac4a6547d0d3cefd7c0cac78e9af177bd94c834c26
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_fill_colour_with_mask_and_mirroring.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=28581 sha256=b0d1d412829aa14bc8c8fa832bda96177c44268472212cf15487f977cf285238
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_fill_colour_with_vertical_line_mask.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=14191 sha256=53fe886bab2694ecaf70be3e7ad50a655bacda579fa9f9389fbf998b0bb2df01
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_filter_iir_blur.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=7810 sha256=ee9de1c0f211a245733db2efc8144947d500c72d98dcb99dd0a58b44b350b4b6
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_filter_reverse_colour.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=5828 sha256=093682917e626d3d1793ddc6e21dc42d4b5d6d2d10d6a08cc3572f54b39f5f6b
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_impl.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=81634 sha256=f7d1b55a3fcd923b485c6fc3207314897d74df1bb855b6daf8b4b8bc2beda946
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_math.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=7921 sha256=7031dd6c77345aa39c0728fe29f1f54b5041e400981cbe2fbbcdee25aa9029df
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_math_helium.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11770 sha256=86c8e6880e65347a49b0fdb025ef47844fb4ee4783b5a982204e3f43f25d7fed
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_paving.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=55371 sha256=2ee3f92219e30716c4bdabbd6bf06a4077faf432df22a5470be8d6fd56810d8e
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_paving_helium.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=50584 sha256=398648b0a658c8443b650015a3a20bf76ed1617aad8a917c34f03be386ba4f3a
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_tile_2xssaa_transform.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=2620 sha256=1d227751fcd1e66c2df4dc89672616aac43466b868dd9109e26fe9897801e28b
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_tile_copy_with_source_mask_and_opacity.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=8531 sha256=390031f297aead07b7da04ae17354dcefbbf45326e47567ed7cebdf6848abdb5
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_tile_fill_with_opacity.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=7589 sha256=a8ca41e621d5cedfcab31e473be3f9ce1340d825bf7c222bd99c516e0129de88
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_tile_fill_with_source_mask_and_opacity.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=8623 sha256=78e2fec4e1b21ed81ffdcca18ff7e7ee78f97a528da02648a4af00644fac041e
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_utils_helium.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=12753 sha256=aeae45284792a62ba243ed91fd3370d5ed653813bcf68f6b1c7daf825e09cf74
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11976 sha256=a06b06c74e188a86ef93deb4966e054d0e538e54b7b5295a2a28e7da5e0a1d46
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_alpha_blending.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=253192 sha256=dc6f4a6d55c7eaf06b2899e42e54774a253632fd5f20f59949151b9aa9958b1d
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_conversion.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=15531 sha256=ec44d01e4ceb742ea286d26a25f71a01d8fd9eef1eae59331e793db331d4b1c3
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_draw.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=27029 sha256=037cf3d5e060f0a58fe6ed3523e1342ede8510d84b89396fd7cfa3c3cc4b9229
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_features.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=13037 sha256=eb09cfab1f453ecf7cb56c5ea4f3bd66afbee4c9df1b5439164de814b274e253
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_filter.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=1837 sha256=cd38c6905643b15057b6dbf6de1418531808fff21b606e289d7950adafb7c2ea
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_op.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=27045 sha256=f2d5e9cbcfc510f13b29978c291f6ba7aec1072bfa6d19d85954b08e68f6c314
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_tile.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=118097 sha256=1c67b99565384ae4f58f5f5c69de937c6417ba0487ddf60b35df10d42c22c020
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_transform.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=358855 sha256=27938bc95927626756846813cb73a039c398f8b72971d3c70434dcce9829f271
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_types.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=54562 sha256=c0448752cc11ac9a3d33eec3275466e52498ba1c64cf8f0c78d053b54b65706b
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_utils.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=55570 sha256=5d1732205efecb5382fcee2a74de13b0af99cac7a2385e410184dfe5354717fa
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/template/arm_2d_cfg.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=13958 sha256=ba5b164c3fead82b80cbae486db77b17255f1f8d807f781b942d85442079dd25
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/template/arm_2d_user_aci.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=2613 sha256=07296a23296ed813b89b8e4c8a293dac27722aabc2c7917c463bd801536b047e
+ projects/01_baseline/Middlewares/Arm-2D/Library/Include/template/arm_2d_user_arch_port.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=2858 sha256=f6d404214925c9c1f563c24c2d4d22ebd0d8475bbc9a9f4efce83f52456963c3
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_alpha_blending_wrapper.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=70380 sha256=96eafd5446c2a2bb114800027cc20c21ba33ee57966c7e12c1317a62ef17c345
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ccca8888_transform_helium.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=136817 sha256=24c3cb360a05c161620b3034d194378360c606a6cdaeac4734b54647bd7a09a6
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_conversion_helium.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=34238 sha256=db7d67d0a201bb64084e21d67436c7f3663ab90596d194cce51ba9e779bb553f
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_copy_mirror_wrapper.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=9568 sha256=4aa096a4198c1a81b31ee31cc2fd166261075e0a45e04ffb77af03bf7d56be4b
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=10363 sha256=ae62006da3bc01d2a0f8962e1d3ba270333e2c32be8ab9c85957aabb13c8a397
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_copy_with_mask_and_mirror_wrapper.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=23195 sha256=da3a6f1766e500550550d57491c5a98021dc6080abede54c0b709db04942e6e6
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_core.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=100762 sha256=948f3d1f3737cb0a0e5a77e053b839091779d66310e9e22c2d16de676b57cce5
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=97922 sha256=6eab5de88bedcbe9c5a005d8a6234f7fb585d878caffe860cb48f8b375712ae4
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=104134 sha256=b620e7012b068caeb7a6989cd66a712324c50766ca9cead2157a353714f3c4d8
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient_and_mask.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=183449 sha256=a164bed9e178a8435bb3381d6dcecd20f90c8e608c9fae9e8c8bc25fd8d8ec69
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient_helium.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=152465 sha256=26d2f264c4e7e212ea3a100086f92847f365fb1000ddbc4befbffbefa83a5393
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_horizontal_line_mask.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=76970 sha256=61730b7041df584da415f16eda0342fdb1f3de39cd2ae32d1b34fd98298f4c68
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_horizontal_line_mask_helium.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=50957 sha256=1799828853efdaa363d1d0f4363aaa3bd6d75668006b78b836056006fbef8f71
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_mask_and_mirroring.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=130438 sha256=bd47cdd0d3df50899dcecd163bfc79a307d4f0102f31555490da25c5024034fc
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_mask_and_mirroring_helium.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=71956 sha256=09a9e89b8eb2e170062eea08304c85b1bace01053abc2ba1821b25f596e8abc2
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_vertical_line_mask.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=76968 sha256=62bfbde4d3ec137a884350d50a6eb3a74b5853dc9fbf88e47c1f6ce7c65e7194
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_vertical_line_mask_helium.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=45204 sha256=6af6230181a59c977f907b0496d3bb6eea3594df7b410a4e4cbc32cac229a65c
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_filter_iir_blur.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=42298 sha256=1dbfc97b512c1044cae73b0f204bb799432e4ed6046b1c0de28a9a2dad9ef922
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_filter_iir_blur_helium.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=54159 sha256=f824215089bee1c3d14942a83400fdfae4176a981afc05478345c2986817bcb2
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_filter_reverse_colour.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11111 sha256=f9d8184be89c2150e2af15b3fffcd0900e292b13c528fc2e74f720fbe4ae4e82
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_filter_reverse_colour_helium.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=6637 sha256=4a5d71f44889541fcdb45ce18a90a33ebc4ef02bcbc539b74bd97a15267eba78
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_alpha_blending.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=5248 sha256=11534b17595c0c00ce38ccb338534e57409df971f894de43fc35d3468c4439ae
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_alpha_mask.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=74606 sha256=53fe1dc126180933ce16b29264ec87fd80530f8770d81ccfc0905ca6150dc44d
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_alpha_mask_helium.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=108098 sha256=f0428f549cee7aa264ba5bc36e2cafb84760ce0a3fa29c6704aaed6449270098
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_colour_filling_with_alpha.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=20477 sha256=8df01e017dfc8ef4b76084c7fe82ed0ccd6498b5ff79bf08c011aefeac7abed3
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_copy.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=64862 sha256=78a0aa55765ff6604143824e3a9890b5a7a7802dbee9943dbc98d47a0b96093e
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_copy_helium.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=38848 sha256=16cadadd6f5cd4f0ed38245dfacf2db51dea925d46e059ce77bf64374294485a
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_draw_pattern.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=12762 sha256=af15b40f04a3e83bffcfab4779cb2fadb88297bba5d04bc3d55981b9ac8db1fd
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_draw_pattern_helium.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=51156 sha256=06e1741561780bbe2423f8abec7e1da5e797dd161b2ceb19dc393f2c0aa2a2b1
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_fill_colour.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=2170 sha256=bb0e0324a589feb9d62ce7477d7eb282ca16401dd3df54ef2fecb14caca21ce9
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_fill_colour_helium.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=3426 sha256=6e3cccedb16720d369ed952be66598be0c6a1330f6d86e9d519970ef06d08707
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_meta_ccca8888_trans.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=13107 sha256=2beafd5ac640dd9702e6fc9719685ab0aa7cbfb61d8a52c9149c4d77ae9f72a5
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_and_fill.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=49718 sha256=35fc31bbb8b18b8521c4c84047f842d3ef85cdba4122c8c21a1fb6c06e85d460
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_with_masks.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=46340 sha256=28fd08359b39767476a5e339aecc400df4b94979ee0252f57ffd0862880885b9
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_with_masks_helium.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=82248 sha256=e45a6c791eb0684391a8b8338a75a3a364cf4e1f632f4aae67b69fc62ea86d22
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_meta_trans_with_masks.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=18366 sha256=f29ce6723d359b4355c04796029c1e022da7dbddf7a817affc857a5a6be47094
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_meta_trans_with_masks_helium.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=107916 sha256=1ca067d5b157189a54c6b215c4a646cbbd2a422b4c421bf6b758c97797ec326f
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_transform.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=51650 sha256=87d0592eaa700f0182cdcd7d8c0f7b2acd5ec6b8a1bedd8100b827800a25d883
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_transform_helium.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=41246 sha256=444632d9b5e04be8e4694d0dbba86aba5fa948e47eca4ba6f4ad891972db185e
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_copy_mirror.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11163 sha256=327a1f5ce3d71287c96fb2a2b50cbedf25fbd13c67edb90d0f0ea00934cb5388
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_copy_with_colour_keying_and_mirror.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=6734 sha256=bd0b6af4dda0122db30ac8a298cfc11b0dbe54f6215470ea790faae76c506124
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_copy_with_des_mask_and_mirror.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=10109 sha256=4e61835e2bdab7cf9e044dd1e3ee78a3700cd9a47d844f7a6b23b771e37d9a4a
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_copy_with_masks_and_mirror.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=15308 sha256=1a5e49f73f6212c501a4e8052f52d380a42fff8c3e15d848522ec109bb9e135d
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_copy_with_src_mask_and_mirror.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=15826 sha256=503f67c175906572dfe9b63cdbdeab718b53ed99198ac83ed242fcffb6c266b1
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_fill_mirror.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=10571 sha256=56d73f69562bffc97bd2de302894ae805ca6e6a8f445e465da8a6266d667786b
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_fill_with_colour_keying_and_mirror.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=7041 sha256=41dd731a7afb53759cbff698471e2dc07cc5fed4478c6d19beccb3022ebc7523
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_fill_with_des_mask_and_mirror.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11031 sha256=d349f5dcad6ac37ff2b329a66dfc0c5c86bb59990b5d5f3804bb30044e9c2443
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_fill_with_masks_and_mirror.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=16938 sha256=3ab18f22338f89f7c8e385a3c6d4202c93b58a2283843ebec9e16b466e7a5fc2
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_fill_with_src_mask_and_mirror.inc | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=17510 sha256=bd4472fde44960d3cdb95369c98f5de68a93ffe5fa84ad9bc86a990a2e16b638
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=111546 sha256=f253e065b11dfd1d065655989c80c053982e0af37feba18b9018dbc9c26dea33
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile_2xssaa_transform.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=23051 sha256=747c4ca6b4d155af6c70298a56a1b608a543a88b17cab06d3705bd0fa330c4ea
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile_4xssaa_transform_src_mask_helium.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=76949 sha256=12b95d57fcb8636662778c9c6e6612865fd0d847a5c2b47782541f8f86b683da
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile_copy_with_source_mask_and_opacity.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=67437 sha256=fd442a5e5577a856c52ed3f830fc57ce143eeecd486b84188cf762c34390f3a4
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile_copy_with_source_mask_and_opacity_helium.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=39322 sha256=87d9612eac3a6aa1775403025d02146d6fb9745fe2991e48d8fa1e380038f379
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile_fill_with_opacity.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=32869 sha256=95ed9ad437bb751dc25f68cedbf9f683fc09867940bc060f238de15763c24bff
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile_fill_with_opacity_helium.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=18451 sha256=56f7fb92a51c0ea8eee14d84fb04d90465f44c04bf98258c0a1ac6fec0dabd59
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile_fill_with_source_mask_and_opacity.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=81227 sha256=d2b9f0054b2bd743a58bbfc260031f9e1d7275b666baa683c8572997838c4e9a
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile_fill_with_source_mask_and_opacity_helium.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=38388 sha256=1e9e745ff6d7e03cff18ecafd3d4ffbb38b539cc8afbf800a87a5d8a654b087e
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_transform_helium.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=243351 sha256=b085ff0f85e0f92212f62eabf7fe299be75be9d07df4e7bd90eaa0e3b0683b1f
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/arm_2d.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=9808 sha256=0370fd1488df05a9e218e0036eab844e1f01bef5cc3057fe989a3d209c38c078
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/arm_2d_alpha_blending.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=136285 sha256=7f8364dea0153d6bf9194c47638f99562975d4a0ee8ef3233d3375add49499f7
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/arm_2d_async.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=34851 sha256=d7c091545e4e2242113aa7ec71275161d0654307beb40f9d59a08b5e5ec6ad45
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/arm_2d_conversion.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=31315 sha256=e83327e0f1483ceceb0b453e01cbce973ae93c6942943bce5391161ae1994d3b
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/arm_2d_draw.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=31582 sha256=b111fa20a6320e3f8633b55a8e4517258f3e03300301e47e20d2417f7bb461c9
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/arm_2d_filter.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=2207 sha256=e49d7f612cbdcd0e232a97377b53215dd2ebe7db35fcb7b877f101c452028d35
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/arm_2d_helium.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=294963 sha256=8324403b8444ca2ac3f74898f9cd167a0c4fdddfb39d8b2e7ec42abb5bcff7e0
+ projects/01_baseline/Middlewares/Arm-2D/Library/Source/arm_2d_transform.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=119824 sha256=654dcca2d2ccfcd0e1b887ef4bdba69321b5e538919db78b525b3052ae011626
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/README.md | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=3604 sha256=39acedfeaeabae00467aefa6355edb2655be2b8668907aef79198099bfba62e3
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_ccca8888_transform_helium.c.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=56416 sha256=7a899f8935c04202aca0ef1bdc1899dd64db5144710df1188e6943eac13c4f91
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient.c.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=39798 sha256=2e6ce0b5a43e2bd8555a09978b020b87ed0d942db6fab2dc59d35312b33483b6
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient.h.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=20524 sha256=364da896fa52143b36a90b228b9d986d5ca1696618cf2f9db436fffb18f70284
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_and_mask.c.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=67165 sha256=adce8457736cf45d4f5ef612937fe6d7356627b817e3fb6ebbc466dc60c6872d
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_and_mask.h.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=22879 sha256=9fb13e43e930e960a22d550ac71e63a1371f7af1407f6ea1d6dbbd0b923b713f
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_helium.c.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=46567 sha256=441f817722ee740b8b5b01ca61b9e2429bf710051484b0b455d7bb25b2112d36
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_horizontal_line_mask.c.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=22508 sha256=28ed944956bb492d25faa2e51af79e03355350311a5030b36ad916b78922504c
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_horizontal_line_mask.h.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=6530 sha256=497212c90423800c7e29455f488a33111e17b52a8aae40263c6b03b52e6d943c
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_mask_and_mirroring.c.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=20541 sha256=07e0006857215128e227dbe87ede4bfb5cc2f0bebc2fd7a6efe15c71edf7e994
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_mask_and_mirroring.h.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=6105 sha256=3f0466cbf7f7aaa81076823bf9803307aa0f4074eccdac09cdf3a3a09bfef401
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_vertical_line_mask.c.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=22483 sha256=042d0fcdcbe07118a7404397007601a821d906d4f82a9ba9a07a33be307353a9
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_vertical_line_mask.h.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=6508 sha256=d59600fe957247e043a5ca4bce1bf6cc2d32baf3fee0e329a7ec24715f4812d4
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_filter_iir_blur.c.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=18566 sha256=eba0ba7b609da36cacad23abfbd945c0355e3529c3b915667d6f87f4e4304c05
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_filter_iir_blur.h.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=6126 sha256=87e07d35b6d9200eed4153512e167921d7471bdae09e2214cd6b41b97d253856
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_filter_reverse_colour.c.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=6685 sha256=66766677fa7264852e71f80b6589d87a3198b03cc7019eee958153af733735a5
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_filter_reverse_colour.h.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=4198 sha256=99b3a42fc3b9af3be82dd0860b065a3efbe677156ffbcd4d706dbbed37c3c853
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_2xssaa_transform.c.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11688 sha256=b3b13cbd9c578e7a463a1d09029be3bcc7089f285e6ea61add7243da63efc4e4
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_2xssaa_transform.h.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=2862 sha256=bcafd2bcf36a7211e08d01e26bdb1e2a1bab4e81c617ac68369a6d2e873e3fdd
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_copy_with_source_mask_and_opacity.c.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=26662 sha256=e58aab31766a39f685547a30220a29d5b88e4f7b6c73f68d81ac22fa79ef0294
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_copy_with_source_mask_and_opacity.h.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=5079 sha256=bb334aee9b27cbd26982197bed2b34c5f264b83899da2e28b3f5c68210078ba4
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity.c.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=14496 sha256=068e021697dff31c45f149f65d90b1b91dfd6ddf54dbe02f1134b4605be11bad
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity.h.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=4741 sha256=f6eb47dff38ff54ad6fb1ab14be251dbb3bad72b9823325f6aa298dc0b42e2ca
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity_helium.c.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=9389 sha256=36daffaf7430ffe55e4b49ce6a01aa83ab27b4310ecfbf1a8c7e96f7cf729fe5
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity.c.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=31206 sha256=09433e31993cb64bfeafd892c95c025c1b06b346914904af9b86c41473624ffc
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity.h.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=5107 sha256=39e38236c2660cdb705eb0dfa7cebc2c66a12df1e0fff8f5fe85da046fc7418e
+ projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity_helium.c.jinja | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=15024 sha256=6eaf353328204893ef29fed4ae48ed77a35bd2312d82fa90e7cc9cba9ea2da06
+ projects/01_baseline/Middlewares/Arm-2D/Library/template/README.md | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=195 sha256=1ae00af09de532bd91de4155b0db79062e899b6ee1bf18ad755319b1dfa7445f
+ projects/01_baseline/Middlewares/Arm-2D/Library/template/arm_2d_user_opcode_template_i_cp_src.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11003 sha256=ebe5631cdebba3589677c56baf57b5f4896c29d0681a40a15e38aec055b8a034
+ projects/01_baseline/Middlewares/Arm-2D/Library/template/arm_2d_user_opcode_template_i_cp_src.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=3140 sha256=e28680e1fda3c85a4587e1486aec7eefc9d7a0671ff9d639bf3c313a60949119
+ projects/01_baseline/Middlewares/Arm-2D/Library/template/arm_2d_user_opcode_template_i_draw.c | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11815 sha256=89b604f381b439b4f60297874d52d6b5ce6717c6fad94046aee9a10059a95784
+ projects/01_baseline/Middlewares/Arm-2D/Library/template/arm_2d_user_opcode_template_i_draw.h | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=3302 sha256=47ac75bbf4804726bc49abc3c45f1727a4317b9e0843211c69da648c9990df4e
+ projects/01_baseline/Middlewares/Arm-2D/README.md | omitted rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=30911 sha256=670cb5ab39a35e3205abfbb811c9e7b5945fda5d3585c26fcf754c0fd346667f
+ projects/01_baseline/Middlewares/CMSIS-DSP/ARM.CMSIS-DSP.pdsc | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=14303 sha256=72cea3f0d75fecd7b6d1ebd93235ae395f026d8352c48c58d3a2baffcbf333ef
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_common_tables.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=30043 sha256=dc36e5c463aee1beea88844c48661a2201a045717bd68ddad6c5ba3cff6cafc6
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_common_tables_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=5563 sha256=c0f326ab182e922fbd700c2cb6164ea998679e058721e91ec0bea0ad4b19c9a6
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_const_structs.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=3637 sha256=0e19ec8edc49a897eed2b02acfbb36da98da1199931765d5a5269857afeb50a5
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_const_structs_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=3552 sha256=f173a3dace7642876073eef169a3b6201b7c77fe6dd7aebe8f41429ceb78ddce
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_helium_utils.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=21467 sha256=b2908dda4945d1a3f99d29330cb5439e3b1852a06d84c6560d87d7822489f46d
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_math.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=8404 sha256=f170e01c8f852f6fa50dff547c3c8e56facc6a2a1186ac409a54bbc93b32c8ed
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_math_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=1812 sha256=51599ec6c3f1840d148d76cdf728d17bcf5de31943b41ee8dbb07c407a45cfa0
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_math_memory.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=5184 sha256=d5916539a16ad055c84a5bb5d5399fedd4a491e2c44a113dcce8ebb6dc7c089b
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_math_types.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=15011 sha256=4c8451b4da0085ef63ef23db08c8dcf13dc2cc96c6bc4d3c584762d4aa75be5b
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_math_types_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=3813 sha256=3b9028e261096c695af06e39ca7793543286c5382899f8f35ea746effecdd61d
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_mve_tables.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=10367 sha256=cbf227724f370e5aaa5b15baaea48638f0e00b19baba1ad8e29ea6fd23636500
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_mve_tables_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=4433 sha256=f1834a5927205692d747151ffbdb9771089291b398611b83ea5c0fa9e52ee143
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_vec_math.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=9807 sha256=7193f27bfdd6db7dc91a8aca9ba38c9af38ead6305940672e121312a6f7e171b
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_vec_math_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=8343 sha256=55d4102cbb7ef14412452b28dcbab332f2e6d8ef6950be121e7295b1c2d20d4b
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/basic_math_functions.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=26199 sha256=3fd31426a623339e2fa60d9aa2d67b880967a4edca420e3fd7ee3733fb65d072
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/basic_math_functions_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=5163 sha256=43f3935b4595ca51d5089b5ccd78e2689bbd1898616bec17b9e785e680fdf57b
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/bayes_functions.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=2828 sha256=f22b8c3ae42fd3cfdd154e1dd4fd0638985c1739ccb9472907a74f250d0e6b25
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/bayes_functions_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=2629 sha256=ce68b78ca4312607eb5e1e5a159eabc86e2f73af6199705e07a67e36e4aed9ee
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/complex_math_functions.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=10923 sha256=0e0123c33173162631186f4bd7c44ce796dbf1cdc2015ccd30d3ac745ae201ad
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/complex_math_functions_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=4082 sha256=743c1337cef2cd59a920affa8032a2e0596052853e95ab2bba5b59e81aa31637
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/controller_functions.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=29222 sha256=f753aea94700e87e43f66b7e5814c9d55c06bcf3606bfac3a369a1c10744f9e5
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/controller_functions_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=1299 sha256=ddc9e1bba2a990a5bc32c0c853c32108bee85791cac9e3cb1911c8eb611a61de
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/debug.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=4971 sha256=55e7557a5e9985bebe4b24341339962a970f5dfa84d5fb474a49a6a0577f45ca
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/distance_functions.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=10040 sha256=936242bb7a79eb0a7454636144fc95bf7e62b34d39d3b6c1fca30a350fe80344
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/distance_functions_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=5322 sha256=540125b782f58935eb6f9c03a7e3dd49f9941de0df9a3b91b0561cd5bc5be3a8
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/fast_math_functions.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=10094 sha256=3e59abe1cf3fffe19ff0590c614109e7d445101cc67e301d94b10a8adcfb72ea
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/fast_math_functions_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=3501 sha256=dbc95d8026960350b6e9bfc48fe94ef7f7e860f91564e57ee5a2be8cdffee195
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/filtering_functions.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=98240 sha256=3d079f167ce03e1cb83479913b2bfb14c78fe3a76ba969fa2579739f06dd2643
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/filtering_functions_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=9196 sha256=4b002e4ba6abada63777975faf63cd0ba071130250c74394e9c2917504bc4d4f
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/interpolation_functions.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=9162 sha256=75550ce2565d3f1ecb5b41feac0cf268f80d473a36cb21ecdda205b248bf23ea
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/interpolation_functions_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=2987 sha256=92d107b03f05eabc8c4a82def3756e099e91572c54179a0598f90a455b923384
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/matrix_functions.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=34628 sha256=1fa1d78a0205d9a3155121edcdddf7e5f6ed1c9292f2f0e2e9efcd3c7471ed40
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/matrix_functions_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=10199 sha256=26a8e871f71889f70b4601cd0ad39b3460a8e03a01fb63b766d3b7ce8e8b4245
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/matrix_utils.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=25412 sha256=4d437c15ed00f988622db7e356a4cd721d50d53474f3edd304c533bffcfcbf44
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/none.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=14967 sha256=ca27e36ba16457d2a9abc1f13e2e0f249ad6ba4642efc446aa2faeb5ace0a257
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/quaternion_math_functions.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=5587 sha256=7bb1d91577b4c11d5d50fcf827ccb5ce38236c776c094fae9ad081489c7bca65
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/statistics_functions.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=30076 sha256=4a35f6b1ba618fc8604bb6430421c801e718abc93a2430593fa8d8e936bf53ee
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/statistics_functions_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=8544 sha256=7738074df7a383bb1906af49c4add0485532f1edf89df81b4c5c431fe1c7f1d8
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/support_functions.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=15141 sha256=9ff9b0fb3843323f65d9697d68f0dd6d12a611c119f5346d3ebb1fd75c3fc803
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/support_functions_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=6310 sha256=01804843a897720f72f3d3ad40da9613990f703f242a2440bddaac4584f3a35e
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/svm_defines.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=1441 sha256=ee7b52a08add7d2bddc40caf3d9913a58eab9244cb62ba2833333d433694b1c0
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/svm_functions.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=9922 sha256=594aa1b2bdbde7a87c043710f6bd4a789617aa56f25b96406b1718fc41ee82e4
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/svm_functions_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=9687 sha256=72c8c9357a62e358eb21b9716a4c4b9e0ce335b6221e19ea549c8bfc27e7237e
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/transform_functions.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=30651 sha256=145207df44784a3ad61c00cbb12bc116a02e4c30fb86d0cfd6cdcd130b748f1a
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/transform_functions_f16.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=7937 sha256=48631b92b3377a49728af6b927d1bd8304374ca9c56e6c22f53b7ee4d5256968
+ projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/utils.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=6048 sha256=2f199a4ef53eacb6dc36b9b1329f5514676d374466bd84284a645d553bf71deb
+ projects/01_baseline/Middlewares/CMSIS-DSP/LICENSE.txt | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=11357 sha256=b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1
+ projects/01_baseline/Middlewares/CMSIS-DSP/PrivateInclude/arm_sorting.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=6640 sha256=0abf0114a2f2d0feae3508c7c184c60227a29b036374c17fbc1794b9be18712f
+ projects/01_baseline/Middlewares/CMSIS-DSP/PrivateInclude/arm_vec_fft.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=11426 sha256=e04a9a590355df232178853ec121e4903d9feccb185c86191844b9d4215be548
+ projects/01_baseline/Middlewares/CMSIS-DSP/PrivateInclude/arm_vec_filtering.h | omitted rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=123649 sha256=d1657c0e9c743727833e4c4c0b22160f37c66137d4e0a3280795ec2d109cb501
+```
+
+patch:
+```diff
+diff --git a/projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx b/projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx
+index fadb5e0..cec4dc1 100644
+--- a/projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx
++++ b/projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx
+@@ -337,7 +337,7 @@
+               <MiscControls></MiscControls>
+               <Define>USE_HAL_DRIVER,STM32F103xE</Define>
+               <Undefine></Undefine>
+-              <IncludePath>..\..\Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\..\Drivers\STM32F1xx_HAL_Driver\Inc;..\..\Drivers\CMSIS\Include;..\..\Drivers\;..\..\User;..\..\Middlewares</IncludePath>
++              <IncludePath>..\..\Drivers\CMSIS\Device\ST\STM32F1xx\Include;..\..\Drivers\STM32F1xx_HAL_Driver\Inc;..\..\Drivers\CMSIS\Include;..\..\Drivers\;..\..\User;..\..\Middlewares;..\..\Middlewares\Arm-2D\Library\Include;..\..\Middlewares\CMSIS-DSP\Include;..\..\Middlewares\CMSIS-DSP\PrivateInclude</IncludePath>
+             </VariousControls>
+           </Cads>
+           <Aads>
+@@ -416,6 +416,11 @@
+               <FileType>1</FileType>
+               <FilePath>..\..\User\d601_lcd.c</FilePath>
+             </File>
++            <File>
++              <FileName>d601_arm2d_demo.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\User\d601_arm2d_demo.c</FilePath>
++            </File>
+             <File>
+               <FileName>d601_comm_serial.c</FileName>
+               <FileType>1</FileType>
+@@ -528,6 +533,116 @@
+             </File>
+           </Files>
+         </Group>
++        <Group>
++          <GroupName>Middlewares/Arm-2D</GroupName>
++          <Files>
++            <File>
++              <FileName>arm_2d.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\arm_2d.c</FilePath>
++            </File>
++            <File>
++              <FileName>arm_2d_alpha_blending.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\arm_2d_alpha_blending.c</FilePath>
++            </File>
++            <File>
++              <FileName>arm_2d_async.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\arm_2d_async.c</FilePath>
++            </File>
++            <File>
++              <FileName>arm_2d_conversion.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\arm_2d_conversion.c</FilePath>
++            </File>
++            <File>
++              <FileName>arm_2d_draw.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\arm_2d_draw.c</FilePath>
++            </File>
++            <File>
++              <FileName>arm_2d_filter.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\arm_2d_filter.c</FilePath>
++            </File>
++            <File>
++              <FileName>arm_2d_transform.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\arm_2d_transform.c</FilePath>
++            </File>
++            <File>
++              <FileName>__arm_2d_core.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\__arm_2d_core.c</FilePath>
++            </File>
++            <File>
++              <FileName>__arm_2d_fill_colour_with_alpha.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\__arm_2d_fill_colour_with_alpha.c</FilePath>
++            </File>
++            <File>
++              <FileName>__arm_2d_fill_colour_with_alpha_gradient.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\__arm_2d_fill_colour_with_alpha_gradient.c</FilePath>
++            </File>
++            <File>
++              <FileName>__arm_2d_fill_colour_with_alpha_gradient_and_mask.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\__arm_2d_fill_colour_with_alpha_gradient_and_mask.c</FilePath>
++            </File>
++            <File>
++              <FileName>__arm_2d_fill_colour_with_horizontal_line_mask.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\__arm_2d_fill_colour_with_horizontal_line_mask.c</FilePath>
++            </File>
++            <File>
++              <FileName>__arm_2d_fill_colour_with_mask_and_mirroring.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\__arm_2d_fill_colour_with_mask_and_mirroring.c</FilePath>
++            </File>
++            <File>
++              <FileName>__arm_2d_fill_colour_with_vertical_line_mask.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\__arm_2d_fill_colour_with_vertical_line_mask.c</FilePath>
++            </File>
++            <File>
++              <FileName>__arm_2d_filter_iir_blur.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\__arm_2d_filter_iir_blur.c</FilePath>
++            </File>
++            <File>
++              <FileName>__arm_2d_filter_reverse_colour.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\__arm_2d_filter_reverse_colour.c</FilePath>
++            </File>
++            <File>
++              <FileName>__arm_2d_tile.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\__arm_2d_tile.c</FilePath>
++            </File>
++            <File>
++              <FileName>__arm_2d_tile_2xssaa_transform.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\__arm_2d_tile_2xssaa_transform.c</FilePath>
++            </File>
++            <File>
++              <FileName>__arm_2d_tile_copy_with_source_mask_and_opacity.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\__arm_2d_tile_copy_with_source_mask_and_opacity.c</FilePath>
++            </File>
++            <File>
++              <FileName>__arm_2d_tile_fill_with_opacity.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\__arm_2d_tile_fill_with_opacity.c</FilePath>
++            </File>
++            <File>
++              <FileName>__arm_2d_tile_fill_with_source_mask_and_opacity.c</FileName>
++              <FileType>1</FileType>
++              <FilePath>..\..\Middlewares\Arm-2D\Library\Source\__arm_2d_tile_fill_with_source_mask_and_opacity.c</FilePath>
++            </File>
++          </Files>
++        </Group>
+         <Group>
+           <GroupName>Readme</GroupName>
+           <Files>
+@@ -555,4 +670,4 @@
+       </Layer>
+     </Layers>
+   </LayerInfo>
+-</Project>
+\ No newline at end of file
++</Project>
+diff --git a/projects/01_baseline/User/main.c b/projects/01_baseline/User/main.c
+index 7467c9a..7eb3410 100644
+--- a/projects/01_baseline/User/main.c
++++ b/projects/01_baseline/User/main.c
+@@ -5,6 +5,7 @@
+ #include "jsonrpc_handler.h"
+ #include "d601_lcd.h"
+ #include "d601_gpio.h"
++#include "d601_arm2d_demo.h"
+ 
+ int main(void)
+ {
+@@ -18,10 +19,12 @@ int main(void)
+     d601_lcd_init();
+     d601_gpio_init();
+     printf("[D601-F103] LCD ID=0x%04X\r\n", (unsigned int)d601_lcd_get_id());
++    d601_arm2d_demo_init();
+     printf("[D601-F103] JSON-RPC ready on USART1 115200 8N1\r\n");
+ 
+     while (1)
+     {
++        d601_arm2d_demo_task();
+         jsonrpc_process();
+     }
+ }
+diff --git a/projects/01_baseline/User/arm_2d_cfg.h b/projects/01_baseline/User/arm_2d_cfg.h
+new file mode 100644
+index 0000000..f7e18f5
+--- /dev/null
++++ b/projects/01_baseline/User/arm_2d_cfg.h
+@@ -0,0 +1,25 @@
++#ifndef D601_ARM_2D_CFG_H
++#define D601_ARM_2D_CFG_H
++
++#define __ARM_2D_HAS_ASYNC__                                      0
++#define __ARM_2D_HAS_HW_ACC__                                     0
++#define __ARM_2D_HAS_HELIUM__                                     0
++#define __ARM_2D_HAS_HELIUM_INTEGER__                             0
++#define __ARM_2D_HAS_HELIUM_FLOAT__                               0
++#define __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                       0
++#define __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__              0
++#define __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__       0
++#define __ARM_2D_CFG_USE_IIR_BLUR_REVERSE_PATH__                  0
++#define __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__         0
++#define __ARM_2D_CFG_ENABLE_LOG__                                 0
++#define __ARM_2D_CFG_LOG_OUTPUT_SUPPORT_COLOUR__                  0
++#define __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__ 1
++#define __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__ 0
++#define __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__  0
++#define __ARM_2D_CFG_OPTIMIZE_FOR_PFB_IN_LAYOUT_ASSISTANT__       0
++
++#define __GLCD_CFG_COLOUR_DEPTH__                                 16
++#define __GLCD_CFG_SCEEN_WIDTH__                                  240
++#define __GLCD_CFG_SCEEN_HEIGHT__                                 320
++
++#endif
+diff --git a/projects/01_baseline/User/d601_arm2d_demo.c b/projects/01_baseline/User/d601_arm2d_demo.c
+new file mode 100644
+index 0000000..9c5b304
+--- /dev/null
++++ b/projects/01_baseline/User/d601_arm2d_demo.c
+@@ -0,0 +1,173 @@
++#include "d601_arm2d_demo.h"
++
++#include "arm_2d.h"
++#include "d601_lcd.h"
++
++#include <stdio.h>
++
++#define D601_ARM2D_FB_W 120U
++#define D601_ARM2D_FB_H 80U
++#define D601_ARM2D_FB_PIXELS (D601_ARM2D_FB_W * D601_ARM2D_FB_H)
++
++static uint16_t s_arm2d_fb[D601_ARM2D_FB_PIXELS];
++static uint32_t s_loop_count;
++static uint32_t s_frame_count;
++
++static arm_2d_tile_t s_arm2d_tile = {
++    .tInfo = {
++        .bIsRoot = 1,
++        .bHasEnforcedColour = 1,
++        .tColourInfo = {
++            .chScheme = ARM_2D_COLOUR_RGB16,
++        },
++    },
++    .tRegion = {
++        .tLocation = {
++            .iX = 0,
++            .iY = 0,
++        },
++        .tSize = {
++            .iWidth = D601_ARM2D_FB_W,
++            .iHeight = D601_ARM2D_FB_H,
++        },
++    },
++    .phwBuffer = s_arm2d_fb,
++};
++
++static uint16_t rgb565_mix(uint8_t r, uint8_t g, uint8_t b)
++{
++    return (uint16_t)((((uint16_t)r & 0xF8U) << 8)
++                    | (((uint16_t)g & 0xF8U) << 3)
++                    | (((uint16_t)b & 0xF8U) >> 3));
++}
++
++static void arm2d_fill(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint16_t colour)
++{
++    arm_2d_region_t region = {
++        .tLocation = {
++            .iX = (int16_t)x,
++            .iY = (int16_t)y,
++        },
++        .tSize = {
++            .iWidth = (int16_t)w,
++            .iHeight = (int16_t)h,
++        },
++    };
++
++    (void)arm_2d_rgb16_fill_colour(&s_arm2d_tile, &region, colour);
++    (void)ARM_2D_OP_WAIT_ASYNC();
++}
++
++static void arm2d_point(uint16_t x, uint16_t y, uint16_t colour)
++{
++    arm_2d_location_t point = {
++        .iX = (int16_t)x,
++        .iY = (int16_t)y,
++    };
++
++    arm_2d_rgb16_draw_point_fast(&s_arm2d_tile, point, colour);
++}
++
++static void render_frame(uint32_t frame)
++{
++    uint16_t y;
++    uint16_t i;
++    uint16_t accent_x = (uint16_t)((frame * 7U) % (D601_ARM2D_FB_W - 18U));
++    uint16_t accent_y = (uint16_t)((frame * 5U) % (D601_ARM2D_FB_H - 18U));
++
++    for (y = 0; y < D601_ARM2D_FB_H; y += 8U) {
++        uint8_t r = (uint8_t)(32U + ((y * 2U + frame) & 0x7FU));
++        uint8_t g = (uint8_t)(48U + ((y * 3U) & 0x7FU));
++        uint8_t b = (uint8_t)(96U + ((frame * 5U + y) & 0x7FU));
++        arm2d_fill(0U, y, D601_ARM2D_FB_W, 8U, rgb565_mix(r, g, b));
++    }
++
++    arm2d_fill(4U, 4U, 38U, 18U, D601_LCD_YELLOW);
++    arm2d_fill(47U, 4U, 36U, 18U, D601_LCD_CYAN);
++    arm2d_fill(88U, 4U, 28U, 18U, D601_LCD_GREEN);
++    arm2d_fill(accent_x, accent_y, 18U, 18U, D601_LCD_RED);
++    arm2d_fill(8U, 58U, (uint16_t)(20U + ((frame * 3U) % 84U)), 10U, D601_LCD_WHITE);
++
++    for (i = 0; i < D601_ARM2D_FB_W && i < D601_ARM2D_FB_H; ++i) {
++        arm2d_point(i, i, D601_LCD_BLACK);
++        arm2d_point((uint16_t)(D601_ARM2D_FB_W - 1U - i), i, D601_LCD_WHITE);
++    }
++}
++
++static void framebuffer_digest(uint32_t *sum, uint32_t *mix)
++{
++    uint32_t i;
++    uint32_t local_sum = 0;
++    uint32_t local_mix = 0xA25D601UL;
++
++    for (i = 0; i < D601_ARM2D_FB_PIXELS; ++i) {
++        uint32_t px = s_arm2d_fb[i];
++        local_sum += px;
++        local_mix ^= (px << (i & 0x0FU)) | (px >> (16U - (i & 0x0FU)));
++        local_mix = (local_mix << 3) | (local_mix >> 29);
++    }
++
++    *sum = local_sum;
++    *mix = local_mix;
++}
++
++static void emit_frame_evidence(const char *phase)
++{
++    uint32_t sum;
++    uint32_t mix;
++
++    framebuffer_digest(&sum, &mix);
++    printf("[ARM2D-RUN7] %s loop=%lu frame=%lu\r\n",
++           phase,
++           (unsigned long)s_loop_count,
++           (unsigned long)s_frame_count);
++    printf("[ARM2D-RUN7] tile=%ux%u rgb565 sum=0x%08lX mix=0x%08lX\r\n",
++           (unsigned int)D601_ARM2D_FB_W,
++           (unsigned int)D601_ARM2D_FB_H,
++           (unsigned long)sum,
++           (unsigned long)mix);
++    printf("[ARM2D-RUN7] px first=0x%04X mid=0x%04X last=0x%04X\r\n",
++           (unsigned int)s_arm2d_fb[0],
++           (unsigned int)s_arm2d_fb[D601_ARM2D_FB_PIXELS / 2U],
++           (unsigned int)s_arm2d_fb[D601_ARM2D_FB_PIXELS - 1U]);
++}
++
++void d601_arm2d_demo_init(void)
++{
++    arm_2d_init();
++    render_frame(0U);
++    d601_lcd_clear(D601_LCD_BLACK);
++    d601_lcd_draw_bitmap(12U, 44U, D601_ARM2D_FB_W, D601_ARM2D_FB_H, s_arm2d_fb);
++    d601_lcd_show_string(12U, 8U, "ARM-2D V1.2.4", D601_LCD_YELLOW, D601_LCD_BLACK, 2U);
++    d601_lcd_show_string(12U, 26U, "CMSIS-DSP", D601_LCD_CYAN, D601_LCD_BLACK, 1U);
++
++    printf("[ARM2D-RUN7] start runId=%s\r\n", D601_ARM2D_RUN_ID);
++    printf("[ARM2D-RUN7] Arm-2D tag=%s commit=%s\r\n",
++           D601_ARM2D_ARM2D_TAG,
++           D601_ARM2D_ARM2D_COMMIT);
++    printf("[ARM2D-RUN7] CMSIS-DSP pack=%s\r\n", D601_ARM2D_CMSIS_DSP_PACK);
++    printf("[ARM2D-RUN7] lcd id=0x%04X size=%ux%u fb-bytes=%u\r\n",
++           (unsigned int)d601_lcd_get_id(),
++           (unsigned int)d601_lcd_get_width(),
++           (unsigned int)d601_lcd_get_height(),
++           (unsigned int)(D601_ARM2D_FB_PIXELS * 2U));
++    emit_frame_evidence("init");
++}
++
++void d601_arm2d_demo_task(void)
++{
++    ++s_loop_count;
++    if ((s_loop_count & 0x0FFFUL) != 0UL) {
++        return;
++    }
++
++    ++s_frame_count;
++    render_frame(s_frame_count);
++    d601_lcd_draw_bitmap(12U, 44U, D601_ARM2D_FB_W, D601_ARM2D_FB_H, s_arm2d_fb);
++    emit_frame_evidence("heartbeat");
++}
++
++uint32_t d601_arm2d_demo_frame_count(void)
++{
++    return s_frame_count;
++}
+diff --git a/projects/01_baseline/User/d601_arm2d_demo.h b/projects/01_baseline/User/d601_arm2d_demo.h
+new file mode 100644
+index 0000000..f972451
+--- /dev/null
++++ b/projects/01_baseline/User/d601_arm2d_demo.h
+@@ -0,0 +1,15 @@
++#ifndef D601_ARM2D_DEMO_H
++#define D601_ARM2D_DEMO_H
++
++#include <stdint.h>
++
++#define D601_ARM2D_RUN_ID "issue1082-real-arm2d-cmsisdsp-run7-20260609-1720"
++#define D601_ARM2D_ARM2D_TAG "v1.2.4"
++#define D601_ARM2D_ARM2D_COMMIT "b73ec43b6567feffe57642861e8b5eb083788011"
++#define D601_ARM2D_CMSIS_DSP_PACK "ARM.CMSIS-DSP.1.14.2"
++
++void d601_arm2d_demo_init(void);
++void d601_arm2d_demo_task(void);
++uint32_t d601_arm2d_demo_frame_count(void);
++
++#endif
+# CaseRun diffCollection omitted files from patch body:
+# - projects/01_baseline/Middlewares/Arm-2D/LICENSE rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11547 sha256=130396f9455f80ddb506f48e64099cc5f99b40976893287df04df76844d52ffe
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/README.md rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=6093 sha256=c1103b647525c121c384ca07bb5c33abeba1f282e35796eaf1f1e8a6c3e77cd7
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_direct.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=702618 sha256=4e20aefa89552cf17d4167964c28b75978ca675eeeef912ee89561e566ec83cc
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_fill_colour_with_alpha_gradient.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=50196 sha256=571d66e07011770d9ff35b2c99d8e55653b81d4b3f36246dd8ad64e9d1d4466c
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_fill_colour_with_alpha_gradient_and_mask.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=57001 sha256=09e2987ce098ba23a60fdc52d901f26532c5ab7af8b2d8ad8883804e4a766aae
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_fill_colour_with_horizontal_line_mask.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=14191 sha256=91413cec7defbb011d83afac4a6547d0d3cefd7c0cac78e9af177bd94c834c26
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_fill_colour_with_mask_and_mirroring.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=28581 sha256=b0d1d412829aa14bc8c8fa832bda96177c44268472212cf15487f977cf285238
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_fill_colour_with_vertical_line_mask.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=14191 sha256=53fe886bab2694ecaf70be3e7ad50a655bacda579fa9f9389fbf998b0bb2df01
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_filter_iir_blur.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=7810 sha256=ee9de1c0f211a245733db2efc8144947d500c72d98dcb99dd0a58b44b350b4b6
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_filter_reverse_colour.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=5828 sha256=093682917e626d3d1793ddc6e21dc42d4b5d6d2d10d6a08cc3572f54b39f5f6b
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_impl.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=81634 sha256=f7d1b55a3fcd923b485c6fc3207314897d74df1bb855b6daf8b4b8bc2beda946
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_math.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=7921 sha256=7031dd6c77345aa39c0728fe29f1f54b5041e400981cbe2fbbcdee25aa9029df
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_math_helium.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11770 sha256=86c8e6880e65347a49b0fdb025ef47844fb4ee4783b5a982204e3f43f25d7fed
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_paving.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=55371 sha256=2ee3f92219e30716c4bdabbd6bf06a4077faf432df22a5470be8d6fd56810d8e
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_paving_helium.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=50584 sha256=398648b0a658c8443b650015a3a20bf76ed1617aad8a917c34f03be386ba4f3a
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_tile_2xssaa_transform.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=2620 sha256=1d227751fcd1e66c2df4dc89672616aac43466b868dd9109e26fe9897801e28b
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_tile_copy_with_source_mask_and_opacity.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=8531 sha256=390031f297aead07b7da04ae17354dcefbbf45326e47567ed7cebdf6848abdb5
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_tile_fill_with_opacity.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=7589 sha256=a8ca41e621d5cedfcab31e473be3f9ce1340d825bf7c222bd99c516e0129de88
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_tile_fill_with_source_mask_and_opacity.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=8623 sha256=78e2fec4e1b21ed81ffdcca18ff7e7ee78f97a528da02648a4af00644fac041e
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/__arm_2d_utils_helium.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=12753 sha256=aeae45284792a62ba243ed91fd3370d5ed653813bcf68f6b1c7daf825e09cf74
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11976 sha256=a06b06c74e188a86ef93deb4966e054d0e538e54b7b5295a2a28e7da5e0a1d46
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_alpha_blending.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=253192 sha256=dc6f4a6d55c7eaf06b2899e42e54774a253632fd5f20f59949151b9aa9958b1d
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_conversion.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=15531 sha256=ec44d01e4ceb742ea286d26a25f71a01d8fd9eef1eae59331e793db331d4b1c3
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_draw.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=27029 sha256=037cf3d5e060f0a58fe6ed3523e1342ede8510d84b89396fd7cfa3c3cc4b9229
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_features.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=13037 sha256=eb09cfab1f453ecf7cb56c5ea4f3bd66afbee4c9df1b5439164de814b274e253
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_filter.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=1837 sha256=cd38c6905643b15057b6dbf6de1418531808fff21b606e289d7950adafb7c2ea
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_op.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=27045 sha256=f2d5e9cbcfc510f13b29978c291f6ba7aec1072bfa6d19d85954b08e68f6c314
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_tile.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=118097 sha256=1c67b99565384ae4f58f5f5c69de937c6417ba0487ddf60b35df10d42c22c020
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_transform.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=358855 sha256=27938bc95927626756846813cb73a039c398f8b72971d3c70434dcce9829f271
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_types.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=54562 sha256=c0448752cc11ac9a3d33eec3275466e52498ba1c64cf8f0c78d053b54b65706b
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/arm_2d_utils.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=55570 sha256=5d1732205efecb5382fcee2a74de13b0af99cac7a2385e410184dfe5354717fa
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/template/arm_2d_cfg.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=13958 sha256=ba5b164c3fead82b80cbae486db77b17255f1f8d807f781b942d85442079dd25
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/template/arm_2d_user_aci.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=2613 sha256=07296a23296ed813b89b8e4c8a293dac27722aabc2c7917c463bd801536b047e
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Include/template/arm_2d_user_arch_port.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=2858 sha256=f6d404214925c9c1f563c24c2d4d22ebd0d8475bbc9a9f4efce83f52456963c3
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_alpha_blending_wrapper.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=70380 sha256=96eafd5446c2a2bb114800027cc20c21ba33ee57966c7e12c1317a62ef17c345
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ccca8888_transform_helium.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=136817 sha256=24c3cb360a05c161620b3034d194378360c606a6cdaeac4734b54647bd7a09a6
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_conversion_helium.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=34238 sha256=db7d67d0a201bb64084e21d67436c7f3663ab90596d194cce51ba9e779bb553f
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_copy_mirror_wrapper.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=9568 sha256=4aa096a4198c1a81b31ee31cc2fd166261075e0a45e04ffb77af03bf7d56be4b
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=10363 sha256=ae62006da3bc01d2a0f8962e1d3ba270333e2c32be8ab9c85957aabb13c8a397
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_copy_with_mask_and_mirror_wrapper.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=23195 sha256=da3a6f1766e500550550d57491c5a98021dc6080abede54c0b709db04942e6e6
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_core.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=100762 sha256=948f3d1f3737cb0a0e5a77e053b839091779d66310e9e22c2d16de676b57cce5
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=97922 sha256=6eab5de88bedcbe9c5a005d8a6234f7fb585d878caffe860cb48f8b375712ae4
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=104134 sha256=b620e7012b068caeb7a6989cd66a712324c50766ca9cead2157a353714f3c4d8
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient_and_mask.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=183449 sha256=a164bed9e178a8435bb3381d6dcecd20f90c8e608c9fae9e8c8bc25fd8d8ec69
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient_helium.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=152465 sha256=26d2f264c4e7e212ea3a100086f92847f365fb1000ddbc4befbffbefa83a5393
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_horizontal_line_mask.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=76970 sha256=61730b7041df584da415f16eda0342fdb1f3de39cd2ae32d1b34fd98298f4c68
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_horizontal_line_mask_helium.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=50957 sha256=1799828853efdaa363d1d0f4363aaa3bd6d75668006b78b836056006fbef8f71
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_mask_and_mirroring.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=130438 sha256=bd47cdd0d3df50899dcecd163bfc79a307d4f0102f31555490da25c5024034fc
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_mask_and_mirroring_helium.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=71956 sha256=09a9e89b8eb2e170062eea08304c85b1bace01053abc2ba1821b25f596e8abc2
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_vertical_line_mask.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=76968 sha256=62bfbde4d3ec137a884350d50a6eb3a74b5853dc9fbf88e47c1f6ce7c65e7194
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_fill_colour_with_vertical_line_mask_helium.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=45204 sha256=6af6230181a59c977f907b0496d3bb6eea3594df7b410a4e4cbc32cac229a65c
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_filter_iir_blur.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=42298 sha256=1dbfc97b512c1044cae73b0f204bb799432e4ed6046b1c0de28a9a2dad9ef922
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_filter_iir_blur_helium.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=54159 sha256=f824215089bee1c3d14942a83400fdfae4176a981afc05478345c2986817bcb2
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_filter_reverse_colour.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11111 sha256=f9d8184be89c2150e2af15b3fffcd0900e292b13c528fc2e74f720fbe4ae4e82
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_filter_reverse_colour_helium.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=6637 sha256=4a5d71f44889541fcdb45ce18a90a33ebc4ef02bcbc539b74bd97a15267eba78
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_alpha_blending.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=5248 sha256=11534b17595c0c00ce38ccb338534e57409df971f894de43fc35d3468c4439ae
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_alpha_mask.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=74606 sha256=53fe1dc126180933ce16b29264ec87fd80530f8770d81ccfc0905ca6150dc44d
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_alpha_mask_helium.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=108098 sha256=f0428f549cee7aa264ba5bc36e2cafb84760ce0a3fa29c6704aaed6449270098
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_colour_filling_with_alpha.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=20477 sha256=8df01e017dfc8ef4b76084c7fe82ed0ccd6498b5ff79bf08c011aefeac7abed3
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_copy.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=64862 sha256=78a0aa55765ff6604143824e3a9890b5a7a7802dbee9943dbc98d47a0b96093e
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_copy_helium.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=38848 sha256=16cadadd6f5cd4f0ed38245dfacf2db51dea925d46e059ce77bf64374294485a
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_draw_pattern.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=12762 sha256=af15b40f04a3e83bffcfab4779cb2fadb88297bba5d04bc3d55981b9ac8db1fd
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_draw_pattern_helium.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=51156 sha256=06e1741561780bbe2423f8abec7e1da5e797dd161b2ceb19dc393f2c0aa2a2b1
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_fill_colour.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=2170 sha256=bb0e0324a589feb9d62ce7477d7eb282ca16401dd3df54ef2fecb14caca21ce9
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_fill_colour_helium.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=3426 sha256=6e3cccedb16720d369ed952be66598be0c6a1330f6d86e9d519970ef06d08707
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_meta_ccca8888_trans.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=13107 sha256=2beafd5ac640dd9702e6fc9719685ab0aa7cbfb61d8a52c9149c4d77ae9f72a5
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_and_fill.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=49718 sha256=35fc31bbb8b18b8521c4c84047f842d3ef85cdba4122c8c21a1fb6c06e85d460
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_with_masks.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=46340 sha256=28fd08359b39767476a5e339aecc400df4b94979ee0252f57ffd0862880885b9
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_with_masks_helium.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=82248 sha256=e45a6c791eb0684391a8b8338a75a3a364cf4e1f632f4aae67b69fc62ea86d22
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_meta_trans_with_masks.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=18366 sha256=f29ce6723d359b4355c04796029c1e022da7dbddf7a817affc857a5a6be47094
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_meta_trans_with_masks_helium.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=107916 sha256=1ca067d5b157189a54c6b215c4a646cbbd2a422b4c421bf6b758c97797ec326f
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_transform.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=51650 sha256=87d0592eaa700f0182cdcd7d8c0f7b2acd5ec6b8a1bedd8100b827800a25d883
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_ll_transform_helium.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=41246 sha256=444632d9b5e04be8e4694d0dbba86aba5fa948e47eca4ba6f4ad891972db185e
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_copy_mirror.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11163 sha256=327a1f5ce3d71287c96fb2a2b50cbedf25fbd13c67edb90d0f0ea00934cb5388
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_copy_with_colour_keying_and_mirror.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=6734 sha256=bd0b6af4dda0122db30ac8a298cfc11b0dbe54f6215470ea790faae76c506124
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_copy_with_des_mask_and_mirror.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=10109 sha256=4e61835e2bdab7cf9e044dd1e3ee78a3700cd9a47d844f7a6b23b771e37d9a4a
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_copy_with_masks_and_mirror.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=15308 sha256=1a5e49f73f6212c501a4e8052f52d380a42fff8c3e15d848522ec109bb9e135d
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_copy_with_src_mask_and_mirror.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=15826 sha256=503f67c175906572dfe9b63cdbdeab718b53ed99198ac83ed242fcffb6c266b1
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_fill_mirror.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=10571 sha256=56d73f69562bffc97bd2de302894ae805ca6e6a8f445e465da8a6266d667786b
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_fill_with_colour_keying_and_mirror.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=7041 sha256=41dd731a7afb53759cbff698471e2dc07cc5fed4478c6d19beccb3022ebc7523
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_fill_with_des_mask_and_mirror.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11031 sha256=d349f5dcad6ac37ff2b329a66dfc0c5c86bb59990b5d5f3804bb30044e9c2443
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_fill_with_masks_and_mirror.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=16938 sha256=3ab18f22338f89f7c8e385a3c6d4202c93b58a2283843ebec9e16b466e7a5fc2
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_meta_fill_with_src_mask_and_mirror.inc rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=17510 sha256=bd4472fde44960d3cdb95369c98f5de68a93ffe5fa84ad9bc86a990a2e16b638
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=111546 sha256=f253e065b11dfd1d065655989c80c053982e0af37feba18b9018dbc9c26dea33
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile_2xssaa_transform.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=23051 sha256=747c4ca6b4d155af6c70298a56a1b608a543a88b17cab06d3705bd0fa330c4ea
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile_4xssaa_transform_src_mask_helium.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=76949 sha256=12b95d57fcb8636662778c9c6e6612865fd0d847a5c2b47782541f8f86b683da
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile_copy_with_source_mask_and_opacity.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=67437 sha256=fd442a5e5577a856c52ed3f830fc57ce143eeecd486b84188cf762c34390f3a4
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile_copy_with_source_mask_and_opacity_helium.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=39322 sha256=87d9612eac3a6aa1775403025d02146d6fb9745fe2991e48d8fa1e380038f379
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile_fill_with_opacity.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=32869 sha256=95ed9ad437bb751dc25f68cedbf9f683fc09867940bc060f238de15763c24bff
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile_fill_with_opacity_helium.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=18451 sha256=56f7fb92a51c0ea8eee14d84fb04d90465f44c04bf98258c0a1ac6fec0dabd59
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile_fill_with_source_mask_and_opacity.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=81227 sha256=d2b9f0054b2bd743a58bbfc260031f9e1d7275b666baa683c8572997838c4e9a
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_tile_fill_with_source_mask_and_opacity_helium.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=38388 sha256=1e9e745ff6d7e03cff18ecafd3d4ffbb38b539cc8afbf800a87a5d8a654b087e
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/__arm_2d_transform_helium.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=243351 sha256=b085ff0f85e0f92212f62eabf7fe299be75be9d07df4e7bd90eaa0e3b0683b1f
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/arm_2d.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=9808 sha256=0370fd1488df05a9e218e0036eab844e1f01bef5cc3057fe989a3d209c38c078
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/arm_2d_alpha_blending.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=136285 sha256=7f8364dea0153d6bf9194c47638f99562975d4a0ee8ef3233d3375add49499f7
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/arm_2d_async.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=34851 sha256=d7c091545e4e2242113aa7ec71275161d0654307beb40f9d59a08b5e5ec6ad45
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/arm_2d_conversion.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=31315 sha256=e83327e0f1483ceceb0b453e01cbce973ae93c6942943bce5391161ae1994d3b
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/arm_2d_draw.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=31582 sha256=b111fa20a6320e3f8633b55a8e4517258f3e03300301e47e20d2417f7bb461c9
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/arm_2d_filter.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=2207 sha256=e49d7f612cbdcd0e232a97377b53215dd2ebe7db35fcb7b877f101c452028d35
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/arm_2d_helium.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=294963 sha256=8324403b8444ca2ac3f74898f9cd167a0c4fdddfb39d8b2e7ec42abb5bcff7e0
+# - projects/01_baseline/Middlewares/Arm-2D/Library/Source/arm_2d_transform.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=119824 sha256=654dcca2d2ccfcd0e1b887ef4bdba69321b5e538919db78b525b3052ae011626
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/README.md rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=3604 sha256=39acedfeaeabae00467aefa6355edb2655be2b8668907aef79198099bfba62e3
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_ccca8888_transform_helium.c.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=56416 sha256=7a899f8935c04202aca0ef1bdc1899dd64db5144710df1188e6943eac13c4f91
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient.c.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=39798 sha256=2e6ce0b5a43e2bd8555a09978b020b87ed0d942db6fab2dc59d35312b33483b6
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient.h.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=20524 sha256=364da896fa52143b36a90b228b9d986d5ca1696618cf2f9db436fffb18f70284
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_and_mask.c.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=67165 sha256=adce8457736cf45d4f5ef612937fe6d7356627b817e3fb6ebbc466dc60c6872d
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_and_mask.h.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=22879 sha256=9fb13e43e930e960a22d550ac71e63a1371f7af1407f6ea1d6dbbd0b923b713f
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_helium.c.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=46567 sha256=441f817722ee740b8b5b01ca61b9e2429bf710051484b0b455d7bb25b2112d36
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_horizontal_line_mask.c.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=22508 sha256=28ed944956bb492d25faa2e51af79e03355350311a5030b36ad916b78922504c
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_horizontal_line_mask.h.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=6530 sha256=497212c90423800c7e29455f488a33111e17b52a8aae40263c6b03b52e6d943c
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_mask_and_mirroring.c.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=20541 sha256=07e0006857215128e227dbe87ede4bfb5cc2f0bebc2fd7a6efe15c71edf7e994
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_mask_and_mirroring.h.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=6105 sha256=3f0466cbf7f7aaa81076823bf9803307aa0f4074eccdac09cdf3a3a09bfef401
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_vertical_line_mask.c.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=22483 sha256=042d0fcdcbe07118a7404397007601a821d906d4f82a9ba9a07a33be307353a9
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_vertical_line_mask.h.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=6508 sha256=d59600fe957247e043a5ca4bce1bf6cc2d32baf3fee0e329a7ec24715f4812d4
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_filter_iir_blur.c.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=18566 sha256=eba0ba7b609da36cacad23abfbd945c0355e3529c3b915667d6f87f4e4304c05
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_filter_iir_blur.h.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=6126 sha256=87e07d35b6d9200eed4153512e167921d7471bdae09e2214cd6b41b97d253856
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_filter_reverse_colour.c.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=6685 sha256=66766677fa7264852e71f80b6589d87a3198b03cc7019eee958153af733735a5
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_filter_reverse_colour.h.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=4198 sha256=99b3a42fc3b9af3be82dd0860b065a3efbe677156ffbcd4d706dbbed37c3c853
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_2xssaa_transform.c.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11688 sha256=b3b13cbd9c578e7a463a1d09029be3bcc7089f285e6ea61add7243da63efc4e4
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_2xssaa_transform.h.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=2862 sha256=bcafd2bcf36a7211e08d01e26bdb1e2a1bab4e81c617ac68369a6d2e873e3fdd
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_copy_with_source_mask_and_opacity.c.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=26662 sha256=e58aab31766a39f685547a30220a29d5b88e4f7b6c73f68d81ac22fa79ef0294
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_copy_with_source_mask_and_opacity.h.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=5079 sha256=bb334aee9b27cbd26982197bed2b34c5f264b83899da2e28b3f5c68210078ba4
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity.c.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=14496 sha256=068e021697dff31c45f149f65d90b1b91dfd6ddf54dbe02f1134b4605be11bad
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity.h.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=4741 sha256=f6eb47dff38ff54ad6fb1ab14be251dbb3bad72b9823325f6aa298dc0b42e2ca
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity_helium.c.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=9389 sha256=36daffaf7430ffe55e4b49ce6a01aa83ab27b4310ecfbf1a8c7e96f7cf729fe5
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity.c.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=31206 sha256=09433e31993cb64bfeafd892c95c025c1b06b346914904af9b86c41473624ffc
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity.h.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=5107 sha256=39e38236c2660cdb705eb0dfa7cebc2c66a12df1e0fff8f5fe85da046fc7418e
+# - projects/01_baseline/Middlewares/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity_helium.c.jinja rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=15024 sha256=6eaf353328204893ef29fed4ae48ed77a35bd2312d82fa90e7cc9cba9ea2da06
+# - projects/01_baseline/Middlewares/Arm-2D/Library/template/README.md rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=195 sha256=1ae00af09de532bd91de4155b0db79062e899b6ee1bf18ad755319b1dfa7445f
+# - projects/01_baseline/Middlewares/Arm-2D/Library/template/arm_2d_user_opcode_template_i_cp_src.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11003 sha256=ebe5631cdebba3589677c56baf57b5f4896c29d0681a40a15e38aec055b8a034
+# - projects/01_baseline/Middlewares/Arm-2D/Library/template/arm_2d_user_opcode_template_i_cp_src.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=3140 sha256=e28680e1fda3c85a4587e1486aec7eefc9d7a0671ff9d639bf3c313a60949119
+# - projects/01_baseline/Middlewares/Arm-2D/Library/template/arm_2d_user_opcode_template_i_draw.c rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=11815 sha256=89b604f381b439b4f60297874d52d6b5ce6717c6fad94046aee9a10059a95784
+# - projects/01_baseline/Middlewares/Arm-2D/Library/template/arm_2d_user_opcode_template_i_draw.h rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=3302 sha256=47ac75bbf4804726bc49abc3c45f1727a4317b9e0843211c69da648c9990df4e
+# - projects/01_baseline/Middlewares/Arm-2D/README.md rule=Middlewares/Arm-2D/** reason=large real Arm-2D upstream source is represented by provenance/hash; patch body omitted bytes=30911 sha256=670cb5ab39a35e3205abfbb811c9e7b5945fda5d3585c26fcf754c0fd346667f
+# - projects/01_baseline/Middlewares/CMSIS-DSP/ARM.CMSIS-DSP.pdsc rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=14303 sha256=72cea3f0d75fecd7b6d1ebd93235ae395f026d8352c48c58d3a2baffcbf333ef
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_common_tables.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=30043 sha256=dc36e5c463aee1beea88844c48661a2201a045717bd68ddad6c5ba3cff6cafc6
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_common_tables_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=5563 sha256=c0f326ab182e922fbd700c2cb6164ea998679e058721e91ec0bea0ad4b19c9a6
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_const_structs.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=3637 sha256=0e19ec8edc49a897eed2b02acfbb36da98da1199931765d5a5269857afeb50a5
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_const_structs_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=3552 sha256=f173a3dace7642876073eef169a3b6201b7c77fe6dd7aebe8f41429ceb78ddce
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_helium_utils.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=21467 sha256=b2908dda4945d1a3f99d29330cb5439e3b1852a06d84c6560d87d7822489f46d
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_math.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=8404 sha256=f170e01c8f852f6fa50dff547c3c8e56facc6a2a1186ac409a54bbc93b32c8ed
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_math_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=1812 sha256=51599ec6c3f1840d148d76cdf728d17bcf5de31943b41ee8dbb07c407a45cfa0
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_math_memory.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=5184 sha256=d5916539a16ad055c84a5bb5d5399fedd4a491e2c44a113dcce8ebb6dc7c089b
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_math_types.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=15011 sha256=4c8451b4da0085ef63ef23db08c8dcf13dc2cc96c6bc4d3c584762d4aa75be5b
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_math_types_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=3813 sha256=3b9028e261096c695af06e39ca7793543286c5382899f8f35ea746effecdd61d
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_mve_tables.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=10367 sha256=cbf227724f370e5aaa5b15baaea48638f0e00b19baba1ad8e29ea6fd23636500
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_mve_tables_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=4433 sha256=f1834a5927205692d747151ffbdb9771089291b398611b83ea5c0fa9e52ee143
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_vec_math.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=9807 sha256=7193f27bfdd6db7dc91a8aca9ba38c9af38ead6305940672e121312a6f7e171b
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/arm_vec_math_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=8343 sha256=55d4102cbb7ef14412452b28dcbab332f2e6d8ef6950be121e7295b1c2d20d4b
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/basic_math_functions.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=26199 sha256=3fd31426a623339e2fa60d9aa2d67b880967a4edca420e3fd7ee3733fb65d072
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/basic_math_functions_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=5163 sha256=43f3935b4595ca51d5089b5ccd78e2689bbd1898616bec17b9e785e680fdf57b
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/bayes_functions.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=2828 sha256=f22b8c3ae42fd3cfdd154e1dd4fd0638985c1739ccb9472907a74f250d0e6b25
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/bayes_functions_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=2629 sha256=ce68b78ca4312607eb5e1e5a159eabc86e2f73af6199705e07a67e36e4aed9ee
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/complex_math_functions.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=10923 sha256=0e0123c33173162631186f4bd7c44ce796dbf1cdc2015ccd30d3ac745ae201ad
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/complex_math_functions_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=4082 sha256=743c1337cef2cd59a920affa8032a2e0596052853e95ab2bba5b59e81aa31637
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/controller_functions.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=29222 sha256=f753aea94700e87e43f66b7e5814c9d55c06bcf3606bfac3a369a1c10744f9e5
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/controller_functions_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=1299 sha256=ddc9e1bba2a990a5bc32c0c853c32108bee85791cac9e3cb1911c8eb611a61de
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/debug.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=4971 sha256=55e7557a5e9985bebe4b24341339962a970f5dfa84d5fb474a49a6a0577f45ca
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/distance_functions.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=10040 sha256=936242bb7a79eb0a7454636144fc95bf7e62b34d39d3b6c1fca30a350fe80344
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/distance_functions_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=5322 sha256=540125b782f58935eb6f9c03a7e3dd49f9941de0df9a3b91b0561cd5bc5be3a8
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/fast_math_functions.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=10094 sha256=3e59abe1cf3fffe19ff0590c614109e7d445101cc67e301d94b10a8adcfb72ea
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/fast_math_functions_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=3501 sha256=dbc95d8026960350b6e9bfc48fe94ef7f7e860f91564e57ee5a2be8cdffee195
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/filtering_functions.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=98240 sha256=3d079f167ce03e1cb83479913b2bfb14c78fe3a76ba969fa2579739f06dd2643
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/filtering_functions_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=9196 sha256=4b002e4ba6abada63777975faf63cd0ba071130250c74394e9c2917504bc4d4f
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/interpolation_functions.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=9162 sha256=75550ce2565d3f1ecb5b41feac0cf268f80d473a36cb21ecdda205b248bf23ea
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/interpolation_functions_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=2987 sha256=92d107b03f05eabc8c4a82def3756e099e91572c54179a0598f90a455b923384
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/matrix_functions.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=34628 sha256=1fa1d78a0205d9a3155121edcdddf7e5f6ed1c9292f2f0e2e9efcd3c7471ed40
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/matrix_functions_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=10199 sha256=26a8e871f71889f70b4601cd0ad39b3460a8e03a01fb63b766d3b7ce8e8b4245
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/matrix_utils.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=25412 sha256=4d437c15ed00f988622db7e356a4cd721d50d53474f3edd304c533bffcfcbf44
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/none.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=14967 sha256=ca27e36ba16457d2a9abc1f13e2e0f249ad6ba4642efc446aa2faeb5ace0a257
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/quaternion_math_functions.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=5587 sha256=7bb1d91577b4c11d5d50fcf827ccb5ce38236c776c094fae9ad081489c7bca65
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/statistics_functions.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=30076 sha256=4a35f6b1ba618fc8604bb6430421c801e718abc93a2430593fa8d8e936bf53ee
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/statistics_functions_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=8544 sha256=7738074df7a383bb1906af49c4add0485532f1edf89df81b4c5c431fe1c7f1d8
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/support_functions.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=15141 sha256=9ff9b0fb3843323f65d9697d68f0dd6d12a611c119f5346d3ebb1fd75c3fc803
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/support_functions_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=6310 sha256=01804843a897720f72f3d3ad40da9613990f703f242a2440bddaac4584f3a35e
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/svm_defines.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=1441 sha256=ee7b52a08add7d2bddc40caf3d9913a58eab9244cb62ba2833333d433694b1c0
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/svm_functions.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=9922 sha256=594aa1b2bdbde7a87c043710f6bd4a789617aa56f25b96406b1718fc41ee82e4
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/svm_functions_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=9687 sha256=72c8c9357a62e358eb21b9716a4c4b9e0ce335b6221e19ea549c8bfc27e7237e
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/transform_functions.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=30651 sha256=145207df44784a3ad61c00cbb12bc116a02e4c30fb86d0cfd6cdcd130b748f1a
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/transform_functions_f16.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=7937 sha256=48631b92b3377a49728af6b927d1bd8304374ca9c56e6c22f53b7ee4d5256968
+# - projects/01_baseline/Middlewares/CMSIS-DSP/Include/dsp/utils.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=6048 sha256=2f199a4ef53eacb6dc36b9b1329f5514676d374466bd84284a645d553bf71deb
+# - projects/01_baseline/Middlewares/CMSIS-DSP/LICENSE.txt rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=11357 sha256=b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1
+# - projects/01_baseline/Middlewares/CMSIS-DSP/PrivateInclude/arm_sorting.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=6640 sha256=0abf0114a2f2d0feae3508c7c184c60227a29b036374c17fbc1794b9be18712f
+# - projects/01_baseline/Middlewares/CMSIS-DSP/PrivateInclude/arm_vec_fft.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=11426 sha256=e04a9a590355df232178853ec121e4903d9feccb185c86191844b9d4215be548
+# - projects/01_baseline/Middlewares/CMSIS-DSP/PrivateInclude/arm_vec_filtering.h rule=Middlewares/CMSIS-DSP/** reason=large real CMSIS-DSP upstream dependency is represented by provenance/hash; patch body omitted bytes=123649 sha256=d1657c0e9c743727833e4c4c0b22160f37c66137d4e0a3280795ec2d109cb501
+```
