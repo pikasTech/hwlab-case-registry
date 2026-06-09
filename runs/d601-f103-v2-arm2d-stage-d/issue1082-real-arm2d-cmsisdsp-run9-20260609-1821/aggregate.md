@@ -214,7 +214,7 @@ HWPOD 参数串: --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F1
 ## 低噪声 Trace
 
 - renderer: tools/src/hwlab-cli/trace-renderer:traceDisplayRows
-- sourceEventCount: 362
+- sourceEventCount: 363
 - renderedRowCount: 100
 - hwpodCommandCount: 44
 - hwpodBuildCommandCount: 2
@@ -1952,16 +1952,16 @@ index 0000000..88f915f
 
 | Path | Bytes | SHA-256 |
 |---|---:|---|
-| evidence.json | 239293 | dfa5968832741030877c3df7810d1cb4f3bcbb16c97739d7152201c732ed13a4 |
+| evidence.json | 239293 | 3f720409e3f534afa25dfe5099a33a898fbb3474047c9e5616cfc78513a69740 |
 | summary.md | 13116 | c3ca60e2811f4a7475842f34c2483e83445d9b427cfcb496ddd5a41703d28059 |
 | aggregate.md | self-referential | self-referential |
-| agent-messages.json | 144707 | af6533e466b5dffe1557b6654450a24d417d690ae0783b714448a9485d3bb4ea |
+| agent-messages.json | 144707 | 36c8c08ac3d9f7a860d614fb5fc5ad84a510a2db247f479a182016236eaacff1 |
 | agent-trace.md | 200589 | 935bc5deb51d9aaf60d695e3443e56e2ccac1b983e05048b7b3087ec01fba894 |
 | agent-transcript.md | 200589 | 935bc5deb51d9aaf60d695e3443e56e2ccac1b983e05048b7b3087ec01fba894 |
 | final-response.md | 1717 | 985846ccc5010ce50ea3148c6f5c32fc3a6cd75e7ae6a65de334d2906d7df9ff |
 | run.json | 258355 | 2ac2f2ad196a78925ab4253b8628a6183a042beecf927cef300fc81ca7b73ead |
 | result.json | 546380 | 918d24ebb5b119439137b9eb1cc93f2358fc6611738bffd79f77d7d2d85e2ed5 |
-| agent-trace.json | 286369 | 7b541587bd336adb3b12657e5c9a50af911eaceeb27663ea5c3cb59a79ebe62c |
+| agent-trace.json | 286369 | 9033f5cfbc8cac995c1f8862733c1ca4f955bf285407c316968753f82f753134 |
 | agent-prompt.md | 11429 | 0f3e5a860e5d4698048fa10c508cb06a641e7e9776bf1dc547ea45447f163e48 |
 | agent-diff.patch | 67510 | a6d7df1b91feba5b44a0c9cabe230ca338aeb426bf9afce717366a288637c17e |
 | .hwlab/hwpod-spec.yaml | 757 | 143440270254bfa79375abf4f9d6f30c8d1707d740034e8368c1708092675612 |
