@@ -14,7 +14,7 @@
 - caseRepoRunDir: /root/hwlab-case-registry/runs/d601-f103-v2-arm2d-integration/issue1075-sub2api-skillboundary-20260609095952
 - sourceRunDir: /root/hwlab-v02/.state/hwlab-cli/caserun/issue1075-sub2api-skillboundary-20260609095952
 - createdAt: 2026-06-09T09:59:52.570Z
-- completedAt: 2026-06-09T10:02:08.427Z
+- completedAt: 2026-06-09T10:02:15.876Z
 - runnerPostAgentCompileCheck: recorded
 
 ## HWPOD 信息
@@ -423,9 +423,9 @@ _agent-diff.patch artifact is missing._
 | agent-trace.md | 15067 | a4784aad0a8de6373799c1403b5467a920537294468a860d072915a81b350c26 |
 | agent-transcript.md | 15067 | a4784aad0a8de6373799c1403b5467a920537294468a860d072915a81b350c26 |
 | final-response.md | 973 | 89d640835b6bc3596f6fda0631fa780e71e425a73cfbb585d51b90c97492d9e9 |
-| run.json | 50000 | ae90ca5b010b826fb071ec13016794b9015cc58023f947ce6a1e0021a912f150 |
-| result.json | 18407 | 929931592d6bbf7fcfadaf672af1100fae5024d6ff89b1fa15c66429e8e338ee |
-| agent-trace.json | 58558 | 37cecad4032954917189c6ce4754c932c0b0f1f7873559e4fe8bff4872922328 |
+| run.json | 50019 | df4ebc0d4d52f2db2b4440fe738bfcd10944c237ff73c0cb2fecb03cda63f927 |
+| result.json | 91236 | 811c90b9dfeb148660c849f9318971406571ea7c84f377dff9ccdce38e397d0d |
+| agent-trace.json | 58558 | e77ae34eff9b4c1663eb870a0eac2d8b199dfad474312f75bd5b806365f64f11 |
 | agent-prompt.md | 4447 | a315596544007d5d38dff6775f988ffd81362d294dc331547b0056aee14af5c2 |
 | agent-diff.patch | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
 | .hwlab/hwpod-spec.yaml | 755 | 7b0b4234ff3813221bdc05a8dcdb19f1d4cb2fa3d1d52395a5da7f97bf97bd36 |
