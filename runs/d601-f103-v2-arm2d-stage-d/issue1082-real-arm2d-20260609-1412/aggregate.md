@@ -7,6 +7,41 @@
 - autoEvaluation: false
 - primaryEntry: aggregate.md
 
+## 状态解释与证据缺口
+
+- declaredValidationMode: compile-only
+- effectiveValidationMode: build-download-uart
+- modeResolution: case-task-overrode-default-compile-only
+- requestedValidationSteps: spec-validate, inspect, build, job-status, download, uart-read
+- completedValidationSteps: spec-validate, inspect
+- agentRunTerminalStatus: completed
+- caseRunStatus: completed
+- hwpodExitCodeSource: case-run-runner-post-agent-compile-check
+- sourceRootDirtyAtPrepare: true
+- dirtyAttribution: source-root dirty before prepare (M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx); subject worktree/agent diff stays separate (M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx  M projects/01_baseline/User/main.c ?? projects/01_baseline/Middlewares/Arm-2D/ ?? projects/01_baseline/User/arm_2d_cfg.h ?? projects/01_baseline/User/d601_arm2d_demo.c ?? projects/01_baseline/User/d601_arm2d_demo.h)
+
+### warnings
+
+- declaredValidationMode=compile-only but effectiveValidationMode=build-download-uart; case task requested runtime validation steps.
+- sourceRootBaselineStatus was dirty before prepare: M projects/01_baseline/Projects/MDK-ARM/atk_f103.uvprojx
+- sourceRootAfterPrepareStatus matches baseline dirty state; prepare did not introduce this source-root diff.
+
+### evidenceGaps
+
+- requested step(s) not observed as completed in aggregate trace summary: build, job-status, download, uart-read
+- hwpod-command-stdout-truncated: low-noise trace clipped at least one HWPOD stdout; this summary extracts command/exitCode/jobId/status fields, raw stdout remains in trace artifacts.
+
+### nonBlockingIssues
+
+_No nonBlockingIssues recorded._
+
+### HWPOD 关键命令摘要
+
+| Step | Status | Job ID | Return Code | Warning Count | Exit Code | Evidence |
+|---|---|---|---:|---:|---:|---|
+| spec-validate | completed |  |  |  | 0 | command=hwpod-ctl spec validate --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-20260609-1412 stdout=truncated |
+| inspect | completed |  |  |  | 0 | command=hwpod inspect --hwpod-id d601-f103-v2 --workspace-path "F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-20260609-1412 stdout=truncated |
+
 ## 运行环境信息
 
 - apiUrl: http://74.48.78.17:19667
@@ -125847,12 +125882,12 @@ index 0000000..2a1899d
 | agent-transcript.md | 5772638 | da8be5514fa27f3fe56e15b952da30baf08f6a47fb8d4b7e2d23dab23548f7e2 |
 | final-response.md | 1288 | 2169a912ea27e0a0978453ee66db729ea3a658da648d89401b2b845b1a18715e |
 | run.json | 208448 | d6b1edc2633eb3127bcbf5940b53d4436be5ba839d0964fa72c50618e96d47b0 |
-| result.json | 405411 | 48ac3d7d31c1551de0cca7f319b854cabce6292d273b68a0ae8d877fb0348508 |
-| agent-trace.json | 110330 | 944e9c745f59f2e5bc36571878862055dbc599de57209de2138e1ed7acb86fc6 |
+| result.json | 405411 | 53247bf2cc4b95a4d7f35536282f4fcce07582eea6fae66c1d289c93518f7903 |
+| agent-trace.json | 110330 | 1638b42c3a05b0b630b60cacd8055de09c0e6ca14533985baeb04c9c1e366723 |
 | agent-prompt.md | 6575 | 8a757f1a751bdba538e055ddd305c9f974021b9853e05cc9cc65554f1e8ce526 |
 | agent-diff.patch | 5733658 | 713d709726f4831b179afd1f23f11dce2bd63e99dca7f8acc259380606aa6c19 |
 | .hwlab/hwpod-spec.yaml | 743 | 066eb5fa0ad75381420b1ec38b09ccb2409e98a34a8c0b6861823944cd9d2ab0 |
-| worker.stdout.log | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
+| worker.stdout.log | 406098 | 85e7dec9a3c82a100fa1f307cb5d13282d1e766b5aec1af5ce4ae82035997e09 |
 | worker.stderr.log | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
 
 ## 说明
