@@ -706,12 +706,12 @@ _agent-diff.patch artifact is missing._
 | agent-transcript.md | 40995 | fc3843c24614dadba2ae30eb00ce189ce3720124efd8d8e8973ac25871f837dc |
 | final-response.md | 1060 | f08138a676db495dcd0eae8a1e1c3d0d7bc8b81ffdb383f232fa0ef9c6d5f474 |
 | run.json | 87693 | b6d9fe93f822acc4831b14106a81eac3a841092e42d621702b831baf729772b9 |
-| result.json | 197269 | 0daa6250e3658235677455c8c5260c1fcb9a8455f264b65a756b05d2e0f49721 |
-| agent-trace.json | 143172 | 77d877b7b05ee033a195e0fb41d572ff604266e05f401fbd3a679bc7dbdc614a |
+| result.json | 197269 | 336cb3bd913c2764d033c879b40ae207455f18fa1d03bf056dbb669841ce0506 |
+| agent-trace.json | 143172 | 53e8d2c877803138eb4210a146a2acc340908848c1abcb3120133af9e64cbe48 |
 | agent-prompt.md | 3967 | 53f4e04ef9b41d19f909c6eebcafe6d179bf6a222dd2a73a8a8b217aef46ef21 |
 | agent-diff.patch | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
 | .hwlab/hwpod-spec.yaml | 763 | 64ba5c97f3b9a8487d7a90633cd5f02fae674c5b13cec4c33aa2e6999616ce88 |
-| worker.stdout.log | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
+| worker.stdout.log | 198043 | 2ad087151039cb7407efa9c8d530cefa4323d45ae24ace183b7318a3cf5f5895 |
 | worker.stderr.log | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
 
 ## 说明
