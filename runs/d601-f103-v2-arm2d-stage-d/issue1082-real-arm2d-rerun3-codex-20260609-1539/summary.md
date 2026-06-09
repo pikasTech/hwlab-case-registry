@@ -1,0 +1,34 @@
+# HWPOD CaseRun d601-f103-v2-arm2d-stage-d
+
+- runId: issue1082-real-arm2d-rerun3-codex-20260609-1539
+- status: recorded
+- autoEvaluation: false
+- compileOnly: true
+- subjectRepoLocalPath: F:\Work\HWLAB-CASE-F103
+- subjectCommitId: 76bce7c2d73b687473223bbbdebc7d69124ebac6
+- subjectWorktreePath: F:\Work\HWLAB-CASE-F103\.worktree\caserun-issue1082-real-arm2d-rerun3-codex-20260609-1539
+- agentTraceId: trc_case_d601-f103-v2-arm2d-stage-d_6ec0378a9803417197b14475a5a95ce2
+- agentSessionId: ses_ef2d5b42-3363-4c7f-bfbb-37be71d3f72a
+- traceLookupStrategy: id_plus_existing_cli
+- traceCommand: hwlab-cli client agent trace trc_case_d601-f103-v2-arm2d-stage-d_6ec0378a9803417197b14475a5a95ce2 --render web
+- resultCommand: hwlab-cli client agent result trc_case_d601-f103-v2-arm2d-stage-d_6ec0378a9803417197b14475a5a95ce2
+- inspectCommand: hwlab-cli client agent inspect --trace-id trc_case_d601-f103-v2-arm2d-stage-d_6ec0378a9803417197b14475a5a95ce2
+- agentTraceCommandCount: 0
+- agentTraceHwpodCommandCount: 0
+- agentTraceHwpodBuildCommandCount: 0
+- agentStageCommandCount: 0
+- agentStageKinds: 
+- diffPatchPath: /root/hwlab-v02/.state/hwlab-cli/caserun/issue1082-real-arm2d-rerun3-codex-20260609-1539/agent-diff.patch
+- runnerHwpodSource: case-run-runner-post-agent-compile-check
+- hwpodExitCode: 0
+- agentBuildJobIds: 
+- agentReportedBuildJobId: 
+- agentReportedReturnCode: 
+- agentReportedWarningCount: 
+- postAgentCompileJobId: 20260609_234026_4b863ab7
+- runnerPostAgentCompileReturnCode: 0
+- runnerPostAgentCompileWarningCount: 0
+- buildJobRelationship: runner-post-agent-check-only
+- jobId: 20260609_234026_4b863ab7
+- runnerPostAgentCompileCheck: recorded
+
