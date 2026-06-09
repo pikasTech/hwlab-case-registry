@@ -50,10 +50,12 @@
       "允许用 sparse checkout、filter clone、archive path、Pack/RTE 组件或最小必要文件清单降低体积；复制到 subject 的 upstream source 文件必须保持原始内容，板级配置、display port、demo 和 adapter 放在 project-local 文件中",
       "禁止自写同名替代实现、mock/stub、API veneer 或 subset 冒充 Arm-2D；禁止把只读取 upstream metadata/tag 当作已经集成；真实来源获取或集成失败时必须报告 blocker",
       "若真实 Arm-2D 编译需要 arm_math.h/CMSIS-DSP，必须从 ARM-software/CMSIS-DSP、官方 CMSIS-Pack/RTE 或目标节点已验证缓存取得真实 CMSIS-DSP 依赖并记录 provenance；禁止使用 Arm-2D PC 示例 platform/math/arm_math.h、手写 arm_math.h 或最小 stub 冒充 CMSIS-DSP",
+      "若使用目标节点 CMSIS-DSP Pack/RTE，不能只复制 Include/PrivateInclude；必须把实际参与链接的真实 Source 文件物化到 subject 并加入 Keil uvprojx。本 case 至少需要 Source/FastMathFunctions/arm_sin_f32.c、arm_sin_q31.c、arm_cos_f32.c、arm_cos_q31.c 和 Source/CommonTables/arm_common_tables.c 来满足 Arm-2D transform 对 CMSIS-DSP 的真实依赖",
       "所有 project-local 文本修改必须通过 HWPOD workspace apply-patch 或等价 HWPOD workspace 写入入口完成，不得从 Linux runner 直接 cd 到 Windows 路径编辑；第三方 upstream/vendor source 物化必须通过 HWPOD cmd/git/archive/Pack/RTE/已验证缓存，不得用 apply-patch 或 workspace write 重写源码",
       "必须更新 Keil uvprojx；新增 C 源文件后不能只改源文件而漏掉 Keil 工程",
       "必须尝试 hwpod build、hwpod download 和 hwpod uart read 原入口命令，并保留原始错误或 job id",
       "UART 输出必须包含本次 runId 和 Arm-2D 真实来源 tag/ref，避免旧串口输出或伪实现混淆",
+      "UART 的 Arm-2D provenance 行必须包含 ARM-software/Arm-2D、tag/ref 和 commit，CMSIS-DSP provenance 行必须包含实际 Pack/RTE 或 upstream 版本，避免只输出泛化 ARM2D 字样",
       "结果只作为 raw trace/evidence 记录，不做自动评价或自动门禁"
     ]
   },
