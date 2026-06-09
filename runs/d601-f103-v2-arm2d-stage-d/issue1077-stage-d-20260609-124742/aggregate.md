@@ -14,7 +14,7 @@
 - caseRepoRunDir: /root/hwlab-case-registry/runs/d601-f103-v2-arm2d-stage-d/issue1077-stage-d-20260609-124742
 - sourceRunDir: /root/hwlab-v02/.state/hwlab-cli/caserun/issue1077-stage-d-20260609-124742
 - createdAt: 2026-06-09T12:49:24.759Z
-- completedAt: 2026-06-09T13:04:24.763Z
+- completedAt: 2026-06-09T13:04:33.736Z
 - runnerPostAgentCompileCheck: recorded
 
 ## HWPOD 信息
@@ -750,9 +750,9 @@ index 7467c9a..7eb3410 100644
 | agent-trace.md | 29153 | 57770ef0c30fbcee32cd7bebb4a586c99320b4542a283d10f309c0be7cfa5bcd |
 | agent-transcript.md | 29153 | 57770ef0c30fbcee32cd7bebb4a586c99320b4542a283d10f309c0be7cfa5bcd |
 | final-response.md | 410 | da1ea622425d73e4a3f17996bf017806ae6fd97f1b81c2ceeb49db06b56835ac |
-| run.json | 60952 | 0af977952fa4574b240ce4edc686eccf2fad0ccf7a71ec55e0f73b3d554a7e67 |
-| result.json | 18045 | 893f4c60e0f8c65ab0195bdf9544cc86220ad9d593261e9777abd05ad3e846a8 |
-| agent-trace.json | 99904 | 0991eca94e037c33db7c1971a675e8e2abfa86a51f1da1bf48a9bf0ed4cd1670 |
+| run.json | 60971 | 74083e7ab7e70a5ad8dc6fb20b7fb49210c2719771366624c5120370fea1185e |
+| result.json | 111652 | cb63220e7ebbe0c0e1341539195f94e3a3ba7af3e26894be712a58741592bcf9 |
+| agent-trace.json | 99904 | a6f31741ac35f5b46115b458067d518406b35f79ee2c8f05897a26426e717e33 |
 | agent-prompt.md | 4815 | a7a3108b0e78e5d647f467d8225201f05199ef05552f727f654a6df200cb5926 |
 | agent-diff.patch | 2879 | 714558255f91439bd7a4c9a9502173bc733cc1fc917eb84925358f5ef1fb8a5c |
 | .hwlab/hwpod-spec.yaml | 742 | c7643894a6b8893270e3f7bf922b4435f7d1fde80a40f852b581242156ddcb43 |
