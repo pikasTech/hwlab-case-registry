@@ -209,8 +209,8 @@ HWPOD 参数串: --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart
 - renderer: tools/src/hwlab-cli/trace-renderer:traceDisplayRows
 - agentFinalBoundary: agent-authored-final-response; not-post-validation-verdict
 - postValidationBoundary: runner-owned-post-agent-validation; separate-from-agent-final
-- sourceEventCount: 38
-- renderedRowCount: 22
+- sourceEventCount: 39
+- renderedRowCount: 23
 - hwpodCommandCount: 0
 - hwpodBuildCommandCount: 0
 
@@ -338,6 +338,12 @@ unexpected status 502 Bad Gateway: upstream stream error: Insufficient Balance, 
 unexpected status 502 Bad Gateway: upstream stream error: Insufficient Balance, url: http://hwlab-deepseek-proxy.hwlab-v02.svc.cluster.local:4000/v1/responses
 ```
 
+- **12:55:22 total=00:00:48 fail agentrun:result:failed**
+
+```text
+unexpected status 502 Bad Gateway: upstream stream error: Insufficient Balance, url: http://hwlab-deepseek-proxy.hwlab-v02.svc.cluster.local:4000/v1/responses
+```
+
 ## 最后 Diff
 
 - statusShort: m projects/71-00075-11
@@ -390,20 +396,20 @@ index 10dc8ca..865b3d8 100644
 
 | Path | Bytes | SHA-256 |
 |---|---:|---|
-| evidence.json | 65483 | bd7caf43b11be37eef6ea99ac4a4d51efd478082b03d9e63e57424017368e55c |
+| evidence.json | 65483 | fddddf341869a9705d7b712a96b24f034ffb4a7740d721dadd48d7ea0917a253 |
 | summary.md | 1806 | f793a4356db4423a8051830e8e4a27a2cc202dad5c06fe14c7e5257f247781bd |
 | aggregate.md | self-referential | self-referential |
-| agent-messages.json | 8825 | 9b80727d2c95feea8a6f5fa7f88268896466d2d079cee7cb9035312fb81b6cb5 |
-| agent-trace.md | 6117 | de8c4791a1feb5e8e68c3e751cca567253f88fb9a677b9550e5ae4e98dfb1125 |
-| agent-transcript.md | 6117 | de8c4791a1feb5e8e68c3e751cca567253f88fb9a677b9550e5ae4e98dfb1125 |
-| final-response.md | 1302 | 4f30e6caa8838b2b4dc2d41ce6e0a7ab508832c050e6ade9f6c550d148af93d1 |
+| agent-messages.json | 9284 | bb18f3f8173774bd8ce2af8cf3794d55cf985a71b472d2d0c18737e0aa1ce8cf |
+| agent-trace.md | 6348 | cb2a2a942be90d81aac958e4895e3aea5f8bab65334c3b0db68486e5fea22ae5 |
+| agent-transcript.md | 6348 | cb2a2a942be90d81aac958e4895e3aea5f8bab65334c3b0db68486e5fea22ae5 |
+| final-response.md | 1433 | 6fb27ce68e7c34791b352508f269db03434d2042802fbb146542a2290e5edcdf |
 | run.json | 72568 | d099e6bbb5543f7e87c15ca5dc5ea468f1e2118252d9a4822330c42c4faf6ce6 |
-| result.json | 114661 | 8bdca8815a9fd5e18f1deeb1169b9521934c414b5f760001711851e93dee65aa |
-| agent-trace.json | 32765 | 88494732bcb7da65bf5922a70e3fcd46c433f32572090e182c5fb2e50e6986be |
+| result.json | 114661 | 1fc1740c0db5009aa48ee2dd6b211872faec7e73434ea797df2c652b81b328c9 |
+| agent-trace.json | 34129 | cbfe25cb1342aae6c8981c841cf8de9618da2bcd770209553373f8a8e55029fd |
 | agent-prompt.md | 4726 | 2d02a7bd3107b874b510819c3fc9c8d5f34ab995fd6aa7e66be0f8d14ea0f20d |
 | agent-diff.patch | 1986 | d027f38e42b15080aa70f0407a6750c8b583f445340391c6a8ed87338d6e0328 |
 | .hwlab/hwpod-spec.yaml | 1061 | b8d46153a103522183a274a1d4c47d3429f1f579d1a345c0ad945ba1401467bb |
-| worker.stdout.log | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
+| worker.stdout.log | 115381 | beef6820bde855f6e218479bf2e5533caff6389ab10ba027c0737a9ac0977ddf |
 | worker.stderr.log | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
 
 ## 说明

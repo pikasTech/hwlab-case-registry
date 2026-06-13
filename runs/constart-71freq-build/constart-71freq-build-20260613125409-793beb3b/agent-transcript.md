@@ -140,6 +140,12 @@ unexpected status 502 Bad Gateway: upstream stream error: Insufficient Balance, 
 unexpected status 502 Bad Gateway: upstream stream error: Insufficient Balance, url: http://hwlab-deepseek-proxy.hwlab-v02.svc.cluster.local:4000/v1/responses
 ```
 
+- **12:55:22 total=00:00:48 fail agentrun:result:failed**
+
+```text
+unexpected status 502 Bad Gateway: upstream stream error: Insufficient Balance, url: http://hwlab-deepseek-proxy.hwlab-v02.svc.cluster.local:4000/v1/responses
+```
+
 ## Final Response
 finalResponse=null
 reason: finalResponse=null; no authoritative final assistant response was returned by the trace/result payload
