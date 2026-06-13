@@ -1,0 +1,49 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "constart-71freq-build-download",
+  "title": "ConStart 71-FREQ build and download through HWPOD",
+  "mode": "build-download",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "F:\\Work\\ConStart",
+    "commitId": "de223ab80ddf80e5ba092dcf2d20f9df7ec91a60",
+    "subdir": "projects/71-00075-11",
+    "submodules": [
+      {
+        "path": "projects/71-00075-11",
+        "url": "https://github.com/ConstarInc/71-00075-11",
+        "commitId": "5ef2fc874782713d1e4752636a8db05cc4a18cd2"
+      }
+    ]
+  },
+  "runtime": {
+    "apiUrl": "http://74.48.78.17:19667",
+    "webUrl": "http://74.48.78.17:19666"
+  },
+  "agentTask": {
+    "workspace": "subjectWorktree",
+    "providerProfile": "deepseek",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 600000,
+    "prompt": "本案例验证 71-FREQ 在 ConStart mono repo 隔离 worktree 中的 build + download 原入口。先确认 submodule HEAD，再运行 hwpod build；只有确认 probe UID 3FD750C63E342E24 在线且目标板是 71-FREQ-C 时，才运行 hwpod download。若探针不在线或 UID 不匹配，报告 blocker，不要改用其他探针烧录。不要修改源码。",
+    "constraints": [
+      "只读，不修改源码",
+      "下载前必须确认 probe UID 3FD750C63E342E24 与 71-FREQ-C 目标板匹配",
+      "不能把其他在线探针当作替代探针烧录",
+      "若探针不匹配，build 仍可记录，download 必须阻塞"
+    ]
+  },
+  "flow": [
+    { "id": "agent-build-download", "kind": "agent" },
+    { "id": "build", "kind": "hwpod.build" },
+    { "id": "download", "kind": "hwpod.download" }
+  ],
+  "expected": {
+    "compile": { "success": true },
+    "download": { "attempted": true, "probeUid": "3FD750C63E342E24" }
+  },
+  "notes": {
+    "autoEvaluation": false,
+    "probeRisk": "2026-06-13 现场只读探测未看到 3FD750C63E342E24 在线；实际下载前必须重新确认"
+  }
+}

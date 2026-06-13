@@ -1,0 +1,62 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "constart-71freq-build",
+  "title": "ConStart 71-FREQ mono repo + submodule Keil build",
+  "mode": "compile-only",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "F:\\Work\\ConStart",
+    "commitId": "de223ab80ddf80e5ba092dcf2d20f9df7ec91a60",
+    "subdir": "projects/71-00075-11",
+    "submodules": [
+      {
+        "path": "projects/71-00075-11",
+        "url": "https://github.com/ConstarInc/71-00075-11",
+        "commitId": "5ef2fc874782713d1e4752636a8db05cc4a18cd2"
+      }
+    ]
+  },
+  "runtime": {
+    "apiUrl": "http://74.48.78.17:19667",
+    "webUrl": "http://74.48.78.17:19666"
+  },
+  "agentTask": {
+    "workspace": "subjectWorktree",
+    "providerProfile": "deepseek",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 600000,
+    "prompt": "本案例用于验证 ConStart mono repo + 71-FREQ submodule 的 CaseRun 接入。请只做只读检查和编译验证：确认 subjectWorkspacePath 是 F:\\Work\\ConStart 下的隔离 worktree，确认 projectRootPath 指向 projects/71-00075-11，确认该 submodule HEAD 是 5ef2fc874782713d1e4752636a8db05cc4a18cd2。然后运行 hwpod-ctl spec validate、hwpod inspect 和 hwpod build。不要修改源码，不要下载，不要访问串口或 board-comm。输出编译 job id、returnCode、warningCount 和关键 artifact 路径。",
+    "constraints": [
+      "只读，不修改 ConStart 或 71-FREQ 源码",
+      "必须以 mono repo 根作为 workspace，不能切换到 projects/71-00075-11 子模块根作为默认 workspace",
+      "如果 submodule 未初始化或 commit 不匹配，报告 blocker，不要改用原始 dirty checkout",
+      "本 case 只做编译，不下载、不串口、不 board-comm"
+    ]
+  },
+  "flow": [
+    { "id": "agent-readonly-build", "kind": "agent" },
+    { "id": "build", "kind": "hwpod.build" }
+  ],
+  "expected": {
+    "subject": {
+      "repoLocalPath": "F:\\Work\\ConStart",
+      "submodulePath": "projects/71-00075-11",
+      "submoduleCommitId": "5ef2fc874782713d1e4752636a8db05cc4a18cd2"
+    },
+    "compile": {
+      "success": true,
+      "artifactSuffixes": [
+        "projects/71-00075-11/FirmWare/MDK-ARM/FREQ_Controller_FW/FREQ_Controller_FW.hex",
+        "projects/71-00075-11/FirmWare/MDK-ARM/FREQ_Controller_FW/FREQ_Controller_FW.axf"
+      ]
+    },
+    "download": {
+      "skipped": true,
+      "reason": "build case only"
+    }
+  },
+  "notes": {
+    "autoEvaluation": false,
+    "purpose": "首个 PLC/ConStart CaseRun：验证 mono repo root workspace、submodule prepare 和 Keil build"
+  }
+}

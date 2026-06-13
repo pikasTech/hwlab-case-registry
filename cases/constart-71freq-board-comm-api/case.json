@@ -1,0 +1,52 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "constart-71freq-board-comm-api",
+  "title": "ConStart 71-FREQ board-comm JSON-RPC over TCP smoke",
+  "mode": "board-comm-smoke",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "F:\\Work\\ConStart",
+    "commitId": "de223ab80ddf80e5ba092dcf2d20f9df7ec91a60",
+    "subdir": "projects/71-00075-11",
+    "submodules": [
+      {
+        "path": "projects/71-00075-11",
+        "url": "https://github.com/ConstarInc/71-00075-11",
+        "commitId": "5ef2fc874782713d1e4752636a8db05cc4a18cd2"
+      }
+    ]
+  },
+  "runtime": {
+    "apiUrl": "http://74.48.78.17:19667",
+    "webUrl": "http://74.48.78.17:19666"
+  },
+  "agentTask": {
+    "workspace": "subjectWorktree",
+    "providerProfile": "deepseek",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 600000,
+    "prompt": "本案例验证 71-FREQ 的 HWPOD board-comm JSON-RPC over TCP 原入口。不要修改源码，不要下载。确认 spec 中 boardComm.jsonrpcTcp.host=192.168.0.154、port=8000，然后运行 hwpod board-comm jrpctcp get api 和 hwpod board-comm jrpctcp get system/status。输出 target、request、response 摘要，并确认返回中包含 71-FREQ/frequency_controller 或 system/status 运行态字段。",
+    "constraints": [
+      "只读，不修改源码，不下载",
+      "必须使用 hwpod board-comm jrpctcp 原入口，不要改用裸 PowerShell 或裸 board-comm CLI",
+      "如果 board-comm 失败，报告 target/request/exitCode/stdout/stderr 摘要"
+    ]
+  },
+  "flow": [
+    { "id": "agent-board-comm", "kind": "agent" },
+    { "id": "board-comm-api", "kind": "hwpod.board-comm.jrpctcp", "method": "get", "path": "api" },
+    { "id": "board-comm-status", "kind": "hwpod.board-comm.jrpctcp", "method": "get", "path": "system/status" }
+  ],
+  "expected": {
+    "boardComm": {
+      "host": "192.168.0.154",
+      "port": 8000,
+      "apiContains": ["71-FREQ", "frequency_controller"],
+      "statusPath": "system/status"
+    }
+  },
+  "notes": {
+    "autoEvaluation": false,
+    "purpose": "验证 board-comm 通过 HWPOD/hwpod-node 受控链路执行，而不是一次性脚本"
+  }
+}
