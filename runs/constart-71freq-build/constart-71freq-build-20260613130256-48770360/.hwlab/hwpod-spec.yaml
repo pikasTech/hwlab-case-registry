@@ -1,0 +1,39 @@
+apiVersion: hwlab.dev/v0alpha1
+kind: Hwpod
+metadata:
+  uid: CONSTART-71FREQ-C
+  name: constart-71freq-c
+spec:
+  targetDevice:
+    board: 71-FREQ-C
+    mcu: STM32H723ZGTx
+  workspace:
+    path: "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613130256-48770360"
+    toolchain: keil-mdk
+    keilProject: projects/71-00075-11/FirmWare/MDK-ARM/FREQ_Controller_FW.uvprojx
+    keilTarget: FREQ_Controller_FW
+    keilCliPath: "C:\\Users\\liang\\.agents\\skills\\keil\\keil-cli.py"
+  debugProbe:
+    type: daplink
+    adapter: pyocd
+    probeUid: 3FD750C63E342E24
+    probeName: MicroLink CMSIS-DAP
+    programBackend: pyocd
+    autoBindUvoptx: false
+  ioProbe:
+    uart:
+      id: uart/1
+      baudrate: 921600
+    boardComm:
+      host: 192.168.0.154
+      port: 8000
+  boardComm:
+    jsonrpcTcp:
+      host: 192.168.0.154
+      port: 8000
+      boardCommDir: "C:\\Users\\liang\\.agents\\skills\\board-comm"
+      boardCommCommand: "py -3 board-comm-cli.py"
+      timeoutMs: 30000
+  nodeBinding:
+    nodeId: node-d601-f103-v2
+    nodeType: pc-host
