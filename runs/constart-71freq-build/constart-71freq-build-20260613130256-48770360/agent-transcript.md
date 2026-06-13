@@ -164,6 +164,12 @@ stream disconnected before completion: error sending request for url (http://10.
 stream disconnected before completion: error sending request for url (http://10.43.52.39:8080/v1/responses)
 ```
 
+- **13:05:30 total=00:02:12 fail agentrun:result:failed**
+
+```text
+stream disconnected before completion: error sending request for url (http://10.43.52.39:8080/v1/responses)
+```
+
 ## Final Response
 finalResponse=null
 reason: finalResponse=null; no authoritative final assistant response was returned by the trace/result payload

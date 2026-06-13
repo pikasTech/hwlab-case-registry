@@ -209,8 +209,8 @@ HWPOD 参数串: --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart
 - renderer: tools/src/hwlab-cli/trace-renderer:traceDisplayRows
 - agentFinalBoundary: agent-authored-final-response; not-post-validation-verdict
 - postValidationBoundary: runner-owned-post-agent-validation; separate-from-agent-final
-- sourceEventCount: 42
-- renderedRowCount: 26
+- sourceEventCount: 43
+- renderedRowCount: 27
 - hwpodCommandCount: 0
 - hwpodBuildCommandCount: 0
 
@@ -362,6 +362,12 @@ stream disconnected before completion: error sending request for url (http://10.
 stream disconnected before completion: error sending request for url (http://10.43.52.39:8080/v1/responses)
 ```
 
+- **13:05:30 total=00:02:12 fail agentrun:result:failed**
+
+```text
+stream disconnected before completion: error sending request for url (http://10.43.52.39:8080/v1/responses)
+```
+
 ## 最后 Diff
 
 - statusShort: m projects/71-00075-11
@@ -414,20 +420,20 @@ index 10dc8ca..865b3d8 100644
 
 | Path | Bytes | SHA-256 |
 |---|---:|---|
-| evidence.json | 65464 | 2c3710ed5d090bbb8f9465552dcabb68360948d520dbe3478e8eab2f1aabab5f |
+| evidence.json | 65464 | 5f8f23a6e824da26c742be3b21906440d87bd7f18aca420386a3b3d7c9dcb9cf |
 | summary.md | 1806 | 7ccc6c307d8885a6ecc85b5b2d74b022ffad40e59fa5f8c5b5f913b403690a23 |
 | aggregate.md | self-referential | self-referential |
-| agent-messages.json | 9513 | c7eb8838fe1986631f073b605357a7cdefc8b4fcdf9a97f989524e026e9109e4 |
-| agent-trace.md | 6495 | f3cb4573893dfb7328e88ad1a1c0c428cbe466ce8e627319454d9be52f751a05 |
-| agent-transcript.md | 6495 | f3cb4573893dfb7328e88ad1a1c0c428cbe466ce8e627319454d9be52f751a05 |
-| final-response.md | 1224 | 7dde545e5cbe25761a4e34e3d3fd9682c40968071b59a76a56fc64c343827c7b |
+| agent-messages.json | 9862 | b82cda3cfc68ea676009000edd3de513b0ab2bd69dbc9671e8b2dd0971d85f3e |
+| agent-trace.md | 6675 | 23d9ea9d3d0635cd26dc062fd60dfe87fcc3e8c651a4bb98eb41e4d5d02c1343 |
+| agent-transcript.md | 6675 | 23d9ea9d3d0635cd26dc062fd60dfe87fcc3e8c651a4bb98eb41e4d5d02c1343 |
+| final-response.md | 1296 | a37fb592818a62af0c0d1fd32c8d26c68cd7763a25a4eeb2696cebcfa9a78f41 |
 | run.json | 72596 | a09620dece93504f73093b3096a71ed0b2da98e4dcb49085a777331133523798 |
-| result.json | 114622 | 31bb460ccacd4351455778c92bb477f44eb8195471c75d415299adebf69bae9c |
-| agent-trace.json | 36551 | 97493ab7e08e893ff753f69c5bd89e1893445f31539516183a052b44d1a020cf |
+| result.json | 114622 | 4e42745338763043eba01d8214a1cf1945474c996c5557c322b47e3ac4a0c60e |
+| agent-trace.json | 37763 | 93323f3ded3ec2187958264cc19025cedc19acad7b84d4655e51675dfe85f2df |
 | agent-prompt.md | 4726 | 1a1c192918c92b3bba0710dc36bb564579e277dbc6c382f47003d7efedb335f1 |
 | agent-diff.patch | 1986 | d027f38e42b15080aa70f0407a6750c8b583f445340391c6a8ed87338d6e0328 |
 | .hwlab/hwpod-spec.yaml | 1061 | c0589cbaa93aca8724b24f5404f52359145863c6725b32d893356851f4eaf4b5 |
-| worker.stdout.log | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
+| worker.stdout.log | 115342 | fa9a4af3a71f344e981ec2555bdd4dd0a632926d9f9866ee4dbd593d030e43c3 |
 | worker.stderr.log | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
 
 ## 说明
