@@ -1,0 +1,198 @@
+{
+  "contractVersion": "hwpod-case-run-agent-messages-v1",
+  "renderer": "tools/src/hwlab-cli/trace-renderer:traceDisplayRows",
+  "traceSource": "hwlab-cli.client.agent.trace",
+  "traceLookup": {
+    "source": "hwlab-cli.client.agent",
+    "strategy": "id_plus_existing_cli",
+    "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+    "baseUrl": "http://74.48.78.17:19666",
+    "traceId": "trc_case_constart-71freq-build_1c92c0aa29f149d7a3e257b3c9b1d254",
+    "sessionId": "ses_b74c13a9-c9b0-4b8d-b9d6-c8d7c76596ac",
+    "conversationId": "cnv_case_constart-71freq-build_constart-71freq-build-20260613140131-ffe01754",
+    "commands": {
+      "result": "hwlab-cli client agent result trc_case_constart-71freq-build_1c92c0aa29f149d7a3e257b3c9b1d254",
+      "trace": "hwlab-cli client agent trace trc_case_constart-71freq-build_1c92c0aa29f149d7a3e257b3c9b1d254 --render web",
+      "traceFull": "hwlab-cli client agent trace trc_case_constart-71freq-build_1c92c0aa29f149d7a3e257b3c9b1d254 --render web --full",
+      "inspect": "hwlab-cli client agent inspect --trace-id trc_case_constart-71freq-build_1c92c0aa29f149d7a3e257b3c9b1d254",
+      "sessionStatus": "hwlab-cli client agent session status ses_b74c13a9-c9b0-4b8d-b9d6-c8d7c76596ac"
+    }
+  },
+  "traceId": "trc_case_constart-71freq-build_1c92c0aa29f149d7a3e257b3c9b1d254",
+  "conversationId": "cnv_case_constart-71freq-build_constart-71freq-build-20260613140131-ffe01754",
+  "sessionId": "ses_b74c13a9-c9b0-4b8d-b9d6-c8d7c76596ac",
+  "status": "completed",
+  "sourceEventCount": 47,
+  "renderedRowCount": 21,
+  "noiseEventCount": 0,
+  "finalResponse": {
+    "present": true,
+    "status": "completed",
+    "source": "agentrun-command-result",
+    "text": "BLOCKER：当前 CaseRun runtime registry 找不到指定 HWPOD。\n\n已按给定参数执行：\n\n- `hwpod-ctl spec validate`: 失败，`hwpod_id_not_found`\n- `hwpod inspect`: 失败，`hwpod_id_not_found`\n- `hwpod build`: 失败，`hwpod_id_not_found`\n\n错误中的 HWPOD id 是 `constart-71freq-c`，runtime endpoint 是 `http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667`。由于 HWPOD 未注册，无法通过标准入口确认 `subjectWorkspacePath`、`projectRootPath` 或 submodule HEAD，也无法启动编译 job。\n\n编译结果：\n\n- job id：未生成\n- returnCode：未生成；`hwpod build` 命令进程退出码为 `1`\n- warningCount：未生成\n- artifact 路径：未生成\n\n未修改源码，未下载，未访问串口或 board-comm。",
+    "textChars": 538,
+    "traceId": "trc_case_constart-71freq-build_1c92c0aa29f149d7a3e257b3c9b1d254"
+  },
+  "rows": [
+    {
+      "rowId": "trace-request:1",
+      "seq": 1,
+      "tone": "warn",
+      "header": "14:01:58  请求接受"
+    },
+    {
+      "rowId": "event:2",
+      "seq": 2,
+      "tone": "warn",
+      "header": "14:01:58 total=00:00:00 run agentrun:run:reuse-skipped",
+      "body": "AgentRun run reuse was skipped because this request requires the CaseRun tools-only resource bundle."
+    },
+    {
+      "rowId": "event:3",
+      "seq": 3,
+      "tone": "warn",
+      "header": "14:01:59 total=00:00:00 run agentrun:run:created",
+      "body": "AgentRun run run_8406e26e94cd4338a87342ba08083b60 created through internal k3s Service DNS."
+    },
+    {
+      "rowId": "event:4",
+      "seq": 4,
+      "tone": "warn",
+      "header": "14:01:59 total=00:00:00 run agentrun:command:created",
+      "body": "AgentRun command cmd_94cccc06b0a14fbab698dc5c9e22fb30 created; hwlab-cloud-api will start a runner Job explicitly without relying on scheduler automation."
+    },
+    {
+      "rowId": "event:5",
+      "seq": 5,
+      "tone": "warn",
+      "header": "14:02:00 total=00:00:01 run agentrun:runner-job:created",
+      "body": "AgentRun runner Job agentrun-v01-runner-b97b90babaed created in namespace agentrun-v01."
+    },
+    {
+      "rowId": "event:9",
+      "seq": 9,
+      "tone": "warn",
+      "header": "14:02:05 total=00:00:06 run agentrun:backend:runner-image-work-ready-smoke",
+      "body": "runner-image-work-ready-smoke"
+    },
+    {
+      "rowId": "event:10",
+      "seq": 10,
+      "tone": "warn",
+      "header": "14:02:05 total=00:00:06 run agentrun:backend:run-claimed",
+      "body": "run-claimed"
+    },
+    {
+      "rowId": "event:11",
+      "seq": 11,
+      "tone": "warn",
+      "header": "14:02:05 total=00:00:06 run agentrun:backend:resource-bundle-materialized",
+      "body": "resource-bundle-materialized"
+    },
+    {
+      "rowId": "event:12",
+      "seq": 12,
+      "tone": "warn",
+      "header": "14:02:05 total=00:00:06 run agentrun:backend:runner-bundle-work-ready-smoke",
+      "body": "runner-bundle-work-ready-smoke"
+    },
+    {
+      "rowId": "event:13",
+      "seq": 13,
+      "tone": "warn",
+      "header": "14:02:05 total=00:00:06 run agentrun:backend:backend-turn-started",
+      "body": "backend-turn-started"
+    },
+    {
+      "rowId": "trace-setup:14",
+      "seq": 14,
+      "tone": "source",
+      "header": "14:02:05  会话就绪"
+    },
+    {
+      "rowId": "event:16",
+      "seq": 16,
+      "tone": "warn",
+      "header": "14:02:05 total=00:00:07 run agentrun:backend:codex-rollout-storage-mounted",
+      "body": "codex-rollout-storage-mounted"
+    },
+    {
+      "rowId": "event:19",
+      "seq": 19,
+      "tone": "warn",
+      "header": "14:02:05 total=00:00:07 run agentrun:backend:initial-prompt-assembly",
+      "body": "initial-prompt-assembly"
+    },
+    {
+      "rowId": "event:22",
+      "seq": 22,
+      "tone": "warn",
+      "header": "14:02:05 total=00:00:07 run agentrun:backend:active-turn-control-ready",
+      "body": "active-turn-control-ready"
+    },
+    {
+      "rowId": "event:25",
+      "seq": 25,
+      "tone": "ok",
+      "header": "14:02:25  助手消息",
+      "bodyFormat": "markdown",
+      "body": "我先按 CaseRun 入口做 `spec validate`，所有 HWPOD 命令都会显式带上本次给定的 `--hwpod-id` 和 `--workspace-path`。之后只做只读确认和编译，不改源码。"
+    },
+    {
+      "rowId": "tool:call_F9W17xSleqMg0W6idh5jAJRK",
+      "seq": 27,
+      "tone": "ok",
+      "header": "14:02:25 total=00:00:26 ok commandExecution",
+      "bodyFormat": "text",
+      "body": "hwpod-ctl spec validate --hwpod-id constart-71freq-c --workspace-path 'F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613140131-ffe01754'\nstdout:\n{ \"ok\": false, \"action\": \"hwpod-ctl\", \"status\": \"failed\", \"error\": { \"code\": \"hwpod_id_not_found\", \"message\": \"HWPOD id not found in runtime registry: constart-71freq-c\", \"details\": { \"hwpodId\": \"constart-71freq-c\", \"count\": 1, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\", \"explicitOverride\": false, \"lane\": \"v02\", \"namespace\": \"hwlab-v02\", \"urlLane\": \"v02\", \"urlNamespace\": \"hwlab-v02\" } } }, \"observedAt\": \"2026-06-13T14:02:25.602Z\" }\nexitCode=1\ndurationMs=0\noutputBytes=909\nsourceSeq=22"
+    },
+    {
+      "rowId": "event:28",
+      "seq": 28,
+      "tone": "ok",
+      "header": "14:02:43  助手消息",
+      "bodyFormat": "markdown",
+      "body": "`spec validate` 没有通过：运行时 registry 报告找不到 `constart-71freq-c`。我会继续用同一参数尝试 `hwpod inspect`，确认这是不是整个 HWPOD 注册不可用，而不是单个子命令问题。"
+    },
+    {
+      "rowId": "tool:call_eXltjkmI34MYKgKV3FVKUujp",
+      "seq": 30,
+      "tone": "ok",
+      "header": "14:02:45 total=00:00:46 ok commandExecution",
+      "bodyFormat": "text",
+      "body": "hwpod inspect --hwpod-id constart-71freq-c --workspace-path 'F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613140131-ffe01754'\nstdout:\n{ \"ok\": false, \"action\": \"hwpod-cli\", \"status\": \"failed\", \"error\": { \"code\": \"hwpod_id_not_found\", \"message\": \"HWPOD id not found in runtime registry: constart-71freq-c\", \"details\": { \"hwpodId\": \"constart-71freq-c\", \"count\": 1, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\", \"explicitOverride\": false, \"lane\": \"v02\", \"namespace\": \"hwlab-v02\", \"urlLane\": \"v02\", \"urlNamespace\": \"hwlab-v02\" } } }, \"observedAt\": \"2026-06-13T14:02:45.402Z\" }\nexitCode=1\ndurationMs=0\noutputBytes=899\nsourceSeq=25"
+    },
+    {
+      "rowId": "event:31",
+      "seq": 31,
+      "tone": "ok",
+      "header": "14:03:00  助手消息",
+      "bodyFormat": "markdown",
+      "body": "`hwpod inspect` 也因同一个 `hwpod_id_not_found` 失败，说明当前 CaseRun runtime 没有注册这个 HWPOD。为了完整记录本次编译入口状态，我再按要求尝试一次 `hwpod build`，预期会在同一注册检查处失败，不会进入下载、串口或 board-comm。"
+    },
+    {
+      "rowId": "tool:call_sIl0yJLiexH4au3d9cgKU63n",
+      "seq": 33,
+      "tone": "ok",
+      "header": "14:03:03 total=00:01:04 ok commandExecution",
+      "bodyFormat": "text",
+      "body": "hwpod build --hwpod-id constart-71freq-c --workspace-path 'F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613140131-ffe01754'\nstdout:\n{ \"ok\": false, \"action\": \"hwpod-cli\", \"status\": \"failed\", \"error\": { \"code\": \"hwpod_id_not_found\", \"message\": \"HWPOD id not found in runtime registry: constart-71freq-c\", \"details\": { \"hwpodId\": \"constart-71freq-c\", \"count\": 1, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\", \"explicitOverride\": false, \"lane\": \"v02\", \"namespace\": \"hwlab-v02\", \"urlLane\": \"v02\", \"urlNamespace\": \"hwlab-v02\" } } }, \"observedAt\": \"2026-06-13T14:03:03.432Z\" }\nexitCode=1\ndurationMs=0\noutputBytes=897\nsourceSeq=28"
+    },
+    {
+      "rowId": "event:35",
+      "seq": 35,
+      "tone": "ok",
+      "header": "14:03:31  助手最终消息，轮次完成（总耗时 00:01:32）",
+      "terminal": true,
+      "bodyFormat": "markdown",
+      "body": "BLOCKER：当前 CaseRun runtime registry 找不到指定 HWPOD。\n\n已按给定参数执行：\n\n- `hwpod-ctl spec validate`: 失败，`hwpod_id_not_found`\n- `hwpod inspect`: 失败，`hwpod_id_not_found`\n- `hwpod build`: 失败，`hwpod_id_not_found`\n\n错误中的 HWPOD id 是 `constart-71freq-c`，runtime endpoint 是 `http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667`。由于 HWPOD 未注册，无法通过标准入口确认 `subjectWorkspacePath`、`projectRootPath` 或 submodule HEAD，也无法启动编译 job。\n\n编译结果：\n\n- job id：未生成\n- returnCode：未生成；`hwpod build` 命令进程退出码为 `1`\n- warningCount：未生成\n- artifact 路径：未生成\n\n未修改源码，未下载，未访问串口或 board-comm。"
+    }
+  ],
+  "diff": {
+    "path": "agent-diff.patch",
+    "sha256": "d027f38e42b15080aa70f0407a6750c8b583f445340391c6a8ed87338d6e0328",
+    "statusShort": "m projects/71-00075-11",
+    "diffStat": "projects/71-00075-11 | 0\n 1 file changed, 0 insertions(+), 0 deletions(-)\nprojects/71-00075-11/FirmWare/MDK-ARM/FREQ_Controller_FW.uvoptx | 6 +++---\n 1 file changed, 3 insertions(+), 3 deletions(-)",
+    "patchIncludedInTranscript": true
+  }
+}
