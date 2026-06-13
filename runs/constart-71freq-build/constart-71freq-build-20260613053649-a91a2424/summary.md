@@ -1,0 +1,40 @@
+# HWPOD CaseRun constart-71freq-build
+
+- runId: constart-71freq-build-20260613053649-a91a2424
+- status: recorded
+- autoEvaluation: false
+- compileOnly: true
+- subjectRepoLocalPath: F:\Work\ConStart
+- subjectCommitId: de223ab80ddf80e5ba092dcf2d20f9df7ec91a60
+- subjectWorktreePath: F:\Work\ConStart\.worktree\caserun-constart-71freq-build-20260613053649-a91a2424
+- agentTraceId: 
+- agentSessionId: 
+- traceLookupStrategy: 
+- traceCommand: 
+- resultCommand: 
+- inspectCommand: 
+- agentTerminalStatus: 
+- agentCommandStatus: 
+- agentToolCallSummaryCount: 
+- agentToolCallStatusCounts: 
+- agentToolCallExitCodeCounts: 
+- agentTraceCommandCount: 0
+- agentTraceHwpodCommandCount: 0
+- agentTraceHwpodBuildCommandCount: 0
+- agentStageSource: agent-trace-commands
+- agentStageCommandCount: 0
+- agentStageKinds: 
+- diffPatchPath: 
+- runnerHwpodSource: case-run-runner-post-agent-compile-check
+- hwpodExitCode: 0
+- agentBuildJobIds: 
+- agentReportedBuildJobId: 
+- agentReportedReturnCode: 
+- agentReportedWarningCount: 
+- postAgentCompileJobId: 20260613_133905_2512fd2e
+- runnerPostAgentCompileReturnCode: 0
+- runnerPostAgentCompileWarningCount: 4
+- buildJobRelationship: runner-post-agent-check-only
+- jobId: 20260613_133905_2512fd2e
+- runnerPostAgentCompileCheck: recorded
+
