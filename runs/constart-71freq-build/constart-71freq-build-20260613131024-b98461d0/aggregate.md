@@ -63,7 +63,7 @@ _No HWPOD command summary recorded._
 - caseRepoRunDir: /root/hwlab-case-registry/runs/constart-71freq-build/constart-71freq-build-20260613131024-b98461d0
 - sourceRunDir: /root/hwlab-v02/.state/hwlab-cli/caserun/constart-71freq-build-20260613131024-b98461d0
 - createdAt: 2026-06-13T13:10:24.756Z
-- completedAt: 2026-06-13T13:11:42.130Z
+- completedAt: 2026-06-13T13:11:47.874Z
 - runnerPostAgentCompileCheck: recorded
 
 ## HWPOD / 后置验证信息
@@ -397,9 +397,9 @@ index 10dc8ca..865b3d8 100644
 | agent-trace.md | 6243 | de41cd571d4fb363e2fd793ebfdbe89c2fd63320f92eb38ee2273f845af97ee2 |
 | agent-transcript.md | 6243 | de41cd571d4fb363e2fd793ebfdbe89c2fd63320f92eb38ee2273f845af97ee2 |
 | final-response.md | 1428 | bce88506d4ad1064164712bde492d161e660320e0f2ea984b428fd0d903e2299 |
-| run.json | 72541 | 359e75952cba9d5503d54345ad072433d8b3713e28341e6d9ab1d3b308608ad8 |
-| result.json | 10767 | dd925160f04f6dd91cd3cb5f33af98e38ae343ea2e33c61a420fdc77bb1f58f4 |
-| agent-trace.json | 33191 | 74b5b57a775ae44e7f8c563f033658a973508450165077dae0440af4224793ce |
+| run.json | 72541 | 9390eb01e315f74f53c41c125d374891e29b73ff3707c1037db4a3ddc78b1f26 |
+| result.json | 114527 | 1e69ad94109bcda714e6d252967c2b7a3b29b4477a9c265bb0e6c5aeccfe386e |
+| agent-trace.json | 33191 | 29de2e5165de1c94f3669693be491faf2ad3e875055c9967c25f2826e25887f0 |
 | agent-prompt.md | 4726 | a5ed02941630d01552dc3bd7e9959b4d776f1c038472163442cc3732a944a292 |
 | agent-diff.patch | 1986 | d027f38e42b15080aa70f0407a6750c8b583f445340391c6a8ed87338d6e0328 |
 | .hwlab/hwpod-spec.yaml | 1061 | c72c7102a3986d496cc97b462c3211d026a0d9e73010da527a6e3311bbf730ee |
