@@ -1,0 +1,40 @@
+# HWPOD CaseRun constart-71freq-build
+
+- runId: constart-71freq-build-20260613131024-b98461d0
+- status: recorded
+- autoEvaluation: false
+- compileOnly: true
+- subjectRepoLocalPath: F:\Work\ConStart
+- subjectCommitId: de223ab80ddf80e5ba092dcf2d20f9df7ec91a60
+- subjectWorktreePath: F:\Work\ConStart\.worktree\caserun-constart-71freq-build-20260613131024-b98461d0
+- agentTraceId: trc_case_constart-71freq-build_5896261f628b4e77bfa10b28f4662005
+- agentSessionId: ses_c02f2dc7-7f43-435a-82be-1e53ceb1cd62
+- traceLookupStrategy: id_plus_existing_cli
+- traceCommand: hwlab-cli client agent trace trc_case_constart-71freq-build_5896261f628b4e77bfa10b28f4662005 --render web
+- resultCommand: hwlab-cli client agent result trc_case_constart-71freq-build_5896261f628b4e77bfa10b28f4662005
+- inspectCommand: hwlab-cli client agent inspect --trace-id trc_case_constart-71freq-build_5896261f628b4e77bfa10b28f4662005
+- agentTerminalStatus: failed
+- agentCommandStatus: failed
+- agentToolCallSummaryCount: 
+- agentToolCallStatusCounts: 
+- agentToolCallExitCodeCounts: 
+- agentTraceCommandCount: 0
+- agentTraceHwpodCommandCount: 0
+- agentTraceHwpodBuildCommandCount: 0
+- agentStageSource: agent-trace-commands
+- agentStageCommandCount: 0
+- agentStageKinds: 
+- diffPatchPath: /root/hwlab-v02/.state/hwlab-cli/caserun/constart-71freq-build-20260613131024-b98461d0/agent-diff.patch
+- runnerHwpodSource: case-run-runner-post-agent-compile-check
+- hwpodExitCode: 0
+- agentBuildJobIds: 
+- agentReportedBuildJobId: 
+- agentReportedReturnCode: 
+- agentReportedWarningCount: 
+- postAgentCompileJobId: 20260613_211118_6e963da5
+- runnerPostAgentCompileReturnCode: 0
+- runnerPostAgentCompileWarningCount: 4
+- buildJobRelationship: runner-post-agent-check-only
+- jobId: 20260613_211118_6e963da5
+- runnerPostAgentCompileCheck: recorded
+
