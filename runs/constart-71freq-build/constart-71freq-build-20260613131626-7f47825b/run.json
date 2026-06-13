@@ -1,0 +1,912 @@
+{
+  "caseId": "constart-71freq-build",
+  "runId": "constart-71freq-build-20260613131626-7f47825b",
+  "runDir": "/root/hwlab-v02/.state/hwlab-cli/caserun/constart-71freq-build-20260613131626-7f47825b",
+  "caseRepo": "/root/hwlab-case-registry",
+  "caseDir": "/root/hwlab-case-registry/cases/constart-71freq-build",
+  "caseFile": "/root/hwlab-case-registry/cases/constart-71freq-build/case.json",
+  "sourceSpecPath": "/root/hwlab-case-registry/cases/constart-71freq-build/hwpod-spec.yaml",
+  "specPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/constart-71freq-build-20260613131626-7f47825b/.hwlab/hwpod-spec.yaml",
+  "apiUrl": "http://74.48.78.17:19667",
+  "compileOnly": true,
+  "createdAt": "2026-06-13T13:16:26.918Z",
+  "updatedAt": "2026-06-13T13:18:44.423Z",
+  "definition": {
+    "contractVersion": "hwpod-case-v1",
+    "caseId": "constart-71freq-build",
+    "title": "ConStart 71-FREQ mono repo + submodule Keil build",
+    "mode": "compile-only",
+    "hwpodSpec": "hwpod-spec.yaml",
+    "subject": {
+      "repoLocalPath": "F:\\Work\\ConStart",
+      "commitId": "de223ab80ddf80e5ba092dcf2d20f9df7ec91a60",
+      "subdir": "projects/71-00075-11",
+      "submodules": [
+        {
+          "path": "projects/71-00075-11",
+          "url": "https://github.com/ConstarInc/71-00075-11",
+          "commitId": "5ef2fc874782713d1e4752636a8db05cc4a18cd2"
+        }
+      ]
+    },
+    "runtime": {
+      "apiUrl": "http://74.48.78.17:19667",
+      "webUrl": "http://74.48.78.17:19666"
+    },
+    "agentTask": {
+      "workspace": "subjectWorktree",
+      "providerProfile": "deepseek",
+      "projectId": "prj_hwpod_workbench",
+      "timeoutMs": 600000,
+      "prompt": "本案例用于验证 ConStart mono repo + 71-FREQ submodule 的 CaseRun 接入。请只做只读检查和编译验证：确认 subjectWorkspacePath 是 F:\\Work\\ConStart 下的隔离 worktree，确认 projectRootPath 指向 projects/71-00075-11，确认该 submodule HEAD 是 5ef2fc874782713d1e4752636a8db05cc4a18cd2。然后运行 hwpod-ctl spec validate、hwpod inspect 和 hwpod build。不要修改源码，不要下载，不要访问串口或 board-comm。输出编译 job id、returnCode、warningCount 和关键 artifact 路径。",
+      "constraints": [
+        "只读，不修改 ConStart 或 71-FREQ 源码",
+        "必须以 mono repo 根作为 workspace，不能切换到 projects/71-00075-11 子模块根作为默认 workspace",
+        "如果 submodule 未初始化或 commit 不匹配，报告 blocker，不要改用原始 dirty checkout",
+        "本 case 只做编译，不下载、不串口、不 board-comm"
+      ]
+    },
+    "flow": [
+      {
+        "id": "agent-readonly-build",
+        "kind": "agent"
+      },
+      {
+        "id": "build",
+        "kind": "hwpod.build"
+      }
+    ],
+    "expected": {
+      "subject": {
+        "repoLocalPath": "F:\\Work\\ConStart",
+        "submodulePath": "projects/71-00075-11",
+        "submoduleCommitId": "5ef2fc874782713d1e4752636a8db05cc4a18cd2"
+      },
+      "compile": {
+        "success": true,
+        "artifactSuffixes": [
+          "projects/71-00075-11/FirmWare/MDK-ARM/FREQ_Controller_FW/FREQ_Controller_FW.hex",
+          "projects/71-00075-11/FirmWare/MDK-ARM/FREQ_Controller_FW/FREQ_Controller_FW.axf"
+        ]
+      },
+      "download": {
+        "skipped": true,
+        "reason": "build case only"
+      }
+    },
+    "notes": {
+      "autoEvaluation": false,
+      "purpose": "首个 PLC/ConStart CaseRun：验证 mono repo root workspace、submodule prepare 和 Keil build"
+    }
+  },
+  "subject": {
+    "repoLocalPath": "F:\\Work\\ConStart",
+    "commitId": "de223ab80ddf80e5ba092dcf2d20f9df7ec91a60",
+    "subdir": "projects/71-00075-11",
+    "submodules": [
+      {
+        "path": "projects/71-00075-11",
+        "commitId": "5ef2fc874782713d1e4752636a8db05cc4a18cd2",
+        "url": "https://github.com/ConstarInc/71-00075-11",
+        "recursive": false
+      }
+    ],
+    "worktreePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613131626-7f47825b",
+    "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613131626-7f47825b",
+    "defaultWorkspacePath": "F:\\Work\\ConStart",
+    "projectRootPath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613131626-7f47825b\\projects\\71-00075-11",
+    "setup": {
+      "httpStatus": 200,
+      "plans": [
+        {
+          "opId": "op_01_subject_commit",
+          "attempt": 1,
+          "planId": "case_subject_2d3e72aa-bd02-404d-b210-815098453447",
+          "httpStatus": 200,
+          "ok": true,
+          "status": "completed",
+          "resultCount": 1
+        },
+        {
+          "opId": "op_02_subject_worktree_add",
+          "attempt": 1,
+          "planId": "case_subject_96cf0e48-f034-4673-aaef-84de0787e84c",
+          "httpStatus": 200,
+          "ok": true,
+          "status": "completed",
+          "resultCount": 1
+        },
+        {
+          "opId": "op_03_subject_worktree_head",
+          "attempt": 1,
+          "planId": "case_subject_7102fb06-d1dd-4f87-abd9-67498b0c705b",
+          "httpStatus": 200,
+          "ok": true,
+          "status": "completed",
+          "resultCount": 1
+        },
+        {
+          "opId": "op_04_submodule_1_update",
+          "attempt": 1,
+          "planId": "case_subject_c84c32fe-582d-4632-9679-74c2b989facf",
+          "httpStatus": 200,
+          "ok": true,
+          "status": "completed",
+          "resultCount": 1
+        },
+        {
+          "opId": "op_04_submodule_1_head",
+          "attempt": 1,
+          "planId": "case_subject_d9cddb49-da63-4667-8605-2115426757d2",
+          "httpStatus": 200,
+          "ok": true,
+          "status": "completed",
+          "resultCount": 1
+        },
+        {
+          "opId": "op_99_keil_sidecars",
+          "attempt": 1,
+          "planId": "case_subject_deb57ab1-776a-48f1-af5b-bd575049b94c",
+          "httpStatus": 200,
+          "ok": true,
+          "status": "completed",
+          "resultCount": 1
+        }
+      ],
+      "nodeId": "node-d601-f103-v2",
+      "exitCode": 0,
+      "stdout": "HEAD is now at de223ab docs: 补充频率判断 R2.2 真机验证报告\nde223ab80ddf80e5ba092dcf2d20f9df7ec91a60\nHEAD is now at 5ef2fc8 feat: expand freq controller JSON-RPC support\n5ef2fc874782713d1e4752636a8db05cc4a18cd2\ncaseRunKeilSidecars {\"copied\":1,\"copiedFiles\":[{\"ext\":\".uvoptx\",\"source\":\"projects\\\\71-00075-11\\\\FirmWare\\\\MDK-ARM\\\\FREQ_Controller_FW.uvoptx\",\"destination\":\".worktree\\\\caserun-constart-71freq-build-20260613131626-7f47825b\\\\projects\\\\71-00075-11\\\\FirmWare\\\\MDK-ARM\\\\FREQ_Controller_FW.uvoptx\"}],\"missing\":[\"projects\\\\71-00075-11\\\\FirmWare\\\\MDK-ARM\\\\FREQ_Controller_FW.uvopt\"],\"sourceBase\":\"projects\\\\71-00075-11\\\\FirmWare\\\\MDK-ARM\\\\FREQ_Controller_FW\",\"destinationBase\":\".worktree\\\\caserun-constart-71freq-build-20260613131626-7f47825b\\\\projects\\\\71-00075-11\\\\FirmWare\\\\MDK-ARM\\\\FREQ_Controller_FW\"}",
+      "stderr": "Preparing worktree (detached HEAD de223ab)\nUpdating files:  38% (899/2330)\rUpdating files:  39% (909/2330)\rUpdating files:  40% (932/2330)\rUpdating files:  41% (956/2330)\rUpdating files:  42% (979/2330)\rUpdating files:  43% (1002/2330)\rUpdating files:  44% (1026/2330)\rUpdating files:  45% (1049/2330)\rUpdating files:  46% (1072/2330)\rUpdating files:  47% (1096/2330)\rUpdating files:  48% (1119/2330)\rUpdating files:  49% (1142/2330)\rUpdating files:  50% (1165/2330)\rUpdating files:  51% (1189/2330)\rUpdating files:  52% (1212/2330)\rUpdating files:  53% (1235/2330)\rUpdating files:  54% (1259/2330)\rUpdating files:  55% (1282/2330)\rUpdating files:  56% (1305/2330)\rUpdating files:  57% (1329/2330)\rUpdating files:  58% (1352/2330)\rUpdating files:  59% (1375/2330)\rUpdating files:  60% (1398/2330)\rUpdating files:  61% (1422/2330)\rUpdating files:  62% (1445/2330)\rUpdating files:  63% (1468/2330)\rUpdating files:  64% (1492/2330)\rUpdating files:  65% (1515/2330)\rUpdating files:  66% (1538/2330)\rUpdating files:  67% (1562/2330)\rUpdating files:  68% (1585/2330)\rUpdating files:  69% (1608/2330)\rUpdating files:  70% (1631/2330)\rUpdating files:  71% (1655/2330)\rUpdating files:  72% (1678/2330)\rUpdating files:  73% (1701/2330)\rUpdating files:  74% (1725/2330)\rUpdating files:  75% (1748/2330)\rUpdating files:  76% (1771/2330)\rUpdating files:  76% (1785/2330)\rUpdating files:  77% (1795/2330)\rUpdating files:  78% (1818/2330)\rUpdating files:  79% (1841/2330)\rUpdating files:  80% (1864/2330)\rUpdating files:  81% (1888/2330)\rUpdating files:  82% (1911/2330)\rUpdating files:  83% (1934/2330)\rUpdating files:  84% (1958/2330)\rUpdating files:  85% (1981/2330)\rUpdating files:  86% (2004/2330)\rUpdating files:  87% (2028/2330)\rUpdating files:  88% (2051/2330)\rUpdating files:  89% (2074/2330)\rUpdating files:  90% (2097/2330)\rUpdating files:  91% (2121/2330)\rUpdating files:  92% (2144/2330)\rUpdating files:  93% (2167/2330)\rUpdating files:  94% (2191/2330)\rUpdating files:  95% (2214/2330)\rUpdating files:\n... clipped ...",
+      "actualHead": "de223ab80ddf80e5ba092dcf2d20f9df7ec91a60",
+      "submodules": [
+        {
+          "path": "projects/71-00075-11",
+          "url": "https://github.com/ConstarInc/71-00075-11",
+          "commitId": "5ef2fc874782713d1e4752636a8db05cc4a18cd2",
+          "actualHead": "5ef2fc874782713d1e4752636a8db05cc4a18cd2",
+          "ok": true
+        }
+      ],
+      "keilSidecars": {
+        "copied": 1,
+        "copiedFiles": [
+          {
+            "ext": ".uvoptx",
+            "source": "projects\\71-00075-11\\FirmWare\\MDK-ARM\\FREQ_Controller_FW.uvoptx",
+            "destination": ".worktree\\caserun-constart-71freq-build-20260613131626-7f47825b\\projects\\71-00075-11\\FirmWare\\MDK-ARM\\FREQ_Controller_FW.uvoptx"
+          }
+        ],
+        "missing": [
+          "projects\\71-00075-11\\FirmWare\\MDK-ARM\\FREQ_Controller_FW.uvopt"
+        ],
+        "sourceBase": "projects\\71-00075-11\\FirmWare\\MDK-ARM\\FREQ_Controller_FW",
+        "destinationBase": ".worktree\\caserun-constart-71freq-build-20260613131626-7f47825b\\projects\\71-00075-11\\FirmWare\\MDK-ARM\\FREQ_Controller_FW",
+        "line": "caseRunKeilSidecars {\"copied\":1,\"copiedFiles\":[{\"ext\":\".uvoptx\",\"source\":\"projects\\\\71-00075-11\\\\FirmWare\\\\MDK-ARM\\\\FREQ_Controller_FW.uvoptx\",\"destination\":\".worktree\\\\caserun-constart-71freq-build-20260613131626-7f47825b\\\\projects\\\\71-00075-11\\\\FirmWare\\\\MDK-ARM\\\\FREQ_Controller_FW.uvoptx\"}],\"missing\":[\"projects\\\\71-00075-11\\\\FirmWare\\\\MDK-ARM\\\\FREQ_Controller_FW.uvopt\"],\"sourceBase\":\"projects\\\\71-00075-11\\\\FirmWare\\\\MDK-ARM\\\\FREQ_Controller_FW\",\"destinationBase\":\".worktree\\\\caserun-constart-71freq-build-20260613131626-7f47825b\\\\projects\\\\71-00075-11\\\\FirmWare\\\\MDK-ARM\\\\FREQ_Controller_FW\"}"
+      }
+    },
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "statusShort": "M \"docs/MDTODO/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210.md\"\n M docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md\n M docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md\n M docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md\n M docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md\n M docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md\n M docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md\n m projects/71-00075-11\n?? .worktree/\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_152857_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_154822_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_155756_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_161550_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_162137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_164205_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_165817_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260613_121137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4.1_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4_Task_Report.md\"",
+      "diffStat": "...224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210.md\" | 83 ++++++++++++++++++++++\n .../Slave_AC_Module/canopen_communication_usage.md | 11 +++\n .../control_algorithm_gap_closure_loopback_plan.md |  6 +-\n .../control_algorithm_implementation_plan.md       |  6 +-\n ...t_implementation_acceptance_and_architecture.md |  6 +-\n .../original_spec_p0_p1_implementation_plan.md     |  6 +-\n .../real_hardware_regression_checklist.md          | 60 ++++++++++++++++\n projects/71-00075-11                               |  0\n 8 files changed, 166 insertions(+), 12 deletions(-)",
+      "diffSha256": "3fa0408768df4935d57d44d8e9c5ac4c569c81d99ae584c5c6c03534aece9441",
+      "diffBytes": 31565,
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 2289,
+          "stderr": ""
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 563,
+          "stderr": "warning: in the working copy of 'docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md', LF \n... clipped ..."
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 31565,
+          "stderr": "warning: in the working copy of 'docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md', LF \n... clipped ..."
+        }
+      }
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "statusShort": "M \"docs/MDTODO/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210.md\"\n M docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md\n M docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md\n M docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md\n M docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md\n M docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md\n M docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md\n m projects/71-00075-11\n?? .worktree/\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_152857_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_154822_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_155756_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_161550_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_162137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_164205_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_165817_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260613_121137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4.1_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4_Task_Report.md\"",
+      "diffStat": "...224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210.md\" | 83 ++++++++++++++++++++++\n .../Slave_AC_Module/canopen_communication_usage.md | 11 +++\n .../control_algorithm_gap_closure_loopback_plan.md |  6 +-\n .../control_algorithm_implementation_plan.md       |  6 +-\n ...t_implementation_acceptance_and_architecture.md |  6 +-\n .../original_spec_p0_p1_implementation_plan.md     |  6 +-\n .../real_hardware_regression_checklist.md          | 60 ++++++++++++++++\n projects/71-00075-11                               |  0\n 8 files changed, 166 insertions(+), 12 deletions(-)",
+      "diffSha256": "3fa0408768df4935d57d44d8e9c5ac4c569c81d99ae584c5c6c03534aece9441",
+      "diffBytes": 31565,
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 2289,
+          "stderr": ""
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 563,
+          "stderr": "warning: in the working copy of 'docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md', LF \n... clipped ..."
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 31565,
+          "stderr": "warning: in the working copy of 'docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md', LF \n... clipped ..."
+        }
+      }
+    }
+  },
+  "agentTask": {
+    "prompt": "本案例用于验证 ConStart mono repo + 71-FREQ submodule 的 CaseRun 接入。请只做只读检查和编译验证：确认 subjectWorkspacePath 是 F:\\Work\\ConStart 下的隔离 worktree，确认 projectRootPath 指向 projects/71-00075-11，确认该 submodule HEAD 是 5ef2fc874782713d1e4752636a8db05cc4a18cd2。然后运行 hwpod-ctl spec validate、hwpod inspect 和 hwpod build。不要修改源码，不要下载，不要访问串口或 board-comm。输出编译 job id、returnCode、warningCount 和关键 artifact 路径。",
+    "workspace": "subjectWorktree",
+    "constraints": [
+      "只读，不修改 ConStart 或 71-FREQ 源码",
+      "必须以 mono repo 根作为 workspace，不能切换到 projects/71-00075-11 子模块根作为默认 workspace",
+      "如果 submodule 未初始化或 commit 不匹配，报告 blocker，不要改用原始 dirty checkout",
+      "本 case 只做编译，不下载、不串口、不 board-comm"
+    ],
+    "providerProfile": "deepseek",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 600000
+  },
+  "stage": "completed",
+  "agent": {
+    "stageStatus": "completed",
+    "baseUrl": "http://74.48.78.17:19666",
+    "projectId": "prj_hwpod_workbench",
+    "providerProfile": "dsflash-go",
+    "conversationId": "cnv_case_constart-71freq-build_constart-71freq-build-20260613131626-7f47825b",
+    "sessionId": "ses_e5985b30-9c05-44c0-bc76-e4b2a2577a17",
+    "traceId": "trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb",
+    "promptPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/constart-71freq-build-20260613131626-7f47825b/agent-prompt.md",
+    "promptSha256": "26129e3c1698e87d9a76984def43ba62d7f41d99e2852f071000a939bc9a2656",
+    "accepted": {
+      "accepted": true,
+      "status": "running",
+      "shortConnection": true,
+      "controlSemantics": "submit-and-poll",
+      "traceId": "trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb",
+      "workspaceId": null,
+      "workspaceRevision": null,
+      "conversationId": "cnv_case_constart-71freq-build_constart-71freq-build-20260613131626-7f47825b",
+      "sessionId": "ses_e5985b30-9c05-44c0-bc76-e4b2a2577a17",
+      "traceUrl": "/v1/agent/chat/trace/trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb",
+      "resultUrl": "/v1/agent/chat/result/trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb",
+      "streamUrl": "/v1/agent/chat/trace/trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb/stream",
+      "cancelUrl": "/v1/agent/chat/cancel",
+      "polling": {
+        "resultIntervalMs": 1000,
+        "traceIntervalMs": 1000
+      },
+      "runnerTrace": {
+        "traceId": "trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb",
+        "status": "missing",
+        "createdAt": null,
+        "updatedAt": null,
+        "startedAt": null,
+        "finishedAt": null,
+        "eventCount": 0,
+        "events": [],
+        "assistantStreams": [],
+        "eventLabels": [],
+        "lastEvent": null,
+        "elapsedMs": null,
+        "waitingFor": null,
+        "runnerKind": null,
+        "workspace": null,
+        "sandbox": null,
+        "sessionMode": null,
+        "implementationType": null,
+        "sessionId": null,
+        "sessionStatus": null,
+        "sessionLifecycleStatus": null,
+        "turn": null,
+        "outputTruncated": false,
+        "valuesPrinted": false
+      }
+    },
+    "polls": 40,
+    "timedOut": false,
+    "timeoutMs": 600000,
+    "pollIntervalMs": 1000,
+    "resultUrl": "http://74.48.78.17:19666/v1/agent/chat/result/trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb",
+    "lastPollAt": "2026-06-13T13:18:05.478Z",
+    "lastHttpStatus": 200,
+    "nextPollCommand": "hwlab-cli client agent result trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb",
+    "traceCommand": "hwlab-cli client agent trace trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb --render web",
+    "inspectCommand": "hwlab-cli client agent inspect --trace-id trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb",
+    "sessionCommand": "hwlab-cli client agent session status ses_e5985b30-9c05-44c0-bc76-e4b2a2577a17",
+    "traceLookup": {
+      "source": "hwlab-cli.client.agent",
+      "strategy": "id_plus_existing_cli",
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "baseUrl": "http://74.48.78.17:19666",
+      "traceId": "trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb",
+      "sessionId": "ses_e5985b30-9c05-44c0-bc76-e4b2a2577a17",
+      "conversationId": "cnv_case_constart-71freq-build_constart-71freq-build-20260613131626-7f47825b",
+      "commands": {
+        "result": "hwlab-cli client agent result trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb",
+        "trace": "hwlab-cli client agent trace trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb --render web",
+        "traceFull": "hwlab-cli client agent trace trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb --render web --full",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb",
+        "sessionStatus": "hwlab-cli client agent session status ses_e5985b30-9c05-44c0-bc76-e4b2a2577a17"
+      }
+    },
+    "sessionResponse": {
+      "ok": true,
+      "status": "created",
+      "contractVersion": "code-agent-manual-session-v1",
+      "session": {
+        "sessionId": "ses_e5985b30-9c05-44c0-bc76-e4b2a2577a17",
+        "projectId": "prj_hwpod_workbench",
+        "agentId": "hwlab-code-agent",
+        "status": "idle",
+        "usable": true,
+        "conversationId": "cnv_case_constart-71freq-build_constart-71freq-build-20260613131626-7f47825b",
+        "threadId": null,
+        "lastTraceId": null,
+        "providerProfile": "dsflash-go",
+        "agentRun": null,
+        "resourceBundle": null,
+        "createdAt": "2026-06-13T13:16:49.713Z",
+        "updatedAt": "2026-06-13T13:16:49.713Z",
+        "valuesRedacted": true,
+        "secretMaterialStored": false
+      },
+      "workspace": {
+        "workspaceId": "wsp_1ad43cb1f9a369d1993c1e3b",
+        "ownerUserId": "usr_v02_admin",
+        "projectId": "prj_hwpod_workbench",
+        "name": "Default Workbench",
+        "status": "active",
+        "isDefault": true,
+        "revision": 383,
+        "selectedConversationId": "cnv_case_constart-71freq-build_constart-71freq-build-20260613131626-7f47825b",
+        "selectedAgentSessionId": "ses_e5985b30-9c05-44c0-bc76-e4b2a2577a17",
+        "activeTraceId": null,
+        "providerProfile": "dsflash-go",
+        "selectedConversation": {
+          "conversationId": "cnv_case_constart-71freq-build_constart-71freq-build-20260613131626-7f47825b",
+          "sessionId": "ses_e5985b30-9c05-44c0-bc76-e4b2a2577a17",
+          "threadId": null,
+          "status": "idle",
+          "projectId": "prj_hwpod_workbench",
+          "agentId": "hwlab-code-agent",
+          "ownerUserId": "usr_v02_admin",
+          "lastTraceId": "",
+          "updatedAt": "2026-06-13T13:16:49.713Z",
+          "startedAt": "2026-06-13T13:16:49.713Z",
+          "endedAt": null,
+          "session": {
+            "sessionId": "ses_e5985b30-9c05-44c0-bc76-e4b2a2577a17",
+            "status": "idle"
+          },
+          "messages": [],
+          "messageCount": 0,
+          "firstUserMessagePreview": null,
+          "snapshot": {
+            "sessionStatus": "idle",
+            "source": "manual-session-create",
+            "valuesRedacted": true
+          },
+          "valuesRedacted": true
+        },
+        "workspace": {
+          "selectedConversationId": "cnv_case_constart-71freq-build_constart-71freq-build-20260613131626-7f47825b",
+          "selectedAgentSessionId": "ses_e5985b30-9c05-44c0-bc76-e4b2a2577a17",
+          "previousActiveTraceId": "trc_mq9ka7pc_6vkal0al",
+          "providerProfile": "dsflash-go",
+          "sessionStatus": "idle",
+          "lastTraceId": "trc_mq9kbguc_p9ydhrip",
+          "workspaceRevisionConflict": true,
+          "expectedWorkspaceRevision": 372,
+          "staleContinuationCleared": false,
+          "actor": {
+            "id": "usr_v02_admin",
+            "username": "admin",
+            "displayName": "HWLAB v0.2 Admin",
+            "role": "admin",
+            "status": "active"
+          },
+          "updatedAt": "2026-06-13T13:16:49.717Z",
+          "secretMaterialStored": false,
+          "valuesRedacted": true
+        },
+        "updatedBySessionId": "key_master_server_admin",
+        "updatedByClient": "hwlab-cli.case-run",
+        "createdAt": "2026-06-05T10:15:11.551Z",
+        "updatedAt": "2026-06-13T13:16:49.717Z",
+        "valuesRedacted": true,
+        "secretMaterialStored": false
+      },
+      "nextCommands": [
+        "hwlab-cli client agent send --session-id ses_e5985b30-9c05-44c0-bc76-e4b2a2577a17 --message TEXT",
+        "hwlab-cli client agent session status ses_e5985b30-9c05-44c0-bc76-e4b2a2577a17"
+      ],
+      "valuesRedacted": true,
+      "secretMaterialStored": false
+    },
+    "terminalStatus": "completed",
+    "commandStatus": "completed",
+    "agentRunStatus": "claimed",
+    "requestedProviderProfile": "dsflash-go",
+    "resolvedBackendProfile": "dsflash-go",
+    "provider": "dsflash-go",
+    "model": "deepseek-v4-flash",
+    "backend": "agentrun-v01/dsflash-go",
+    "infrastructureBackend": "agentrun-v01/dsflash-go",
+    "modelContextWindow": 1000000,
+    "autoCompactTokenLimit": 900000,
+    "providerTrace": {
+      "transport": "agentrun-v01",
+      "protocol": "agentrun-v01-jsonrpc",
+      "wireApi": "agentrun-v01-command-result",
+      "source": "agentrun-v01",
+      "backendProfile": "dsflash-go",
+      "model": "deepseek-v4-flash",
+      "modelContextWindow": 1000000,
+      "autoCompactTokenLimit": 900000,
+      "runId": "run_98d631e7bc4d467cb3e521cb92b15eeb",
+      "commandId": "cmd_7a88188409c8454c85782232cdca79aa",
+      "terminalStatus": "completed",
+      "valuesPrinted": false
+    },
+    "result": {
+      "clipped": true,
+      "bytes": 121459,
+      "preview": "{\"accepted\":true,\"status\":\"completed\",\"shortConnection\":true,\"traceId\":\"trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb\",\"conversationId\":\"cnv_case_constart-71freq-build_constart-71freq-build-20260613131626-7f47825b\",\"sessionId\":\"ses_e5985b30-9c05-44c0-bc76-e4b2a2577a17\",\"threadId\":null,\"messageId\":\"msg_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb\",\"createdAt\":\"2026-06-13T13:16:51.714Z\",\"updatedAt\":\"2026-06-13T13:18:05.721Z\",\"provider\":\"dsflash-go\",\"model\":\"deepseek-v4-flash\",\"modelContextWindow\":1000000,\"autoCompactTokenLimit\":900000,\"backend\":\"agentrun-v01/dsflash-go\",\"infrastructureBackend\":\"agentrun-v01/dsflash-go\",\"capabilityLevel\":\"agentrun-v01-shared-code-agent-session\",\"sessionMode\":\"agentrun-v01-durable-session\",\"implementationType\":\"agentrun-v01-shared-execution-infra\",\"threadContinuityPolicy\":\"hwlab-agentrun-v01-reuse-runner-thread\",\"agentRun\":{\"adapter\":\"agentrun-v01\",\"managerUrl\":\"http://agentrun-mgr.agentrun-v01.svc.cluster.local:8080\",\"backendProfile\":\"dsflash-go\",\"providerId\":\"G14\",\"runId\":\"run_98d631e7bc4d467cb3e521cb92b15eeb\",\"commandId\":\"cmd_7a88188409c8454c85782232cdca79aa\",\"attemptId\":\"attempt_mqcdqdlt\",\"runnerId\":\"runner_99999736df96\",\"runnerJobId\":null,\"jobName\":\"agentrun-v01-runner-b582fad8dcf0\",\"namespace\":\"agentrun-v01\",\"status\":\"completed\",\"runStatus\":\"claimed\",\"commandState\":\"completed\",\"terminalStatus\":\"completed\",\"resourceBundle\":{\"kind\":\"gitbundle\",\"repoUrl\":\"git@github.com:pikasTech/HWLAB.git\",\"ref\":\"v0.2\",\"requestedRef\":\"v0.2\",\"sourceCommitHint\":\"65cbbdf142379a59d3df13caddb5d4d652c8679b\",\"commitId\":\"65cbbdf142379a59d3df13caddb5d4d652c8679b\",\"materializedCommitId\":\"65cbbdf142379a59d3df13caddb5d4d652c8679b\",\"fetchRepoUrl\":\"http://git-mirror-http.devops-infra.svc.cluster.local/pikasTech/HWLAB.git\",\"mirrorUsed\":true,\"mirrorBaseUrl\":\"http://git-mirror-http.devops-infra.svc.cluster.local\",\"treeId\":\"a5455290b73eedd1d2873bca61d1ef456ced0fb6\",\"observedAt\":\"2026-06-13T13:16:57.110Z\",\"valuesPrinted\":false},\"lastSeq\":71,\"traceId\":\"trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb\",\"sessionId\":\"ses_agentrun_dsflash_go_e5985b30_9c05_44c0_bc76_e4b2a2577a17\",\"conversationId\":\"cnv_case_constart-71freq-build_constart-71freq-build-20260613131626-7f47825b\",\"threadId\":\"019ec120-de94-75a2-85ee-c47aa8830660\",\"runnerReused\":false,\"threadReused\":false,\"persistentResume\":false,\"reused\":false,\"reuseEligible\":true,\"createdAt\":\"2026-06-13T13:16:50.219Z\",\"updatedAt\":\"2026-06-13T13:18:05.721Z\",\"valuesPrinted\":false,\"modelContextWindow\":1000000,\"autoCompactTokenLimit\":900000,\"runnerJobCount\":1,\"completed\":true,\"providerTrace\":{\"transport\":\"agentrun-v01\",\"protocol\":\"agentrun-v01-jsonrpc\",\"wireApi\":\"agentrun-v01-command-result\",\"runnerKind\":\"agentrun-v01-shared-runner\",\"implementationType\":\"agentrun-v01-shared-execution-infra\",\"command\":\"agentrun.v01.command.turn\",\"toolName\":\"agentrun.v01.command.turn\",\"source\":\"agentrun-v01\",\"backendProfile\":\"dsflash-go\",\"model\":\"deepseek-v4-flash\",\"modelContextWindow\":1000000,\"autoCompactTokenLimit\":900000,\"runId\":\"run_98d631e7bc4d467cb3e521cb92b15eeb\",\"commandId\":\"cmd_7a88188409c8454c85782232cdca79aa\",\"runnerId\":\"runner_99999736df96\",\"jobName\":\"agentrun-v01-runner-b582fad8dcf0\",\"namespace\":\"agentrun-v01\",\"traceId\":\"trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb\",\"threadId\":\"019ec120-de94-75a2-85ee-c47aa8830660\",\"turnId\":null,\"terminalStatus\":\"completed\",\"failureKind\":null,\"failureMessage\":null,\"valuesPrinted\":false}},\"valuesPrinted\":false,\"session\":{\"sessionId\":\"ses_e5985b30-9c05-44c0-bc76-e4b2a2577a17\",\"conversationId\":\"cnv_case_constart-71freq-build_constart-71freq-build-20260613131626-7f47825b\",\"threadId\":\"019ec120-de94-75a2-85ee-c47aa8830660\",\"status\":\"idle\",\"sessionMode\":\"agentrun-v01-durable-session\",\"runnerKind\":\"agentrun-v01-shared-runner\",\"lastTraceId\":\"trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb\",\"longLivedSession\":true,\"codexStdio\":false,\"delegatedToAgentRun\":true,\"writeCapable\":true,\"durable\":true,\""
+    }
+  },
+  "agentTrace": {
+    "traceId": "trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb",
+    "status": "completed",
+    "httpStatus": 200,
+    "source": "hwlab-cli.client.agent.trace",
+    "lookup": {
+      "source": "hwlab-cli.client.agent",
+      "strategy": "id_plus_existing_cli",
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "baseUrl": "http://74.48.78.17:19666",
+      "traceId": "trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb",
+      "sessionId": "ses_e5985b30-9c05-44c0-bc76-e4b2a2577a17",
+      "conversationId": "cnv_case_constart-71freq-build_constart-71freq-build-20260613131626-7f47825b",
+      "commands": {
+        "result": "hwlab-cli client agent result trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb",
+        "trace": "hwlab-cli client agent trace trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb --render web",
+        "traceFull": "hwlab-cli client agent trace trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb --render web --full",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb",
+        "sessionStatus": "hwlab-cli client agent session status ses_e5985b30-9c05-44c0-bc76-e4b2a2577a17"
+      }
+    },
+    "sourceEventCount": 77,
+    "renderedRowCount": 34,
+    "commandCount": 18,
+    "hwpodCommandCount": 3,
+    "hwpodBuildCommandCount": 0,
+    "keilJobCandidates": [],
+    "agentBuildJobIds": [],
+    "terminalStatus": "completed",
+    "commands": [
+      {
+        "source": "trace-row",
+        "seq": 27,
+        "rowId": "tool:call_00_v7iUwyY2MYpWBCiFnToa9135",
+        "header": "13:17:03 total=00:00:12 ok commandExecution",
+        "command": "hwpod-ctl spec validate --hwpod-id constart-71freq-c --workspace-path \"F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613131626-7f47825b\"",
+        "normalizedCommand": "hwpod-ctl spec validate --hwpod-id constart-71freq-c --workspace-path \"F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613131626-7f47825b",
+        "bodyPreview": "hwpod-ctl spec validate --hwpod-id constart-71freq-c --workspace-path \"F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613131626-7f47825b\"\nstdout:\n{ \"ok\": false, \"action\": \"hwpod-ctl\", \"status\": \"failed\", \"error\": { \"code\": \"hwpod_id_not_found\", \"message\": \"HWPOD id not found in runtime registry: constart-71freq-c\", \"details\": { \"hwpodId\": \"constart-71freq-c\", \"count\": 1, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\", \"explicitOverride\": false, \"lane\": \"v02\", \"namespace\": \"hwlab-v02\", \"urlLane\": \"v02\", \"urlNamespace\": \"hwlab-v02\" } } }, \"observedAt\": \"2026-06-13T13:17:03.012Z\" }\nexitCode=1\ndurationMs=0\noutputBytes=911\nsourceSeq=22",
+        "exitCode": 1
+      },
+      {
+        "source": "trace-row",
+        "seq": 30,
+        "rowId": "tool:call_00_uAeKDYAmLDhKfioyv8Je4217",
+        "header": "13:17:06 total=00:00:16 ok commandExecution",
+        "command": "list\", \"details\": {} }, \"observedAt\": \"2026-06-13T13:17:06.266Z\" }",
+        "normalizedCommand": "list\", \"details\": {} }, \"observedAt\": \"2026-06-13T13:17:06.266Z\" }",
+        "bodyPreview": "hwpod-ctl list --workspace-path \"F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613131626-7f47825b\"\nstdout:\n{ \"ok\": false, \"action\": \"hwpod-ctl\", \"status\": \"failed\", \"error\": { \"code\": \"unsupported_ctl_command\", \"message\": \"unsupported hwpod-ctl command: list\", \"details\": {} }, \"observedAt\": \"2026-06-13T13:17:06.266Z\" }\nexitCode=1\ndurationMs=0\noutputBytes=425\nsourceSeq=25",
+        "exitCode": 1
+      },
+      {
+        "source": "trace-row",
+        "seq": 32,
+        "rowId": "tool:call_00_9DQgqRidQAp2gQlTDiyG8818",
+        "header": "13:17:08 total=00:00:18 ok commandExecution",
+        "command": "hwpod-ctl --help 2>&1 || hwpod-ctl 2>&1",
+        "normalizedCommand": "hwpod-ctl --help 2>&1 || hwpod-ctl 2>&1",
+        "bodyPreview": "hwpod-ctl --help 2>&1 || hwpod-ctl 2>&1\nstdout:\n{ \"ok\": true, \"action\": \"hwpod-ctl.help\", \"status\": \"succeeded\", \"contractVersion\": \"hwpod-ctl-v1\", \"usage\": [ \"HWLAB_HWPOD_ID=d601-f103-v2 HWLAB_HWPOD_WORKSPACE_PATH=<run-worktree> bun tools/hwpod-ctl.ts spec validate\", \"bun tools/hwpod-ctl.ts spec validate --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\", \"bun tools/hwpod-ctl.ts spec init --spec .hwlab/hwpod-spec.yaml --node local-node\", \"bun tools/hwpod-ctl.ts spec validate --spec .hwlab/hwpod-spec.yaml\", \"bun tools/hwpod-ctl.ts spec set spec.workspace.path /workspace/firmware\", \"bun tools/hwpod-ctl.ts bind --node pc-host-1\" ], \"...\nexitCode=0\ndurationMs=0\noutputBytes=833\nsourceSeq=27",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 34,
+        "rowId": "tool:call_00_9L6EDFeJcEhtDg1OQ1Qn5655",
+        "header": "13:17:11 total=00:00:21 ok commandExecution",
+        "command": "env | grep -i hwlab 2>/dev/null; env | grep -i hwpod 2>/dev/null; env | grep -i constart 2>/dev/null",
+        "normalizedCommand": "hwpod 2>/dev/null; env | grep -i constart 2>/dev/null",
+        "bodyPreview": "env | grep -i hwlab 2>/dev/null; env | grep -i hwpod 2>/dev/null; env | grep -i constart 2>/dev/null\nstdout:\nHWLAB_RUNTIME_ENDPOINT_LOCKED=1 HWLAB_RUNTIME_API_URL=http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667 HWLAB_CODE_AGENT_ASSEMBLED_RUNTIME=1 HWLAB_RUNTIME_WEB_URL=http://hwlab-cloud-web.hwlab-v02.svc.cluster.local:8080 HWLAB_RUNTIME_LANE=v02 HWLAB_API_KEY=REDACTED AGENTRUN_SESSION_REF_JSON={\"metadata\":{\"adapter\":\"agentrun-v01\",\"hwlabApi\":\"/v1/agent/chat\",\"hwlabTraceId\":\"trc_case_constart-71freq-build_d85302bcb74c4e8588656e07f0383afb\",\"sessionPolicy\":\"hwlab-agentrun-v01-session-runner-reuse\",\"valuesPrinted\":false,\"hwlabProjectId\":\"prj_hwpod_workbench\",\"hwlabSessionId\":\"ses_e5985b30-9c0...\nexitCode=0\ndurationMs=0\noutputBytes=3540\nsourceSeq=29",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 37,
+        "rowId": "tool:call_00_hBJGLZFoenDN1e7taIXb4043",
+        "header": "13:17:14 total=00:00:24 ok commandExecution",
+        "command": "ls -la \"F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613131626-7f47825b\" 2>&1 | head -30",
+        "normalizedCommand": "ls -la \"F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613131626-7f47825b\" 2>&1 | head -30",
+        "bodyPreview": "ls -la \"F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613131626-7f47825b\" 2>&1 | head -30\nstdout:\nls: F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613131626-7f47825b: No such file or directory\nexitCode=0\ndurationMs=0\noutputBytes=293\nsourceSeq=32",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 39,
+        "rowId": "tool:call_00_maf72sqzVWfT6MxjIOUk8992",
+        "header": "13:17:17 total=00:00:26 ok commandExecution",
+        "command": "pwd; ls -la",
+        "normalizedCommand": "pwd; ls -la",
+        "bodyPreview": "pwd; ls -la\nstdout:\n/home/agentrun/workspaces/gitbundle-11f8dc8627a62dd6/workspace total 12 drwxr-xr-x 3 root root 4096 Jun 13 13:16 . drwxr-xr-x 4 root root 4096 Jun 13 13:16 .. drwxr-xr-x 5 root root 4096 Jun 13 13:16 tools\nexitCode=0\ndurationMs=0\noutputBytes=335\nsourceSeq=34",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 41,
+        "rowId": "tool:call_00_LXTBs1Z6FDf2AZdV3SG62200",
+        "header": "13:17:20 total=00:00:30 ok commandExecution",
+        "command": "ls -la tools/",
+        "normalizedCommand": "ls -la tools/",
+        "bodyPreview": "ls -la tools/\nstdout:\ntotal 260 drwxr-xr-x 5 root root 4096 Jun 13 13:16 . drwxr-xr-x 3 root root 4096 Jun 13 13:16 .. -rw-r--r-- 1 root root 2487 Jun 13 13:16 agentrun-bundle-tools.test.ts -rwxr-xr-x 1 root root 9955 Jun 13 13:16 apply_patch -rwxr-xr-x 1 root root 6284 Jun 13 13:16 capture-issue-803-noise.mjs -rw-r--r-- 1 root root 15743 Jun 13 13:16 hwlab-caserun.test.ts drwxr-xr-x 3 root root 4096 Jun 13 13:16 hwlab-cli -rwxr-xr-x 1 root root 74 Jun 13 13:16 hwlab-code-agent -rwxr-xr-x 1 root root 234 Jun 13 13:16 hwlab-code-agent-cli.ts -rwxr-xr-x 1 root root 10592 Jun 13 13:16 hwlab-gateway-shell.mjs -rwxr-...\nexitCode=0\ndurationMs=0\noutputBytes=2116\nsourceSeq=36",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 43,
+        "rowId": "tool:call_00_25Mu4CLVJMv2chLO2KjO1161",
+        "header": "13:17:22 total=00:00:32 ok commandExecution",
+        "command": "cat tools/hwpod-ctl.ts",
+        "normalizedCommand": "cat tools/hwpod-ctl.ts",
+        "bodyPreview": "cat tools/hwpod-ctl.ts\nstdout:\n#!/usr/bin/env bun import { mainHwpodCtl } from \"./src/hwpod-harness-lib.ts\"; await mainHwpodCtl();\nexitCode=0\ndurationMs=0\noutputBytes=193\nsourceSeq=38",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 45,
+        "rowId": "tool:call_00_oMzic8RWe9dkMEKVICHE0800",
+        "header": "13:17:26 total=00:00:36 ok commandExecution",
+        "command": "bun tools/hwpod-ctl.ts spec validate --hwpod-id constart-71freq-c --workspace-path \"F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613131626-7f47825b\" 2>&1",
+        "normalizedCommand": "bun tools/hwpod-ctl.ts spec validate --hwpod-id constart-71freq-c --workspace-path \"F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613131626-7f47825b\" 2>&1",
+        "bodyPreview": "bun tools/hwpod-ctl.ts spec validate --hwpod-id constart-71freq-c --workspace-path \"F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613131626-7f47825b\" 2>&1\nstdout:\n{ \"ok\": false, \"action\": \"hwpod-ctl\", \"status\": \"failed\", \"error\": { \"code\": \"hwpod_id_not_found\", \"message\": \"HWPOD id not found in runtime registry: constart-71freq-c\", \"details\": { \"hwpodId\": \"constart-71freq-c\", \"count\": 1, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\", \"explicitOverride\": false, \"lane\": \"v02\", \"namespace\": \"hwlab-v02\", \"urlLane\": \"v02\", \"urlNamespace\": \"hwlab-v02\" } } }, \"observedAt\": \"2026-06-13T13:17:26.420Z\" }\nexitCode=1\ndurationMs=0\noutputBytes=929\nsourceSeq=40",
+        "exitCode": 1
+      },
+      {
+        "source": "trace-row",
+        "seq": 47,
+        "rowId": "tool:call_00_K7kqsQTTpgR5ZiCZAytX2900",
+        "header": "13:17:29 total=00:00:39 ok commandExecution",
+        "command": "head -100 tools/hwlab-caserun.test.ts",
+        "normalizedCommand": "head -100 tools/hwlab-caserun.test.ts",
+        "bodyPreview": "head -100 tools/hwlab-caserun.test.ts\nstdout:\nimport assert from \"node:assert/strict\"; import { mkdir, mkdtemp, readFile, rm, writeFile } from \"node:fs/promises\"; import os from \"node:os\"; import path from \"node:path\"; import { test } from \"bun:test\"; import { aggregateCaseRun, caseCommand, prepareCaseRun } from \"./src/hwlab-caserun-lib.ts\"; const NOW = \"2026-06-06T00:00:00.000Z\"; const SUBJECT_COMMIT = \"df7a4e6e551fa90d64bde5537cc000f89d63dd20\"; test(\"CaseRun records source root baseline so pre-existing dirty files are not attributed to the run\", async () => { const root = await mkdtemp(path.join(os.tmpdir(), \"hwlab-caserun-source-roo...\nexitCode=0\ndurationMs=0\noutputBytes=4107\noutputTruncated=true\nsourceSeq=42",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 49,
+        "rowId": "tool:call_00_w13tJMihH3adOTvmhS1O4795",
+        "header": "13:17:33 total=00:00:42 ok commandExecution",
+        "command": "ls -la tools/hwlab-cli/",
+        "normalizedCommand": "ls -la tools/hwlab-cli/",
+        "bodyPreview": "ls -la tools/hwlab-cli/\nstdout:\ntotal 272 drwxr-xr-x 3 root root 4096 Jun 13 13:16 . drwxr-xr-x 5 root root 4096 Jun 13 13:16 .. drwxr-xr-x 2 root root 4096 Jun 13 13:16 bin -rw-r--r-- 1 root root 6226 Jun 13 13:16 caserun-tool-call-summary.test.ts -rw-r--r-- 1 root root 119282 Jun 13 13:16 caserun.test.ts -rw-r--r-- 1 root root 119388 Jun 13 13:16 client.test.ts -rw-r--r-- 1 root root 6212 Jun 13 13:16 hwpod.test.ts -rw-r--r-- 1 root root 321 Jun 13 13:16 package.json\nexitCode=0\ndurationMs=0\noutputBytes=660\nsourceSeq=44",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 51,
+        "rowId": "tool:call_00_QWj66fflvjxA3Z5jCNWD0389",
+        "header": "13:17:35 total=00:00:45 ok commandExecution",
+        "command": "head -60 tools/hwlab-cli/hwpod.test.ts",
+        "normalizedCommand": "head -60 tools/hwlab-cli/hwpod.test.ts",
+        "bodyPreview": "head -60 tools/hwlab-cli/hwpod.test.ts\nstdout:\nimport assert from \"node:assert/strict\"; import { mkdtemp, rm, writeFile } from \"node:fs/promises\"; import os from \"node:os\"; import path from \"node:path\"; import { test } from \"bun:test\"; import { runHwpodCli } from \"../src/hwpod-harness-lib.ts\"; test(\"hwpod-cli help exposes workspace cat and apply-patch stdin usage\", async () => { const result = await runHwpodCli([\"help\"], { now: () => \"2026-06-06T00:00:00.000Z\" }); assert.equal(result.exitCode, 0); assert.equal(result.payload.action, \"hwpod-cli.help\"); assert.equal(result.payload.usage.some((item: string) => /workspace cat/u.test(item)),...\nexitCode=0\ndurationMs=0\noutputBytes=3317\nsourceSeq=46",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 53,
+        "rowId": "tool:call_00_LnttGpSoaUMmYg8tDb5J2264",
+        "header": "13:17:38 total=00:00:47 ok commandExecution",
+        "command": "ls -la tools/hwpod-node-runtime/",
+        "normalizedCommand": "ls -la tools/hwpod-node-runtime/",
+        "bodyPreview": "ls -la tools/hwpod-node-runtime/\nstdout:\ntotal 12 drwxr-xr-x 3 root root 4096 Jun 13 13:16 . drwxr-xr-x 5 root root 4096 Jun 13 13:16 .. drwxr-xr-x 2 root root 4096 Jun 13 13:16 d601\nexitCode=0\ndurationMs=0\noutputBytes=292\nsourceSeq=48",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 55,
+        "rowId": "tool:call_00_eQ8zbuxfsJY9IX2vfPpT0722",
+        "header": "13:17:41 total=00:00:51 ok commandExecution",
+        "command": "curl -s \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667/v1/hwpod\" -H \"Authorization: Bearer REDACTED\" 2>&1 | head -100",
+        "normalizedCommand": "curl -s \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667/v1/hwpod\" -H \"Authorization: Bearer REDACTED\" 2>&1 | head -100",
+        "bodyPreview": "curl -s \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667/v1/hwpod\" -H \"Authorization: Bearer REDACTED\" 2>&1 | head -100\nstdout:\n{\"error\":{\"code\":\"not_found\",\"message\":\"REST route is not implemented in the L1 cloud-api runtime\",\"audit\":{\"requestId\":\"req_unassigned\",\"actor\":{\"type\":\"user\",\"id\":\"system_hwlab-cloud-api\"},\"source\":{\"serviceId\":\"hwlab-cloud-api\",\"environment\":\"v02\",\"adapter\":\"rest\"},\"operation\":\"GET /v1/hwpod\",\"target\":{\"type\":\"route\",\"id\":\"/v1/hwpod\"},\"result\":\"failed\",\"timestamp\":\"2026-06-13T13:17:41.892Z\"}}}\nexitCode=0\ndurationMs=0\noutputBytes=597\nsourceSeq=50",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 57,
+        "rowId": "tool:call_00_fhAcgpfH8J2m4QWKRmzg3991",
+        "header": "13:17:44 total=00:00:54 ok commandExecution",
+        "command": "ls -la tools/hwlab-cli/bin/",
+        "normalizedCommand": "ls -la tools/hwlab-cli/bin/",
+        "bodyPreview": "ls -la tools/hwlab-cli/bin/\nstdout:\ntotal 16 drwxr-xr-x 2 root root 4096 Jun 13 13:16 . drwxr-xr-x 3 root root 4096 Jun 13 13:16 .. -rwxr-xr-x 1 root root 1049 Jun 13 13:16 hwlab-cli.mjs -rw-r--r-- 1 root root 85 Jun 13 13:16 hwlab-cli.ts\nexitCode=0\ndurationMs=0\noutputBytes=366\nsourceSeq=52",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 59,
+        "rowId": "tool:call_00_uynl9S3XQ16kyaH76ndi7130",
+        "header": "13:17:47 total=00:00:57 ok commandExecution",
+        "command": "grep -n \"hwpod_id_not_found\\|findHwpod\\|hwpodRegistry\\|registerHwpod\" tools/src/*.ts 2>/dev/null | head -30",
+        "normalizedCommand": "grep -n \"hwpod_id_not_found\\|findHwpod\\|hwpodRegistry\\|registerHwpod\" tools/src/*.ts 2>/dev/null | head -30",
+        "bodyPreview": "grep -n \"hwpod_id_not_found\\|findHwpod\\|hwpodRegistry\\|registerHwpod\" tools/src/*.ts 2>/dev/null | head -30\nstdout:\ntools/src/hwpod-harness-lib.ts:792: if (!match) throw cliError(\"hwpod_id_not_found\", `HWPOD id not found in runtime registry: ${hwpodId}`, { hwpodId, count: specs.length, runtimeEndpoint });\nexitCode=0\ndurationMs=0\noutputBytes=374\nsourceSeq=54",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 61,
+        "rowId": "tool:call_00_HW2rJqUHTZa4X9an5Bki7890",
+        "header": "13:17:49 total=00:00:59 ok commandExecution",
+        "command": "sed -n '770,810p' tools/src/hwpod-harness-lib.ts",
+        "normalizedCommand": "sed -n '770,810p' tools/src/hwpod-harness-lib.ts",
+        "bodyPreview": "sed -n '770,810p' tools/src/hwpod-harness-lib.ts\nstdout:\n}); } function withResolvedWorkspaceHints(plan: any, resolved: any) { const authority = hwpodResolvedAuthority(resolved); plan.resourceHints = clean({ ...objectValue(plan.resourceHints), effectiveWorkspacePath: authority.effectiveWorkspacePath, defaultWorkspacePath: authority.defaultWorkspacePath, requestedWorkspacePath: authority.requestedWorkspacePath, caseSubjectWorkspacePath: authority.caseSubjectWorkspacePath, workspaceBinding: authority.workspaceBinding, workspaceOverrideSource: authority.workspaceOverrideSource }); return plan; } async function fetchHwpodSpecById({ hwpodId, parsed, e...\nexitCode=0\ndurationMs=0\noutputBytes=2859\nsourceSeq=56",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 63,
+        "rowId": "tool:call_00_1OjPIZ34gDPv4DqBf2145232",
+        "header": "13:17:52 total=00:01:02 ok commandExecution",
+        "command": "curl -s \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667/v1/hwpod/specs\" -H \"Authorization: Bearer REDACTED\" 2>&1 | head -200",
+        "normalizedCommand": "curl -s \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667/v1/hwpod/specs\" -H \"Authorization: Bearer REDACTED\" 2>&1 | head -200",
+        "bodyPreview": "curl -s \"http://hwlab-cloud-api.hwlab-v02.svc.cluster.local:6667/v1/hwpod/specs\" -H \"Authorization: Bearer REDACTED\" 2>&1 | head -200\nstdout:\n{\"ok\":true,\"status\":\"completed\",\"contractVersion\":\"hwpod-spec-discovery-v1\",\"nodeOpsContractVersion\":\"hwpod-node-ops-v1\",\"route\":\"/v1/hwpod/specs\",\"specAuthority\":\"workspace-or-registry\",\"count\":1,\"availableCount\":null,\"specs\":[{\"ok\":true,\"status\":\"discovered\",\"name\":\"d601-f103-v2\",\"hwpodId\":\"d601-f103-v2\",\"uid\":\"D601-F103-V2\",\"metadata\":{\"uid\":\"D601-F103-V2\",\"name\":\"d601-f103-v2\"},\"specPath\":\"/workspace/hwlab-boot/repo/.hwlab/hwpod-spec.yaml\",\"authority\":\"preinstalled-verified-spec\",\"source\":{\"kind\":\"preinstalled-verified-spec\",\"caseRepo\":\"pikasTech/hwlab-case-registry\",\"caseId\":\"d601-f103...\nexitCode=0\ndurationMs=0\noutputBytes=2500\nsourceSeq=58",
+        "exitCode": 0
+      }
+    ]
+  },
+  "agentDiff": {
+    "statusShort": "m projects/71-00075-11",
+    "diffStat": "projects/71-00075-11 | 0\n 1 file changed, 0 insertions(+), 0 deletions(-)\nprojects/71-00075-11/FirmWare/MDK-ARM/FREQ_Controller_FW.uvoptx | 6 +++---\n 1 file changed, 3 insertions(+), 3 deletions(-)",
+    "diffPatchPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/constart-71freq-build-20260613131626-7f47825b/agent-diff.patch",
+    "diffPatchSha256": "d027f38e42b15080aa70f0407a6750c8b583f445340391c6a8ed87338d6e0328",
+    "diffCollection": {
+      "contractVersion": "hwpod-case-run-diff-collection-v1",
+      "included": [],
+      "omitted": [],
+      "config": {
+        "include": [],
+        "ignore": []
+      },
+      "tracked": {
+        "paths": [
+          "projects/71-00075-11"
+        ],
+        "diffStat": "projects/71-00075-11 | 0\n 1 file changed, 0 insertions(+), 0 deletions(-)",
+        "diffPatchSha256": "db3e2d1da1b75236537762dda6372540f82972b8a096c38d36577f452fa17a25"
+      },
+      "untracked": {
+        "total": 0,
+        "included": 0,
+        "omitted": 0
+      },
+      "submodules": [
+        {
+          "path": "projects/71-00075-11",
+          "commitId": "5ef2fc874782713d1e4752636a8db05cc4a18cd2",
+          "statusShort": "M FirmWare/MDK-ARM/FREQ_Controller_FW.uvoptx",
+          "tracked": {
+            "paths": [
+              "projects/71-00075-11/FirmWare/MDK-ARM/FREQ_Controller_FW.uvoptx"
+            ],
+            "diffStat": "projects/71-00075-11/FirmWare/MDK-ARM/FREQ_Controller_FW.uvoptx | 6 +++---\n 1 file changed, 3 insertions(+), 3 deletions(-)",
+            "diffPatchSha256": "fcd18feee5bf8ec84ed046efc312e50848f058c3565152ba21024685ec1ca60f"
+          },
+          "untracked": {
+            "total": 0,
+            "included": 0,
+            "omitted": 0
+          },
+          "included": [],
+          "omitted": []
+        }
+      ]
+    },
+    "sourceRootStatusShort": "M \"docs/MDTODO/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210.md\"\n M docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md\n M docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md\n M docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md\n M docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md\n M docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md\n M docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md\n m projects/71-00075-11\n?? .worktree/\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_152857_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_154822_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_155756_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_161550_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_162137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_164205_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_165817_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260613_121137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4.1_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4_Task_Report.md\"",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "statusShort": "M \"docs/MDTODO/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210.md\"\n M docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md\n M docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md\n M docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md\n M docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md\n M docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md\n M docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md\n m projects/71-00075-11\n?? .worktree/\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_152857_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_154822_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_155756_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_161550_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_162137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_164205_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_165817_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260613_121137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4.1_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4_Task_Report.md\"",
+      "diffStat": "...224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210.md\" | 83 ++++++++++++++++++++++\n .../Slave_AC_Module/canopen_communication_usage.md | 11 +++\n .../control_algorithm_gap_closure_loopback_plan.md |  6 +-\n .../control_algorithm_implementation_plan.md       |  6 +-\n ...t_implementation_acceptance_and_architecture.md |  6 +-\n .../original_spec_p0_p1_implementation_plan.md     |  6 +-\n .../real_hardware_regression_checklist.md          | 60 ++++++++++++++++\n projects/71-00075-11                               |  0\n 8 files changed, 166 insertions(+), 12 deletions(-)",
+      "diffSha256": "3fa0408768df4935d57d44d8e9c5ac4c569c81d99ae584c5c6c03534aece9441",
+      "diffBytes": 31565,
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 2289,
+          "stderr": ""
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 563,
+          "stderr": "warning: in the working copy of 'docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md', LF \n... clipped ..."
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 31565,
+          "stderr": "warning: in the working copy of 'docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md', LF \n... clipped ..."
+        }
+      }
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "statusShort": "M \"docs/MDTODO/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210.md\"\n M docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md\n M docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md\n M docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md\n M docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md\n M docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md\n M docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md\n m projects/71-00075-11\n?? .worktree/\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_152857_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_154822_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_155756_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_161550_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_162137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_164205_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_165817_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260613_121137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4.1_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4_Task_Report.md\"",
+      "diffStat": "...224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210.md\" | 83 ++++++++++++++++++++++\n .../Slave_AC_Module/canopen_communication_usage.md | 11 +++\n .../control_algorithm_gap_closure_loopback_plan.md |  6 +-\n .../control_algorithm_implementation_plan.md       |  6 +-\n ...t_implementation_acceptance_and_architecture.md |  6 +-\n .../original_spec_p0_p1_implementation_plan.md     |  6 +-\n .../real_hardware_regression_checklist.md          | 60 ++++++++++++++++\n projects/71-00075-11                               |  0\n 8 files changed, 166 insertions(+), 12 deletions(-)",
+      "diffSha256": "3fa0408768df4935d57d44d8e9c5ac4c569c81d99ae584c5c6c03534aece9441",
+      "diffBytes": 31565,
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 2289,
+          "stderr": ""
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 563,
+          "stderr": "warning: in the working copy of 'docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md', LF \n... clipped ..."
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 31565,
+          "stderr": "warning: in the working copy of 'docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md', LF \n... clipped ..."
+        }
+      }
+    },
+    "sourceRootAfterAgent": {
+      "label": "after-agent",
+      "statusShort": "M \"docs/MDTODO/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210.md\"\n M docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md\n M docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md\n M docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md\n M docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md\n M docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md\n M docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md\n m projects/71-00075-11\n?? .worktree/\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_152857_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_154822_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_155756_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_161550_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_162137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_164205_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_165817_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260613_121137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4.1_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4_Task_Report.md\"",
+      "diffStat": "...224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210.md\" | 83 ++++++++++++++++++++++\n .../Slave_AC_Module/canopen_communication_usage.md | 11 +++\n .../control_algorithm_gap_closure_loopback_plan.md |  6 +-\n .../control_algorithm_implementation_plan.md       |  6 +-\n ...t_implementation_acceptance_and_architecture.md |  6 +-\n .../original_spec_p0_p1_implementation_plan.md     |  6 +-\n .../real_hardware_regression_checklist.md          | 60 ++++++++++++++++\n projects/71-00075-11                               |  0\n 8 files changed, 166 insertions(+), 12 deletions(-)",
+      "diffSha256": "3fa0408768df4935d57d44d8e9c5ac4c569c81d99ae584c5c6c03534aece9441",
+      "diffBytes": 31565,
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 2289,
+          "stderr": ""
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 563,
+          "stderr": "warning: in the working copy of 'docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md', LF \n... clipped ..."
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "httpStatus": 200,
+          "exitCode": 0,
+          "stdoutBytes": 31565,
+          "stderr": "warning: in the working copy of 'docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md', LF \n... clipped ..."
+        }
+      }
+    },
+    "sourceRootChangedAfterPrepare": false,
+    "sourceRootChangedAfterAgent": false,
+    "requests": [
+      {
+        "label": "status",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 22,
+        "stderr": ""
+      },
+      {
+        "label": "diff-stat",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 73,
+        "stderr": ""
+      },
+      {
+        "label": "diff-patch",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 248,
+        "stderr": ""
+      },
+      {
+        "label": "submodule-status:projects/71-00075-11",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 44,
+        "stderr": ""
+      },
+      {
+        "label": "submodule-diff-stat:projects/71-00075-11",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 102,
+        "stderr": "warning: in the working copy of 'FirmWare/MDK-ARM/FREQ_Controller_FW.uvoptx', LF will be replaced by CRLF the next time Git touches it"
+      },
+      {
+        "label": "submodule-diff-patch:projects/71-00075-11",
+        "httpStatus": 200,
+        "exitCode": 0,
+        "stdoutBytes": 1737,
+        "stderr": "warning: in the working copy of 'FirmWare/MDK-ARM/FREQ_Controller_FW.uvoptx', LF will be replaced by CRLF the next time Git touches it"
+      },
+      {
+        "label": "source-root-baseline",
+        "statusShort": "M \"docs/MDTODO/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210.md\"\n M docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md\n M docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md\n M docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md\n M docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md\n M docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md\n M docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md\n m projects/71-00075-11\n?? .worktree/\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_152857_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_154822_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_155756_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_161550_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_162137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_164205_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_165817_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260613_121137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4.1_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4_Task_Report.md\"",
+        "diffSha256": "3fa0408768df4935d57d44d8e9c5ac4c569c81d99ae584c5c6c03534aece9441"
+      },
+      {
+        "label": "source-root-after-prepare",
+        "statusShort": "M \"docs/MDTODO/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210.md\"\n M docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md\n M docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md\n M docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md\n M docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md\n M docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md\n M docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md\n m projects/71-00075-11\n?? .worktree/\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_152857_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_154822_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_155756_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_161550_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_162137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_164205_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_165817_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260613_121137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4.1_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4_Task_Report.md\"",
+        "diffSha256": "3fa0408768df4935d57d44d8e9c5ac4c569c81d99ae584c5c6c03534aece9441"
+      },
+      {
+        "label": "source-root-after-agent",
+        "statusShort": "M \"docs/MDTODO/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210.md\"\n M docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md\n M docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md\n M docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md\n M docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md\n M docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md\n M docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md\n m projects/71-00075-11\n?? .worktree/\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_152857_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_154822_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_155756_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_161550_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_162137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_164205_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260611_165817_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/20260613_121137_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4.1_Task_Report.md\"\n?? \"docs/MDTODO/details/20260609_\\351\\242\\221\\347\\216\\207\\345\\210\\244\\346\\226\\255_\\347\\224\\250\\346\\210\\267\\345\\217\\215\\351\\246\\210/R4_Task_Report.md\"",
+        "diffSha256": "3fa0408768df4935d57d44d8e9c5ac4c569c81d99ae584c5c6c03534aece9441"
+      }
+    ]
+  },
+  "_control": {
+    "status": "completed",
+    "stage": "completed",
+    "stdoutPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/constart-71freq-build-20260613131626-7f47825b/worker.stdout.log",
+    "stderrPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/constart-71freq-build-20260613131626-7f47825b/worker.stderr.log",
+    "startedAt": "2026-06-13T13:16:26.915Z",
+    "command": [
+      "bun",
+      "hwlab-cli.mjs",
+      "case",
+      "run",
+      "worker",
+      "constart-71freq-build",
+      "--run-id",
+      "constart-71freq-build-20260613131626-7f47825b",
+      "--run-dir",
+      "constart-71freq-build-20260613131626-7f47825b",
+      "--case-repo",
+      "hwlab-case-registry",
+      "--provider-profile",
+      "dsflash-go"
+    ],
+    "updatedAt": "2026-06-13T13:18:44.423Z",
+    "pid": 3893544,
+    "completedAt": "2026-06-13T13:18:44.422Z",
+    "exitCode": 0,
+    "evidencePath": "/root/hwlab-v02/.state/hwlab-cli/caserun/constart-71freq-build-20260613131626-7f47825b/evidence.json",
+    "resultPath": "/root/hwlab-v02/.state/hwlab-cli/caserun/constart-71freq-build-20260613131626-7f47825b/result.json"
+  },
+  "status": "completed",
+  "evidencePath": "/root/hwlab-v02/.state/hwlab-cli/caserun/constart-71freq-build-20260613131626-7f47825b/evidence.json"
+}
