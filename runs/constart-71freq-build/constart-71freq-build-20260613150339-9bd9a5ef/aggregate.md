@@ -1,182 +1,7 @@
 # HWPOD CaseRun Aggregate: constart-71freq-build
 
-- caseId: constart-71freq-build
-- runId: constart-71freq-build-20260613150339-9bd9a5ef
-- generatedFrom: case registry artifacts
-- aggregationOnly: true
-- autoEvaluation: false
-- primaryEntry: aggregate.md
-
-## 判定摘要
-
-- caseRunStatus: completed
-- agentRunTerminalStatus: completed
-- agentCommandStatus: completed
-- postValidationJobId: 20260613_230846_c3a3f484
-- postValidationStatus: completed
-- postValidationReturnCode: 0
-- postValidationWarningCount: 0
-- finalVsPostValidation: agent-final-and-post-validation-are-separate-evidence
-- requestedProviderProfile: sub2api
-- resolvedBackendProfile: sub2api
-- traceId: trc_case_constart-71freq-build_17bf45bec2aa4a7cb1aa1215b5ae6551
-- sourceRunDir: /root/hwlab-v02/.state/hwlab-cli/caserun/constart-71freq-build-20260613150339-9bd9a5ef
-
-### HWPOD 关键命令摘要
-
-| Step | Status | Job ID | Return Code | Warning Count | Exit Code | Evidence |
-|---|---|---|---:|---:|---:|---|
-| spec-validate |  |  |  |  | 0 | source=agent-trace-commands; command=hwpod-ctl spec validate --hwpod-id constart-71freq-c --workspace-path 'F:\Work\ConStart\.worktree\caserun-constart-71freq-build-20260613150339-9bd9a5ef |
-| inspect |  |  |  |  | 0 | source=agent-trace-commands; command=hwpod inspect --hwpod-id constart-71freq-c --workspace-path 'F:\Work\ConStart\.worktree\caserun-constart-71freq-build-20260613150339-9bd9a5ef |
-| build |  |  |  |  | 0 | source=agent-trace-commands; command=hwpod build --hwpod-id constart-71freq-c --workspace-path 'F:\Work\ConStart\.worktree\caserun-constart-71freq-build-20260613150339-9bd9a5ef |
-| job-status |  |  |  |  | 0 | source=agent-trace-commands; command=hwpod job status 20260613_230716_19ee11bf --hwpod-id constart-71freq-c --workspace-path 'F:\Work\ConStart\.worktree\caserun-constart-71freq-build-20260613150339 ... clipped ... |
-
-<details>
-<summary>运行环境、证据边界和诊断附录</summary>
-
-## 证据边界速览
-
-- agentFinalSource: agent-final-response.md-or-terminal-row
-- agentFinalBoundary: agent-authored-final-response; not-post-validation-verdict
-- agentStageStatus: completed
-- agentTimedOut: false
-- agentRunTerminalStatus: completed
-- postValidationSource: case-run-runner-post-agent-compile-check
-- postValidationJobId: 20260613_230846_c3a3f484
-- postValidationStatus: completed
-- postValidationReturnCode: 0
-- postValidationWarningCount: 0
-- postValidationBoundary: runner-owned-post-agent-validation; separate-from-agent-final
-- finalVsPostValidation: agent-final-and-post-validation-are-separate-evidence
-- supplementalValidation: not-recorded
-
-## 状态解释与证据缺口
-
-- declaredValidationMode: compile-only
-- effectiveValidationMode: build-only
-- modeResolution: case-task-overrode-default-compile-only
-- requestedValidationSteps: spec-validate, inspect, build, job-status
-- completedValidationSteps: spec-validate, inspect, build, job-status
-- agentRunTerminalStatus: completed
-- agentCommandStatus: completed
-- caseRunStatus: completed
-- hwpodExitCodeSource: case-run-runner-post-agent-compile-check
-- sourceRootDirtyAtPrepare: true
-- dirtyAttribution: source-root dirty before prepare (M "docs/MDTODO/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210.md"  M docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md  M docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md  M docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md  M docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md  M docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md  M docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md  m projects/71-00075-11 ?? .worktree/ ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_152857_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_154822_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_155756_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_161550_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_162137_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_164205_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_165817_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260613_121137_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/R4.1_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/R4_Task_Report.md"); subject worktree/agent diff stays separate (m projects/71-00075-11)
-
-### warnings
-
-- declaredValidationMode=compile-only but effectiveValidationMode=build-only; case task requested runtime validation steps.
-- sourceRootBaselineStatus was dirty before prepare: M "docs/MDTODO/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210.md"  M docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md  M docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md  M docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md  M docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md  M docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md  M docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md  m projects/71-00075-11 ?? .worktree/ ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_152857_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_154822_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_155756_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_161550_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_162137_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_164205_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_165817_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260613_121137_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/R4.1_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/R4_Task_Report.md"
-- sourceRootAfterPrepareStatus matches baseline dirty state; prepare did not introduce this source-root diff.
-
-### evidenceGaps
-
-- hwpod-command-stdout-truncated: low-noise trace clipped at least one HWPOD stdout; this summary extracts command/exitCode/jobId/status fields, raw stdout remains in trace artifacts.
-
-### nonBlockingIssues
-
-_No nonBlockingIssues recorded._
-
-## 运行环境信息
-
-- apiUrl: http://74.48.78.17:19667
-- compileOnly: true
-- caseRepoRunDir: /root/hwlab-case-registry/runs/constart-71freq-build/constart-71freq-build-20260613150339-9bd9a5ef
-- sourceRunDir: /root/hwlab-v02/.state/hwlab-cli/caserun/constart-71freq-build-20260613150339-9bd9a5ef
-- createdAt: 2026-06-13T15:03:39.589Z
-- completedAt: 2026-06-13T15:09:20.079Z
-- runnerPostAgentCompileCheck: recorded
-
-## HWPOD / 后置验证信息
-
-- subjectRepoLocalPath: F:\Work\ConStart
-- subjectCommitId: de223ab80ddf80e5ba092dcf2d20f9df7ec91a60
-- subjectSubdir: projects/71-00075-11
-- subjectWorktreePath: F:\Work\ConStart\.worktree\caserun-constart-71freq-build-20260613150339-9bd9a5ef
-- sourceRootBaselineStatus: M "docs/MDTODO/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210.md"  M docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md  M docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md  M docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md  M docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md  M docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md  M docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md  m projects/71-00075-11 ?? .worktree/ ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_152857_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_154822_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_155756_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_161550_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_162137_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_164205_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_165817_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260613_121137_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/R4.1_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/R4_Task_Report.md"
-- sourceRootAfterPrepareStatus: M "docs/MDTODO/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210.md"  M docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md  M docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md  M docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md  M docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md  M docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md  M docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md  m projects/71-00075-11 ?? .worktree/ ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_152857_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_154822_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_155756_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_161550_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_162137_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_164205_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_165817_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260613_121137_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/R4.1_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/R4_Task_Report.md"
-- agentBuildJobIds: 20260613_230716_19ee11bf
-- agentReportedBuildJobId: 20260613_230716_19ee11bf
-- postAgentCompileJobId: 20260613_230846_c3a3f484
-- runnerPostAgentCompileStatus: completed
-- runnerPostAgentCompileReturnCode: 0
-- runnerPostAgentCompileWarningCount: 0
-- buildJobRelationship: agent-build-observed-plus-runner-post-agent-check
-- hwpodExitCode: 0
-<details>
-<summary>Run-local HWPOD spec</summary>
-
-```yaml
-apiVersion: hwlab.dev/v0alpha1
-kind: Hwpod
-metadata:
-  uid: CONSTART-71FREQ-C
-  name: constart-71freq-c
-spec:
-  targetDevice:
-    board: 71-FREQ-C
-    mcu: STM32H723ZGTx
-  workspace:
-    path: "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613150339-9bd9a5ef"
-    toolchain: keil-mdk
-    keilProject: projects/71-00075-11/FirmWare/MDK-ARM/FREQ_Controller_FW.uvprojx
-    keilTarget: FREQ_Controller_FW
-    keilCliPath: "C:\\Users\\liang\\.agents\\skills\\keil\\keil-cli.py"
-  debugProbe:
-    type: daplink
-    adapter: pyocd
-    probeUid: 3FD750C63E342E24
-    probeName: MicroLink CMSIS-DAP
-    programBackend: pyocd
-    autoBindUvoptx: false
-  ioProbe:
-    uart:
-      id: uart/1
-      baudrate: 921600
-    boardComm:
-      host: 192.168.0.154
-      port: 8000
-  boardComm:
-    jsonrpcTcp:
-      host: 192.168.0.154
-      port: 8000
-      boardCommDir: "C:\\Users\\liang\\.agents\\skills\\board-comm"
-      boardCommCommand: "py -3 board-comm-cli.py"
-      timeoutMs: 30000
-  nodeBinding:
-    nodeId: node-d601-f103-v2
-    nodeType: pc-host
-```
-
-</details>
-
-## Code Agent 信息
-
-- providerProfile: sub2api
-- requestedProviderProfile: sub2api
-- resolvedBackendProfile: sub2api
-- provider: sub2api
-- providerModel: sub2api
-- backend: agentrun-v01/sub2api
-- infrastructureBackend: agentrun-v01/sub2api
-- providerTraceTransport: agentrun-v01
-- providerTraceWireApi: agentrun-v01-command-result
-- providerTraceSource: agentrun-v01
-- providerTraceBackendProfile: sub2api
-- providerTraceValuesPrinted: false
-- projectId: prj_hwpod_workbench
-- conversationId: cnv_case_constart-71freq-build_constart-71freq-build-20260613150339-9bd9a5ef
-- sessionId: ses_56334b94-6efc-4c8f-a468-5e58dff6bcde
-- traceId: trc_case_constart-71freq-build_17bf45bec2aa4a7cb1aa1215b5ae6551
-- agentTerminalStatus: completed
-- agentCommandStatus: completed
-- traceSource: hwlab-cli.client.agent.trace
-- traceCommand: hwlab-cli client agent trace trc_case_constart-71freq-build_17bf45bec2aa4a7cb1aa1215b5ae6551 --render web
-- resultCommand: hwlab-cli client agent result trc_case_constart-71freq-build_17bf45bec2aa4a7cb1aa1215b5ae6551
-- inspectCommand: hwlab-cli client agent inspect --trace-id trc_case_constart-71freq-build_17bf45bec2aa4a7cb1aa1215b5ae6551
-
-</details>
+- outcome: caseRun=completed; agent=completed; command=completed; postValidation=completed rc=0 warnings=0; provider=sub2api
+- mainReadingPath: 输入 Prompt -> 低噪声 Trace -> 最后 Diff；运行元信息、判定字段和 HWPOD 命令明细已折叠。
 
 ## 输入 Prompt
 
@@ -553,6 +378,191 @@ index 10dc8ca..865b3d8 100644
          <SetRegEntry>
            <Number>0</Number>
 ```
+
+<details>
+<summary>判定摘要与 HWPOD 命令详情（折叠）</summary>
+
+## 判定摘要
+
+- caseRunStatus: completed
+- agentRunTerminalStatus: completed
+- agentCommandStatus: completed
+- postValidationJobId: 20260613_230846_c3a3f484
+- postValidationStatus: completed
+- postValidationReturnCode: 0
+- postValidationWarningCount: 0
+- finalVsPostValidation: agent-final-and-post-validation-are-separate-evidence
+- requestedProviderProfile: sub2api
+- resolvedBackendProfile: sub2api
+- traceId: trc_case_constart-71freq-build_17bf45bec2aa4a7cb1aa1215b5ae6551
+- sourceRunDir: /root/hwlab-v02/.state/hwlab-cli/caserun/constart-71freq-build-20260613150339-9bd9a5ef
+
+## HWPOD 关键命令摘要
+
+| Step | Status | Job ID | Return Code | Warning Count | Exit Code | Evidence |
+|---|---|---|---:|---:|---:|---|
+| spec-validate |  |  |  |  | 0 | source=agent-trace-commands |
+| inspect |  |  |  |  | 0 | source=agent-trace-commands |
+| build |  |  |  |  | 0 | source=agent-trace-commands |
+| job-status |  |  |  |  | 0 | source=agent-trace-commands |
+
+## 聚合产物元信息
+
+- caseId: constart-71freq-build
+- runId: constart-71freq-build-20260613150339-9bd9a5ef
+- generatedFrom: case registry artifacts
+- aggregationOnly: true
+- autoEvaluation: false
+- primaryEntry: aggregate.md
+
+</details>
+
+<details>
+<summary>运行环境、证据边界和诊断附录</summary>
+
+## 证据边界速览
+
+- agentFinalSource: agent-final-response.md-or-terminal-row
+- agentFinalBoundary: agent-authored-final-response; not-post-validation-verdict
+- agentStageStatus: completed
+- agentTimedOut: false
+- agentRunTerminalStatus: completed
+- postValidationSource: case-run-runner-post-agent-compile-check
+- postValidationJobId: 20260613_230846_c3a3f484
+- postValidationStatus: completed
+- postValidationReturnCode: 0
+- postValidationWarningCount: 0
+- postValidationBoundary: runner-owned-post-agent-validation; separate-from-agent-final
+- finalVsPostValidation: agent-final-and-post-validation-are-separate-evidence
+- supplementalValidation: not-recorded
+
+## 状态解释与证据缺口
+
+- declaredValidationMode: compile-only
+- effectiveValidationMode: build-only
+- modeResolution: case-task-overrode-default-compile-only
+- requestedValidationSteps: spec-validate, inspect, build, job-status
+- completedValidationSteps: spec-validate, inspect, build, job-status
+- agentRunTerminalStatus: completed
+- agentCommandStatus: completed
+- caseRunStatus: completed
+- hwpodExitCodeSource: case-run-runner-post-agent-compile-check
+- sourceRootDirtyAtPrepare: true
+- dirtyAttribution: source-root dirty before prepare (M "docs/MDTODO/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210.md"  M docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md  M docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md  M docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md  M docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md  M docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md  M docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md  m projects/71-00075-11 ?? .worktree/ ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_152857_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_154822_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_155756_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_161550_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_162137_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_164205_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_165817_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260613_121137_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/R4.1_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/R4_Task_Report.md"); subject worktree/agent diff stays separate (m projects/71-00075-11)
+
+### warnings
+
+- declaredValidationMode=compile-only but effectiveValidationMode=build-only; case task requested runtime validation steps.
+- sourceRootBaselineStatus was dirty before prepare: M "docs/MDTODO/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210.md"  M docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md  M docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md  M docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md  M docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md  M docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md  M docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md  m projects/71-00075-11 ?? .worktree/ ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_152857_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_154822_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_155756_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_161550_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_162137_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_164205_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_165817_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260613_121137_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/R4.1_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/R4_Task_Report.md"
+- sourceRootAfterPrepareStatus matches baseline dirty state; prepare did not introduce this source-root diff.
+
+### evidenceGaps
+
+- hwpod-command-stdout-truncated: low-noise trace clipped at least one HWPOD stdout; this summary extracts command/exitCode/jobId/status fields, raw stdout remains in trace artifacts.
+
+### nonBlockingIssues
+
+_No nonBlockingIssues recorded._
+
+## 运行环境信息
+
+- apiUrl: http://74.48.78.17:19667
+- compileOnly: true
+- caseRepoRunDir: /root/hwlab-case-registry/runs/constart-71freq-build/constart-71freq-build-20260613150339-9bd9a5ef
+- sourceRunDir: /root/hwlab-v02/.state/hwlab-cli/caserun/constart-71freq-build-20260613150339-9bd9a5ef
+- createdAt: 2026-06-13T15:03:39.589Z
+- completedAt: 2026-06-13T15:09:20.079Z
+- runnerPostAgentCompileCheck: recorded
+
+## HWPOD / 后置验证信息
+
+- subjectRepoLocalPath: F:\Work\ConStart
+- subjectCommitId: de223ab80ddf80e5ba092dcf2d20f9df7ec91a60
+- subjectSubdir: projects/71-00075-11
+- subjectWorktreePath: F:\Work\ConStart\.worktree\caserun-constart-71freq-build-20260613150339-9bd9a5ef
+- sourceRootBaselineStatus: M "docs/MDTODO/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210.md"  M docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md  M docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md  M docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md  M docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md  M docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md  M docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md  m projects/71-00075-11 ?? .worktree/ ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_152857_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_154822_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_155756_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_161550_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_162137_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_164205_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_165817_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260613_121137_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/R4.1_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/R4_Task_Report.md"
+- sourceRootAfterPrepareStatus: M "docs/MDTODO/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210.md"  M docs/reference/projects/41-00426-20-Controller-Code/Slave_AC_Module/canopen_communication_usage.md  M docs/reference/projects/71-00075-11/control_algorithm_gap_closure_loopback_plan.md  M docs/reference/projects/71-00075-11/control_algorithm_implementation_plan.md  M docs/reference/projects/71-00075-11/current_implementation_acceptance_and_architecture.md  M docs/reference/projects/71-00075-11/original_spec_p0_p1_implementation_plan.md  M docs/reference/projects/71-00075-11/real_hardware_regression_checklist.md  m projects/71-00075-11 ?? .worktree/ ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_152857_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_154822_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_155756_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_161550_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_162137_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_164205_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260611_165817_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/20260613_121137_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/R4.1_Task_Report.md" ?? "docs/MDTODO/details/20260609_\351\242\221\347\216\207\345\210\244\346\226\255_\347\224\250\346\210\267\345\217\215\351\246\210/R4_Task_Report.md"
+- agentBuildJobIds: 20260613_230716_19ee11bf
+- agentReportedBuildJobId: 20260613_230716_19ee11bf
+- postAgentCompileJobId: 20260613_230846_c3a3f484
+- runnerPostAgentCompileStatus: completed
+- runnerPostAgentCompileReturnCode: 0
+- runnerPostAgentCompileWarningCount: 0
+- buildJobRelationship: agent-build-observed-plus-runner-post-agent-check
+- hwpodExitCode: 0
+<details>
+<summary>Run-local HWPOD spec</summary>
+
+```yaml
+apiVersion: hwlab.dev/v0alpha1
+kind: Hwpod
+metadata:
+  uid: CONSTART-71FREQ-C
+  name: constart-71freq-c
+spec:
+  targetDevice:
+    board: 71-FREQ-C
+    mcu: STM32H723ZGTx
+  workspace:
+    path: "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-build-20260613150339-9bd9a5ef"
+    toolchain: keil-mdk
+    keilProject: projects/71-00075-11/FirmWare/MDK-ARM/FREQ_Controller_FW.uvprojx
+    keilTarget: FREQ_Controller_FW
+    keilCliPath: "C:\\Users\\liang\\.agents\\skills\\keil\\keil-cli.py"
+  debugProbe:
+    type: daplink
+    adapter: pyocd
+    probeUid: 3FD750C63E342E24
+    probeName: MicroLink CMSIS-DAP
+    programBackend: pyocd
+    autoBindUvoptx: false
+  ioProbe:
+    uart:
+      id: uart/1
+      baudrate: 921600
+    boardComm:
+      host: 192.168.0.154
+      port: 8000
+  boardComm:
+    jsonrpcTcp:
+      host: 192.168.0.154
+      port: 8000
+      boardCommDir: "C:\\Users\\liang\\.agents\\skills\\board-comm"
+      boardCommCommand: "py -3 board-comm-cli.py"
+      timeoutMs: 30000
+  nodeBinding:
+    nodeId: node-d601-f103-v2
+    nodeType: pc-host
+```
+
+</details>
+
+## Code Agent 信息
+
+- providerProfile: sub2api
+- requestedProviderProfile: sub2api
+- resolvedBackendProfile: sub2api
+- provider: sub2api
+- providerModel: sub2api
+- backend: agentrun-v01/sub2api
+- infrastructureBackend: agentrun-v01/sub2api
+- providerTraceTransport: agentrun-v01
+- providerTraceWireApi: agentrun-v01-command-result
+- providerTraceSource: agentrun-v01
+- providerTraceBackendProfile: sub2api
+- providerTraceValuesPrinted: false
+- projectId: prj_hwpod_workbench
+- conversationId: cnv_case_constart-71freq-build_constart-71freq-build-20260613150339-9bd9a5ef
+- sessionId: ses_56334b94-6efc-4c8f-a468-5e58dff6bcde
+- traceId: trc_case_constart-71freq-build_17bf45bec2aa4a7cb1aa1215b5ae6551
+- agentTerminalStatus: completed
+- agentCommandStatus: completed
+- traceSource: hwlab-cli.client.agent.trace
+- traceCommand: hwlab-cli client agent trace trc_case_constart-71freq-build_17bf45bec2aa4a7cb1aa1215b5ae6551 --render web
+- resultCommand: hwlab-cli client agent result trc_case_constart-71freq-build_17bf45bec2aa4a7cb1aa1215b5ae6551
+- inspectCommand: hwlab-cli client agent inspect --trace-id trc_case_constart-71freq-build_17bf45bec2aa4a7cb1aa1215b5ae6551
+
+</details>
 
 <details>
 <summary>原始产物索引</summary>
