@@ -7,6 +7,33 @@
 - autoEvaluation: false
 - primaryEntry: aggregate.md
 
+## 判定摘要
+
+- caseRunStatus: completed
+- agentRunTerminalStatus: completed
+- agentCommandStatus: completed
+- postValidationJobId: 20260613_230846_c3a3f484
+- postValidationStatus: completed
+- postValidationReturnCode: 0
+- postValidationWarningCount: 0
+- finalVsPostValidation: agent-final-and-post-validation-are-separate-evidence
+- requestedProviderProfile: sub2api
+- resolvedBackendProfile: sub2api
+- traceId: trc_case_constart-71freq-build_17bf45bec2aa4a7cb1aa1215b5ae6551
+- sourceRunDir: /root/hwlab-v02/.state/hwlab-cli/caserun/constart-71freq-build-20260613150339-9bd9a5ef
+
+### HWPOD 关键命令摘要
+
+| Step | Status | Job ID | Return Code | Warning Count | Exit Code | Evidence |
+|---|---|---|---:|---:|---:|---|
+| spec-validate |  |  |  |  | 0 | source=agent-trace-commands; command=hwpod-ctl spec validate --hwpod-id constart-71freq-c --workspace-path 'F:\Work\ConStart\.worktree\caserun-constart-71freq-build-20260613150339-9bd9a5ef |
+| inspect |  |  |  |  | 0 | source=agent-trace-commands; command=hwpod inspect --hwpod-id constart-71freq-c --workspace-path 'F:\Work\ConStart\.worktree\caserun-constart-71freq-build-20260613150339-9bd9a5ef |
+| build |  |  |  |  | 0 | source=agent-trace-commands; command=hwpod build --hwpod-id constart-71freq-c --workspace-path 'F:\Work\ConStart\.worktree\caserun-constart-71freq-build-20260613150339-9bd9a5ef |
+| job-status |  |  |  |  | 0 | source=agent-trace-commands; command=hwpod job status 20260613_230716_19ee11bf --hwpod-id constart-71freq-c --workspace-path 'F:\Work\ConStart\.worktree\caserun-constart-71freq-build-20260613150339 ... clipped ... |
+
+<details>
+<summary>运行环境、证据边界和诊断附录</summary>
+
 ## 证据边界速览
 
 - agentFinalSource: agent-final-response.md-or-terminal-row
@@ -50,15 +77,6 @@
 ### nonBlockingIssues
 
 _No nonBlockingIssues recorded._
-
-### HWPOD 关键命令摘要
-
-| Step | Status | Job ID | Return Code | Warning Count | Exit Code | Evidence |
-|---|---|---|---:|---:|---:|---|
-| spec-validate |  |  |  |  | 0 | source=agent-trace-commands; command=hwpod-ctl spec validate --hwpod-id constart-71freq-c --workspace-path 'F:\Work\ConStart\.worktree\caserun-constart-71freq-build-20260613150339-9bd9a5ef |
-| inspect |  |  |  |  | 0 | source=agent-trace-commands; command=hwpod inspect --hwpod-id constart-71freq-c --workspace-path 'F:\Work\ConStart\.worktree\caserun-constart-71freq-build-20260613150339-9bd9a5ef |
-| build |  |  |  |  | 0 | source=agent-trace-commands; command=hwpod build --hwpod-id constart-71freq-c --workspace-path 'F:\Work\ConStart\.worktree\caserun-constart-71freq-build-20260613150339-9bd9a5ef |
-| job-status |  |  |  |  | 0 | source=agent-trace-commands; command=hwpod job status 20260613_230716_19ee11bf --hwpod-id constart-71freq-c --workspace-path 'F:\Work\ConStart\.worktree\caserun-constart-71freq-build-20260613150339 ... clipped ... |
 
 ## 运行环境信息
 
@@ -157,6 +175,8 @@ spec:
 - traceCommand: hwlab-cli client agent trace trc_case_constart-71freq-build_17bf45bec2aa4a7cb1aa1215b5ae6551 --render web
 - resultCommand: hwlab-cli client agent result trc_case_constart-71freq-build_17bf45bec2aa4a7cb1aa1215b5ae6551
 - inspectCommand: hwlab-cli client agent inspect --trace-id trc_case_constart-71freq-build_17bf45bec2aa4a7cb1aa1215b5ae6551
+
+</details>
 
 ## 输入 Prompt
 
@@ -560,7 +580,8 @@ index 10dc8ca..865b3d8 100644
            <Number>0</Number>
 ```
 
-## 原始产物索引
+<details>
+<summary>原始产物索引</summary>
 
 | Path | Bytes | SHA-256 |
 |---|---:|---|
@@ -579,6 +600,8 @@ index 10dc8ca..865b3d8 100644
 | .hwlab/hwpod-spec.yaml | 1061 | 3f680a393e09bb62355d7e1c6a4135e846c114a31123b5b0a3189f374d5132a1 |
 | worker.stdout.log | 170227 | 2a14292e0b4b7755f74235a2abb6d91ea77f21c0d6762301aee5ee1ad28163a5 |
 | worker.stderr.log | 0 | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 |
+
+</details>
 
 ## 说明
 
