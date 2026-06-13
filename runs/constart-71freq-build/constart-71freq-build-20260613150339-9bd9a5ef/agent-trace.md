@@ -16,57 +16,31 @@
 - autoEvaluation: false
 
 ## Messages
-- **15:04:05  请求接受**
-
-- **15:04:05 total=00:00:00 run agentrun:run:reuse-skipped**
-
-```text
-AgentRun run reuse was skipped because this request requires the CaseRun tools-only resource bundle.
-```
-
-- **15:04:05 total=00:00:00 run agentrun:run:created**
-
-```text
-AgentRun run run_ae65f585d42a4ddfb12ae0dc4c0d6a5d created through internal k3s Service DNS.
-```
-
-- **15:04:05 total=00:00:00 run agentrun:command:created**
-
-```text
-AgentRun command cmd_d48be486309f4a27927d7b87a2840fb9 created; hwlab-cloud-api will start a runner Job explicitly without relying on scheduler automation.
-```
-
-- **15:04:06 total=00:00:01 run agentrun:runner-job:created**
-
-```text
-AgentRun runner Job agentrun-v01-runner-f3d5f5b9a243 created in namespace agentrun-v01.
-```
-
-- **15:04:11 total=00:00:06 run agentrun:backend:runner-image-work-ready-smoke**
+- **15:04:11 total=00:00:00 run agentrun:backend:runner-image-work-ready-smoke**
 
 ```text
 runner-image-work-ready-smoke
 ```
 
-- **15:04:11 total=00:00:06 run agentrun:backend:run-claimed**
+- **15:04:11 total=00:00:00 run agentrun:backend:run-claimed**
 
 ```text
 run-claimed
 ```
 
-- **15:04:12 total=00:00:07 run agentrun:backend:resource-bundle-materialized**
+- **15:04:12 total=00:00:00 run agentrun:backend:resource-bundle-materialized**
 
 ```text
 resource-bundle-materialized
 ```
 
-- **15:04:12 total=00:00:07 run agentrun:backend:runner-bundle-work-ready-smoke**
+- **15:04:12 total=00:00:00 run agentrun:backend:runner-bundle-work-ready-smoke**
 
 ```text
 runner-bundle-work-ready-smoke
 ```
 
-- **15:04:12 total=00:00:07 run agentrun:backend:backend-turn-started**
+- **15:04:12 total=00:00:00 run agentrun:backend:backend-turn-started**
 
 ```text
 backend-turn-started
@@ -74,19 +48,19 @@ backend-turn-started
 
 - **15:04:12  会话就绪**
 
-- **15:04:12 total=00:00:07 run agentrun:backend:codex-rollout-storage-mounted**
+- **15:04:12 total=00:00:00 run agentrun:backend:codex-rollout-storage-mounted**
 
 ```text
 codex-rollout-storage-mounted
 ```
 
-- **15:04:12 total=00:00:07 run agentrun:backend:initial-prompt-assembly**
+- **15:04:12 total=00:00:00 run agentrun:backend:initial-prompt-assembly**
 
 ```text
 initial-prompt-assembly
 ```
 
-- **15:04:12 total=00:00:07 run agentrun:backend:active-turn-control-ready**
+- **15:04:12 total=00:00:00 run agentrun:backend:active-turn-control-ready**
 
 ```text
 active-turn-control-ready
@@ -227,7 +201,7 @@ workspace 工具只提供文件读取/搜索/补丁入口；确认 submodule HEA
 
   </details>
 
-- **15:06:11 total=00:02:06 run agentrun:backend:model/verification**
+- **15:06:11 total=00:00:00 run agentrun:backend:model/verification**
 
 ```text
 model/verification
@@ -283,7 +257,7 @@ submodule 目录自身 `rev-parse HEAD` 已返回目标提交 `5ef2fc...`。我�
 
 构建已经提交到 HWPOD，命令仍在运行中；我会等待它完成并提取返回码、warning 数和产物路径。
 
-- **15:08:30  助手最终消息，轮次完成（总耗时 00:04:25）**
+- **15:08:30  助手最终消息，轮次完成（总耗时 00:00:00）**
 
 `hwpod build` 已接受异步构建，job id 是 `20260613_230716_19ee11bf`。我现在用 `hwpod job status` 轮询终态结果。
 

@@ -235,62 +235,36 @@ HWPOD 参数串: --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart
 - renderer: tools/src/hwlab-cli/trace-renderer:traceDisplayRows
 - agentFinalBoundary: agent-authored-final-response; not-post-validation-verdict
 - postValidationBoundary: runner-owned-post-agent-validation; separate-from-agent-final
-- sourceEventCount: 82
-- renderedRowCount: 36
+- sourceEventCount: 76
+- renderedRowCount: 31
 - hwpodCommandCount: 10
 - hwpodBuildCommandCount: 1
 
-- **15:04:05  请求接受**
-
-- **15:04:05 total=00:00:00 run agentrun:run:reuse-skipped**
-
-```text
-AgentRun run reuse was skipped because this request requires the CaseRun tools-only resource bundle.
-```
-
-- **15:04:05 total=00:00:00 run agentrun:run:created**
-
-```text
-AgentRun run run_ae65f585d42a4ddfb12ae0dc4c0d6a5d created through internal k3s Service DNS.
-```
-
-- **15:04:05 total=00:00:00 run agentrun:command:created**
-
-```text
-AgentRun command cmd_d48be486309f4a27927d7b87a2840fb9 created; hwlab-cloud-api will start a runner Job explicitly without relying on scheduler automation.
-```
-
-- **15:04:06 total=00:00:01 run agentrun:runner-job:created**
-
-```text
-AgentRun runner Job agentrun-v01-runner-f3d5f5b9a243 created in namespace agentrun-v01.
-```
-
-- **15:04:11 total=00:00:06 run agentrun:backend:runner-image-work-ready-smoke**
+- **15:04:11 total=00:00:00 run agentrun:backend:runner-image-work-ready-smoke**
 
 ```text
 runner-image-work-ready-smoke
 ```
 
-- **15:04:11 total=00:00:06 run agentrun:backend:run-claimed**
+- **15:04:11 total=00:00:00 run agentrun:backend:run-claimed**
 
 ```text
 run-claimed
 ```
 
-- **15:04:12 total=00:00:07 run agentrun:backend:resource-bundle-materialized**
+- **15:04:12 total=00:00:00 run agentrun:backend:resource-bundle-materialized**
 
 ```text
 resource-bundle-materialized
 ```
 
-- **15:04:12 total=00:00:07 run agentrun:backend:runner-bundle-work-ready-smoke**
+- **15:04:12 total=00:00:00 run agentrun:backend:runner-bundle-work-ready-smoke**
 
 ```text
 runner-bundle-work-ready-smoke
 ```
 
-- **15:04:12 total=00:00:07 run agentrun:backend:backend-turn-started**
+- **15:04:12 total=00:00:00 run agentrun:backend:backend-turn-started**
 
 ```text
 backend-turn-started
@@ -298,19 +272,19 @@ backend-turn-started
 
 - **15:04:12  会话就绪**
 
-- **15:04:12 total=00:00:07 run agentrun:backend:codex-rollout-storage-mounted**
+- **15:04:12 total=00:00:00 run agentrun:backend:codex-rollout-storage-mounted**
 
 ```text
 codex-rollout-storage-mounted
 ```
 
-- **15:04:12 total=00:00:07 run agentrun:backend:initial-prompt-assembly**
+- **15:04:12 total=00:00:00 run agentrun:backend:initial-prompt-assembly**
 
 ```text
 initial-prompt-assembly
 ```
 
-- **15:04:12 total=00:00:07 run agentrun:backend:active-turn-control-ready**
+- **15:04:12 total=00:00:00 run agentrun:backend:active-turn-control-ready**
 
 ```text
 active-turn-control-ready
@@ -451,7 +425,7 @@ workspace 工具只提供文件读取/搜索/补丁入口；确认 submodule HEA
 
   </details>
 
-- **15:06:11 total=00:02:06 run agentrun:backend:model/verification**
+- **15:06:11 total=00:00:00 run agentrun:backend:model/verification**
 
 ```text
 model/verification
@@ -507,7 +481,7 @@ submodule 目录自身 `rev-parse HEAD` 已返回目标提交 `5ef2fc...`。我�
 
 构建已经提交到 HWPOD，命令仍在运行中；我会等待它完成并提取返回码、warning 数和产物路径。
 
-- **15:08:30  助手最终消息，轮次完成（总耗时 00:04:25）**
+- **15:08:30  助手最终消息，轮次完成（总耗时 00:00:00）**
 
 `hwpod build` 已接受异步构建，job id 是 `20260613_230716_19ee11bf`。我现在用 `hwpod job status` 轮询终态结果。
 
@@ -585,16 +559,16 @@ index 10dc8ca..865b3d8 100644
 
 | Path | Bytes | SHA-256 |
 |---|---:|---|
-| evidence.json | 82438 | 2717b348c272dc41ba13bc7b18767eec634e5058d45fc1203b4993dfa643b35a |
+| evidence.json | 82438 | 0bdefc52596077a6e39781a50792ac320ab24d65632f7d1513d1454e723c3d0c |
 | summary.md | 5902 | f71b8412bae174bb0587b3bdbe6d447d9868a03b34567b8deceb65d0307e37dd |
 | aggregate.md | self-referential | self-referential |
-| agent-messages.json | 21730 | 35100f426b494dbfe16a6e48c8e84ccc51028e17bf0c66808a53b8af5a53dc26 |
-| agent-trace.md | 19019 | 1ab72d434b09720e83b8d37097c8812aef40d6fdc611cb3c98b7a61073256fe4 |
-| agent-transcript.md | 19019 | 1ab72d434b09720e83b8d37097c8812aef40d6fdc611cb3c98b7a61073256fe4 |
+| agent-messages.json | 20497 | d26e205307afca3a4351a39d0877295d6a9788a4c9440f913a7b1699ad4f51cc |
+| agent-trace.md | 18260 | dd568febee770c5a69fd8680c4d4d1586f5662030189e9c8f18e269b9b4255f6 |
+| agent-transcript.md | 18260 | dd568febee770c5a69fd8680c4d4d1586f5662030189e9c8f18e269b9b4255f6 |
 | final-response.md | 337 | b6fb0e3e63484e6dc9d28c7e21c0b3db529c3f3a0f3ea7bd0ee0599890f0ccf2 |
 | run.json | 88775 | a2a16779e63f9380e915731a52d66b043b087552dde712854d3d09e29e010ded |
-| result.json | 169506 | afb16e9186cd63d63685ac8d526919b6a20fbb2f81a86b37ea24f64e3a1ab771 |
-| agent-trace.json | 94361 | bfd7159d74f83f276d0eeab2ec6ea6a8f3068d6038a821a60fe37836f72c2c8e |
+| result.json | 169506 | 2c6b9135d0f67962f636ef0355b304801aea702153825840d07f0ff1bfe84bbe |
+| agent-trace.json | 88336 | ed0929c82017cda0b4fd4e32650375a4f90f4e73cdecf3d4ef754b71b461d90f |
 | agent-prompt.md | 4726 | d351f9d2042c0a84153167fd42f9a0f7983445826fe72b6b23ccb282775742d5 |
 | agent-diff.patch | 1986 | d027f38e42b15080aa70f0407a6750c8b583f445340391c6a8ed87338d6e0328 |
 | .hwlab/hwpod-spec.yaml | 1061 | 3f680a393e09bb62355d7e1c6a4135e846c114a31123b5b0a3189f374d5132a1 |
