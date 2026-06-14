@@ -1067,7 +1067,26 @@ AI0 正在按 probe 定义采样 3 次。
 **造模回采**
 | 请求 uA | 71 command echo | 41 AI0 external current |
 |---:|---|---:|
-| 40
+| 4000 | `ao_current_uA=4000` | `3.448666 mA` |
+| 8000 | `ao_current_uA=8000` | `6.854743 mA` |
+| 12000 | `ao_current_uA=12000` | `10.257923 mA` |
+
+## ioProbe 读数摘要
+
+本节为 #1184 收口时对低噪声 trace 的人工摘要回填，用于弥补 `final-response.md` 在本 run 中途截断的问题；自动截断缺陷已单独登记到 HWLAB #1200。原始证据仍以本文件上方低噪声 trace、`agent-trace.md` 和 `agent-trace.json` 为准。
+
+| 阶段 | 请求 uA | 71 command echo | 41 AI0 external current | 证据位置 |
+|---|---:|---|---:|---|
+| 造模坏 baseline | 4000 | `ao_current_uA=4000` | `3.448666 mA` | `agent-trace.md:493` / `aggregate.md:549` |
+| 造模坏 baseline | 8000 | `ao_current_uA=8000` | `6.854743 mA` | `agent-trace.md:543` / `aggregate.md:599` |
+| 造模坏 baseline | 12000 | `ao_current_uA=12000` | `10.257923 mA` | `agent-trace.md:593` / `aggregate.md:649` |
+| 修复版安全预检 | 4000 | `ao_current_uA=4000` | `3.998754 mA` | `agent-trace.md:785` / `aggregate.md:841` |
+| 修复版安全预检 | 8000 | `ao_current_uA=8000` | `7.998794 mA` | `agent-trace.md:835` / `aggregate.md:891` |
+| 修复版安全预检 | 12000 | `ao_current_uA=12000` | `11.995110 mA` | `agent-trace.md:881` / `aggregate.md:937` |
+| 修复版高点 | 20000 | `ao_current_uA=20000` | `19.964974 mA` | `agent-trace.md:931` / `aggregate.md:987` |
+| 最终恢复 | 4000 | `ao_current_uA=4000` | 约 `3.998 mA`；关闭前复核 `3.997926 mA` | `agent-trace.md:981` / 关闭前 `io-probe read` |
+
+补充复核命令：`hwpod io-probe read main41.ai0.current --hwpod-id constart-71freq-c --workspace-path "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"`，关闭前返回 `value=3.9979261557261148 mA`，samples=`[3.998339891433716, 3.9970986843109126, 3.998339891433716]`。
 
 ## 最后 Diff
 
