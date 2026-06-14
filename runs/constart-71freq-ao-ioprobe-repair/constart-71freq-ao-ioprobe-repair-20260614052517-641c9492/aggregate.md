@@ -157,13 +157,11 @@ active-turn-control-ready
 
   ```text
   hwpod-ctl spec validate --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-ctl.spec.validate", "status": "succeeded", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c94...
+  hwpod: ctl.spec.validate succeeded
   exitCode=0
   durationMs=0
   outputBytes=4240
-  outputTruncated=true
-  sourceSeq=22
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_WUTCuZYLYzIXGTbKB5V1Bhij
   ```
 
@@ -178,13 +176,11 @@ spec validate 已通过，且绑定的是本次隔离工作区，不是默认 ch
 
   ```text
   hwpod inspect --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: inspect completed
   exitCode=0
   durationMs=1079
   outputBytes=4070
-  outputTruncated=true
-  sourceSeq=26
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_DKJ0054vb94cxoHRcZL6KCMT
   ```
 
@@ -195,12 +191,12 @@ spec validate 已通过，且绑定的是本次隔离工作区，不是默认 ch
 
   ```text
   hwpod io-probe inspect main41.ai0.current --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.io-probe.inspect", "status": "succeeded", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641...
+  hwpod: io-probe.inspect succeeded
+  ioProbe: main41.ai0.current current
   exitCode=0
   durationMs=0
   outputBytes=2501
-  sourceSeq=28
+  stdout: hwpod wrapper JSON omitted
   rowId: tool:call_wks6CaeUitULzFn0EJuZLEWu
   ```
 
@@ -211,13 +207,12 @@ spec validate 已通过，且绑定的是本次隔离工作区，不是默认 ch
 
   ```text
   hwpod io-probe read main41.ai0.current --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: io-probe.read completed
+  ioProbe: main41.ai0.current current
   exitCode=0
   durationMs=4604
   outputBytes=4258
-  outputTruncated=true
-  sourceSeq=35
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_eby6NDBLA09SVKxfgSTT6Z1d
   ```
 
@@ -236,12 +231,11 @@ AI0 读取命令已发出，正在等待 41 主机按探针定义完成 3 次采
 
   ```text
   hwpod workspace --help --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.workspace.help", "status": "succeeded", "contractVersion": "hwpod-node-ops-v1", "command": "workspace", "subcommand": null, "applyPatchExample": "cat > /tmp/hwpod.patch <<'PATCH'\n*** Begin Patch\n*** Update File: projects/01_baseline/User/main.c\n@@\n #include \"d601_lcd.h\"\n+#include \"d601_arm2d_demo.h\"\n \n int main(void)\n@@\n d601_lcd_init();\n+ d601_arm2d_demo_show();\n*** End Patch\nPATCH\ncat /tmp/hwpod.patch | hwpod workspace apply-patch --reason \"edit subject workspace through hwpod-node\"", "applyPatchRules": [ "Use a multi-line Codex/UniDes...
+  hwpod: workspace --help succeeded
   exitCode=0
   durationMs=0
   outputBytes=2871
-  sourceSeq=39
+  stdout: hwpod wrapper JSON omitted
   rowId: tool:call_y3BAiOelU3ObPCrPaEX3SJFB
   ```
 
@@ -256,13 +250,11 @@ workspace 子命令支持 `cat/rg/apply-patch`，我会通过它读取和修改�
 
   ```text
   hwpod cmd git rev-parse HEAD --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: cmd git rev-parse HEAD completed
   exitCode=0
   durationMs=952
   outputBytes=4247
-  outputTruncated=true
-  sourceSeq=43
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_LCQ562A8AoZih78Bml5kMxdl
   ```
 
@@ -277,13 +269,11 @@ mono repo HEAD 确认是 `de223ab80ddf80e5ba092dcf2d20f9df7ec91a60`。我继续�
 
   ```text
   hwpod cmd git -C projects/71-00075-11 rev-parse HEAD --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: cmd git -C projects/71-00075-11 completed
   exitCode=0
   durationMs=840
   outputBytes=4271
-  outputTruncated=true
-  sourceSeq=49
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_Dd0v6dxAQMsbBKKbvB5ABhEZ
   ```
 
@@ -294,13 +284,11 @@ mono repo HEAD 确认是 `de223ab80ddf80e5ba092dcf2d20f9df7ec91a60`。我继续�
 
   ```text
   hwpod workspace cat projects/71-00075-11/FirmWare/APP/driver/aout.c --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: workspace cat projects/71-00075-11/FirmWare/APP/driver/aout.c completed
   exitCode=0
   durationMs=1200
   outputBytes=4287
-  outputTruncated=true
-  sourceSeq=51
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_7yqf40ZnPRdpYvnQaZpkv55L
   ```
 
@@ -311,13 +299,11 @@ mono repo HEAD 确认是 `de223ab80ddf80e5ba092dcf2d20f9df7ec91a60`。我继续�
 
   ```text
   hwpod workspace cat projects/71-00075-11/FirmWare/APP/user_config.h --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: workspace cat projects/71-00075-11/FirmWare/APP/user_config.h completed
   exitCode=0
   durationMs=1363
   outputBytes=4287
-  outputTruncated=true
-  sourceSeq=53
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_TFzjWCemNgrRT52bz2GsGTrn
   ```
 
@@ -344,13 +330,11 @@ mono repo HEAD 确认是 `de223ab80ddf80e5ba092dcf2d20f9df7ec91a60`。我继续�
 
   ```text
   cat <<'PATCH' | hwpod workspace apply-patch --reason "model bad AO current calibration baseline" --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492" *** Begin Patch *** Update File: projects/71-00075-11/FirmWare/APP/driver/aout.c @@ -#define AO_CAL_ZERO_UA 39U +#define AO_CAL_ZERO_UA 0U #define AO_CAL_DUTY_NUM 100000U -#define AO_CAL_DUTY_DEN 170375U +#define AO_CAL_DUTY_DEN 200000U *** End Patch PATCH
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: workspace apply-patch --reason "model completed
   exitCode=0
   durationMs=1224
   outputBytes=4576
-  outputTruncated=true
-  sourceSeq=60
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_4CNkv0JMvMTjH6ABCjXvzpDo
   ```
 
@@ -369,13 +353,11 @@ mono repo HEAD 确认是 `de223ab80ddf80e5ba092dcf2d20f9df7ec91a60`。我继续�
 
   ```text
   hwpod build --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: build completed
   exitCode=0
   durationMs=1179
   outputBytes=4231
-  outputTruncated=true
-  sourceSeq=65
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_7TljkJfavwY8pIbrB9dO2kpF
   ```
 
@@ -394,13 +376,11 @@ mono repo HEAD 确认是 `de223ab80ddf80e5ba092dcf2d20f9df7ec91a60`。我继续�
 
   ```text
   hwpod job status 20260614_133010_6556c51f --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: job.status completed
   exitCode=0
   durationMs=1578
   outputBytes=4261
-  outputTruncated=true
-  sourceSeq=71
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_3cvM9wuR0ncIghGoalNLBBUp
   ```
 
@@ -415,13 +395,11 @@ mono repo HEAD 确认是 `de223ab80ddf80e5ba092dcf2d20f9df7ec91a60`。我继续�
 
   ```text
   hwpod job status 20260614_133010_6556c51f --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: job.status completed
   exitCode=0
   durationMs=1232
   outputBytes=4261
-  outputTruncated=true
-  sourceSeq=76
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_Mv4YugjZynVjlgyQRjaRWCHP
   ```
 
@@ -440,13 +418,11 @@ Keil job 还在目标机上跑，我继续等终态；这里不会切换工作�
 
   ```text
   hwpod download --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: download completed
   exitCode=0
   durationMs=2122
   outputBytes=4234
-  outputTruncated=true
-  sourceSeq=81
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_JGPXAm65zTy56zksc3zLSM0d
   ```
 
@@ -465,13 +441,11 @@ Keil job 还在目标机上跑，我继续等终态；这里不会切换工作�
 
   ```text
   hwpod job status 20260614_133114_9274c252 --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: job.status completed
   exitCode=0
   durationMs=1791
   outputBytes=4261
-  outputTruncated=true
-  sourceSeq=87
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_6jbsaK6ulLBhcfg0cllxHwOk
   ```
 
@@ -486,13 +460,11 @@ Keil job 还在目标机上跑，我继续等终态；这里不会切换工作�
 
   ```text
   hwpod job status 20260614_133114_9274c252 --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: job.status completed
   exitCode=0
   durationMs=1676
   outputBytes=4261
-  outputTruncated=true
-  sourceSeq=93
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_NUwRP3rWiZgsNLihoP3UN7AH
   ```
 
@@ -507,13 +479,11 @@ Keil job 还在目标机上跑，我继续等终态；这里不会切换工作�
 
   ```text
   hwpod board-comm jrpctcp put hardware/ao/current/4000 --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: board-comm jrpctcp put hardware/ao/current/4000 completed
   exitCode=0
   durationMs=3621
   outputBytes=4273
-  outputTruncated=true
-  sourceSeq=97
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_go8NAnT3RZ53xQFjrFD6oRmE
   ```
 
@@ -532,13 +502,12 @@ Keil job 还在目标机上跑，我继续等终态；这里不会切换工作�
 
   ```text
   hwpod io-probe read main41.ai0.current --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: io-probe.read completed
+  ioProbe: main41.ai0.current current
   exitCode=0
   durationMs=3896
   outputBytes=4258
-  outputTruncated=true
-  sourceSeq=106
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_4c9MPS2ZIVZYhdmIocSu6low
   ```
 
@@ -553,13 +522,11 @@ Keil job 还在目标机上跑，我继续等终态；这里不会切换工作�
 
   ```text
   hwpod board-comm jrpctcp put hardware/ao/current/8000 --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: board-comm jrpctcp put hardware/ao/current/8000 completed
   exitCode=0
   durationMs=1501
   outputBytes=4273
-  outputTruncated=true
-  sourceSeq=110
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_JhHXOwJqpe4FHMa6JkHrYS3v
   ```
 
@@ -578,13 +545,12 @@ Keil job 还在目标机上跑，我继续等终态；这里不会切换工作�
 
   ```text
   hwpod io-probe read main41.ai0.current --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: io-probe.read completed
+  ioProbe: main41.ai0.current current
   exitCode=0
   durationMs=3654
   outputBytes=4258
-  outputTruncated=true
-  sourceSeq=119
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_8goQ2x5Jt8e43PibEp58O12C
   ```
 
@@ -603,13 +569,11 @@ AI0 读取在采样中，等 3 次均值输出。
 
   ```text
   hwpod board-comm jrpctcp put hardware/ao/current/12000 --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: board-comm jrpctcp put hardware/ao/current/12000 completed
   exitCode=0
   durationMs=1254
   outputBytes=4274
-  outputTruncated=true
-  sourceSeq=124
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_FNQjya2w5hZu1jtlT3JhQ35b
   ```
 
@@ -628,13 +592,12 @@ AI0 读取在采样中，等 3 次均值输出。
 
   ```text
   hwpod io-probe read main41.ai0.current --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: io-probe.read completed
+  ioProbe: main41.ai0.current current
   exitCode=0
   durationMs=4341
   outputBytes=4258
-  outputTruncated=true
-  sourceSeq=133
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_v6lYrjNRAzHa30ISaHBi5b07
   ```
 
@@ -653,13 +616,11 @@ AI0 读取在采样中，等 3 次均值输出。
 
   ```text
   cat <<'PATCH' | hwpod workspace apply-patch --reason "restore AO boundary calibration from bad baseline" --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492" *** Begin Patch *** Update File: projects/71-00075-11/FirmWare/APP/driver/aout.c @@ -#define AO_CAL_ZERO_UA 0U +#define AO_CAL_ZERO_UA 39U #define AO_CAL_DUTY_NUM 100000U -#define AO_CAL_DUTY_DEN 200000U +#define AO_CAL_DUTY_DEN 170375U *** End Patch PATCH
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: workspace apply-patch --reason "restore completed
   exitCode=0
   durationMs=692
   outputBytes=4583
-  outputTruncated=true
-  sourceSeq=138
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_thmwP2fjWnZqM8wi7IhbeXsM
   ```
 
@@ -674,13 +635,11 @@ AI0 读取在采样中，等 3 次均值输出。
 
   ```text
   hwpod build --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: build completed
   exitCode=0
   durationMs=1828
   outputBytes=4231
-  outputTruncated=true
-  sourceSeq=142
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_LYnAsymgKQfbxyeUsyOjLzXj
   ```
 
@@ -699,13 +658,11 @@ AI0 读取在采样中，等 3 次均值输出。
 
   ```text
   hwpod job status 20260614_133440_911c8f8c --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: job.status completed
   exitCode=0
   durationMs=1682
   outputBytes=4261
-  outputTruncated=true
-  sourceSeq=148
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_MJdyckmPipkoqlO4RJbVgOQc
   ```
 
@@ -724,13 +681,11 @@ AI0 读取在采样中，等 3 次均值输出。
 
   ```text
   hwpod download --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: download completed
   exitCode=0
   durationMs=1532
   outputBytes=4234
-  outputTruncated=true
-  sourceSeq=153
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_r6DNy6hcV4HEsXWegft1kL0Z
   ```
 
@@ -749,13 +704,11 @@ AI0 读取在采样中，等 3 次均值输出。
 
   ```text
   hwpod job status 20260614_133529_669d9a04 --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: job.status completed
   exitCode=0
   durationMs=1040
   outputBytes=4261
-  outputTruncated=true
-  sourceSeq=159
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_CDWm4VO6O2TgvcxwfWmVyBhA
   ```
 
@@ -770,13 +723,11 @@ program job 仍在运行，参数里再次确认 probe `3FD750C63E342E24`；继�
 
   ```text
   hwpod job status 20260614_133529_669d9a04 --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: job.status completed
   exitCode=0
   durationMs=1484
   outputBytes=4261
-  outputTruncated=true
-  sourceSeq=165
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_IZvJOTPfIuvf3HajSKIMg9q0
   ```
 
@@ -795,13 +746,11 @@ program job 仍在运行，参数里再次确认 probe `3FD750C63E342E24`；继�
 
   ```text
   hwpod board-comm jrpctcp put hardware/ao/current/4000 --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: board-comm jrpctcp put hardware/ao/current/4000 completed
   exitCode=0
   durationMs=1595
   outputBytes=4273
-  outputTruncated=true
-  sourceSeq=170
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_5yq302TGnAb2qJK6WsrOCe0L
   ```
 
@@ -820,13 +769,12 @@ program job 仍在运行，参数里再次确认 probe `3FD750C63E342E24`；继�
 
   ```text
   hwpod io-probe read main41.ai0.current --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: io-probe.read completed
+  ioProbe: main41.ai0.current current
   exitCode=0
   durationMs=3273
   outputBytes=4258
-  outputTruncated=true
-  sourceSeq=179
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_XQzMwaUpWuKd91gzpbEphLqR
   ```
 
@@ -845,13 +793,11 @@ AI0 正在按 probe 定义采样 3 次。
 
   ```text
   hwpod board-comm jrpctcp put hardware/ao/current/8000 --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: board-comm jrpctcp put hardware/ao/current/8000 completed
   exitCode=0
   durationMs=2003
   outputBytes=4273
-  outputTruncated=true
-  sourceSeq=184
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_KXbikqCBshfv7prSp4xkOjt1
   ```
 
@@ -870,13 +816,12 @@ AI0 正在按 probe 定义采样 3 次。
 
   ```text
   hwpod io-probe read main41.ai0.current --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: io-probe.read completed
+  ioProbe: main41.ai0.current current
   exitCode=0
   durationMs=3320
   outputBytes=4258
-  outputTruncated=true
-  sourceSeq=193
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_rCXelGIcJnRpJRUVezcu35YE
   ```
 
@@ -895,13 +840,11 @@ AI0 正在按 probe 定义采样 3 次。
 
   ```text
   hwpod board-comm jrpctcp put hardware/ao/current/12000 --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: board-comm jrpctcp put hardware/ao/current/12000 completed
   exitCode=0
   durationMs=1669
   outputBytes=4274
-  outputTruncated=true
-  sourceSeq=198
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_a63yXRF85bkKJUhcc4D4FKQg
   ```
 
@@ -916,13 +859,12 @@ AI0 正在按 probe 定义采样 3 次。
 
   ```text
   hwpod io-probe read main41.ai0.current --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: io-probe.read completed
+  ioProbe: main41.ai0.current current
   exitCode=0
   durationMs=4231
   outputBytes=4258
-  outputTruncated=true
-  sourceSeq=207
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_RpyZJXyKkGf9roky0CHECugy
   ```
 
@@ -941,13 +883,11 @@ AI0 正在按 probe 定义采样 3 次。
 
   ```text
   hwpod board-comm jrpctcp put hardware/ao/current/20000 --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: board-comm jrpctcp put hardware/ao/current/20000 completed
   exitCode=0
   durationMs=1701
   outputBytes=4274
-  outputTruncated=true
-  sourceSeq=212
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_TCD0zmUiMdsH5PEFDWvQxWmV
   ```
 
@@ -966,13 +906,12 @@ AI0 正在按 probe 定义采样 3 次。
 
   ```text
   hwpod io-probe read main41.ai0.current --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: io-probe.read completed
+  ioProbe: main41.ai0.current current
   exitCode=0
   durationMs=3096
   outputBytes=4258
-  outputTruncated=true
-  sourceSeq=221
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_KnYJ5IJzPlqtb7iVjImyZnsw
   ```
 
@@ -991,13 +930,11 @@ AI0 正在按 probe 定义采样 3 次。
 
   ```text
   hwpod board-comm jrpctcp put hardware/ao/current/4000 --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: board-comm jrpctcp put hardware/ao/current/4000 completed
   exitCode=0
   durationMs=1632
   outputBytes=4273
-  outputTruncated=true
-  sourceSeq=226
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_qIszoOiXsUuCslXxuTs5P7aK
   ```
 
@@ -1016,13 +953,12 @@ AI0 正在按 probe 定义采样 3 次。
 
   ```text
   hwpod io-probe read main41.ai0.current --hwpod-id constart-71freq-c --workspace-path "F:\Work\ConStart\.worktree\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"
-  stdout:
-  { "ok": true, "action": "hwpod-cli.invoke", "status": "completed", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "hwpodId": "constart-71freq-c", "specAuthority": "gitbundle-bundled-spec", "resolvedAuthority": { "hwpodId": "constart-71freq-c", "specPath": "/home/agentrun/workspaces/gitbundle-bd8af3b3e5f52f99/workspace/tools/hwpod-specs/constart-71freq-c.yaml", "specAuthority": "gitbundle-bundled-spec", "workspacePath": "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492", "e...
+  hwpod: io-probe.read completed
+  ioProbe: main41.ai0.current current
   exitCode=0
   durationMs=3536
   outputBytes=4258
-  outputTruncated=true
-  sourceSeq=235
+  stdout: hwpod wrapper JSON omitted from default view; use full row/raw trace for details.
   rowId: tool:call_RaGioevCcUAOsWG5wz0H8kqC
   ```
 
@@ -1067,26 +1003,7 @@ AI0 正在按 probe 定义采样 3 次。
 **造模回采**
 | 请求 uA | 71 command echo | 41 AI0 external current |
 |---:|---|---:|
-| 4000 | `ao_current_uA=4000` | `3.448666 mA` |
-| 8000 | `ao_current_uA=8000` | `6.854743 mA` |
-| 12000 | `ao_current_uA=12000` | `10.257923 mA` |
-
-## ioProbe 读数摘要
-
-本节为 #1184 收口时对低噪声 trace 的人工摘要回填，用于弥补 `final-response.md` 在本 run 中途截断的问题；自动截断缺陷已单独登记到 HWLAB #1200。原始证据仍以本文件上方低噪声 trace、`agent-trace.md` 和 `agent-trace.json` 为准。
-
-| 阶段 | 请求 uA | 71 command echo | 41 AI0 external current | 证据位置 |
-|---|---:|---|---:|---|
-| 造模坏 baseline | 4000 | `ao_current_uA=4000` | `3.448666 mA` | `agent-trace.md:493` / `aggregate.md:549` |
-| 造模坏 baseline | 8000 | `ao_current_uA=8000` | `6.854743 mA` | `agent-trace.md:543` / `aggregate.md:599` |
-| 造模坏 baseline | 12000 | `ao_current_uA=12000` | `10.257923 mA` | `agent-trace.md:593` / `aggregate.md:649` |
-| 修复版安全预检 | 4000 | `ao_current_uA=4000` | `3.998754 mA` | `agent-trace.md:785` / `aggregate.md:841` |
-| 修复版安全预检 | 8000 | `ao_current_uA=8000` | `7.998794 mA` | `agent-trace.md:835` / `aggregate.md:891` |
-| 修复版安全预检 | 12000 | `ao_current_uA=12000` | `11.995110 mA` | `agent-trace.md:881` / `aggregate.md:937` |
-| 修复版高点 | 20000 | `ao_current_uA=20000` | `19.964974 mA` | `agent-trace.md:931` / `aggregate.md:987` |
-| 最终恢复 | 4000 | `ao_current_uA=4000` | 约 `3.998 mA`；关闭前复核 `3.997926 mA` | `agent-trace.md:981` / 关闭前 `io-probe read` |
-
-补充复核命令：`hwpod io-probe read main41.ai0.current --hwpod-id constart-71freq-c --workspace-path "F:\\Work\\ConStart\\.worktree\\caserun-constart-71freq-ao-ioprobe-repair-20260614052517-641c9492"`，关闭前返回 `value=3.9979261557261148 mA`，samples=`[3.998339891433716, 3.9970986843109126, 3.998339891433716]`。
+| 40
 
 ## 最后 Diff
 
