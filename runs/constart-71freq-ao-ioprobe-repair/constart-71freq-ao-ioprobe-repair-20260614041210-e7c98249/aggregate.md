@@ -694,7 +694,7 @@ _No nonBlockingIssues recorded._
 - caseRepoRunDir: /root/hwlab-case-registry/runs/constart-71freq-ao-ioprobe-repair/constart-71freq-ao-ioprobe-repair-20260614041210-e7c98249
 - sourceRunDir: /root/hwlab-v02/.state/hwlab-cli/caserun/constart-71freq-ao-ioprobe-repair-20260614041210-e7c98249
 - createdAt: 2026-06-14T04:12:10.385Z
-- completedAt: 2026-06-14T04:17:20.964Z
+- completedAt: 2026-06-14T04:17:28.487Z
 - runnerPostAgentCompileCheck: recorded
 
 ## HWPOD / 后置验证信息
@@ -846,9 +846,9 @@ spec:
 | agent-trace.md | 31439 | fd5271b05f986ca7dde22dcd82e3bda1f11f16f15c0ea7eb3872248bb2c78a11 |
 | agent-transcript.md | 31439 | fd5271b05f986ca7dde22dcd82e3bda1f11f16f15c0ea7eb3872248bb2c78a11 |
 | final-response.md | 1729 | 71489ffcc6d905106134d6b0af98449e0e9a450f2431d9061db0045cd5d3ad19 |
-| run.json | 114143 | b41c4be19ed5af8939253eb2cfeb7854b41a492fe8679daa5c746bd80b204bfe |
-| result.json | 49615 | 8539857c0383153d5335a4daf22e3a25b40e054fdf0cf4df57583221093a01c6 |
-| agent-trace.json | 150962 | c4cafe64eeabf95c8184bca31aab28d493c12c2de496b91401c8c715d605831f |
+| run.json | 114143 | feaf5fe5c99a342206a6aeacd59e968e4aa4fc5445ffb4072df4cbc1177f03ec |
+| result.json | 225207 | b297764bc2405c4c031456857b91a51c6f683b3949a01b9ca59360583e1f4a85 |
+| agent-trace.json | 150962 | 594ed1fc456b8cbdadb60fc7c1b769eee97c2163713384cc557bfd53442336b3 |
 | agent-prompt.md | 6746 | 8dddf99f339e56d4bd64248297e121f3793865e2ead772ea2078af670c64956b |
 | agent-diff.patch | 1986 | d027f38e42b15080aa70f0407a6750c8b583f445340391c6a8ed87338d6e0328 |
 | .hwlab/hwpod-spec.yaml | 2431 | 29ec3460b3ffb31ceaae2379b21bbe5a872af7a3968a30e313211cbf5a6edb6f |
