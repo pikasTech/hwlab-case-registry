@@ -1,0 +1,92 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "constart-71freq-ao-ioprobe-repair",
+  "title": "ConStart 71-FREQ AO calibration repair with 41 AI0 ioProbe",
+  "mode": "repair-build-download-ioprobe",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "F:\\Work\\ConStart",
+    "commitId": "de223ab80ddf80e5ba092dcf2d20f9df7ec91a60",
+    "subdir": "projects/71-00075-11",
+    "submodules": [
+      {
+        "path": "projects/71-00075-11",
+        "url": "https://github.com/ConstarInc/71-00075-11",
+        "commitId": "5ef2fc874782713d1e4752636a8db05cc4a18cd2"
+      }
+    ]
+  },
+  "runtime": {
+    "apiUrl": "http://74.48.78.17:19667",
+    "webUrl": "http://74.48.78.17:19666"
+  },
+  "agentTask": {
+    "workspace": "subjectWorktree",
+    "providerProfile": "sub2api",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 900000,
+    "prompt": "本案例用于造模并修复 71-FREQ-C AO 电流输出校准。你必须在 subjectWorkspacePath 的隔离 worktree 内完成，不得修改原始 F:\\Work\\ConStart checkout 或 case registry。第一步先只读确认 mono repo HEAD、projects/71-00075-11 submodule HEAD、HWPOD spec 和 41 AI0 ioProbe：运行 hwpod-ctl spec validate、hwpod inspect、hwpod io-probe inspect main41.ai0.current、hwpod io-probe read main41.ai0.current。第二步在隔离 worktree 中制造一个可审计坏 baseline：只允许围绕 projects/71-00075-11/FirmWare/APP/driver/aout.c 和 projects/71-00075-11/FirmWare/APP/user_config.h 退化 ao_current_to_pwm_duty() 的 gain/offset 使用，使 4000uA/8000uA/12000uA 的外部 41 AI0 回采明显偏离；不要删除 control/status.output.ao_current_ua，不要伪造 JSON-RPC 返回。第三步再修复 AO 驱动边界校准，使 public API 仍接收 uA，请求电流只在 aout.c 的 PWM duty 边界转换一次。第四步按顺序运行 hwpod build，确认 probe UID 3FD750C63E342E24 与 71-FREQ-C 匹配后运行 hwpod download；若探针不匹配，报告 blocker，不要改用其他探针。第五步通过 hwpod board-comm jrpctcp put hardware/ao/current/4000、8000、12000 和 hwpod io-probe read main41.ai0.current 做安全预检；确认安全后可补 20000uA 点。最后必须恢复 4000uA 并再次读取 main41.ai0.current。输出必须包含：造模 diff 摘要、修复 diff 摘要、build job id/returnCode/warningCount、download 证据、每个电流点的 71 command echo 与 41 AI0 external current 表。",
+    "constraints": [
+      "思维过程和输出消息一律使用中文",
+      "只允许修改 subjectWorkspacePath 隔离 worktree，不得修改原始 F:\\Work\\ConStart checkout 或 case registry",
+      "允许重点修改 projects/71-00075-11/FirmWare/APP/driver/aout.c 和 projects/71-00075-11/FirmWare/APP/user_config.h；如确需触碰其他文件，必须先说明原因并保持最小 diff",
+      "不得删除、篡改或伪造 control/status.output.ao_current_ua；该字段只能作为 command echo，不能当作外部电流证据",
+      "必须使用 hwpod io-probe read main41.ai0.current 读取 41 主机 AI0 外部电流证据，不要直接解析裸大 JSON 作为最终结论",
+      "安全预检先做 4000uA、8000uA、12000uA，最后恢复 4000uA；只有读数稳定且安全时才做 20000uA",
+      "下载前必须确认 probe UID 3FD750C63E342E24 与 71-FREQ-C 匹配；不匹配时报告 blocker，不得换探针",
+      "遇到 41 主机不可达、AI0 未接线、ioProbe read 失败、download probe 不匹配或 build 失败时，报告 blocker 并保留已完成 evidence"
+    ]
+  },
+  "flow": [
+    { "id": "agent-repair", "kind": "agent" },
+    { "id": "build", "kind": "hwpod.build" },
+    { "id": "download", "kind": "hwpod.download" },
+    { "id": "safe-ao-4000", "kind": "hwpod.board-comm.jrpctcp", "method": "put", "path": "hardware/ao/current/4000" },
+    { "id": "read-ai0-4000", "kind": "hwpod.io-probe.read", "probeId": "main41.ai0.current" },
+    { "id": "safe-ao-8000", "kind": "hwpod.board-comm.jrpctcp", "method": "put", "path": "hardware/ao/current/8000" },
+    { "id": "read-ai0-8000", "kind": "hwpod.io-probe.read", "probeId": "main41.ai0.current" },
+    { "id": "safe-ao-12000", "kind": "hwpod.board-comm.jrpctcp", "method": "put", "path": "hardware/ao/current/12000" },
+    { "id": "read-ai0-12000", "kind": "hwpod.io-probe.read", "probeId": "main41.ai0.current" },
+    { "id": "restore-ao-4000", "kind": "hwpod.board-comm.jrpctcp", "method": "put", "path": "hardware/ao/current/4000" },
+    { "id": "read-ai0-restored", "kind": "hwpod.io-probe.read", "probeId": "main41.ai0.current" }
+  ],
+  "expected": {
+    "subject": {
+      "repoLocalPath": "F:\\Work\\ConStart",
+      "submodulePath": "projects/71-00075-11",
+      "submoduleCommitId": "5ef2fc874782713d1e4752636a8db05cc4a18cd2"
+    },
+    "repair": {
+      "primaryFiles": [
+        "projects/71-00075-11/FirmWare/APP/driver/aout.c",
+        "projects/71-00075-11/FirmWare/APP/user_config.h"
+      ],
+      "mustRestoreBoundaryCalibration": true,
+      "mustNotFakeStatus": true
+    },
+    "compile": { "success": true },
+    "download": { "attempted": true, "probeUid": "3FD750C63E342E24" },
+    "ioProbe": {
+      "probeId": "main41.ai0.current",
+      "quantity": "current",
+      "unit": "mA",
+      "safePointsUa": [4000, 8000, 12000],
+      "restoreUa": 4000,
+      "evidenceFields": ["ai_raw_voltage", "ai_current_mA"]
+    }
+  },
+  "diffCollection": {
+    "include": [
+      "projects/71-00075-11/FirmWare/APP/driver/aout.c",
+      "projects/71-00075-11/FirmWare/APP/user_config.h",
+      "projects/71-00075-11/FirmWare/APP/freq_control.c",
+      "projects/71-00075-11/FirmWare/APP/freq_jsonrpc_service.c"
+    ]
+  },
+  "notes": {
+    "autoEvaluation": false,
+    "purpose": "首个 PLC AO repair case：用 41 主机 AI0 外部电流回采证明修复，而不是只看 71-FREQ command echo",
+    "stage0Issue": "https://github.com/pikasTech/HWLAB/issues/1180",
+    "baselineRisk": "D601 F:\\Work\\ConStart 当前 checkout 有并行 dirty 修改，本 case 必须依赖 CaseRun 隔离 worktree 与固定 commit"
+  }
+}
