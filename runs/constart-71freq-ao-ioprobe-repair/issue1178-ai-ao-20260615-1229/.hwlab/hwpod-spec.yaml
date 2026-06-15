@@ -1,0 +1,87 @@
+apiVersion: hwlab.dev/v0alpha1
+kind: Hwpod
+metadata:
+  uid: CONSTART-71FREQ-C
+  name: constart-71freq-c
+spec:
+  targetDevice:
+    board: 71-FREQ-C
+    mcu: STM32H723ZGTx
+  workspace:
+    path: "F:\\Work\\ConStart\\.worktree\\caserun-issue1178-ai-ao-20260615-1229"
+    toolchain: keil-mdk
+    keilProject: projects/71-00075-11/FirmWare/MDK-ARM/FREQ_Controller_FW.uvprojx
+    keilTarget: FREQ_Controller_FW
+    keilCliPath: "C:\\Users\\liang\\.agents\\skills\\keil\\keil-cli.py"
+  debugProbe:
+    type: daplink
+    adapter: pyocd
+    probeUid: 3FD750C63E342E24
+    probeName: MicroLink CMSIS-DAP
+    programBackend: pyocd
+    autoBindUvoptx: false
+  ioProbe:
+    uart:
+      id: uart/1
+      baudrate: 921600
+    boardComm:
+      host: 192.168.0.154
+      port: 8000
+    endpoints:
+      freq71:
+        kind: boardCommJsonRpcTcp
+        host: 192.168.0.154
+        port: 8000
+        boardCommDir: "C:\\Users\\liang\\.agents\\skills\\board-comm"
+        boardCommCommand: "py -3 board-comm-cli.py"
+        timeoutMs: 30000
+      main41:
+        kind: boardCommJsonRpcTcp
+        host: 192.168.0.151
+        port: 8000
+        boardCommDir: "C:\\Users\\liang\\.agents\\skills\\board-comm"
+        boardCommCommand: "py -3 board-comm-cli.py"
+        timeoutMs: 30000
+    probes:
+      - id: main41.ai0.current
+        role: external-observer
+        endpointRef: main41
+        quantity: current
+        unit: mA
+        channel:
+          kind: analog-input
+          name: AI0
+          index: 0
+          quantity: current
+          unit: mA
+          range:
+            min: 0
+            max: 20
+        wiring:
+          from: 71-FREQ-C AO
+          to: 41-main AI0
+        read:
+          method: GET
+          path: hardware/ai
+          params:
+            - "0"
+          valuePath: "$.response.result.ai_current_mA"
+          rawValuePaths:
+            voltage: "$.response.result.ai_raw_voltage"
+            current: "$.response.result.ai_current_mA"
+            channel: "$.response.result.ai_channel"
+        sample:
+          count: 3
+          intervalMs: 100
+          settleMs: 300
+          statistic: mean
+  boardComm:
+    jsonrpcTcp:
+      host: 192.168.0.154
+      port: 8000
+      boardCommDir: "C:\\Users\\liang\\.agents\\skills\\board-comm"
+      boardCommCommand: "py -3 board-comm-cli.py"
+      timeoutMs: 30000
+  nodeBinding:
+    nodeId: node-d601-f103-v2
+    nodeType: pc-host
