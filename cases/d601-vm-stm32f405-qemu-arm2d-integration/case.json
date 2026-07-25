@@ -7,7 +7,33 @@
   "subject": {
     "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_workspace",
     "commitId": "f909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9",
-    "subdir": ""
+    "subdir": "",
+    "resources": [
+      {
+        "id": "arm-2d",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+        "ref": "v1.2.4",
+        "commitId": "b73ec43b6567feffe57642861e8b5eb083788011",
+        "destination": "third_party/Arm-2D"
+      },
+      {
+        "id": "cmsis-dsp",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/CMSIS-DSP.git",
+        "ref": "v1.14.2",
+        "commitId": "43aa2a9e7fc080e0d7541e9f5e083258403ac9ee",
+        "destination": "third_party/CMSIS-DSP"
+      },
+      {
+        "id": "cmsis-core",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/CMSIS_5.git",
+        "ref": "5.9.0",
+        "commitId": "2b7495b8535bdcb306dac29b9ded4cfb679d7e5c",
+        "destination": "third_party/CMSIS"
+      }
+    ]
   },
   "agentTask": {
     "workspace": "subjectWorktree",
@@ -16,14 +42,14 @@
     "resourceBundlePolicy": "caserun-with-skills",
     "timeoutMs": 1800000,
     "pollIntervalMs": 2000,
-    "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中完成 STM32F405 QEMU 的真实 Arm-2D 最小集成，并以 ARM GCC 编译证据收口。\n\n先通过标准 HWPOD workspace/cmd 入口读取 src/main.c、linker.ld 和必要的 arm2d-skill。获取 ARM-software/Arm-2D v1.2.4 与真实 CMSIS-DSP 1.14.2 来源，记录 URL、tag/version、commit 和文件清单。只物化 Cortex-M4 最小必要源码与头文件；upstream 文件保持原文，本地配置、framebuffer、display port 和 demo glue 放在 src/ 等项目本地源码路径。HWPOD build 使用 CaseRun compiler 生成的不可变 ARM GCC 计划，不读取或执行 subject 中的 scripts 构建入口。尽早运行 hwpod build，后续只按具体编译错误修改任务源码或项目本地配置。最终回报 provenance、diff、build operation identity、return code、warning 和 artifact hash。",
+    "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中完成 STM32F405 QEMU 的真实 Arm-2D 最小集成，并以 ARM GCC 编译证据收口。\n\n先通过标准 HWPOD workspace/cmd 入口读取 src/main.c、linker.ld 和必要的 arm2d-skill。Harness 已按 case 中声明的固定 URL、ref 与 commit，将 Arm-2D、CMSIS-DSP 和 CMSIS Core 物化到 third_party；直接读取并使用这些资源，记录 provenance 和必要文件清单，不要再次 clone、fetch、覆盖或删除。只选用 Cortex-M4 最小必要源码与头文件；upstream 文件保持原文，本地配置、framebuffer、display port 和 demo glue 放在 src/ 等项目本地源码路径。HWPOD build 使用 CaseRun compiler 生成的不可变 ARM GCC 计划，不读取或执行 subject 中的 scripts 构建入口。尽早运行 hwpod build，后续只按具体编译错误修改任务源码或项目本地配置。最终回报 provenance、diff、build operation identity、return code、warning 和 artifact hash。",
     "constraints": [
       "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
       "只能修改隔离 subject worktree，不得修改 case registry、HWLAB repo 或原 subject checkout",
       "资源与 skill 必须来自 AgentRun gitbundle，不得使用 workspaceFiles、seed files、host skill 或 ConfigMap fallback",
       "必须使用 ARM-software/Arm-2D 的真实 upstream v1.2.4；禁止 mock、stub、同名 API veneer、兼容子集或自制替代实现",
       "CMSIS-DSP 必须来自真实 1.14.2 Pack/RTE 或 upstream，并记录 provenance；禁止手写 arm_math.h 或最小 stub",
-      "第三方 upstream 文件必须由 HWPOD cmd/git/archive/已验证缓存物化，不得通过 apply-patch 手工粘贴或重写",
+      "第三方 upstream 文件由 CaseRun Harness 在 Agent 启动前按固定 provenance 物化；Agent 不得重复 clone、fetch、覆盖、删除或通过 apply-patch 手工粘贴和重写",
       "project-local 文本修改使用 HWPOD workspace apply-patch；禁止退化为 runner 直接文件操作",
       "禁止读取、修改或执行 scripts/hwpod-qemu-cli.py、scripts/build、scripts/rebuild、scripts/download、scripts/reset；这些属于 Harness 边界",
       "只做 compile-only，不启动 QEMU，不读取 UART",
