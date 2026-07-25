@@ -1,0 +1,869 @@
+{
+  "agent": {
+    "polls": 256,
+    "backend": "gpt-pika",
+    "baseUrl": "http://127.0.0.1:6677",
+    "traceId": "trc_harnessrl_2061f1cd4580573ebd187606",
+    "timedOut": false,
+    "projectId": "prj_hwpod_workbench",
+    "sessionId": "ses_9c975c60-2558-408b-890f-915cf846d782",
+    "timeoutMs": 1800000,
+    "promptPath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_l1_20260725d/agent-prompt.md",
+    "stageStatus": "completed",
+    "traceLookup": {
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "source": "hwlab-cli.client.agent",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_2061f1cd4580573ebd187606",
+      "commands": {
+        "trace": "hwlab-cli client agent trace trc_harnessrl_2061f1cd4580573ebd187606 --render web",
+        "result": "hwlab-cli client agent result trc_harnessrl_2061f1cd4580573ebd187606",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_2061f1cd4580573ebd187606",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_2061f1cd4580573ebd187606 --render web --full",
+        "sessionStatus": "hwlab-cli client agent session status ses_9c975c60-2558-408b-890f-915cf846d782"
+      },
+      "strategy": "id_plus_existing_cli",
+      "sessionId": "ses_9c975c60-2558-408b-890f-915cf846d782",
+      "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-integration_run-embdagentbench-arm2d-l1-20260725d"
+    },
+    "promptSha256": "b8904e241a7c3a0a3909610098c68a2ecf93dc910ba53280d095e670b1481914",
+    "traceCommand": "hwlab-cli client agent trace trc_harnessrl_2061f1cd4580573ebd187606 --render web",
+    "agentRunStatus": "completed",
+    "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-integration_run-embdagentbench-arm2d-l1-20260725d",
+    "inspectCommand": "hwlab-cli client agent inspect --trace-id trc_harnessrl_2061f1cd4580573ebd187606",
+    "lastHttpStatus": 200,
+    "pollIntervalMs": 2000,
+    "sessionCommand": "hwlab-cli client agent session status ses_9c975c60-2558-408b-890f-915cf846d782",
+    "terminalStatus": "completed",
+    "nextPollCommand": "hwlab-cli client agent result trc_harnessrl_2061f1cd4580573ebd187606",
+    "providerProfile": "gpt.pika",
+    "infrastructureBackend": "gpt-pika",
+    "resolvedBackendProfile": "gpt-pika",
+    "requestedProviderProfile": "gpt.pika"
+  },
+  "hwpod": {
+    "source": "case-run-runner-post-agent-compile-check",
+    "command": [
+      "bun",
+      "hwpod-cli.ts",
+      "build",
+      "--spec",
+      "hwpod-spec.yaml",
+      "--reason",
+      "case-run d601-vm-stm32f405-qemu-arm2d-integration run_embdagentbench_arm2d_l1_20260725d compile-only"
+    ],
+    "exitCode": 0,
+    "operation": {
+      "ok": true,
+      "op": "debug.build",
+      "opId": "op_01_debug_build",
+      "status": "completed",
+      "expected": {
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "hwpodId": "d601-vm-stm32f405-qemu",
+        "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d"
+      },
+      "observed": {
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "hwpodId": "d601-vm-stm32f405-qemu",
+        "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d"
+      },
+      "topology": {
+        "ok": true
+      },
+      "artifacts": [
+        "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/build/stm32f405-qemu.elf"
+      ],
+      "authority": "case-hwpod-yaml",
+      "contractVersion": "hwpod-operation-result-v0.3",
+      "synchronousBuild": {
+        "ok": true,
+        "status": "completed",
+        "artifacts": [
+          "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/build/stm32f405-qemu.elf"
+        ],
+        "sizeBytes": 6676,
+        "modifiedAt": "2026-07-25T01:47:30Z"
+      }
+    },
+    "stdoutJson": {
+      "ok": true,
+      "action": "hwpod-cli.invoke",
+      "status": "completed",
+      "results": [
+        {
+          "ok": true,
+          "op": "debug.build",
+          "opId": "op_01_debug_build",
+          "output": {
+            "ok": true,
+            "op": "debug.build",
+            "cwd": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d",
+            "stderr": "",
+            "stdout": "{\"ok\":true,\"action\":\"build\",\"status\":\"completed\",\"artifact\":\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/build/stm32f405-qemu.elf\",\"sizeBytes\":6676,\"modifiedAt\":\"2026-07-25T01:47:30Z\",\"command\":[\"arm-none-eabi-gcc\",\"-mcpu=cortex-m4\",\"-mthumb\",\"-mfpu=fpv4-sp-d16\",\"-mfloat-abi=hard\",\"-ffreestanding\",\"-std=gnu11\",\"-fdata-sections\",\"-ffunction-sections\",\"-nostdlib\",\"-DARM_MATH_CM4\",\"-D___ARM_2D_CFG_HEADER___=\\\"arm_2d_cfg.h\\\"\",\"-I\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/src\",\"-I\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/third_party/Arm-2D/Library/Include\",\"-I\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/third_party/CMSIS-DSP/Include\",\"-I\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/third_party/CMSIS-DSP/PrivateInclude\",\"-I\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/third_party/CMSIS_5/CMSIS/Core/Include\",\"-Wl,--gc-sections\",\"-Wl,-Map=/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/build/stm32f405-qemu.map\",\"-T\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/linker.ld\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/src/startup.S\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/src/main.c\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/src/libc_minimal.c\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/third_party/Arm-2D/Library/Source/arm_2d.c\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/third_party/Arm-2D/Library/Source/arm_2d_async.c\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/third_party/Arm-2D/Library/Source/__arm_2d_core.c\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/third_party/Arm-2D/Library/Source/arm_2d_draw.c\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/third_party/Arm-2D/Library/Source/arm_2d_conversion.c\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/third_party/CMSIS-DSP/Source/BasicMathFunctions/arm_dot_prod_f32.c\",\"-lm\",\"-o\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/build/stm32f405-qemu.elf\"]}\n",
+            "command": [
+              "scripts/build"
+            ],
+            "exitCode": 0,
+            "elapsedMs": 1240,
+            "bindingSource": "hwpod-node-ops.command"
+          },
+          "status": "completed"
+        }
+      ]
+    }
+  },
+  "runId": "run_embdagentbench_arm2d_l1_20260725d",
+  "apiUrl": "http://127.0.0.1:6681",
+  "caseId": "d601-vm-stm32f405-qemu-arm2d-integration",
+  "replay": {
+    "source": "archived-hwpod-operation-observations",
+    "planMode": "compile-only",
+    "actionIds": [
+      "validation_01_build"
+    ],
+    "operationIds": [
+      "op_01_debug_build"
+    ],
+    "relationships": [],
+    "observationIds": [],
+    "contractVersion": "hwpod-case-validation-replay-v1"
+  },
+  "status": "recorded",
+  "subject": {
+    "setup": {
+      "nodeId": "node-d601-vm-hwpod-qemu",
+      "planId": "run_embdagentbench_arm2d_l1_20260725d:prepare:v1:subject-prepare",
+      "stderr": "Preparing worktree (detached HEAD f909cda)",
+      "stdout": "HEAD is now at f909cda feat: add full QEMU rebuild operation\nf909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9",
+      "exitCode": 0,
+      "operation": {
+        "ops": [
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_01_subject_commit",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_02_subject_worktree_add",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_03_subject_worktree_head",
+            "status": "completed"
+          }
+        ],
+        "intent": "cmd.run",
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "planId": "run_embdagentbench_arm2d_l1_20260725d:prepare:v1:subject-prepare",
+        "hwpodId": "d601-vm-stm32f405-qemu",
+        "contractVersion": "hwpod-node-ops-v1"
+      },
+      "httpStatus": 200
+    },
+    "subdir": "",
+    "commitId": "f909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9",
+    "worktreePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d",
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_workspace",
+    "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    }
+  },
+  "warnings": {},
+  "agentDiff": {
+    "diffStat": "scripts/hwpod-qemu-cli.py | 18 ++++++++++++++++--\n src/main.c                |  7 +++++++\n 2 files changed, 23 insertions(+), 2 deletions(-)\n/dev/null => src/arm_2d_cfg.h | 7 +++++++\n 1 file changed, 7 insertions(+)\n/dev/null => src/libc_minimal.c | 10 ++++++++++\n 1 file changed, 10 insertions(+)\n\n\n\n/dev/null => third_party/PROVENANCE.md | 7 +++++++\n 1 file changed, 7 insertions(+)",
+    "requests": [
+      {
+        "label": "status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 99
+      },
+      {
+        "label": "diff-stat",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 140
+      },
+      {
+        "label": "diff-patch",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 2404
+      },
+      {
+        "label": "submodule-status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-ls-files",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 125
+      },
+      {
+        "label": "untracked-file-metadata",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:src/arm_2d_cfg.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 74
+      },
+      {
+        "label": "untracked-diff-patch:src/arm_2d_cfg.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 312
+      },
+      {
+        "label": "untracked-diff-stat:src/libc_minimal.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 81
+      },
+      {
+        "label": "untracked-diff-patch:src/libc_minimal.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 400
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D",
+        "stderr": "error: Could not access 'third_party/Arm-2D/null'",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D",
+        "stderr": "error: Could not access 'third_party/Arm-2D/null'",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/CMSIS-DSP",
+        "stderr": "error: Could not access 'third_party/CMSIS-DSP/null'",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/CMSIS-DSP",
+        "stderr": "error: Could not access 'third_party/CMSIS-DSP/null'",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/CMSIS_5",
+        "stderr": "error: Could not access 'third_party/CMSIS_5/null'",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/CMSIS_5",
+        "stderr": "error: Could not access 'third_party/CMSIS_5/null'",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/PROVENANCE.md",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 83
+      },
+      {
+        "label": "untracked-diff-patch:third_party/PROVENANCE.md",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 663
+      },
+      {
+        "label": "source-root-baseline",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      },
+      {
+        "label": "source-root-after-prepare",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      },
+      {
+        "label": "source-root-after-agent",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      }
+    ],
+    "statusShort": "M scripts/hwpod-qemu-cli.py\n M src/main.c\n?? src/arm_2d_cfg.h\n?? src/libc_minimal.c\n?? third_party/",
+    "diffPatchPath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_l1_20260725d/agent-diff.patch",
+    "diffCollection": {
+      "config": {
+        "ignore": [],
+        "include": []
+      },
+      "omitted": [],
+      "tracked": {
+        "paths": [
+          "scripts/hwpod-qemu-cli.py",
+          "src/main.c"
+        ],
+        "diffStat": "scripts/hwpod-qemu-cli.py | 18 ++++++++++++++++--\n src/main.c                |  7 +++++++\n 2 files changed, 23 insertions(+), 2 deletions(-)",
+        "diffPatchSha256": "9cdd329e1f1b188859e7cd84b1d98a475381a57f730d2d6d50e60fdd9fba0602"
+      },
+      "included": [
+        {
+          "path": "src/arm_2d_cfg.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "src/libc_minimal.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/CMSIS-DSP",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/CMSIS_5",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/PROVENANCE.md",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        }
+      ],
+      "untracked": {
+        "total": 6,
+        "omitted": 0,
+        "included": 6
+      },
+      "submodules": [],
+      "contractVersion": "hwpod-case-run-diff-collection-v1"
+    },
+    "diffPatchSha256": "2c4470a49600d9890d950eead7156953e1c8e89ac70fb81a01c33475289b8b95",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterAgent": {
+      "label": "after-agent",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootStatusShort": "?? .worktree/",
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootChangedAfterAgent": false,
+    "sourceRootChangedAfterPrepare": false
+  },
+  "agentTask": {
+    "model": "gpt-5.6-luna",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 1800000,
+    "workspace": "subjectWorktree",
+    "constraints": [
+      "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
+      "只能修改隔离 subject worktree，不得修改 case registry、HWLAB repo 或原 subject checkout",
+      "资源与 skill 必须来自 AgentRun gitbundle，不得使用 workspaceFiles、seed files、host skill 或 ConfigMap fallback",
+      "必须使用 ARM-software/Arm-2D 的真实 upstream v1.2.4；禁止 mock、stub、同名 API veneer、兼容子集或自制替代实现",
+      "CMSIS-DSP 必须来自真实 1.14.2 Pack/RTE 或 upstream，并记录 provenance；禁止手写 arm_math.h 或最小 stub",
+      "第三方 upstream 文件必须由 HWPOD cmd/git/archive/已验证缓存物化，不得通过 apply-patch 手工粘贴或重写",
+      "project-local 文本修改使用 HWPOD workspace apply-patch；禁止退化为 runner 直接文件操作",
+      "只做 compile-only，不启动 QEMU，不读取 UART",
+      "结果只记录 raw trace/evidence，autoEvaluation=false"
+    ],
+    "promptSha256": "a288f00fe2bf87e0a80b90e166732c7f9a3ed1f21b847443846edada22badc85",
+    "pollIntervalMs": 2000,
+    "providerProfile": "gpt.pika",
+    "reasoningEffort": "low"
+  },
+  "artifacts": [
+    "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d/build/stm32f405-qemu.elf"
+  ],
+  "decisions": {
+    "reason": "CaseRun records Agent final independently and projects only authoritative HWPOD post-validation observations",
+    "autoEvaluation": false,
+    "runnerPostAgentCompileCheck": "recorded"
+  },
+  "agentFinal": {
+    "source": "agentrun-result",
+    "present": true,
+    "timedOut": false,
+    "naturalEnd": true,
+    "stageStatus": "completed",
+    "text": "已完成真实 Arm-2D/CMSIS-DSP 最小集成，全部操作通过 HWPOD 隔离 worktree 完成。\n\n- Arm-2D v1.2.4：`b73ec43b6567feffe57642861e8b5eb083788011`\n- CMSIS-DSP v1.14.2：`43aa2a9e7fc080e0d7541e9f5e083258403ac9ee`\n- CMSIS-Core 5.9.0：`2b7495b8535bdcb306dac29b9ded4cfb679d7e5c`\n- 构建 operation plan：`hwpod_plan_0e853646-6f74-47f3-afa9-59676a9ded86`\n- 返回码：`0`\n- Artifact：`build/stm32f405-qemu.elf`\n- Artifact SHA-256：`0b08b3ff6f7defba2f411197ad9f12631280bd0493522e5959344cbcdce8b1c9`\n- Artifact 大小：6676 bytes\n- 最终构建 warning/error：无\n- 未执行 QEMU、download 或 UART 验证\n\n修改包含构建入口、Arm-2D 配置、CMSIS-Core 头文件路径、Arm-2D 初始化、CMSIS-DSP `arm_dot_prod_f32` 调用、freestanding `memset` 和 provenance 文档。 upstream 文件 diff 为 0。",
+    "textChars": 664,
+    "status": "completed",
+    "traceId": "trc_harnessrl_2061f1cd4580573ebd187606"
+  },
+  "agentTrace": {
+    "traceId": "trc_harnessrl_2061f1cd4580573ebd187606",
+    "status": "completed",
+    "httpStatus": 200,
+    "source": "hwlab-cli.client.agent.trace",
+    "lookup": {
+      "source": "hwlab-cli.client.agent",
+      "strategy": "id_plus_existing_cli",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_2061f1cd4580573ebd187606",
+      "sessionId": "ses_9c975c60-2558-408b-890f-915cf846d782",
+      "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-integration_run-embdagentbench-arm2d-l1-20260725d",
+      "threadId": "",
+      "commands": {
+        "result": "hwlab-cli client agent result trc_harnessrl_2061f1cd4580573ebd187606",
+        "trace": "hwlab-cli client agent trace trc_harnessrl_2061f1cd4580573ebd187606 --render web",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_2061f1cd4580573ebd187606 --render web --full",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_2061f1cd4580573ebd187606",
+        "sessionStatus": "hwlab-cli client agent session status ses_9c975c60-2558-408b-890f-915cf846d782"
+      }
+    },
+    "sourceEventCount": 187,
+    "renderedRowCount": 52,
+    "commandCount": 41,
+    "hwpodCommandCount": 0,
+    "hwpodBuildCommandCount": 0,
+    "keilJobCandidates": [],
+    "terminalStatus": "completed",
+    "commands": [
+      {
+        "source": "trace-row",
+        "seq": 4273,
+        "rowId": "tool:exec-63a13ea6-e456-4368-9cff-4c240cac4af7",
+        "header": "01:38:58",
+        "command": "printf '%s\\n' '--- commands ---'; command -v hwpod; command -v hwpod-ctl; command -v hwpod-compiler; printf '%s\\n' '--- skill files ---'; sed -n '1,240p' .git/agentrun-managed-overlay/.agents/skills/hwpod-cli/SKILL.md; sed -n '1,220p' .git/agentrun-managed-overlay/.agents/skills/arm2d-skill/SKILL.md\noutput:\ncommandExecution started: /bin/bash -lc \"printf '%s\\\\n' '--- commands ---'; command -v hwpod; command -v hwpod-ctl; command -v hwpod-compiler; printf '%s\\\\n' '--- skill files ---'; sed -n '1,240p' .git/agentrun-managed-overlay/.agents/skills/hwpod-cli/SKILL.md; sed -n '1,220p' .git/agentrun-managed-overlay/.agents/skills/arm2d-skill/SKILL.md\"\noutputBytes=344",
+        "normalizedCommand": "printf '%s\\n' '--- commands ---'; command -v hwpod; command -v hwpod-ctl; command -v hwpod-compiler; printf '%s\\n' '--- skill files ---'; sed -n '1,240p' .git/agentrun-managed-overlay/.agents/skills/hwpod-cli/SKILL.md; sed -n '1,220p' .git/agentrun-managed-overlay/.agents/skills/arm2d-skill/SKILL.md output: commandExecution started: /bin/bash -lc \"printf '%s\\\\n' '--- commands ---'; command -v hwpod; command -v hwpod-ctl; command -v hwpod-compiler; printf '%s\\\\n' '--- skill files ---'; sed -n '1,240p' .git/agentrun-managed-overlay/.agents/skills/hwpod-cli/SKILL.md; sed -n '1,220p' .git/agentrun-managed-overlay/.agents/skills/arm2d-skill/SKILL.md\" outputBytes=344",
+        "bodyPreview": "printf '%s\\n' '--- commands ---'; command -v hwpod; command -v hwpod-ctl; command -v hwpod-compiler; printf '%s\\n' '--- skill files ---'; sed -n '1,240p' .git/agentrun-managed-overlay/.agents/skills/hwpod-cli/SKILL.md; sed -n '1,220p' .git/agentrun-managed-overlay/.agents/skills/arm2d-skill/SKILL.md\noutput:\ncommandExecution started: /bin/bash -lc \"printf '%s\\\\n' '--- commands ---'; command -v hwpod; command -v hwpod-ctl; command -v hwpod-compiler; printf '%s\\\\n' '--- skill files ---'; sed -n '1,240p' .git/agentrun-managed-overlay/.agents/skills/hwpod-cli/SKILL.md; sed -n '1,220p' .git/agentrun-managed-overlay/.agents/skills/arm2d-skill/SKILL.md\"\noutputBytes=344\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4276,
+        "rowId": "tool:exec-1cb458cd-4725-4a09-bb9e-2772f956f114",
+        "header": "01:39:10",
+        "command": "printf '%s\\n' '--- env ---'; env | rg '\"'^(AGENTRUN|HWLAB_RUNTIME|PATH)='\"'; printf '%s\\n' '--- tools ---'; rg --files tools .git/agentrun-managed-overlay 2>/dev/null | sed -n '1,120p'; printf '%s\\n' '--- wrappers ---'; find .git/agentrun-managed-overlay tools -maxdepth 4 -type f -perm -111 -print 2>/dev/null | sed -n '1,80p'\noutput:\ncommandExecution started: /bin/bash -lc \"printf '%s\\\\n' '--- env ---'; env | rg '\"'^(AGENTRUN|HWLAB_RUNTIME|PATH)='\"'; printf '%s\\\\n' '--- tools ---'; rg --files tools .git/agentrun-managed-overlay 2>/dev/null | sed -n '1,120p'; printf '%s\\\\n' '--- wrappers ---'; find .git/agentrun-managed-overlay tools -maxdepth 4 -type f -perm -111 -print 2>/dev/null | sed -n '1,80p'\"\noutputBytes=372",
+        "normalizedCommand": "printf '%s\\n' '--- env ---'; env | rg '\"'^(AGENTRUN|HWLAB_RUNTIME|PATH)='\"'; printf '%s\\n' '--- tools ---'; rg --files tools .git/agentrun-managed-overlay 2>/dev/null | sed -n '1,120p'; printf '%s\\n' '--- wrappers ---'; find .git/agentrun-managed-overlay tools -maxdepth 4 -type f -perm -111 -print 2>/dev/null | sed -n '1,80p' output: commandExecution started: /bin/bash -lc \"printf '%s\\\\n' '--- env ---'; env | rg '\"'^(AGENTRUN|HWLAB_RUNTIME|PATH)='\"'; printf '%s\\\\n' '--- tools ---'; rg --files tools .git/agentrun-managed-overlay 2>/dev/null | sed -n '1,120p'; printf '%s\\\\n' '--- wrappers ---'; find .git/agentrun-managed-overlay tools -maxdepth 4 -type f -perm -111 -print 2>/dev/null | sed -n '1,80p'\" outputBytes=372",
+        "bodyPreview": "printf '%s\\n' '--- env ---'; env | rg '\"'^(AGENTRUN|HWLAB_RUNTIME|PATH)='\"'; printf '%s\\n' '--- tools ---'; rg --files tools .git/agentrun-managed-overlay 2>/dev/null | sed -n '1,120p'; printf '%s\\n' '--- wrappers ---'; find .git/agentrun-managed-overlay tools -maxdepth 4 -type f -perm -111 -print 2>/dev/null | sed -n '1,80p'\noutput:\ncommandExecution started: /bin/bash -lc \"printf '%s\\\\n' '--- env ---'; env | rg '\"'^(AGENTRUN|HWLAB_RUNTIME|PATH)='\"'; printf '%s\\\\n' '--- tools ---'; rg --files tools .git/agentrun-managed-overlay 2>/dev/null | sed -n '1,120p'; printf '%s\\\\n' '--- wrappers ---'; find .git/agentrun-managed-overlay tools -maxdepth 4 -type f -perm -111 -print 2>/dev/null | sed -n '1,80p'\"\noutputBytes=372\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4278,
+        "rowId": "tool:exec-44816b8e-6156-46df-8380-b6b805380683",
+        "header": "01:39:34",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\"\noutputBytes=249",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' output: commandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\" outputBytes=249",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\"\noutputBytes=249\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4279,
+        "rowId": "tool:exec-124e491f-9fcf-4527-89e4-c257b821e5db",
+        "header": "01:39:34",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\"\noutputBytes=244",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' output: commandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\" outputBytes=244",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\"\noutputBytes=244\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4280,
+        "rowId": "tool:exec-bae9518e-57cd-46a8-9d3f-96a354d8f39c",
+        "header": "01:39:34",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod-ctl spec validate --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod-ctl spec validate --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\"\noutputBytes=254",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod-ctl spec validate --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' output: commandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod-ctl spec validate --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\" outputBytes=254",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod-ctl spec validate --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod-ctl spec validate --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\"\noutputBytes=254\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4288,
+        "rowId": "tool:exec-ff0f76f6-210f-4a02-934a-013d055dbe12",
+        "header": "01:39:45",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod workspace cat src/main.c --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace cat src/main.c --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\"\noutputBytes=261",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod workspace cat src/main.c --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' output: commandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace cat src/main.c --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\" outputBytes=261",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod workspace cat src/main.c --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace cat src/main.c --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\"\noutputBytes=261\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4291,
+        "rowId": "tool:exec-bce79c96-2c1f-4162-9b8f-189c5bf224e3",
+        "header": "01:39:46",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod workspace cat scripts/hwpod-qemu-cli.py --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace cat scripts/hwpod-qemu-cli.py --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\"\noutputBytes=276",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod workspace cat scripts/hwpod-qemu-cli.py --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' output: commandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace cat scripts/hwpod-qemu-cli.py --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\" outputBytes=276",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod workspace cat scripts/hwpod-qemu-cli.py --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace cat scripts/hwpod-qemu-cli.py --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\"\noutputBytes=276\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4294,
+        "rowId": "tool:exec-2783afac-dafd-42c6-8026-4c6a465dd805",
+        "header": "01:39:47",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod workspace cat linker.ld --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace cat linker.ld --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\"\noutputBytes=260",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod workspace cat linker.ld --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' output: commandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace cat linker.ld --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\" outputBytes=260",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod workspace cat linker.ld --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace cat linker.ld --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\"\noutputBytes=260\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4297,
+        "rowId": "tool:exec-130b34da-9332-4b6b-a864-748598b4b756",
+        "header": "01:39:48",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod workspace rg -n 'arm_2d|CMSIS|arm_math|gcc|build' . --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --context 2\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace rg -n 'arm_2d|CMSIS|arm_math|gcc|build' . --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --context 2\"\noutputBytes=300",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod workspace rg -n 'arm_2d|CMSIS|arm_math|gcc|build' . --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --context 2 output: commandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace rg -n 'arm_2d|CMSIS|arm_math|gcc|build' . --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --context 2\" outputBytes=300",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod workspace rg -n 'arm_2d|CMSIS|arm_math|gcc|build' . --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --context 2\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace rg -n 'arm_2d|CMSIS|arm_math|gcc|build' . --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --context 2\"\noutputBytes=300\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4300,
+        "rowId": "tool:exec-3d684792-1ee7-44f1-a61e-b888d7819d7b",
+        "header": "01:39:57",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod --help; .git/agentrun-managed-overlay/tools/hwpod workspace --help; .git/agentrun-managed-overlay/tools/hwpod build --help\noutput:\ncommandExecution started: /bin/bash -lc '.git/agentrun-managed-overlay/tools/hwpod --help; .git/agentrun-managed-overlay/tools/hwpod workspace --help; .git/agentrun-managed-overlay/tools/hwpod build --help'\noutputBytes=206",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod --help; .git/agentrun-managed-overlay/tools/hwpod workspace --help; .git/agentrun-managed-overlay/tools/hwpod build --help output: commandExecution started: /bin/bash -lc '.git/agentrun-managed-overlay/tools/hwpod --help; .git/agentrun-managed-overlay/tools/hwpod workspace --help; .git/agentrun-managed-overlay/tools/hwpod build --help' outputBytes=206",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod --help; .git/agentrun-managed-overlay/tools/hwpod workspace --help; .git/agentrun-managed-overlay/tools/hwpod build --help\noutput:\ncommandExecution started: /bin/bash -lc '.git/agentrun-managed-overlay/tools/hwpod --help; .git/agentrun-managed-overlay/tools/hwpod workspace --help; .git/agentrun-managed-overlay/tools/hwpod build --help'\noutputBytes=206\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4382,
+        "rowId": "tool:exec-2a1fed9c-3ad9-4a54-af29-73741a3fa60f",
+        "header": "01:45:09",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git clone --depth 1 --branch 5.9.0 https://github.com/ARM-software/CMSIS_5.git third_party/CMSIS_5 && git -C third_party/CMSIS_5 rev-parse HEAD'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git clone --depth 1 --branch 5.9.0 https://github.com/ARM-software/CMSIS_5.git third_party/CMSIS_5 && git -C third_party/CMSIS_5 rev-parse HEAD'\"\noutputBytes=398",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git clone --depth 1 --branch 5.9.0 https://github.com/ARM-software/CMSIS_5.git third_party/CMSIS_5 && git -C third_party/CMSIS_5 rev-parse HEAD' output: commandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git clone --depth 1 --branch 5.9.0 https://github.com/ARM-software/CMSIS_5.git third_party/CMSIS_5 && git -C third_party/CMSIS_5 rev-parse HEAD'\" outputBytes=398",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git clone --depth 1 --branch 5.9.0 https://github.com/ARM-software/CMSIS_5.git third_party/CMSIS_5 && git -C third_party/CMSIS_5 rev-parse HEAD'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git clone --depth 1 --branch 5.9.0 https://github.com/ARM-software/CMSIS_5.git third_party/CMSIS_5 && git -C third_party/CMSIS_5 rev-parse HEAD'\"\noutputBytes=398\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4385,
+        "rowId": "tool:exec-13a386b1-f6ef-4530-a462-c99ef1651515",
+        "header": "01:45:43",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --reason 'add CMSIS Core headers and correct Arm-2D source list' --patch-content '*** Begin Patch\n*** Update File: scripts/hwpod-qemu-cli.py\n@@\n         \"-I\", str(ROOT / \"src\"), \"-I\", str(arm2d / \"Include\"),\n         \"-I\", str(cmsis / \"Include\"), \"-I\", str(cmsis / \"PrivateInclude\"),\n+        \"-I\", str(ROOT / \"third_party\" / \"CMSIS_5\" / \"CMSIS\" / \"Core\" / \"Include\"),\n@@\n-        str(arm2d / \"Source\" / \"arm_2d_tile.c\"),\n         str(arm2d / \"Source\" / \"arm_2d_draw.c\"),\n*** Update File: third_party/PROVENANCE.md\n@@\n - CMSIS-DSP: https://github.com/ARM-software/CMSIS-DSP.git, tag v1.14.2, commit 43aa2a9e7fc080e0d7541e9f5e083258403ac9ee.\n+- CMSIS-Core headers: https://github.com/ARM-software/CMSIS_5.git, tag 5.9.0, commit 2b7495b8535bdcb306dac29b9ded4cfb679d7e5c.\n*** End Patch'\n... clipped ...",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --reason 'add CMSIS Core headers and correct Arm-2D source list' --patch-content '*** Begin Patch *** Update File: scripts/hwpod-qemu-cli.py @@ \"-I\", str(ROOT / \"src\"), \"-I\", str(arm2d / \"Include\"), \"-I\", str(cmsis / \"Include\"), \"-I\", str(cmsis / \"PrivateInclude\"), + \"-I\", str(ROOT / \"third_party\" / \"CMSIS_5\" / \"CMSIS\" / \"Core\" / \"Include\"), @@ - str(arm2d / \"Source\" / \"arm_2d_tile.c\"), str(arm2d / \"Source\" / \"arm_2d_draw.c\"), *** Update File: third_party/PROVENANCE.md @@ - CMSIS-DSP: https://github.com/ARM-software/CMSIS-DSP.git, tag v1.14.2, commit 43aa2a9e7fc080e0d7541e9f5e083258403ac9ee. +- CMSIS-Core headers: https://github.com/ARM-software/CMSIS_5.git, tag 5.9.0, commit 2b7495b8535bdcb306dac29b9ded4cfb679d7e5c. *** End Patch' output: commandExecution started: /bin/ba\n... clipped ...",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --reason 'add CMSIS Core headers and correct Arm-2D source list' --patch-content '*** Begin Patch\n*** Update File: scripts/hwpod-qemu-cli.py\n@@\n         \"-I\", str(ROOT / \"src\"), \"-I\", str(arm2d / \"Include\"),\n         \"-I\", str(cmsis / \"Include\"), \"-I\", str(cmsis / \"PrivateInclude\"),\n+        \"-I\", str(ROOT / \"third_party\" / \"CMSIS_5\" / \"CMSIS\" / \"Core\" / \"Include\"),\n@@\n-        str(arm2d / \"Source\" / \"arm_2d_tile.c\"),\n         str(arm2d / \"Source\" / \"arm_2d_draw.c\"),\n*** Update File: third_party/PROVENANCE.md\n@@\n - CMSIS-DSP: https://github.com/ARM-software/CMSIS-DSP.git, tag v1.14.2, commit 43aa2a9e7fc080e0d7541e9f5e083258403ac9ee.\n+- CMSIS-Core headers: https://github.com/ARM-software/CMSIS_5.git, tag 5.9.0, commit 2b7495b8535bdcb306dac29b9ded4cfb679d7e5c.\n*** End Patch'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_\n... clipped ..."
+      },
+      {
+        "source": "trace-row",
+        "seq": 4388,
+        "rowId": "tool:exec-60976030-20a4-467a-a2db-68e2652302b0",
+        "header": "01:45:52",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\"\noutputBytes=242",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' output: commandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\" outputBytes=242",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\"\noutputBytes=242\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4409,
+        "rowId": "tool:exec-69a1e7e5-bd35-49ca-8c17-6132deced65e",
+        "header": "01:46:13",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --reason 'resolve real Arm-2D runtime and freestanding libc links' --patch-content '*** Begin Patch\n*** Update File: scripts/hwpod-qemu-cli.py\n@@\n-        \"-mfloat-abi=hard\", \"-ffreestanding\", \"-std=c11\",\n+        \"-mfloat-abi=hard\", \"-ffreestanding\", \"-std=gnu11\",\n@@\n         str(arm2d / \"Source\" / \"arm_2d.c\"),\n+        str(arm2d / \"Source\" / \"arm_2d_async.c\"),\n*** Add File: src/libc_minimal.c\n+#include <stddef.h>\n+\n+void *memset(void *destination, int value, size_t count)\n+{\n+    unsigned char *bytes = (unsigned char *)destination;\n+    while (count-- \"'!= 0u) {\n+        *bytes++ = (unsigned char)value;\n+    }\n+    return destination;\n+}\n*** End Patch'\"'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace apply-patch --hwp\n... clipped ...",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --reason 'resolve real Arm-2D runtime and freestanding libc links' --patch-content '*** Begin Patch *** Update File: scripts/hwpod-qemu-cli.py @@ - \"-mfloat-abi=hard\", \"-ffreestanding\", \"-std=c11\", + \"-mfloat-abi=hard\", \"-ffreestanding\", \"-std=gnu11\", @@ str(arm2d / \"Source\" / \"arm_2d.c\"), + str(arm2d / \"Source\" / \"arm_2d_async.c\"), *** Add File: src/libc_minimal.c +#include <stddef.h> + +void *memset(void *destination, int value, size_t count) +{ + unsigned char *bytes = (unsigned char *)destination; + while (count-- \"'!= 0u) { + *bytes++ = (unsigned char)value; + } + return destination; +} *** End Patch'\"' output: commandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/h\n... clipped ...",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --reason 'resolve real Arm-2D runtime and freestanding libc links' --patch-content '*** Begin Patch\n*** Update File: scripts/hwpod-qemu-cli.py\n@@\n-        \"-mfloat-abi=hard\", \"-ffreestanding\", \"-std=c11\",\n+        \"-mfloat-abi=hard\", \"-ffreestanding\", \"-std=gnu11\",\n@@\n         str(arm2d / \"Source\" / \"arm_2d.c\"),\n+        str(arm2d / \"Source\" / \"arm_2d_async.c\"),\n*** Add File: src/libc_minimal.c\n+#include <stddef.h>\n+\n+void *memset(void *destination, int value, size_t count)\n+{\n+    unsigned char *bytes = (unsigned char *)destination;\n+    while (count-- \"'!= 0u) {\n+        *bytes++ = (unsigned char)value;\n+    }\n+    return destination;\n+}\n*** End Patch'\"'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --reason 'resolve real Arm-2D runtime and freestandi\n... clipped ..."
+      },
+      {
+        "source": "trace-row",
+        "seq": 4412,
+        "rowId": "tool:exec-7c5a875e-2bb8-489c-a9c7-ae26d2c5d12a",
+        "header": "01:46:25",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --reason 'include local freestanding libc glue' --patch-content '*** Begin Patch\n*** Update File: scripts/hwpod-qemu-cli.py\n@@\n         \"-T\", str(ROOT / \"linker.ld\"), str(ROOT / \"src/startup.S\"),\n-        str(ROOT / \"src/main.c\"),\n+        str(ROOT / \"src/main.c\"), str(ROOT / \"src/libc_minimal.c\"),\n*** End Patch'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --reason 'include local freestanding libc glue' --patch-content '*** Begin Patch\n*** Update File: scripts/hwpod-qemu-cli.py\n@@\n         \\\"-T\\\", str(ROOT / \\\"linker.ld\\\"), str(ROOT / \\\"src/startup.S\\\"),\n\n... clipped ...",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --reason 'include local freestanding libc glue' --patch-content '*** Begin Patch *** Update File: scripts/hwpod-qemu-cli.py @@ \"-T\", str(ROOT / \"linker.ld\"), str(ROOT / \"src/startup.S\"), - str(ROOT / \"src/main.c\"), + str(ROOT / \"src/main.c\"), str(ROOT / \"src/libc_minimal.c\"), *** End Patch' output: commandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --reason 'include local freestanding libc glue' --patch-content '*** Begin Patch *** Update File: scripts/hwpod-qemu-cli.py @@ \\\"-T\\\", str(ROOT / \\\"linker.ld\\\"), str(ROOT / \\\"src/startup.S\\\"), - str(ROOT / \\\"src/main.c\\\"), + \n... clipped ...",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --reason 'include local freestanding libc glue' --patch-content '*** Begin Patch\n*** Update File: scripts/hwpod-qemu-cli.py\n@@\n         \"-T\", str(ROOT / \"linker.ld\"), str(ROOT / \"src/startup.S\"),\n-        str(ROOT / \"src/main.c\"),\n+        str(ROOT / \"src/main.c\"), str(ROOT / \"src/libc_minimal.c\"),\n*** End Patch'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' --reason 'include local freestanding libc glue' --patch-content '*** Begin Patch\n*** Update File: scripts/hwpod-qemu-cli.py\n@@\n         \\\"-T\\\", str(ROOT / \\\"linker.ld\\\"), str(ROOT / \\\"src/startup.S\\\"),\n-        str(ROOT / \\\"src/main.c\\\"),\n+        str(ROOT / \\\"src/main.c\\\"), str(ROOT / \\\"src/libc_minimal.c\\\"),\n*** End Patch'\"\noutputBytes=585\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4415,
+        "rowId": "tool:exec-d043e397-23aa-40c6-8d2e-d98865923b2d",
+        "header": "01:46:35",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\"\noutputBytes=242",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' output: commandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\" outputBytes=242",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d'\"\noutputBytes=242\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4419,
+        "rowId": "tool:exec-e2325413-b3df-42fc-962d-30a16ffff8d5",
+        "header": "01:46:50",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git status --short && git diff --stat'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git status --short && git diff --stat'\"\noutputBytes=292",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git status --short && git diff --stat' output: commandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git status --short && git diff --stat'\" outputBytes=292",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git status --short && git diff --stat'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git status --short && git diff --stat'\"\noutputBytes=292\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4422,
+        "rowId": "tool:exec-71a9910c-a402-49ae-995e-8ab71f0f051e",
+        "header": "01:46:51",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'sha256sum build/stm32f405-qemu.elf'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'sha256sum build/stm32f405-qemu.elf'\"\noutputBytes=289",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'sha256sum build/stm32f405-qemu.elf' output: commandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'sha256sum build/stm32f405-qemu.elf'\" outputBytes=289",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'sha256sum build/stm32f405-qemu.elf'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'sha256sum build/stm32f405-qemu.elf'\"\noutputBytes=289\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4425,
+        "rowId": "tool:exec-6ebae426-5375-40fc-b4a3-292d59d6c700",
+        "header": "01:46:52",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git -C third_party/Arm-2D rev-parse HEAD && git -C third_party/CMSIS-DSP rev-parse HEAD && git -C third_party/CMSIS_5 rev-parse HEAD'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git -C third_party/Arm-2D rev-parse HEAD && git -C third_party/CMSIS-DSP rev-parse HEAD && git -C third_party/CMSIS_5 rev-parse HEAD'\"\noutputBytes=387",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git -C third_party/Arm-2D rev-parse HEAD && git -C third_party/CMSIS-DSP rev-parse HEAD && git -C third_party/CMSIS_5 rev-parse HEAD' output: commandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git -C third_party/Arm-2D rev-parse HEAD && git -C third_party/CMSIS-DSP rev-parse HEAD && git -C third_party/CMSIS_5 rev-parse HEAD'\" outputBytes=387",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git -C third_party/Arm-2D rev-parse HEAD && git -C third_party/CMSIS-DSP rev-parse HEAD && git -C third_party/CMSIS_5 rev-parse HEAD'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git -C third_party/Arm-2D rev-parse HEAD && git -C third_party/CMSIS-DSP rev-parse HEAD && git -C third_party/CMSIS_5 rev-parse HEAD'\"\noutputBytes=387\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4428,
+        "rowId": "tool:exec-b050127c-611e-4767-aa74-dbbcc0a9ee3b",
+        "header": "01:46:53",
+        "command": ".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git diff -- third_party/Arm-2D third_party/CMSIS-DSP third_party/CMSIS_5 | wc -l'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git diff -- third_party/Arm-2D third_party/CMSIS-DSP third_party/CMSIS_5 | wc -l'\"\noutputBytes=335",
+        "normalizedCommand": ".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git diff -- third_party/Arm-2D third_party/CMSIS-DSP third_party/CMSIS_5 | wc -l' output: commandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git diff -- third_party/Arm-2D third_party/CMSIS-DSP third_party/CMSIS_5 | wc -l'\" outputBytes=335",
+        "bodyPreview": ".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git diff -- third_party/Arm-2D third_party/CMSIS-DSP third_party/CMSIS_5 | wc -l'\noutput:\ncommandExecution started: /bin/bash -lc \".git/agentrun-managed-overlay/tools/hwpod cmd --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d' -- bash -lc 'git diff -- third_party/Arm-2D third_party/CMSIS-DSP third_party/CMSIS_5 | wc -l'\"\noutputBytes=335\nexitCode=null"
+      }
+    ]
+  },
+  "observedAt": "2026-07-25T01:47:30.918Z",
+  "validation": {
+    "plan": {
+      "mode": "compile-only",
+      "steps": [
+        {
+          "args": {},
+          "kind": "build",
+          "stage": "post-agent-validation",
+          "actionId": "validation_01_build",
+          "expectedOp": "debug.build"
+        }
+      ],
+      "source": "default-compile-only",
+      "compileOnly": true,
+      "contractVersion": "hwpod-case-validation-plan-v1"
+    },
+    "results": [
+      {
+        "operation": {
+          "ok": true,
+          "op": "debug.build",
+          "kind": "build",
+          "opId": "op_01_debug_build",
+          "stage": "post-agent-validation",
+          "status": "completed",
+          "actionId": "validation_01_build",
+          "expected": {
+            "op": "debug.build",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-stm32f405-qemu",
+            "actionId": "validation_01_build",
+            "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d"
+          },
+          "observed": {
+            "op": "debug.build",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-stm32f405-qemu",
+            "actionId": "op_01_debug_build",
+            "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725d"
+          },
+          "topology": {
+            "ok": true
+          },
+          "authority": "hwpod-service",
+          "contractVersion": "hwpod-operation-result-v0.3"
+        }
+      }
+    ],
+    "archivePath": "validation-observations.json"
+  },
+  "compileOnly": true,
+  "traceLookup": {
+    "source": "hwlab-cli.client.agent",
+    "baseUrl": "http://127.0.0.1:6677",
+    "traceId": "trc_harnessrl_2061f1cd4580573ebd187606",
+    "commands": {
+      "trace": "hwlab-cli client agent trace trc_harnessrl_2061f1cd4580573ebd187606 --render web",
+      "result": "hwlab-cli client agent result trc_harnessrl_2061f1cd4580573ebd187606",
+      "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_2061f1cd4580573ebd187606",
+      "traceFull": "hwlab-cli client agent trace trc_harnessrl_2061f1cd4580573ebd187606 --render web --full",
+      "sessionStatus": "hwlab-cli client agent session status ses_9c975c60-2558-408b-890f-915cf846d782"
+    },
+    "strategy": "id_plus_existing_cli",
+    "threadId": "",
+    "sessionId": "ses_9c975c60-2558-408b-890f-915cf846d782",
+    "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-integration_run-embdagentbench-arm2d-l1-20260725d"
+  },
+  "autoEvaluation": false,
+  "postValidation": {
+    "source": "case-run-runner-post-agent-compile-check",
+    "boundary": "runner-post-agent-validation",
+    "returnCode": 0
+  },
+  "contractVersion": "hwpod-case-run-evidence-v1",
+  "refresh": {
+    "source": "runtime",
+    "authority": "registry",
+    "runtimeAccess": true
+  }
+}

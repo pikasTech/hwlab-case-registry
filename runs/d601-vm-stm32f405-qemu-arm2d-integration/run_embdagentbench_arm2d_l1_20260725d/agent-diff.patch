@@ -1,0 +1,101 @@
+diff --git a/scripts/hwpod-qemu-cli.py b/scripts/hwpod-qemu-cli.py
+index 4f6bd59..381faca 100755
+--- a/scripts/hwpod-qemu-cli.py
++++ b/scripts/hwpod-qemu-cli.py
+@@ -30,12 +30,26 @@ def running():
+ 
+ def build(emit_result=True):
+     BUILD.mkdir(parents=True, exist_ok=True)
++    arm2d = ROOT / "third_party" / "Arm-2D" / "Library"
++    cmsis = ROOT / "third_party" / "CMSIS-DSP"
+     command = [
+-        "arm-none-eabi-gcc", "-mcpu=cortex-m4", "-mthumb", "-ffreestanding",
++        "arm-none-eabi-gcc", "-mcpu=cortex-m4", "-mthumb", "-mfpu=fpv4-sp-d16",
++        "-mfloat-abi=hard", "-ffreestanding", "-std=gnu11",
+         "-fdata-sections", "-ffunction-sections", "-nostdlib",
++        "-DARM_MATH_CM4", "-D___ARM_2D_CFG_HEADER___=\"arm_2d_cfg.h\"",
++        "-I", str(ROOT / "src"), "-I", str(arm2d / "Include"),
++        "-I", str(cmsis / "Include"), "-I", str(cmsis / "PrivateInclude"),
++        "-I", str(ROOT / "third_party" / "CMSIS_5" / "CMSIS" / "Core" / "Include"),
+         "-Wl,--gc-sections", f"-Wl,-Map={BUILD / 'stm32f405-qemu.map'}",
+         "-T", str(ROOT / "linker.ld"), str(ROOT / "src/startup.S"),
+-        str(ROOT / "src/main.c"), "-o", str(ELF),
++        str(ROOT / "src/main.c"), str(ROOT / "src/libc_minimal.c"),
++        str(arm2d / "Source" / "arm_2d.c"),
++        str(arm2d / "Source" / "arm_2d_async.c"),
++        str(arm2d / "Source" / "__arm_2d_core.c"),
++        str(arm2d / "Source" / "arm_2d_draw.c"),
++        str(arm2d / "Source" / "arm_2d_conversion.c"),
++        str(cmsis / "Source" / "BasicMathFunctions" / "arm_dot_prod_f32.c"),
++        "-lm", "-o", str(ELF),
+     ]
+     result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
+     if result.returncode != 0:
+diff --git a/src/main.c b/src/main.c
+index a6af673..3efde0b 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -1,4 +1,6 @@
+ #include <stdint.h>
++#include "arm_2d.h"
++#include "arm_math.h"
+ 
+ #define RCC_APB2ENR (*(volatile uint32_t *)0x40023844u)
+ #define USART1_SR   (*(volatile uint32_t *)0x40011000u)
+@@ -16,6 +18,11 @@ static void uart_write(const char *text) {
+ }
+ 
+ int main(void) {
++    float32_t samples[2] = { 1.0f, 2.0f };
++    float32_t weights[2] = { 3.0f, 4.0f };
++    float32_t dot = 0.0f;
++    arm_2d_init();
++    arm_dot_prod_f32(samples, weights, 2u, &dot);
+     RCC_APB2ENR |= (1u << 4);
+     USART1_BRR = 0x05b2u;
+     USART1_CR1 = (1u << 13) | (1u << 3) | (1u << 2);
+diff --git a/src/arm_2d_cfg.h b/src/arm_2d_cfg.h
+new file mode 100644
+index 0000000..a772295
+--- /dev/null
++++ b/src/arm_2d_cfg.h
+@@ -0,0 +1,7 @@
++#ifndef HWPOD_ARM_2D_CFG_H
++#define HWPOD_ARM_2D_CFG_H
++
++#define __ARM_2D_CFG_COLOUR_CHANNEL_ACCESS__
++#define __ARM_2D_CFG_DEFAULT_SUB_TASK_POOL_SIZE__ 4
++
++#endif
+diff --git a/src/libc_minimal.c b/src/libc_minimal.c
+new file mode 100644
+index 0000000..91a1c3f
+--- /dev/null
++++ b/src/libc_minimal.c
+@@ -0,0 +1,10 @@
++#include <stddef.h>
++
++void *memset(void *destination, int value, size_t count)
++{
++    unsigned char *bytes = (unsigned char *)destination;
++    while (count-- != 0u) {
++        *bytes++ = (unsigned char)value;
++    }
++    return destination;
++}
+
+
+
+diff --git a/third_party/PROVENANCE.md b/third_party/PROVENANCE.md
+new file mode 100644
+index 0000000..c9076a9
+--- /dev/null
++++ b/third_party/PROVENANCE.md
+@@ -0,0 +1,7 @@
++# Third-party provenance
++
++- Arm-2D: https://github.com/ARM-software/Arm-2D.git, tag v1.2.4, commit b73ec43b6567feffe57642861e8b5eb083788011.
++- CMSIS-DSP: https://github.com/ARM-software/CMSIS-DSP.git, tag v1.14.2, commit 43aa2a9e7fc080e0d7541e9f5e083258403ac9ee.
++- CMSIS-Core headers: https://github.com/ARM-software/CMSIS_5.git, tag 5.9.0, commit 2b7495b8535bdcb306dac29b9ded4cfb679d7e5c.
++
++The upstream files are unmodified. Project configuration and display glue remain under src/.
