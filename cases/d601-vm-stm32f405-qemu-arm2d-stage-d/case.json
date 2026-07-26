@@ -7,16 +7,42 @@
   "subject": {
     "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_workspace",
     "commitId": "f909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9",
-    "subdir": ""
+    "subdir": "",
+    "resources": [
+      {
+        "id": "arm-2d",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+        "ref": "v1.2.4",
+        "commitId": "b73ec43b6567feffe57642861e8b5eb083788011",
+        "destination": "third_party/Arm-2D"
+      },
+      {
+        "id": "cmsis-dsp",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/CMSIS-DSP.git",
+        "ref": "v1.14.2",
+        "commitId": "43aa2a9e7fc080e0d7541e9f5e083258403ac9ee",
+        "destination": "third_party/CMSIS-DSP"
+      },
+      {
+        "id": "cmsis-core",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/CMSIS_5.git",
+        "ref": "5.9.0",
+        "commitId": "2b7495b8535bdcb306dac29b9ded4cfb679d7e5c",
+        "destination": "third_party/CMSIS"
+      }
+    ]
   },
   "diffCollection": {
     "ignore": [
       {
-        "pattern": "Middlewares/Arm-2D/**",
+        "pattern": "third_party/Arm-2D/**",
         "reason": "真实 Arm-2D upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文"
       },
       {
-        "pattern": "Middlewares/CMSIS-DSP/**",
+        "pattern": "third_party/CMSIS-DSP/**",
         "reason": "真实 CMSIS-DSP upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文"
       }
     ]
@@ -28,15 +54,16 @@
     "resourceBundlePolicy": "caserun-with-skills",
     "timeoutMs": 3600000,
     "pollIntervalMs": 2000,
-    "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中完成 STM32F405 QEMU 的 Arm-2D 阶段D：从裸基线真实接入 Arm-2D/CMSIS-DSP，完成 ARM GCC build、QEMU load/start 和 UART 运行态证据。\n\n真实性底线：Arm-2D 必须来自 ARM-software/Arm-2D v1.2.4，CMSIS-DSP 必须来自真实 1.14.2 Pack/RTE 或 upstream。记录 repository、tag/version、commit、获取方式、物化文件清单和 hash；禁止 mock、stub、API veneer、兼容子集和自制替代实现。只物化 Cortex-M4 所需最小源码；upstream 文件保持原文，arm_2d_cfg.h、framebuffer/display port、UART 和 demo glue 放在 project-local 文件。\n\n任务目标：通过标准 HWPOD workspace/cmd 入口修改构建脚本和本地源码；以 Arm-2D API 在 RAM framebuffer 上生成可验证 frame/tile 内容；UART 必须输出本次 runId、ARM-software/Arm-2D v1.2.4 与 commit、CMSIS-DSP 版本、heartbeat、frame counter 和 framebuffer/tile CRC 或摘要。依次执行 hwpod build、hwpod download、operation/job status 和 hwpod uart read；download 在本 QEMU HWPOD 表示重新构建并启动 QEMU。最终回报完整 identity、provenance、diff、artifact hash、QEMU 状态和 UART 原始尾部。",
+    "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中完成 STM32F405 QEMU 的 Arm-2D 阶段D：真实接入 Arm-2D/CMSIS-DSP，完成 ARM GCC build、QEMU load/start 和 UART 运行态证据。\n\nHarness 已按 case 中固定的 URL、ref 与 commit 将 Arm-2D、CMSIS-DSP 和 CMSIS Core 物化到 third_party；直接读取并使用这些资源，记录 repository、tag/version、commit、文件清单和 hash，不要再次 clone、fetch、覆盖或删除。禁止 mock、stub、API veneer、兼容子集和自制替代实现。只选用 Cortex-M4 所需最小源码；upstream 文件保持原文，arm_2d_cfg.h、framebuffer/display port、UART 和 demo glue 放在 src/ 等项目本地路径。HWPOD build/download 使用 CaseRun compiler 生成的不可变计划，不读取、修改或执行 subject 中的 scripts 构建入口。\n\n任务目标：通过标准 HWPOD workspace/cmd 入口修改项目本地源码；以 Arm-2D API 在 RAM framebuffer 上生成可验证 frame/tile 内容；UART 必须输出本次 runId、ARM-software/Arm-2D v1.2.4 与 commit、CMSIS-DSP 版本、heartbeat、frame counter 和 framebuffer/tile CRC 或摘要。开发中尽早运行 hwpod build，后续只按具体编译错误做窄范围修改；CaseRun flow 会在 Agent 完成后独立执行最终 build、download/QEMU start 和 UART read。最终回报完整 identity、provenance、diff、artifact hash、QEMU 状态和 UART 证据。",
     "constraints": [
       "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
       "只能修改隔离 subject worktree，不得修改 case registry、HWLAB repo 或原 subject checkout",
       "资源与 skill 必须来自 AgentRun gitbundle，不得使用 workspaceFiles、seed files、host skill 或 ConfigMap fallback",
       "必须使用 ARM-software/Arm-2D v1.2.4 真实 upstream；禁止 mock、stub、同名 API veneer、兼容子集或自制替代实现",
       "CMSIS-DSP 必须来自真实 1.14.2 Pack/RTE 或 upstream，并记录 provenance；禁止手写 arm_math.h 或最小 stub",
-      "第三方 upstream 文件必须由 HWPOD cmd/git/archive/已验证缓存物化，不得通过 apply-patch 手工粘贴或重写",
+      "第三方 upstream 文件由 CaseRun Harness 在 Agent 启动前按固定 provenance 物化；Agent 不得重复 clone、fetch、覆盖、删除或通过 apply-patch 手工粘贴和重写",
       "project-local 文本修改使用 HWPOD workspace apply-patch；禁止退化为 runner 直接文件操作",
+      "禁止读取、修改或执行 scripts/hwpod-qemu-cli.py、scripts/build、scripts/rebuild、scripts/download、scripts/reset；这些属于 Harness 边界",
       "必须实际执行 build、download/QEMU start 和 UART read，并保留 operationId、jobId、return code、artifact 和原始错误",
       "UART 必须包含本次 runId、ARM-software/Arm-2D、v1.2.4、commit、CMSIS-DSP、heartbeat、frame 和 CRC 或 tile 摘要",
       "Agent completed 或 final response 不能替代 build、QEMU 和 UART 证据",
@@ -71,6 +98,13 @@
         "CMSIS-DSP",
         "runId",
         "frame"
+      ],
+      "forbiddenPaths": [
+        "scripts/hwpod-qemu-cli.py",
+        "scripts/build",
+        "scripts/rebuild",
+        "scripts/download",
+        "scripts/reset"
       ]
     },
     "compile": {
