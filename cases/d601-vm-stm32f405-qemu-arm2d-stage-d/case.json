@@ -65,7 +65,8 @@
       "project-local 文本修改使用 HWPOD workspace apply-patch；禁止退化为 runner 直接文件操作",
       "禁止读取、修改或执行 scripts/hwpod-qemu-cli.py、scripts/build、scripts/rebuild、scripts/download、scripts/reset；这些属于 Harness 边界",
       "必须实际执行 build、download/QEMU start 和 UART read，并保留 operationId、jobId、return code、artifact 和原始错误",
-      "UART 必须包含本次 runId、ARM-software/Arm-2D、v1.2.4、commit、CMSIS-DSP、heartbeat、frame 和 CRC 或 tile 摘要",
+      "必须保留 netduinoplus2 已验证的 RCC_APB2ENR 和 USART1 寄存器映射及初始化，不得切换到 USART2 或其他串口",
+      "UART 必须在主循环持续输出本次 runId、ARM-software/Arm-2D、v1.2.4、commit、CMSIS-DSP、heartbeat、frame 和 CRC 或 tile 摘要，不能只在启动时输出一次",
       "Agent completed 或 final response 不能替代 build、QEMU 和 UART 证据",
       "结果只记录 raw trace/evidence，autoEvaluation=false"
     ]
