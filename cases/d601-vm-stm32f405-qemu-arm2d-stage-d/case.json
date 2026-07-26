@@ -54,12 +54,13 @@
     "resourceBundlePolicy": "caserun-with-skills",
     "timeoutMs": 3600000,
     "pollIntervalMs": 2000,
-    "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中完成 STM32F405 QEMU 的 Arm-2D 阶段D：真实接入 Arm-2D/CMSIS-DSP，完成 ARM GCC build、QEMU load/start 和 UART 运行态证据。\n\nHarness 已按 case 中固定的 URL、ref 与 commit 将 Arm-2D、CMSIS-DSP 和 CMSIS Core 物化到 third_party；直接读取并使用这些资源，记录 repository、tag/version、commit、文件清单和 hash，不要再次 clone、fetch、覆盖或删除。禁止 mock、stub、API veneer、兼容子集和自制替代实现。只选用 Cortex-M4 所需最小源码；upstream 文件保持原文，arm_2d_cfg.h、framebuffer/display port、UART 和 demo glue 放在 src/ 等项目本地路径。HWPOD build/download 使用 CaseRun compiler 生成的不可变计划，不读取、修改或执行 subject 中的 scripts 构建入口。\n\n任务目标：通过标准 HWPOD workspace/cmd 入口修改项目本地源码；以 Arm-2D API 在 RAM framebuffer 上生成可验证 frame/tile 内容；UART 必须输出本次 runId、ARM-software/Arm-2D v1.2.4 与 commit、CMSIS-DSP 版本、heartbeat、frame counter 和 framebuffer/tile CRC 或摘要。开发中尽早运行 hwpod build，后续只按具体编译错误做窄范围修改；CaseRun flow 会在 Agent 完成后独立执行最终 build、download/QEMU start 和 UART read。最终回报完整 identity、provenance、diff、artifact hash、QEMU 状态和 UART 证据。",
+    "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中完成 STM32F405 QEMU 的 Arm-2D 阶段D：真实接入 Arm-2D/CMSIS-DSP，完成 ARM GCC build、QEMU load/start 和 UART 运行态证据。\n\nHarness 已按 case 中固定的 URL、ref 与 commit 将 Arm-2D、CMSIS-DSP 和 CMSIS Core 物化到 third_party；直接读取并使用这些资源，记录 repository、tag/version、commit、文件清单和 hash，不要再次 clone、fetch、覆盖或删除。禁止 mock、stub、API veneer、兼容子集和自制替代实现。只选用 Cortex-M4 所需最小源码；upstream 文件保持原文，arm_2d_cfg.h、framebuffer/display port、UART 和 demo glue 放在 src/ 等项目本地路径。HWPOD build/download 使用 CaseRun compiler 生成的不可变计划，不读取、修改或执行 subject 中的 scripts 构建入口。\n\n任务目标：通过标准 HWPOD workspace/cmd 入口修改项目本地源码；Arm-2D v1.2.4 的 16 位 RGB 填充入口是 `arm_2d_rgb16_fill_colour`，必须实际调用该上游 API 在 RAM framebuffer 上生成可验证 frame/tile 内容，不得用项目本地循环直接填充 framebuffer 冒充 Arm-2D；UART 必须输出本次 runId、ARM-software/Arm-2D v1.2.4 与 commit、CMSIS-DSP 版本、heartbeat、frame counter 和 framebuffer/tile CRC 或摘要。开发中尽早运行 hwpod build，后续只按具体编译错误做窄范围修改；CaseRun flow 会在 Agent 完成后独立执行最终 build、download/QEMU start 和 UART read。最终回报完整 identity、provenance、diff、artifact hash、QEMU 状态和 UART 证据。",
     "constraints": [
       "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
       "只能修改隔离 subject worktree，不得修改 case registry、HWLAB repo 或原 subject checkout",
       "资源与 skill 必须来自 AgentRun gitbundle，不得使用 workspaceFiles、seed files、host skill 或 ConfigMap fallback",
       "必须使用 ARM-software/Arm-2D v1.2.4 真实 upstream；禁止 mock、stub、同名 API veneer、兼容子集或自制替代实现",
+      "必须调用 Arm-2D v1.2.4 上游 arm_2d_rgb16_fill_colour 完成 framebuffer/tile 填充；禁止用项目本地循环直接填充 framebuffer 冒充 Arm-2D",
       "CMSIS-DSP 必须来自真实 1.14.2 Pack/RTE 或 upstream，并记录 provenance；禁止手写 arm_math.h 或最小 stub",
       "第三方 upstream 文件由 CaseRun Harness 在 Agent 启动前按固定 provenance 物化；Agent 不得重复 clone、fetch、覆盖、删除或通过 apply-patch 手工粘贴和重写",
       "project-local 文本修改使用 HWPOD workspace apply-patch；禁止退化为 runner 直接文件操作",
@@ -95,6 +96,7 @@
     "diff": {
       "contains": [
         "arm_2d",
+        "arm_2d_rgb16_fill_colour",
         "ARM-software",
         "CMSIS-DSP",
         "runId",
