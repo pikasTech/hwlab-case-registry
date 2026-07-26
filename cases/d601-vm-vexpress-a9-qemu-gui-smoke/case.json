@@ -1,0 +1,63 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-smoke",
+  "title": "D601 VM VExpress-A9 QEMU GUI 采集冒烟",
+  "mode": "agent-observation-build-display-capture",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "commitId": "4ed40401ff5686c86f9598ae8239b76374a98d00",
+    "subdir": ""
+  },
+  "agentTask": {
+    "workspace": "subjectWorktree",
+    "providerProfile": "gpt.pika",
+    "model": "gpt-5.6-luna",
+    "reasoningEffort": "low",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 300000,
+    "pollIntervalMs": 2000,
+    "prompt": "只读核查当前 VExpress-A9 QEMU GUI subject worktree：通过 HWPOD 读取 src/main.c，确认其中配置了 PL111 framebuffer，并简短报告判断。不要修改任何文件，不要启动 QEMU；后续 build 和 display.capture 由 CaseRun Harness 执行。",
+    "constraints": [
+      "只允许通过 HWPOD 读取 subject worktree",
+      "禁止修改任何文件",
+      "禁止由 Agent 启动 QEMU 或执行截图和视频采集",
+      "真实构建与显示采集只由 CaseRun Harness 后置验证执行"
+    ]
+  },
+  "flow": [
+    {
+      "id": "agent-observation",
+      "kind": "agent"
+    },
+    {
+      "id": "build",
+      "kind": "hwpod.build"
+    },
+    {
+      "id": "display-capture",
+      "kind": "hwpod.display.capture"
+    }
+  ],
+  "expected": {
+    "compile": {
+      "success": true,
+      "artifactSuffixes": [
+        "build/qemu-gui.elf"
+      ]
+    },
+    "display": {
+      "width": 640,
+      "height": 480,
+      "durationMs": 10000,
+      "frameRate": 5,
+      "screenshotFormat": "png",
+      "videoFormat": "webm"
+    }
+  },
+  "notes": {
+    "autoEvaluation": false,
+    "target": "D601-VM-HOST Linux / VExpress-A9 / PL111 / QEMU",
+    "captureAuthority": "HWPOD display.capture operation result"
+  }
+}
