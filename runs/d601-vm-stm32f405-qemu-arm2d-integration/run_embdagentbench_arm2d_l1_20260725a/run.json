@@ -1,0 +1,3725 @@
+{
+  "agent": {
+    "polls": 218,
+    "result": {
+      "bytes": 11289,
+      "clipped": true,
+      "preview": "{\"ok\":true,\"traceId\":\"trc_harnessrl_47820ed4a979db31afe2de39\",\"sessionId\":\"ses_7b7b706f-9ec3-4b30-9a3c-fe7e91ace814\",\"conversationId\":\"cnv_case_d601-vm-stm32f405-qemu-arm2d-integration_run-embdagentbench-arm2d-l1-20260725a\",\"ownerUserId\":\"usr_native\",\"status\":\"completed\",\"message\":\"# HWPOD CaseRun 代码代理任务\\n\\n案例ID: d601-vm-stm32f405-qemu-arm2d-integration\\n运行ID: run_embdagentbench_arm2d_l1_20260725a\\n主体仓库本地路径: /home/ubuntu/workspace/hwpod_qemu_workspace\\n主体提交ID: f909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9\\n主体隔离工作区路径: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725a\\nhwpodId: d601-vm-stm32f405-qemu\\nhwpodWorkspaceArgs: --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725a'\\n验证模式: 仅执行编译构建检查；不下载、不做运行态冒烟验证。\\nCaseRun 后置验证动作: validation_01_build:build\\n\\n## 运行时装配\\nAgentRun 通过 ResourceBundleRef kind=gitbundle 装配 HWLAB 运行时资源：仓库子路径 `tools` 会复制到工作区 `tools`，仓库子路径 `skills` 会复制到工作区 `.agents/skills`。CaseRun 不再发送临时 workspaceFiles 或 seed-file 载荷。\\n\\n## HWPOD 运行时\\n通过运行时服务按 ID 使用 HWPOD，不要求 runner 本地存在 `.hwlab/hwpod-spec.yaml`。\\n每个 hwpod/hwpod-ctl 命令都必须携带这些参数：`--hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725a'`。\\n本任务的标准冒烟步骤：\\n- `hwpod-ctl spec validate --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725a'`\\n- `hwpod inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725a'`\\n- 工作区读取、搜索和编辑：`hwpod workspace ... --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725a'`\\n- 编译检查：`hwpod build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725a'`\\n\\n## 任务\\n请在 D601-VM-HOST 的隔离 Linux subject worktree 中完成 STM32F405 QEMU 的真实 Arm-2D 最小集成，并以 ARM GCC 编译证据收口。\\n\\n先通过标准 HWPOD workspace/cmd 入口读取 src/main.c、scripts/hwpod-qemu-cli.py、linker.ld 和必要的 arm2d-skill。获取 ARM-software/Arm-2D v1.2.4 与真实 CMSIS-DSP 1.14.2 来源，记录 URL、tag/version、commit 和文件清单。只物化 Cortex-M4 最小必要源码与头文件；upstream 文件保持原文，本地配置、framebuffer、display port 和 demo glue 放在项目本地文件。修改构建入口，使 arm-none-eabi-gcc 编译真实 Arm-2D/CMSIS-DSP 与 demo，并生成 build/stm32f405-qemu.elf。尽早运行 hwpod build，后续只按具体编译错误做窄范围修复。最终回报 provenance、diff、build operation/job identity、return code、warning 和 artifact hash。\\n\\n## 约束\\n- 思维过程和输出消息一律使用中文\\n- 只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径\\n- 只能修改隔离 subject worktree，不得修改 case registry、HWLAB repo 或原 subject checkout\\n- 资源与 skill 必须来自 AgentRun gitbundle，不得使用 workspaceFiles、seed files、host skill 或 ConfigMap fallback\\n- 必须使用 ARM-software/Arm-2D 的真实 upstream v1.2.4；禁止 mock、stub、同名 API veneer、兼容子集或自制替代实现\\n- CMSIS-DSP 必须来自真实 1.14.2 Pack/RTE 或 upstream，并记录 provenance；禁止手写 arm_math.h 或最小 stub\\n- 第三方 upstream 文件必须由 HWPOD cmd/git/archive/已验证缓存物化，不得通过 apply-patch 手工粘贴或重写\\n- project-local 文本修改使用 HWPOD workspace apply-patch；禁止退化为 runner 直接文件操作\\n- 只做 compile-only，不启动 QEMU，不读取 UART\\n- 结果只记录 raw trace/evidence，autoEvaluation=false\\n- 只能修改 isolated subject worktree，不得修改 case registry repo。\\n- 不得修改原 subject repo checkout；所有源码修改必须落在 subjectWorktreePath。\\n- AgentRun 通过 kind=gitbundle 装配当前 v0.2 的 tools/ 与 .agents/skills；若标准 hwpod 命令能力缺失，报告 gitbundle runtime assembly 问题，不要改走旁路。\\n- 不要依赖 workspaceFiles、seed files、hostPath skill 目录、ConfigMap 或 runner 本地 .hwlab/hwpod-spec.yaml 作为工具/skill/HWPOD 注入 fallback。\\n- 必须通过 HWPOD registry/service 引用 hwpodId=d601-vm-stm32f405-qemu；所有 hwpod/hwpod-ctl 命令都携带 --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725a'。\\n- 如果 case promp"
+    },
+    "backend": "gpt-pika",
+    "baseUrl": "http://127.0.0.1:6677",
+    "traceId": "trc_harnessrl_47820ed4a979db31afe2de39",
+    "accepted": {
+      "ok": true,
+      "reused": false,
+      "status": "running",
+      "traceId": "trc_harnessrl_47820ed4a979db31afe2de39",
+      "accepted": true,
+      "sessionId": "ses_7b7b706f-9ec3-4b30-9a3c-fe7e91ace814",
+      "workflowId": "workbench-turn-trc_harnessrl_47820ed4a979db31afe2de39",
+      "workflowRunId": "019f96b5-06f9-740f-b88a-d49884d61910",
+      "orchestrationMode": "agentrun-native",
+      "resultSynthesized": false,
+      "terminalAuthority": "hwlab.event.v1"
+    },
+    "terminal": true,
+    "timedOut": false,
+    "projectId": "prj_hwpod_workbench",
+    "resultUrl": "http://127.0.0.1:6677/v1/agent/chat/result/trc_harnessrl_47820ed4a979db31afe2de39",
+    "sessionId": "ses_7b7b706f-9ec3-4b30-9a3c-fe7e91ace814",
+    "timeoutMs": 1800000,
+    "lastPollAt": "2026-07-25T00:45:24.871Z",
+    "promptPath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_l1_20260725a/agent-prompt.md",
+    "stageStatus": "completed",
+    "traceLookup": {
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "source": "hwlab-cli.client.agent",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_47820ed4a979db31afe2de39",
+      "commands": {
+        "trace": "hwlab-cli client agent trace trc_harnessrl_47820ed4a979db31afe2de39 --render web",
+        "result": "hwlab-cli client agent result trc_harnessrl_47820ed4a979db31afe2de39",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_47820ed4a979db31afe2de39",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_47820ed4a979db31afe2de39 --render web --full",
+        "sessionStatus": "hwlab-cli client agent session status ses_7b7b706f-9ec3-4b30-9a3c-fe7e91ace814"
+      },
+      "strategy": "id_plus_existing_cli",
+      "sessionId": "ses_7b7b706f-9ec3-4b30-9a3c-fe7e91ace814",
+      "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-integration_run-embdagentbench-arm2d-l1-20260725a"
+    },
+    "promptSha256": "9488f8676c051f6b3bf01e0fb3ea289794f17c107921473005ea8bb66bfb8566",
+    "traceCommand": "hwlab-cli client agent trace trc_harnessrl_47820ed4a979db31afe2de39 --render web",
+    "agentRunStatus": "completed",
+    "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-integration_run-embdagentbench-arm2d-l1-20260725a",
+    "inspectCommand": "hwlab-cli client agent inspect --trace-id trc_harnessrl_47820ed4a979db31afe2de39",
+    "lastHttpStatus": 200,
+    "pollIntervalMs": 2000,
+    "sessionCommand": "hwlab-cli client agent session status ses_7b7b706f-9ec3-4b30-9a3c-fe7e91ace814",
+    "terminalStatus": "completed",
+    "nextPollCommand": "hwlab-cli client agent result trc_harnessrl_47820ed4a979db31afe2de39",
+    "providerProfile": "gpt.pika",
+    "sessionResponse": {
+      "ok": true,
+      "status": "created",
+      "session": {
+        "mode": "agentrun-native",
+        "status": "idle",
+        "messages": [],
+        "createdAt": "2026-07-25T00:37:53.165Z",
+        "ownerRole": "user",
+        "projectId": "prj_hwpod_workbench",
+        "sessionId": "ses_7b7b706f-9ec3-4b30-9a3c-fe7e91ace814",
+        "updatedAt": "2026-07-25T00:37:53.165Z",
+        "ownerUserId": "usr_native",
+        "launchContext": null,
+        "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-integration_run-embdagentbench-arm2d-l1-20260725a",
+        "providerProfile": "gpt.pika"
+      },
+      "valuesRedacted": true,
+      "orchestrationMode": "agentrun-native",
+      "secretMaterialStored": false
+    },
+    "infrastructureBackend": "gpt-pika",
+    "resolvedBackendProfile": "gpt-pika",
+    "requestedProviderProfile": "gpt.pika"
+  },
+  "runId": "run_embdagentbench_arm2d_l1_20260725a",
+  "stage": "completed",
+  "apiUrl": "http://127.0.0.1:6681",
+  "caseId": "d601-vm-stm32f405-qemu-arm2d-integration",
+  "runDir": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_l1_20260725a",
+  "caseDir": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_l1_20260725a/case-authority/cases/d601-vm-stm32f405-qemu-arm2d-integration",
+  "subject": {
+    "setup": {
+      "nodeId": "node-d601-vm-hwpod-qemu",
+      "planId": "run_embdagentbench_arm2d_l1_20260725a:prepare:v1:subject-prepare",
+      "stderr": "Preparing worktree (detached HEAD f909cda)",
+      "stdout": "HEAD is now at f909cda feat: add full QEMU rebuild operation\nf909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9",
+      "exitCode": 0,
+      "operation": {
+        "ops": [
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_01_subject_commit",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_02_subject_worktree_add",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_03_subject_worktree_head",
+            "status": "completed"
+          }
+        ],
+        "intent": "cmd.run",
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "planId": "run_embdagentbench_arm2d_l1_20260725a:prepare:v1:subject-prepare",
+        "hwpodId": "d601-vm-stm32f405-qemu",
+        "contractVersion": "hwpod-node-ops-v1"
+      },
+      "httpStatus": 200
+    },
+    "subdir": "",
+    "commitId": "f909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9",
+    "worktreePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725a",
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_workspace",
+    "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725a",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    }
+  },
+  "caseFile": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_l1_20260725a/case-authority/cases/d601-vm-stm32f405-qemu-arm2d-integration/case.json",
+  "caseRepo": "/root/hwlab-case-registry",
+  "specPath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_l1_20260725a/.hwlab/hwpod-spec.yaml",
+  "agentTask": {
+    "model": "gpt-5.6-luna",
+    "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中完成 STM32F405 QEMU 的真实 Arm-2D 最小集成，并以 ARM GCC 编译证据收口。\n\n先通过标准 HWPOD workspace/cmd 入口读取 src/main.c、scripts/hwpod-qemu-cli.py、linker.ld 和必要的 arm2d-skill。获取 ARM-software/Arm-2D v1.2.4 与真实 CMSIS-DSP 1.14.2 来源，记录 URL、tag/version、commit 和文件清单。只物化 Cortex-M4 最小必要源码与头文件；upstream 文件保持原文，本地配置、framebuffer、display port 和 demo glue 放在项目本地文件。修改构建入口，使 arm-none-eabi-gcc 编译真实 Arm-2D/CMSIS-DSP 与 demo，并生成 build/stm32f405-qemu.elf。尽早运行 hwpod build，后续只按具体编译错误做窄范围修复。最终回报 provenance、diff、build operation/job identity、return code、warning 和 artifact hash。",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 1800000,
+    "workspace": "subjectWorktree",
+    "constraints": [
+      "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
+      "只能修改隔离 subject worktree，不得修改 case registry、HWLAB repo 或原 subject checkout",
+      "资源与 skill 必须来自 AgentRun gitbundle，不得使用 workspaceFiles、seed files、host skill 或 ConfigMap fallback",
+      "必须使用 ARM-software/Arm-2D 的真实 upstream v1.2.4；禁止 mock、stub、同名 API veneer、兼容子集或自制替代实现",
+      "CMSIS-DSP 必须来自真实 1.14.2 Pack/RTE 或 upstream，并记录 provenance；禁止手写 arm_math.h 或最小 stub",
+      "第三方 upstream 文件必须由 HWPOD cmd/git/archive/已验证缓存物化，不得通过 apply-patch 手工粘贴或重写",
+      "project-local 文本修改使用 HWPOD workspace apply-patch；禁止退化为 runner 直接文件操作",
+      "只做 compile-only，不启动 QEMU，不读取 UART",
+      "结果只记录 raw trace/evidence，autoEvaluation=false"
+    ],
+    "pollIntervalMs": 2000,
+    "providerProfile": "gpt.pika",
+    "reasoningEffort": "low"
+  },
+  "createdAt": "2026-07-25T00:37:50.022Z",
+  "updatedAt": "2026-07-25T00:47:14.600Z",
+  "agentTrace": {
+    "lookup": {
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "source": "hwlab-cli.client.agent",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_47820ed4a979db31afe2de39",
+      "commands": {
+        "trace": "hwlab-cli client agent trace trc_harnessrl_47820ed4a979db31afe2de39 --render web",
+        "result": "hwlab-cli client agent result trc_harnessrl_47820ed4a979db31afe2de39",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_47820ed4a979db31afe2de39",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_47820ed4a979db31afe2de39 --render web --full",
+        "sessionStatus": "hwlab-cli client agent session status ses_7b7b706f-9ec3-4b30-9a3c-fe7e91ace814"
+      },
+      "strategy": "id_plus_existing_cli",
+      "sessionId": "ses_7b7b706f-9ec3-4b30-9a3c-fe7e91ace814",
+      "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-integration_run-embdagentbench-arm2d-l1-20260725a"
+    },
+    "source": "caserun-identity",
+    "status": "completed",
+    "traceId": "trc_harnessrl_47820ed4a979db31afe2de39",
+    "commands": [],
+    "httpStatus": 0,
+    "lookupOnly": true,
+    "commandCount": 0,
+    "terminalStatus": "completed",
+    "hwpodCommandCount": 0,
+    "keilJobCandidates": [],
+    "hwpodBuildCommandCount": 0
+  },
+  "definition": {
+    "flow": [
+      {
+        "id": "agent-mutation",
+        "kind": "agent"
+      },
+      {
+        "id": "build",
+        "kind": "hwpod.build"
+      }
+    ],
+    "mode": "agent-mutation-compile-only",
+    "notes": {
+      "stage": "integration",
+      "target": "D601-VM-HOST Linux / STM32F405RGT6 / Netduino Plus 2 QEMU",
+      "autoEvaluation": false,
+      "middlewareSourcePolicy": "real-upstream-required"
+    },
+    "title": "D601 VM STM32F405 QEMU Arm-2D 真实集成编译",
+    "caseId": "d601-vm-stm32f405-qemu-arm2d-integration",
+    "subject": {
+      "subdir": "",
+      "commitId": "f909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9",
+      "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_workspace"
+    },
+    "expected": {
+      "diff": {
+        "contains": [
+          "arm_2d",
+          "ARM-software",
+          "CMSIS-DSP"
+        ]
+      },
+      "compile": {
+        "success": true,
+        "artifactSuffixes": [
+          "build/stm32f405-qemu.elf"
+        ]
+      },
+      "download": {
+        "reason": "快速集成 case 只验证真实 upstream 与 ARM GCC 编译",
+        "skipped": true
+      }
+    },
+    "agentTask": {
+      "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中完成 STM32F405 QEMU 的真实 Arm-2D 最小集成，并以 ARM GCC 编译证据收口。\n\n先通过标准 HWPOD workspace/cmd 入口读取 src/main.c、scripts/hwpod-qemu-cli.py、linker.ld 和必要的 arm2d-skill。获取 ARM-software/Arm-2D v1.2.4 与真实 CMSIS-DSP 1.14.2 来源，记录 URL、tag/version、commit 和文件清单。只物化 Cortex-M4 最小必要源码与头文件；upstream 文件保持原文，本地配置、framebuffer、display port 和 demo glue 放在项目本地文件。修改构建入口，使 arm-none-eabi-gcc 编译真实 Arm-2D/CMSIS-DSP 与 demo，并生成 build/stm32f405-qemu.elf。尽早运行 hwpod build，后续只按具体编译错误做窄范围修复。最终回报 provenance、diff、build operation/job identity、return code、warning 和 artifact hash。",
+      "projectId": "prj_hwpod_workbench",
+      "timeoutMs": 1800000,
+      "workspace": "subjectWorktree",
+      "constraints": [
+        "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
+        "只能修改隔离 subject worktree，不得修改 case registry、HWLAB repo 或原 subject checkout",
+        "资源与 skill 必须来自 AgentRun gitbundle，不得使用 workspaceFiles、seed files、host skill 或 ConfigMap fallback",
+        "必须使用 ARM-software/Arm-2D 的真实 upstream v1.2.4；禁止 mock、stub、同名 API veneer、兼容子集或自制替代实现",
+        "CMSIS-DSP 必须来自真实 1.14.2 Pack/RTE 或 upstream，并记录 provenance；禁止手写 arm_math.h 或最小 stub",
+        "第三方 upstream 文件必须由 HWPOD cmd/git/archive/已验证缓存物化，不得通过 apply-patch 手工粘贴或重写",
+        "project-local 文本修改使用 HWPOD workspace apply-patch；禁止退化为 runner 直接文件操作",
+        "只做 compile-only，不启动 QEMU，不读取 UART",
+        "结果只记录 raw trace/evidence，autoEvaluation=false"
+      ],
+      "pollIntervalMs": 2000,
+      "providerProfile": "gpt.pika",
+      "resourceBundlePolicy": "caserun-with-skills"
+    },
+    "hwpodSpec": "hwpod-spec.yaml",
+    "contractVersion": "hwpod-case-v1"
+  },
+  "compileOnly": true,
+  "sourceSpecPath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_l1_20260725a/case-authority/cases/d601-vm-stm32f405-qemu-arm2d-integration/hwpod-spec.yaml",
+  "validationPlan": {
+    "mode": "compile-only",
+    "steps": [
+      {
+        "args": {},
+        "kind": "build",
+        "stage": "post-agent-validation",
+        "actionId": "validation_01_build",
+        "expectedOp": "debug.build"
+      }
+    ],
+    "source": "default-compile-only",
+    "compileOnly": true,
+    "contractVersion": "hwpod-case-validation-plan-v1"
+  },
+  "agentDiff": {
+    "diffStat": "scripts/hwpod-qemu-cli.py | 11 +++++++++--\n src/main.c                |  3 +++\n 2 files changed, 12 insertions(+), 2 deletions(-)\n/dev/null => src/arm2d_demo.c | 19 +++++++++++++++++++\n 1 file changed, 19 insertions(+)\n/dev/null => src/arm_2d_cfg.h | 8 ++++++++\n 1 file changed, 8 insertions(+)\n/dev/null => src/arm_2d_user_arch_port.h | 1 +\n 1 file changed, 1 insertion(+)\n/dev/null => third_party/Arm-2D/.gitattributes | 1 +\n 1 file changed, 1 insertion(+)\n/dev/null => third_party/Arm-2D/.gitconfig | 3 +++\n 1 file changed, 3 insertions(+)\n/dev/null => third_party/Arm-2D/.github/dependabot.yml | 8 ++++++++\n 1 file changed, 8 insertions(+)\n.../Arm-2D/.github/workflows/build.yaml            | 36 ++++++++++++++++++++++\n 1 file changed, 36 insertions(+)\n/dev/null => third_party/Arm-2D/.gitignore | 66 ++++++++++++++++++++++++++++++\n 1 file changed, 66 insertions(+)\n.../Arm-2D/.vscode/c_cpp_properties.json           | 105 +++++++++++++++++++++\n 1 file changed, 105 insertions(+)\n/dev/null => third_party/Arm-2D/ARM.Arm-2D.pdsc | 1035 +++++++++++++++++++++++\n 1 file changed, 1035 insertions(+)\n/dev/null => third_party/Arm-2D/CMakeLists.txt | 262 +++++++++++++++++++++++++\n 1 file changed, 262 insertions(+)\n/dev/null => third_party/Arm-2D/LICENSE | 201 ++++++++++++++++++++++++++++++++\n 1 file changed, 201 insertions(+)\n.../Arm-2D/Library/Include/README.md               | 64 ++++++++++++++++++++++\n 1 file changed, 64 insertions(+)\n.../Arm-2D/Library/Include/__arm_2d_direct.h       | 11356 +++++++++++++++++++\n 1 file changed, 11356 insertions(+)\n.../__arm_2d_fill_colour_with_alpha_gradient.h     | 921 +++++++++++++++++++++\n 1 file changed, 921 insertions(+)\n...m_2d_fill_colour_with_alpha_gradient_and_mask.h | 1019 ++++++++++++++++++++\n 1 file changed, 1019 insertions(+)\n..._arm_2d_fill_colour_with_horizontal_line_mask.h | 275 +++++++++++++++++++++\n 1 file changed, 275 insertions(+)\n.../__arm_2d_fill_colour_with_mask_and_mirroring.h | 469 +++++++++++++++++++++\n 1 file changed, 469 insertions(+)\n.../__arm_2d_fill_colour_with_vertical_line_mask.h | 275 +++++++++++++++++++++\n 1 file changed, 275 insertions(+)\n.../Library/Include/__arm_2d_filter_iir_blur.h     | 237 +++++++++++++++++++++\n 1 file changed, 237 insertions(+)\n.../Include/__arm_2d_filter_reverse_colour.h       | 138 +++++++++++++++++++++\n 1 file changed, 138 insertions(+)\n.../Arm-2D/Library/Include/__arm_2d_impl.h         | 1930 ++++++++++++++++++++\n 1 file changed, 1930 insertions(+)\n.../Arm-2D/Library/Include/__arm_2d_math.h         | 325 +++++++++++++++++++++\n 1 file changed, 325 insertions(+)\n.../Arm-2D/Library/Include/__arm_2d_math_helium.h  | 425 +++++++++++++++++++++\n 1 file changed, 425 insertions(+)\n.../Arm-2D/Library/Include/__arm_2d_paving.h       | 818 +++++++++++++++++++++\n 1 file changed, 818 insertions(+)\n.../Library/Include/__arm_2d_paving_helium.h       | 704 +++++++++++++++++++++\n 1 file changed, 704 insertions(+)\n.../Include/__arm_2d_tile_2xssaa_transform.h       | 76 ++++++++++++++++++++++\n 1 file changed, 76 insertions(+)\n...arm_2d_tile_copy_with_source_mask_and_opacity.h | 180 +++++++++++++++++++++\n 1 file changed, 180 insertions(+)\n.../Include/__arm_2d_tile_fill_with_opacity.h      | 168 +++++++++++++++++++++\n 1 file changed, 168 insertions(+)\n...arm_2d_tile_fill_with_source_mask_and_opacity.h | 180 +++++++++++++++++++++\n 1 file changed, 180 insertions(+)\n.../Arm-2D/Library/Include/__arm_2d_utils_helium.h | 380 +++++++++++++++++++++\n 1 file changed, 380 insertions(+)\n.../Arm-2D/Library/Include/arm_2d.h                | 340 +++++++++++++++++++++\n 1 file changed, 340 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_alpha_blending.h | 4432 ++++++++++++++++++++\n 1 file changed, 4432 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_conversion.h     | 393 +++++++++++++++++++++\n 1 file changed, 393 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_draw.h           | 561 +++++++++++++++++++++\n 1 file changed, 561 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_features.h       | 288 +++++++++++++++++++++\n 1 file changed, 288 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_filter.h         | 55 ++++++++++++++++++++++\n 1 file changed, 55 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_op.h             | 893 +++++++++++++++++++++\n 1 file changed, 893 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_tile.h           | 2233 ++++++++++++++++++++\n 1 file changed, 2233 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_transform.h      | 5324 ++++++++++++++++++++\n 1 file changed, 5324 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_types.h          | 1285 ++++++++++++++++++++\n 1 file changed, 1285 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_utils.h          | 1419 ++++++++++++++++++++\n 1 file changed, 1419 insertions(+)\n.../Arm-2D/Library/Include/template/arm_2d_cfg.h   | 297 +++++++++++++++++++++\n 1 file changed, 297 insertions(+)\n.../Library/Include/template/arm_2d_user_aci.h     | 72 ++++++++++++++++++++++\n 1 file changed, 72 insertions(+)\n.../Include/template/arm_2d_user_arch_port.h       | 88 ++++++++++++++++++++++\n 1 file changed, 88 insertions(+)\n.../Source/__arm_2d_alpha_blending_wrapper.inc     | 1627 ++++++++++++++++++++\n 1 file changed, 1627 insertions(+)\n.../Source/__arm_2d_ccca8888_transform_helium.c    | 3290 ++++++++++++++++++++\n 1 file changed, 3290 insertions(+)\n.../Library/Source/__arm_2d_conversion_helium.c    | 760 +++++++++++++++++++++\n 1 file changed, 760 insertions(+)\n.../Source/__arm_2d_copy_mirror_wrapper.inc        | 196 +++++++++++++++++++++\n 1 file changed, 196 insertions(+)\n..._copy_with_colour_keying_and_mirror_wrapper.inc | 190 +++++++++++++++++++++\n 1 file changed, 190 insertions(+)\n.../__arm_2d_copy_with_mask_and_mirror_wrapper.inc | 417 +++++++++++++++++++++\n 1 file changed, 417 insertions(+)\n.../Arm-2D/Library/Source/__arm_2d_core.c          | 2526 ++++++++++++++++++++\n 1 file changed, 2526 insertions(+)\n.../Library/Source/__arm_2d_expanded_helium.log    | 114692 ++++++++++++++++++\n 1 file changed, 114692 insertions(+)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/dev/null => third_party/Arm-2D/gen_pack.sh | 117 ++++++++++++++++++++++++++++\n 1 file changed, 117 insertions(+)\n/dev/null => third_party/Arm-2D/tools/Kabosu.c | 1683 ++++++++++++++++++++++++\n 1 file changed, 1683 insertions(+)\n/dev/null => third_party/Arm-2D/tools/README.md | 84 +++++++++++++++++++++++++\n 1 file changed, 84 insertions(+)\n/dev/null => third_party/Arm-2D/tools/img2c.py | 650 +++++++++++++++++++++++++\n 1 file changed, 650 insertions(+)\n/dev/null => third_party/Arm-2D/tools/jinja2c.py | 111 +++++++++++++++++++++++\n 1 file changed, 111 insertions(+)\n/dev/null => third_party/Arm-2D/tools/space_fleet.png | Bin 0 -> 2183570 bytes\n 1 file changed, 0 insertions(+), 0 deletions(-)\n/dev/null => third_party/Arm-2D/tools/ttf2c.py | 584 +++++++++++++++++++++++++\n 1 file changed, 584 insertions(+)\n\n\n.../arm2d-port/arm_2d_user_arch_port.h             | 82 ++++++++++++++++++++++\n 1 file changed, 82 insertions(+)",
+    "requests": [
+      {
+        "label": "status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 128
+      },
+      {
+        "label": "diff-stat",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 129
+      },
+      {
+        "label": "diff-patch",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 2168
+      },
+      {
+        "label": "submodule-status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-ls-files",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 10294
+      },
+      {
+        "label": "untracked-file-metadata",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:src/arm2d_demo.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 88
+      },
+      {
+        "label": "untracked-diff-patch:src/arm2d_demo.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 569
+      },
+      {
+        "label": "untracked-diff-stat:src/arm_2d_cfg.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 75
+      },
+      {
+        "label": "untracked-diff-patch:src/arm_2d_cfg.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 373
+      },
+      {
+        "label": "untracked-diff-stat:src/arm_2d_user_arch_port.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 78
+      },
+      {
+        "label": "untracked-diff-patch:src/arm_2d_user_arch_port.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 235
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/.gitattributes",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 84
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/.gitattributes",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 232
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/.gitconfig",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 83
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/.gitconfig",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 295
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/.github/dependabot.yml",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 100
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/.github/dependabot.yml",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 408
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/.github/workflows/build.yaml",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 112
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/.github/workflows/build.yaml",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 1232
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/.gitignore",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 112
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/.gitignore",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 1162
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/.vscode/c_cpp_properties.json",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/.vscode/c_cpp_properties.json",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 4388
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/ARM.Arm-2D.pdsc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 114
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/ARM.Arm-2D.pdsc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 63855
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/CMakeLists.txt",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/CMakeLists.txt",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 11950
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/LICENSE",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/LICENSE",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 11724
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/README.md",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 112
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/README.md",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 6323
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_direct.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 115
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_direct.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 702875
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_alpha_gradient.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_alpha_gradient.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 50526
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_alpha_gradient_and_mask.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 114
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_alpha_gradient_and_mask.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 57359
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_horizontal_line_mask.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_horizontal_line_mask.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 14539
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_mask_and_mirroring.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_mask_and_mirroring.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 28923
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_vertical_line_mask.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_vertical_line_mask.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 14533
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_filter_iir_blur.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_filter_iir_blur.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 8122
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_filter_reverse_colour.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_filter_reverse_colour.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 6128
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_impl.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 114
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_impl.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 81884
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_math.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_math.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 8170
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_math_helium.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_math_helium.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 12040
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_paving.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_paving.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 55626
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_paving_helium.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_paving_helium.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 50860
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_tile_2xssaa_transform.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 112
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_tile_2xssaa_transform.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 2919
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_tile_copy_with_source_mask_and_opacity.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_tile_copy_with_source_mask_and_opacity.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 8912
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_tile_fill_with_opacity.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_tile_fill_with_opacity.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 7922
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_tile_fill_with_source_mask_and_opacity.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_tile_fill_with_source_mask_and_opacity.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 9004
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/__arm_2d_utils_helium.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/__arm_2d_utils_helium.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 13026
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/arm_2d.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/arm_2d.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 12204
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/arm_2d_alpha_blending.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 114
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/arm_2d_alpha_blending.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 253466
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/arm_2d_conversion.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/arm_2d_conversion.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 15792
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/arm_2d_draw.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/arm_2d_draw.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 27272
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/arm_2d_features.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/arm_2d_features.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 13292
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/arm_2d_filter.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 112
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/arm_2d_filter.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 2085
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/arm_2d_op.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/arm_2d_op.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 27282
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/arm_2d_tile.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 114
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/arm_2d_tile.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 118341
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/arm_2d_transform.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 114
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/arm_2d_transform.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 359114
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/arm_2d_types.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 114
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/arm_2d_types.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 54809
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/arm_2d_utils.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 114
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/arm_2d_utils.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 55817
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/template/arm_2d_cfg.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/template/arm_2d_cfg.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 14225
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/template/arm_2d_user_aci.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 112
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/template/arm_2d_user_aci.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 2894
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Include/template/arm_2d_user_arch_port.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 112
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Include/template/arm_2d_user_arch_port.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 3157
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_alpha_blending_wrapper.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 114
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_alpha_blending_wrapper.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 70687
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ccca8888_transform_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 114
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ccca8888_transform_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 137157
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_conversion_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_conversion_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 34523
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_copy_mirror_wrapper.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_copy_mirror_wrapper.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 9865
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 10729
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_copy_with_mask_and_mirror_wrapper.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_copy_with_mask_and_mirror_wrapper.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 23534
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_core.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 114
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_core.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 101009
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_expanded_helium.log",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 116
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_expanded_helium.log",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient_and_mask.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient_and_mask.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_horizontal_line_mask.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_horizontal_line_mask.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_horizontal_line_mask_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_horizontal_line_mask_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_mask_and_mirroring.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_mask_and_mirroring.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_mask_and_mirroring_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_mask_and_mirroring_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_vertical_line_mask.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_vertical_line_mask.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_vertical_line_mask_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_vertical_line_mask_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_filter_iir_blur.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_filter_iir_blur.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_filter_iir_blur_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_filter_iir_blur_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_filter_reverse_colour.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_filter_reverse_colour.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_filter_reverse_colour_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_filter_reverse_colour_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_alpha_blending.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_alpha_blending.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_alpha_mask.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_alpha_mask.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_alpha_mask_helium.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_alpha_mask_helium.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_colour_filling_with_alpha.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_colour_filling_with_alpha.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_copy.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_copy.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_copy_helium.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_copy_helium.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_draw_pattern.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_draw_pattern.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_draw_pattern_helium.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_draw_pattern_helium.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_fill_colour.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_fill_colour.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_fill_colour_helium.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_fill_colour_helium.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_ccca8888_trans.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_ccca8888_trans.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_and_fill.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_and_fill.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_with_masks.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_with_masks.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_with_masks_helium.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_with_masks_helium.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_trans_with_masks.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_trans_with_masks.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_trans_with_masks_helium.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_trans_with_masks_helium.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_transform.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_transform.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_ll_transform_helium.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_ll_transform_helium.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_with_colour_keying_and_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_with_colour_keying_and_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_with_des_mask_and_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_with_des_mask_and_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_with_masks_and_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_with_masks_and_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_with_src_mask_and_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_with_src_mask_and_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_with_colour_keying_and_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_with_colour_keying_and_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_with_des_mask_and_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_with_des_mask_and_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_with_masks_and_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_with_masks_and_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_with_src_mask_and_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_with_src_mask_and_mirror.inc",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_tile.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_tile.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_tile_2xssaa_transform.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_tile_2xssaa_transform.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_tile_4xssaa_transform_src_mask_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_tile_4xssaa_transform_src_mask_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_tile_copy_with_source_mask_and_opacity.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_tile_copy_with_source_mask_and_opacity.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_tile_copy_with_source_mask_and_opacity_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_tile_copy_with_source_mask_and_opacity_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_tile_fill_with_opacity.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_tile_fill_with_opacity.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_tile_fill_with_opacity_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_tile_fill_with_opacity_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_tile_fill_with_source_mask_and_opacity.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_tile_fill_with_source_mask_and_opacity.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_tile_fill_with_source_mask_and_opacity_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_tile_fill_with_source_mask_and_opacity_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/__arm_2d_transform_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/__arm_2d_transform_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/arm_2d.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/arm_2d.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/arm_2d_alpha_blending.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/arm_2d_alpha_blending.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/arm_2d_async.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/arm_2d_async.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/arm_2d_conversion.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/arm_2d_conversion.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/arm_2d_draw.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/arm_2d_draw.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/arm_2d_filter.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/arm_2d_filter.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/arm_2d_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/arm_2d_helium.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/Source/arm_2d_transform.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/Source/arm_2d_transform.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/README.md",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/README.md",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_ccca8888_transform_helium.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_ccca8888_transform_helium.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_and_mask.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_and_mask.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_and_mask.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_and_mask.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_helium.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_helium.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_horizontal_line_mask.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_horizontal_line_mask.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_horizontal_line_mask.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_horizontal_line_mask.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_mask_and_mirroring.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_mask_and_mirroring.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_mask_and_mirroring.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_mask_and_mirroring.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_vertical_line_mask.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_vertical_line_mask.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_vertical_line_mask.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_vertical_line_mask.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_filter_iir_blur.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_filter_iir_blur.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_filter_iir_blur.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_filter_iir_blur.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_filter_reverse_colour.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_filter_reverse_colour.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_filter_reverse_colour.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_filter_reverse_colour.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_tile_2xssaa_transform.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_tile_2xssaa_transform.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_tile_2xssaa_transform.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_tile_2xssaa_transform.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_tile_copy_with_source_mask_and_opacity.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_tile_copy_with_source_mask_and_opacity.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_tile_copy_with_source_mask_and_opacity.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_tile_copy_with_source_mask_and_opacity.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity_helium.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity_helium.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity.h.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity_helium.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity_helium.c.jinja",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/template/README.md",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/template/README.md",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/template/arm_2d_user_opcode_template_i_cp_src.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/template/arm_2d_user_opcode_template_i_cp_src.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/template/arm_2d_user_opcode_template_i_cp_src.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/template/arm_2d_user_opcode_template_i_cp_src.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/template/arm_2d_user_opcode_template_i_draw.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/template/arm_2d_user_opcode_template_i_draw.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Library/template/arm_2d_user_opcode_template_i_draw.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Library/template/arm_2d_user_opcode_template_i_draw.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/README.md",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/README.md",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/ReleaseNote.md",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/ReleaseNote.md",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Scripts/git/git-configure.sh",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Scripts/git/git-configure.sh",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Scripts/git/git-version.clean",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Scripts/git/git-version.clean",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/Scripts/git/git-version.smudge",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/Scripts/git/git-version.smudge",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 509
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/gen_pack.sh",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/gen_pack.sh",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 2924
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/tools/Kabosu.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 114
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/tools/Kabosu.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 201918
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/tools/README.md",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 112
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/tools/README.md",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 4160
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/tools/img2c.py",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/tools/img2c.py",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 21849
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/tools/jinja2c.py",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/tools/jinja2c.py",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 4559
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/tools/space_fleet.png",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 127
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/tools/space_fleet.png",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 2779320
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D/tools/ttf2c.py",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D/tools/ttf2c.py",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 22008
+      },
+      {
+        "label": "untracked-diff-stat:third_party/CMSIS-DSP",
+        "stderr": "error: Could not access 'third_party/CMSIS-DSP/null'",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/CMSIS-DSP",
+        "stderr": "error: Could not access 'third_party/CMSIS-DSP/null'",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/CMSIS_5",
+        "stderr": "error: Could not access 'third_party/CMSIS_5/null'",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/CMSIS_5",
+        "stderr": "error: Could not access 'third_party/CMSIS_5/null'",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/arm2d-port/arm_2d_user_arch_port.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 112
+      },
+      {
+        "label": "untracked-diff-patch:third_party/arm2d-port/arm_2d_user_arch_port.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 3079
+      },
+      {
+        "label": "source-root-baseline",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      },
+      {
+        "label": "source-root-after-prepare",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      },
+      {
+        "label": "source-root-after-agent",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      }
+    ],
+    "statusShort": "M scripts/hwpod-qemu-cli.py\n M src/main.c\n?? src/arm2d_demo.c\n?? src/arm_2d_cfg.h\n?? src/arm_2d_user_arch_port.h\n?? third_party/",
+    "diffPatchPath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_l1_20260725a/agent-diff.patch",
+    "diffCollection": {
+      "config": {
+        "ignore": [],
+        "include": []
+      },
+      "omitted": [],
+      "tracked": {
+        "paths": [
+          "scripts/hwpod-qemu-cli.py",
+          "src/main.c"
+        ],
+        "diffStat": "scripts/hwpod-qemu-cli.py | 11 +++++++++--\n src/main.c                |  3 +++\n 2 files changed, 12 insertions(+), 2 deletions(-)",
+        "diffPatchSha256": "e40bd95c44c39241d13aacbed41cc90c4d5cd5a721012d73c77d92e1ffbc1876"
+      },
+      "included": [
+        {
+          "path": "src/arm2d_demo.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "src/arm_2d_cfg.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "src/arm_2d_user_arch_port.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/.gitattributes",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/.gitconfig",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/.github/dependabot.yml",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/.github/workflows/build.yaml",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/.gitignore",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/.vscode/c_cpp_properties.json",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/ARM.Arm-2D.pdsc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/CMakeLists.txt",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/LICENSE",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/README.md",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_direct.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_alpha_gradient.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_alpha_gradient_and_mask.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_horizontal_line_mask.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_mask_and_mirroring.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_vertical_line_mask.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_filter_iir_blur.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_filter_reverse_colour.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_impl.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_math.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_math_helium.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_paving.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_paving_helium.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_tile_2xssaa_transform.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_tile_copy_with_source_mask_and_opacity.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_tile_fill_with_opacity.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_tile_fill_with_source_mask_and_opacity.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_utils_helium.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_alpha_blending.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_conversion.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_draw.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_features.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_filter.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_op.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_tile.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_transform.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_types.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_utils.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/template/arm_2d_cfg.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/template/arm_2d_user_aci.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/template/arm_2d_user_arch_port.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_alpha_blending_wrapper.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ccca8888_transform_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_conversion_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_copy_mirror_wrapper.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_copy_with_mask_and_mirror_wrapper.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_core.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_expanded_helium.log",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient_and_mask.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_horizontal_line_mask.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_horizontal_line_mask_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_mask_and_mirroring.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_mask_and_mirroring_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_vertical_line_mask.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_vertical_line_mask_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_filter_iir_blur.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_filter_iir_blur_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_filter_reverse_colour.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_filter_reverse_colour_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_alpha_blending.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_alpha_mask.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_alpha_mask_helium.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_colour_filling_with_alpha.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_copy.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_copy_helium.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_draw_pattern.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_draw_pattern_helium.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_fill_colour.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_fill_colour_helium.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_ccca8888_trans.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_and_fill.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_with_masks.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_with_masks_helium.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_trans_with_masks.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_trans_with_masks_helium.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_transform.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_transform_helium.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_with_colour_keying_and_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_with_des_mask_and_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_with_masks_and_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_with_src_mask_and_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_with_colour_keying_and_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_with_des_mask_and_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_with_masks_and_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_with_src_mask_and_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile_2xssaa_transform.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile_4xssaa_transform_src_mask_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile_copy_with_source_mask_and_opacity.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile_copy_with_source_mask_and_opacity_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile_fill_with_opacity.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile_fill_with_opacity_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile_fill_with_source_mask_and_opacity.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile_fill_with_source_mask_and_opacity_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_transform_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/arm_2d.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/arm_2d_alpha_blending.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/arm_2d_async.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/arm_2d_conversion.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/arm_2d_draw.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/arm_2d_filter.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/arm_2d_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/arm_2d_transform.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/README.md",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_ccca8888_transform_helium.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_and_mask.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_and_mask.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_helium.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_horizontal_line_mask.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_horizontal_line_mask.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_mask_and_mirroring.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_mask_and_mirroring.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_vertical_line_mask.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_vertical_line_mask.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_filter_iir_blur.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_filter_iir_blur.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_filter_reverse_colour.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_filter_reverse_colour.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_2xssaa_transform.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_2xssaa_transform.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_copy_with_source_mask_and_opacity.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_copy_with_source_mask_and_opacity.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity_helium.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity_helium.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/template/README.md",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/template/arm_2d_user_opcode_template_i_cp_src.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/template/arm_2d_user_opcode_template_i_cp_src.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/template/arm_2d_user_opcode_template_i_draw.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/template/arm_2d_user_opcode_template_i_draw.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/README.md",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/ReleaseNote.md",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Scripts/git/git-configure.sh",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Scripts/git/git-version.clean",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Scripts/git/git-version.smudge",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/gen_pack.sh",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/tools/Kabosu.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/tools/README.md",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/tools/img2c.py",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/tools/jinja2c.py",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/tools/space_fleet.png",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/tools/ttf2c.py",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/CMSIS-DSP",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/CMSIS_5",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/arm2d-port/arm_2d_user_arch_port.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        }
+      ],
+      "untracked": {
+        "total": 160,
+        "omitted": 0,
+        "included": 160
+      },
+      "submodules": [],
+      "contractVersion": "hwpod-case-run-diff-collection-v1"
+    },
+    "diffPatchSha256": "116a1fb41489f9a6497a66b13db7695d2b77082a8d1e4b7daf6470a3334162e8",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterAgent": {
+      "label": "after-agent",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootStatusShort": "?? .worktree/",
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootChangedAfterAgent": false,
+    "sourceRootChangedAfterPrepare": false
+  },
+  "_control": {
+    "status": "completed",
+    "stage": "completed",
+    "updatedAt": "2026-07-25T00:47:14.600Z",
+    "completedAt": "2026-07-25T00:47:14.570Z",
+    "exitCode": 0,
+    "evidencePath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_l1_20260725a/evidence.json"
+  },
+  "status": "completed",
+  "evidencePath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_l1_20260725a/evidence.json"
+}

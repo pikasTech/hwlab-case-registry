@@ -1,0 +1,33 @@
+apiVersion: hwlab.dev/v0alpha1
+kind: Hwpod
+metadata:
+  name: d601-vm-stm32f405-qemu
+spec:
+  nodeBinding:
+    nodeId: node-d601-vm-hwpod-qemu
+  targetDevice:
+    board: Netduino Plus 2 QEMU
+    mcu: STM32F405RGT6
+    simulation: true
+  workspace:
+    path: "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-rawcapture01"
+    toolchain: arm-none-eabi-gcc
+    buildCommand: scripts/build
+    rebuildCommand: scripts/rebuild
+  debugProbe:
+    type: qemu
+    adapter: hwpod-qemu-workspace
+    downloadCommand: scripts/download
+    resetCommand: scripts/reset
+    physicalProbe: false
+  ioProbe:
+    uart:
+      backend: pyserial
+      port: /home/ubuntu/workspace/hwpod_qemu_workspace/.state/qemu/uart
+      baudRate: 115200
+      simulated: true
+  simulationBoundary:
+    physicalProbe: false
+    physicalFlash: false
+    powerControl: false
+    uart: qemu-pty

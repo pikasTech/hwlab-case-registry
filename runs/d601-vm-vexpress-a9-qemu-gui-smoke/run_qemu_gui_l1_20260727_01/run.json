@@ -1,0 +1,517 @@
+{
+  "agent": {
+    "polls": 39,
+    "result": {
+      "bytes": 8632,
+      "clipped": true,
+      "preview": "{\"ok\":true,\"traceId\":\"trc_harnessrl_8058e61d70d9eab603318718\",\"sessionId\":\"ses_bf4a1193-6d9c-4c19-ad7e-b87825841cfc\",\"conversationId\":\"cnv_case_d601-vm-vexpress-a9-qemu-gui-smoke_run-qemu-gui-l1-20260727-01\",\"ownerUserId\":\"usr_native\",\"status\":\"completed\",\"message\":\"# HWPOD CaseRun 代码代理任务\\n\\n案例ID: d601-vm-vexpress-a9-qemu-gui-smoke\\n运行ID: run_qemu_gui_l1_20260727_01\\n主体仓库本地路径: /home/ubuntu/workspace/hwpod_qemu_gui_workspace\\n主体提交ID: 4ed40401ff5686c86f9598ae8239b76374a98d00\\n主体隔离工作区路径: /home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01\\nhwpodId: d601-vm-vexpress-a9-qemu-gui\\nHWPOD 环境默认: HWPOD_ID=d601-vm-vexpress-a9-qemu-gui；HWPOD_WORKSPACE_PATH=/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01\\nhwpodWorkspaceArgs（仅用于显式诊断，通常不要传）: --hwpod-id d601-vm-vexpress-a9-qemu-gui --workspace-path '/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01'\\n验证模式: custom-runtime；Agent final 与 CaseRun 后置 HWPOD validation 独立记录。\\nCaseRun 后置验证动作: build:build, display-capture:displayCapture\\n\\n## 运行时装配\\nAgentRun 通过 ResourceBundleRef kind=gitbundle 装配 HWLAB 运行时资源。工具命令从 bundle 暴露；skill 的真实位置以 AgentRun 初始资源 manifest 给出的绝对路径为准，不把 subject worktree 下的 `.agents/skills` 当作固定路径。CaseRun 不再发送临时 workspaceFiles 或 seed-file 载荷。\\n\\n## HWPOD 运行时\\n通过运行时服务按 ID 使用 HWPOD，不要求 runner 本地存在 `.hwlab/hwpod-spec.yaml`。\\nhwpod/hwpod-ctl 默认读取已注入的 HWPOD_ID 和 HWPOD_WORKSPACE_PATH；不要在每条命令中重复长参数。显式传入时必须与环境作用域精确一致。\\n本任务的标准冒烟步骤：\\n- `hwpod-ctl spec validate`\\n- `hwpod inspect`\\n- 工作区读取、搜索和编辑：`hwpod workspace ...`\\n- 编译检查：`hwpod build`\\n\\n## 任务\\n只读核查当前 VExpress-A9 QEMU GUI subject worktree：通过 HWPOD 读取 src/main.c，确认其中配置了 PL111 framebuffer，并简短报告判断。不要修改任何文件，不要启动 QEMU；后续 build 和 display.capture 由 CaseRun Harness 执行。\\n\\n## 约束\\n- 思维过程和输出消息一律使用中文\\n- 只允许通过 HWPOD 读取 subject worktree\\n- 禁止修改任何文件\\n- 禁止由 Agent 启动 QEMU 或执行截图和视频采集\\n- 真实构建与显示采集只由 CaseRun Harness 后置验证执行\\n- 只能修改 isolated subject worktree，不得修改 case registry repo。\\n- 不得修改原 subject repo checkout；所有源码修改必须落在 subjectWorktreePath。\\n- AgentRun 通过 kind=gitbundle 装配当前 v0.2 的 tools/ 与 skills；读取 skill 时使用初始资源 manifest 给出的绝对路径，不要假定 subject worktree 内存在 .agents/skills。若标准 hwpod 命令能力缺失，报告 gitbundle runtime assembly 问题，不要改走旁路。\\n- 不要依赖 workspaceFiles、seed files、hostPath skill 目录、ConfigMap 或 runner 本地 .hwlab/hwpod-spec.yaml 作为工具/skill/HWPOD 注入 fallback。\\n- 必须通过 HWPOD registry/service 引用 hwpodId=d601-vm-vexpress-a9-qemu-gui；Harness 已把该 HWPOD 与 subject workspace 注入工具作用域，可以省略 --hwpod-id d601-vm-vexpress-a9-qemu-gui --workspace-path '/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01'，若显式传入则必须精确一致。\\n- 如果 case prompt 或旧帮助文本提到 .hwlab/hwpod-spec.yaml，把它视为过时写法；直接使用 Harness 注入的 HWPOD_ID/HWPOD_WORKSPACE_PATH 环境作用域，不要创建、复制或修补本地 spec 文件。\\n- 若 case prompt 要求源码修改，必须只改 subjectWorktreePath；若 prompt 未要求源码修改，则保持 subject 源码不变。\\n- 不要运行 CaseRun 答案执行器；你本人必须通过 hwpod/hwpod-ctl 标准入口触发编译验证。\\n- hwpod build/download 是长任务短连接入口；不要再用 shell sleep/&&/timeout/watch/head/pipe 或 shell loop 包住它们。只有返回 JSON 明确包含 jobId/job_id 时，才用独立的 hwpod job status <jobId> 短命令有限轮询；status=completed 或只返回 operationId/planId 时不得调用 job status。\\n- 同一 HWPOD 节点的只读 workspace/cmd 请求可在节点声明的 maxInFlight 范围内并发；build、download、reset、UART 和其他作用于同一物理资源的操作必须按资源串行。节点报告 maxInFlight 或 busy 时停止新增请求，并按 retryable 信息有限重试，不要无界并发重发。\\n\\n## 执行流程\\n- 先确认标准 `hwpod`、`hwpod-ctl` 和 `hwpod-compiler` 命令可从 gitbundle 工具目录调用。\\n- 使用标准 hwpod/hwpod-ctl 命令和环境默认作用域完成案例任务。只有案例明确要求时才运行 build/download/UART 步骤，并回报返回的 JSON、job、artifact 或串口摘要。\\n- 对 hwpod build/download，保持 HWPOD 命令本身不被包装。只有响应明确返回 `jobId` 或 `job_id` 时，才用独立短命令 `hwpod job status <jobId>` 有限轮询；响应已经 `status=completed` 或只返回 `operationId/planId` 时不得把它当作 job。不要用 shell sleep、&&、timeout、watch、head、pipe 或 shell loop 包裹状态轮询。\\n- 你的回合结束后，CaseRun 会检查 subjectWorktreePath 下的 git diff，并可能把 runner 后置编译作为单独证据记录。\\n- CaseRun 只记录 trace、session、conversation、agent 命令执行、workspace diff 和 Keil 构建证据，不做自动评分或门禁判断。\",\"createdAt\":\"2026-07-26T20:39:47.946Z\",\"u"
+    },
+    "backend": "gpt-pika",
+    "baseUrl": "http://127.0.0.1:6677",
+    "traceId": "trc_harnessrl_8058e61d70d9eab603318718",
+    "accepted": {
+      "ok": true,
+      "reused": false,
+      "status": "running",
+      "traceId": "trc_harnessrl_8058e61d70d9eab603318718",
+      "accepted": true,
+      "sessionId": "ses_bf4a1193-6d9c-4c19-ad7e-b87825841cfc",
+      "workflowId": "workbench-turn-trc_harnessrl_8058e61d70d9eab603318718",
+      "workflowRunId": "019fa026-7d62-728b-aece-3473cfc77feb",
+      "orchestrationMode": "agentrun-native",
+      "resultSynthesized": false,
+      "terminalAuthority": "hwlab.event.v1"
+    },
+    "terminal": true,
+    "timedOut": false,
+    "projectId": "prj_hwpod_workbench",
+    "resultUrl": "http://127.0.0.1:6677/v1/agent/chat/result/trc_harnessrl_8058e61d70d9eab603318718",
+    "sessionId": "ses_bf4a1193-6d9c-4c19-ad7e-b87825841cfc",
+    "timeoutMs": 300000,
+    "lastPollAt": "2026-07-26T20:39:48.475Z",
+    "promptPath": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_01/agent-prompt.md",
+    "stageStatus": "completed",
+    "traceLookup": {
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "source": "hwlab-cli.client.agent",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_8058e61d70d9eab603318718",
+      "commands": {
+        "trace": "hwlab-cli client agent trace trc_harnessrl_8058e61d70d9eab603318718 --render web",
+        "result": "hwlab-cli client agent result trc_harnessrl_8058e61d70d9eab603318718",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_8058e61d70d9eab603318718",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_8058e61d70d9eab603318718 --render web --full",
+        "sessionStatus": "hwlab-cli client agent session status ses_bf4a1193-6d9c-4c19-ad7e-b87825841cfc"
+      },
+      "strategy": "id_plus_existing_cli",
+      "sessionId": "ses_bf4a1193-6d9c-4c19-ad7e-b87825841cfc",
+      "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-smoke_run-qemu-gui-l1-20260727-01"
+    },
+    "promptSha256": "3ae24c12e773de99c49617e5a264c9331702bfb5cd0b05c0edfa0c2e3addfd21",
+    "traceCommand": "hwlab-cli client agent trace trc_harnessrl_8058e61d70d9eab603318718 --render web",
+    "agentRunStatus": "completed",
+    "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-smoke_run-qemu-gui-l1-20260727-01",
+    "inspectCommand": "hwlab-cli client agent inspect --trace-id trc_harnessrl_8058e61d70d9eab603318718",
+    "lastHttpStatus": 200,
+    "pollIntervalMs": 2000,
+    "sessionCommand": "hwlab-cli client agent session status ses_bf4a1193-6d9c-4c19-ad7e-b87825841cfc",
+    "terminalStatus": "completed",
+    "nextPollCommand": "hwlab-cli client agent result trc_harnessrl_8058e61d70d9eab603318718",
+    "providerProfile": "gpt.pika",
+    "sessionResponse": {
+      "ok": true,
+      "status": "created",
+      "session": {
+        "mode": "agentrun-native",
+        "status": "idle",
+        "messages": [],
+        "createdAt": "2026-07-26T20:38:23.544Z",
+        "ownerRole": "user",
+        "projectId": "prj_hwpod_workbench",
+        "sessionId": "ses_bf4a1193-6d9c-4c19-ad7e-b87825841cfc",
+        "updatedAt": "2026-07-26T20:38:23.544Z",
+        "ownerUserId": "usr_native",
+        "launchContext": null,
+        "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-smoke_run-qemu-gui-l1-20260727-01",
+        "providerProfile": "gpt.pika"
+      },
+      "valuesRedacted": true,
+      "orchestrationMode": "agentrun-native",
+      "secretMaterialStored": false
+    },
+    "infrastructureBackend": "gpt-pika",
+    "resolvedBackendProfile": "gpt-pika",
+    "requestedProviderProfile": "gpt.pika"
+  },
+  "runId": "run_qemu_gui_l1_20260727_01",
+  "stage": "blocked",
+  "apiUrl": "http://127.0.0.1:6681",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-smoke",
+  "runDir": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_01",
+  "caseDir": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_01/case-authority/cases/d601-vm-vexpress-a9-qemu-gui-smoke",
+  "subject": {
+    "setup": {
+      "nodeId": "node-d601-vm-hwpod-qemu",
+      "planId": "run_qemu_gui_l1_20260727_01:prepare:v1:subject-prepare",
+      "stderr": "Preparing worktree (detached HEAD 4ed4040)",
+      "stdout": "HEAD is now at 4ed4040 feat: add VExpress-A9 QEMU GUI subject baseline\n4ed40401ff5686c86f9598ae8239b76374a98d00",
+      "exitCode": 0,
+      "operation": {
+        "ops": [
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_01_subject_commit",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_02_subject_worktree_add",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_03_subject_worktree_head",
+            "status": "completed"
+          }
+        ],
+        "intent": "cmd.run",
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "planId": "run_qemu_gui_l1_20260727_01:prepare:v1:subject-prepare",
+        "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+        "contractVersion": "hwpod-node-ops-v1"
+      },
+      "resources": [],
+      "httpStatus": 200
+    },
+    "subdir": "",
+    "commitId": "4ed40401ff5686c86f9598ae8239b76374a98d00",
+    "resources": [],
+    "worktreePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01",
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": ""
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": ""
+    }
+  },
+  "caseFile": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_01/case-authority/cases/d601-vm-vexpress-a9-qemu-gui-smoke/case.json",
+  "caseRepo": "/root/hwlab-case-registry",
+  "specPath": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_01/.hwlab/hwpod-spec.yaml",
+  "agentTask": {
+    "model": "gpt-5.6-luna",
+    "prompt": "只读核查当前 VExpress-A9 QEMU GUI subject worktree：通过 HWPOD 读取 src/main.c，确认其中配置了 PL111 framebuffer，并简短报告判断。不要修改任何文件，不要启动 QEMU；后续 build 和 display.capture 由 CaseRun Harness 执行。",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 300000,
+    "workspace": "subjectWorktree",
+    "constraints": [
+      "只允许通过 HWPOD 读取 subject worktree",
+      "禁止修改任何文件",
+      "禁止由 Agent 启动 QEMU 或执行截图和视频采集",
+      "真实构建与显示采集只由 CaseRun Harness 后置验证执行"
+    ],
+    "pollIntervalMs": 2000,
+    "providerProfile": "gpt.pika",
+    "reasoningEffort": "low"
+  },
+  "createdAt": "2026-07-26T20:38:13.694Z",
+  "updatedAt": "2026-07-26T20:40:08.065Z",
+  "agentTrace": {
+    "lookup": {
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "source": "hwlab-cli.client.agent",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_8058e61d70d9eab603318718",
+      "commands": {
+        "trace": "hwlab-cli client agent trace trc_harnessrl_8058e61d70d9eab603318718 --render web",
+        "result": "hwlab-cli client agent result trc_harnessrl_8058e61d70d9eab603318718",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_8058e61d70d9eab603318718",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_8058e61d70d9eab603318718 --render web --full",
+        "sessionStatus": "hwlab-cli client agent session status ses_bf4a1193-6d9c-4c19-ad7e-b87825841cfc"
+      },
+      "strategy": "id_plus_existing_cli",
+      "sessionId": "ses_bf4a1193-6d9c-4c19-ad7e-b87825841cfc",
+      "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-smoke_run-qemu-gui-l1-20260727-01"
+    },
+    "source": "caserun-identity",
+    "status": "completed",
+    "traceId": "trc_harnessrl_8058e61d70d9eab603318718",
+    "commands": [],
+    "httpStatus": 0,
+    "lookupOnly": true,
+    "commandCount": 0,
+    "terminalStatus": "completed",
+    "hwpodCommandCount": 0,
+    "keilJobCandidates": [],
+    "hwpodBuildCommandCount": 0
+  },
+  "definition": {
+    "flow": [
+      {
+        "id": "agent-observation",
+        "kind": "agent"
+      },
+      {
+        "id": "build",
+        "kind": "hwpod.build"
+      },
+      {
+        "id": "display-capture",
+        "kind": "hwpod.display.capture"
+      }
+    ],
+    "mode": "agent-observation-build-display-capture",
+    "notes": {
+      "target": "D601-VM-HOST Linux / VExpress-A9 / PL111 / QEMU",
+      "autoEvaluation": false,
+      "captureAuthority": "HWPOD display.capture operation result"
+    },
+    "title": "D601 VM VExpress-A9 QEMU GUI 采集冒烟",
+    "caseId": "d601-vm-vexpress-a9-qemu-gui-smoke",
+    "subject": {
+      "subdir": "",
+      "commitId": "4ed40401ff5686c86f9598ae8239b76374a98d00",
+      "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace"
+    },
+    "expected": {
+      "compile": {
+        "success": true,
+        "artifactSuffixes": [
+          "build/qemu-gui.elf"
+        ]
+      },
+      "display": {
+        "width": 640,
+        "height": 480,
+        "frameRate": 5,
+        "durationMs": 10000,
+        "videoFormat": "webm",
+        "screenshotFormat": "png"
+      }
+    },
+    "agentTask": {
+      "model": "gpt-5.6-luna",
+      "prompt": "只读核查当前 VExpress-A9 QEMU GUI subject worktree：通过 HWPOD 读取 src/main.c，确认其中配置了 PL111 framebuffer，并简短报告判断。不要修改任何文件，不要启动 QEMU；后续 build 和 display.capture 由 CaseRun Harness 执行。",
+      "projectId": "prj_hwpod_workbench",
+      "timeoutMs": 300000,
+      "workspace": "subjectWorktree",
+      "constraints": [
+        "只允许通过 HWPOD 读取 subject worktree",
+        "禁止修改任何文件",
+        "禁止由 Agent 启动 QEMU 或执行截图和视频采集",
+        "真实构建与显示采集只由 CaseRun Harness 后置验证执行"
+      ],
+      "pollIntervalMs": 2000,
+      "providerProfile": "gpt.pika",
+      "reasoningEffort": "low"
+    },
+    "hwpodSpec": "hwpod-spec.yaml",
+    "contractVersion": "hwpod-case-v1"
+  },
+  "compileOnly": false,
+  "sourceSpecPath": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_01/case-authority/cases/d601-vm-vexpress-a9-qemu-gui-smoke/hwpod-spec.yaml",
+  "validationPlan": {
+    "mode": "custom-runtime",
+    "steps": [
+      {
+        "args": {},
+        "kind": "build",
+        "stage": "post-agent-validation",
+        "actionId": "build",
+        "expectedOp": "debug.build"
+      },
+      {
+        "args": {},
+        "kind": "displayCapture",
+        "stage": "post-agent-validation",
+        "actionId": "display-capture",
+        "expectedOp": "display.capture"
+      }
+    ],
+    "source": "case-definition.flow",
+    "compileOnly": false,
+    "contractVersion": "hwpod-case-validation-plan-v1"
+  },
+  "agentDiff": {
+    "diffStat": "",
+    "requests": [
+      {
+        "label": "status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "diff-stat",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "diff-patch",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "submodule-status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "source-root-baseline",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": ""
+      },
+      {
+        "label": "source-root-after-prepare",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": ""
+      },
+      {
+        "label": "source-root-after-agent",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      }
+    ],
+    "statusShort": "",
+    "diffPatchPath": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_01/agent-diff.patch",
+    "diffCollection": {
+      "config": {
+        "ignore": [
+          {
+            "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+            "pattern": "vendor/**"
+          },
+          {
+            "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+            "pattern": "third_party/**"
+          }
+        ],
+        "include": []
+      },
+      "omitted": [],
+      "tracked": {
+        "paths": [],
+        "diffStat": "",
+        "diffPatchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "included": [],
+      "untracked": {
+        "total": 0,
+        "omitted": 0,
+        "included": 0
+      },
+      "submodules": [],
+      "omittedGroups": [],
+      "contractVersion": "hwpod-case-run-diff-collection-v1"
+    },
+    "diffPatchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": ""
+    },
+    "sourceRootAfterAgent": {
+      "label": "after-agent",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootStatusShort": "?? .worktree/",
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": ""
+    },
+    "sourceRootChangedAfterAgent": true,
+    "sourceRootChangedAfterPrepare": false
+  },
+  "_control": {
+    "status": "blocked",
+    "stage": "blocked",
+    "updatedAt": "2026-07-26T20:40:08.065Z",
+    "completedAt": "2026-07-26T20:40:08.061Z",
+    "exitCode": 0,
+    "evidencePath": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_01/evidence.json"
+  },
+  "status": "blocked",
+  "evidencePath": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_01/evidence.json"
+}

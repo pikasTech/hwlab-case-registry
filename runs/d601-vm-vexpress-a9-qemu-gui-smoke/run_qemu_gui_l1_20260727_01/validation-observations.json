@@ -1,0 +1,97 @@
+{
+  "contractVersion": "hwpod-case-validation-observations-v1",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-smoke",
+  "runId": "run_qemu_gui_l1_20260727_01",
+  "observedAt": "2026-07-26T20:40:07.974Z",
+  "plan": {
+    "mode": "custom-runtime",
+    "steps": [
+      {
+        "args": {},
+        "kind": "build",
+        "stage": "post-agent-validation",
+        "actionId": "build",
+        "expectedOp": "debug.build"
+      },
+      {
+        "args": {},
+        "kind": "displayCapture",
+        "stage": "post-agent-validation",
+        "actionId": "display-capture",
+        "expectedOp": "display.capture"
+      }
+    ],
+    "source": "case-definition.flow",
+    "compileOnly": false,
+    "contractVersion": "hwpod-case-validation-plan-v1"
+  },
+  "results": [
+    {
+      "operation": {
+        "contractVersion": "hwpod-operation-result-v0.3",
+        "authority": "hwpod-service",
+        "actionId": "build",
+        "stage": "post-agent-validation",
+        "kind": "build",
+        "op": "debug.build",
+        "opId": "op_01_debug_build",
+        "status": "completed",
+        "ok": true,
+        "expected": {
+          "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01",
+          "op": "debug.build",
+          "actionId": "build"
+        },
+        "observed": {
+          "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01",
+          "op": "debug.build",
+          "actionId": "op_01_debug_build"
+        },
+        "topology": {
+          "ok": true
+        }
+      },
+      "result": {
+        "opId": "op_01_debug_build",
+        "op": "debug.build",
+        "status": "completed",
+        "ok": true,
+        "output": {
+          "cwd": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01",
+          "op": "debug.build",
+          "bindingSource": "hwpod-node-ops.command",
+          "ok": true,
+          "command": [
+            "scripts/build"
+          ],
+          "exitCode": 0,
+          "stdout": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n    584\t      0\t      0\t    584\t    248\t/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01/build/qemu-gui.elf\n",
+          "stderr": "",
+          "elapsedMs": 50
+        }
+      },
+      "blocker": {
+        "code": "hwpod_build_result_missing",
+        "summary": "HWPOD build returned neither a waitable job nor a completed synchronous result"
+      }
+    }
+  ],
+  "replay": {
+    "contractVersion": "hwpod-case-validation-replay-v1",
+    "source": "archived-hwpod-operation-observations",
+    "planMode": "custom-runtime",
+    "actionIds": [
+      "build",
+      "display-capture"
+    ],
+    "operationIds": [
+      "op_01_debug_build"
+    ],
+    "observationIds": [],
+    "relationships": []
+  }
+}

@@ -1,0 +1,779 @@
+{
+  "agent": {
+    "polls": 150,
+    "result": {
+      "bytes": 12407,
+      "clipped": true,
+      "preview": "{\"ok\":true,\"traceId\":\"trc_harnessrl_59e47e607a0157e88ae36b7b\",\"sessionId\":\"ses_c3cb8925-7fb3-45a9-ace7-ac47701f79a2\",\"conversationId\":\"cnv_case_d601-vm-stm32f405-qemu-arm2d-stage-d_run-embdagentbench-arm2d-staged-l1-20260726-12\",\"ownerUserId\":\"usr_native\",\"status\":\"completed\",\"message\":\"# HWPOD CaseRun 代码代理任务\\n\\n案例ID: d601-vm-stm32f405-qemu-arm2d-stage-d\\n运行ID: run_embdagentbench_arm2d_staged_l1_20260726_12\\n主体仓库本地路径: /home/ubuntu/workspace/hwpod_qemu_workspace\\n主体提交ID: f909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9\\n主体隔离工作区路径: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-12\\nhwpodId: d601-vm-stm32f405-qemu\\nHWPOD 环境默认: HWPOD_ID=d601-vm-stm32f405-qemu；HWPOD_WORKSPACE_PATH=/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-12\\nhwpodWorkspaceArgs（仅用于显式诊断，通常不要传）: --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-12'\\n验证模式: custom-runtime；Agent final 与 CaseRun 后置 HWPOD validation 独立记录。\\nCaseRun 后置验证动作: build:build, download:download, uart-read:uart\\n\\n## 运行时装配\\nAgentRun 通过 ResourceBundleRef kind=gitbundle 装配 HWLAB 运行时资源。工具命令从 bundle 暴露；skill 的真实位置以 AgentRun 初始资源 manifest 给出的绝对路径为准，不把 subject worktree 下的 `.agents/skills` 当作固定路径。CaseRun 不再发送临时 workspaceFiles 或 seed-file 载荷。\\n\\n## HWPOD 运行时\\n通过运行时服务按 ID 使用 HWPOD，不要求 runner 本地存在 `.hwlab/hwpod-spec.yaml`。\\n\\n## Harness 已物化资源\\n- arm-2d: third_party/Arm-2D | https://github.com/ARM-software/Arm-2D.git | ref=v1.2.4 | commit=b73ec43b6567feffe57642861e8b5eb083788011 | reused=false\\n- cmsis-dsp: third_party/CMSIS-DSP | https://github.com/ARM-software/CMSIS-DSP.git | ref=v1.14.2 | commit=43aa2a9e7fc080e0d7541e9f5e083258403ac9ee | reused=false\\n- cmsis-core: third_party/CMSIS | https://github.com/ARM-software/CMSIS_5.git | ref=5.9.0 | commit=2b7495b8535bdcb306dac29b9ded4cfb679d7e5c | reused=false\\nhwpod/hwpod-ctl 默认读取已注入的 HWPOD_ID 和 HWPOD_WORKSPACE_PATH；不要在每条命令中重复长参数。显式传入时必须与环境作用域精确一致。\\n本任务的标准冒烟步骤：\\n- `hwpod-ctl spec validate`\\n- `hwpod inspect`\\n- 工作区读取、搜索和编辑：`hwpod workspace ...`\\n- 编译检查：`hwpod build`\\n\\n## 任务\\n请在 D601-VM-HOST 的隔离 Linux subject worktree 中完成 STM32F405 QEMU 的 Arm-2D 阶段D：真实接入 Arm-2D/CMSIS-DSP，完成 ARM GCC build、QEMU load/start 和 UART 运行态证据。\\n\\nHarness 已按 case 中固定的 URL、ref 与 commit 将 Arm-2D、CMSIS-DSP 和 CMSIS Core 物化到 third_party；直接读取并使用这些资源，记录 repository、tag/version、commit、文件清单和 hash，不要再次 clone、fetch、覆盖或删除。禁止 mock、stub、API veneer、兼容子集和自制替代实现。只选用 Cortex-M4 所需最小源码；upstream 文件保持原文，arm_2d_cfg.h、framebuffer/display port、UART 和 demo glue 放在 src/ 等项目本地路径。HWPOD build/download 使用 CaseRun compiler 生成的不可变计划，不读取、修改或执行 subject 中的 scripts 构建入口。\\n\\n任务目标：通过标准 HWPOD workspace/cmd 入口修改项目本地源码；以 Arm-2D API 在 RAM framebuffer 上生成可验证 frame/tile 内容；UART 必须输出本次 runId、ARM-software/Arm-2D v1.2.4 与 commit、CMSIS-DSP 版本、heartbeat、frame counter 和 framebuffer/tile CRC 或摘要。开发中尽早运行 hwpod build，后续只按具体编译错误做窄范围修改；CaseRun flow 会在 Agent 完成后独立执行最终 build、download/QEMU start 和 UART read。最终回报完整 identity、provenance、diff、artifact hash、QEMU 状态和 UART 证据。\\n\\n## 约束\\n- 思维过程和输出消息一律使用中文\\n- 只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径\\n- 只能修改隔离 subject worktree，不得修改 case registry、HWLAB repo 或原 subject checkout\\n- 资源与 skill 必须来自 AgentRun gitbundle，不得使用 workspaceFiles、seed files、host skill 或 ConfigMap fallback\\n- 必须使用 ARM-software/Arm-2D v1.2.4 真实 upstream；禁止 mock、stub、同名 API veneer、兼容子集或自制替代实现\\n- CMSIS-DSP 必须来自真实 1.14.2 Pack/RTE 或 upstream，并记录 provenance；禁止手写 arm_math.h 或最小 stub\\n- 第三方 upstream 文件由 CaseRun Harness 在 Agent 启动前按固定 provenance 物化；Agent 不得重复 clone、fetch、覆盖、删除或通过 apply-patch 手工粘贴和重写\\n- project-local 文本修改使用 HWPOD workspace apply-patch；禁止退化为 runner 直接文件操作\\n- 禁止读取、修改或执行 scripts/hwpod-qemu-cli.py、scripts/build、scripts/rebuild、scripts/download、scripts/reset；这些属于 Harness 边界\\n- 必须实际执行 build、download/QEMU start 和 UART read，并保留 operationId、jobId、return code、artifact 和原始错误\\n- 必须保留 netduinoplus"
+    },
+    "backend": "gpt-pika",
+    "baseUrl": "http://127.0.0.1:6677",
+    "traceId": "trc_harnessrl_59e47e607a0157e88ae36b7b",
+    "accepted": {
+      "ok": true,
+      "reused": false,
+      "status": "running",
+      "traceId": "trc_harnessrl_59e47e607a0157e88ae36b7b",
+      "accepted": true,
+      "sessionId": "ses_c3cb8925-7fb3-45a9-ace7-ac47701f79a2",
+      "workflowId": "workbench-turn-trc_harnessrl_59e47e607a0157e88ae36b7b",
+      "workflowRunId": "019f9cb5-c211-75f8-9951-aeb8869ad41e",
+      "orchestrationMode": "agentrun-native",
+      "resultSynthesized": false,
+      "terminalAuthority": "hwlab.event.v1"
+    },
+    "terminal": true,
+    "timedOut": false,
+    "projectId": "prj_hwpod_workbench",
+    "resultUrl": "http://127.0.0.1:6677/v1/agent/chat/result/trc_harnessrl_59e47e607a0157e88ae36b7b",
+    "sessionId": "ses_c3cb8925-7fb3-45a9-ace7-ac47701f79a2",
+    "timeoutMs": 3600000,
+    "lastPollAt": "2026-07-26T04:41:58.645Z",
+    "promptPath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_staged_l1_20260726_12/agent-prompt.md",
+    "stageStatus": "completed",
+    "traceLookup": {
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "source": "hwlab-cli.client.agent",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_59e47e607a0157e88ae36b7b",
+      "commands": {
+        "trace": "hwlab-cli client agent trace trc_harnessrl_59e47e607a0157e88ae36b7b --render web",
+        "result": "hwlab-cli client agent result trc_harnessrl_59e47e607a0157e88ae36b7b",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_59e47e607a0157e88ae36b7b",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_59e47e607a0157e88ae36b7b --render web --full",
+        "sessionStatus": "hwlab-cli client agent session status ses_c3cb8925-7fb3-45a9-ace7-ac47701f79a2"
+      },
+      "strategy": "id_plus_existing_cli",
+      "sessionId": "ses_c3cb8925-7fb3-45a9-ace7-ac47701f79a2",
+      "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-stage-d_run-embdagentbench-arm2d-staged-l1-20260726-12"
+    },
+    "promptSha256": "dbab9a2147815ea1810c8c6e8ecc25b606ecb73d3d6e7ad2a53dee29ba53f0f6",
+    "traceCommand": "hwlab-cli client agent trace trc_harnessrl_59e47e607a0157e88ae36b7b --render web",
+    "agentRunStatus": "completed",
+    "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-stage-d_run-embdagentbench-arm2d-staged-l1-20260726-12",
+    "inspectCommand": "hwlab-cli client agent inspect --trace-id trc_harnessrl_59e47e607a0157e88ae36b7b",
+    "lastHttpStatus": 200,
+    "pollIntervalMs": 2000,
+    "sessionCommand": "hwlab-cli client agent session status ses_c3cb8925-7fb3-45a9-ace7-ac47701f79a2",
+    "terminalStatus": "completed",
+    "nextPollCommand": "hwlab-cli client agent result trc_harnessrl_59e47e607a0157e88ae36b7b",
+    "providerProfile": "gpt.pika",
+    "sessionResponse": {
+      "ok": true,
+      "status": "created",
+      "session": {
+        "mode": "agentrun-native",
+        "status": "idle",
+        "messages": [],
+        "createdAt": "2026-07-26T04:36:23.757Z",
+        "ownerRole": "user",
+        "projectId": "prj_hwpod_workbench",
+        "sessionId": "ses_c3cb8925-7fb3-45a9-ace7-ac47701f79a2",
+        "updatedAt": "2026-07-26T04:36:23.757Z",
+        "ownerUserId": "usr_native",
+        "launchContext": null,
+        "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-stage-d_run-embdagentbench-arm2d-staged-l1-20260726-12",
+        "providerProfile": "gpt.pika"
+      },
+      "valuesRedacted": true,
+      "orchestrationMode": "agentrun-native",
+      "secretMaterialStored": false
+    },
+    "infrastructureBackend": "gpt-pika",
+    "resolvedBackendProfile": "gpt-pika",
+    "requestedProviderProfile": "gpt.pika"
+  },
+  "runId": "run_embdagentbench_arm2d_staged_l1_20260726_12",
+  "stage": "completed",
+  "apiUrl": "http://127.0.0.1:6681",
+  "caseId": "d601-vm-stm32f405-qemu-arm2d-stage-d",
+  "runDir": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_staged_l1_20260726_12",
+  "caseDir": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_staged_l1_20260726_12/case-authority/cases/d601-vm-stm32f405-qemu-arm2d-stage-d",
+  "subject": {
+    "setup": {
+      "nodeId": "node-d601-vm-hwpod-qemu",
+      "planId": "run_embdagentbench_arm2d_staged_l1_20260726_12:prepare:v1:subject-prepare",
+      "stderr": "Preparing worktree (detached HEAD f909cda)",
+      "stdout": "HEAD is now at f909cda feat: add full QEMU rebuild operation\nf909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9",
+      "exitCode": 0,
+      "operation": {
+        "ops": [
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_01_subject_commit",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_02_subject_worktree_add",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_03_subject_worktree_head",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "workspace.git-materialize",
+            "opId": "op_10_resource_arm-2d",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "workspace.git-materialize",
+            "opId": "op_11_resource_cmsis-dsp",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "workspace.git-materialize",
+            "opId": "op_12_resource_cmsis-core",
+            "status": "completed"
+          }
+        ],
+        "intent": "cmd.run",
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "planId": "run_embdagentbench_arm2d_staged_l1_20260726_12:prepare:v1:subject-prepare",
+        "hwpodId": "d601-vm-stm32f405-qemu",
+        "contractVersion": "hwpod-node-ops-v1"
+      },
+      "resources": [
+        {
+          "id": "arm-2d",
+          "ref": "v1.2.4",
+          "kind": "git",
+          "reused": false,
+          "gitHead": "b73ec43b6567feffe57642861e8b5eb083788011",
+          "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+          "commitId": "b73ec43b6567feffe57642861e8b5eb083788011",
+          "destination": "third_party/Arm-2D",
+          "materialized": true
+        },
+        {
+          "id": "cmsis-dsp",
+          "ref": "v1.14.2",
+          "kind": "git",
+          "reused": false,
+          "gitHead": "43aa2a9e7fc080e0d7541e9f5e083258403ac9ee",
+          "repoUrl": "https://github.com/ARM-software/CMSIS-DSP.git",
+          "commitId": "43aa2a9e7fc080e0d7541e9f5e083258403ac9ee",
+          "destination": "third_party/CMSIS-DSP",
+          "materialized": true
+        },
+        {
+          "id": "cmsis-core",
+          "ref": "5.9.0",
+          "kind": "git",
+          "reused": false,
+          "gitHead": "2b7495b8535bdcb306dac29b9ded4cfb679d7e5c",
+          "repoUrl": "https://github.com/ARM-software/CMSIS_5.git",
+          "commitId": "2b7495b8535bdcb306dac29b9ded4cfb679d7e5c",
+          "destination": "third_party/CMSIS",
+          "materialized": true
+        }
+      ],
+      "httpStatus": 200
+    },
+    "subdir": "",
+    "commitId": "f909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9",
+    "resources": [
+      {
+        "id": "arm-2d",
+        "ref": "v1.2.4",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+        "commitId": "b73ec43b6567feffe57642861e8b5eb083788011",
+        "destination": "third_party/Arm-2D"
+      },
+      {
+        "id": "cmsis-dsp",
+        "ref": "v1.14.2",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/CMSIS-DSP.git",
+        "commitId": "43aa2a9e7fc080e0d7541e9f5e083258403ac9ee",
+        "destination": "third_party/CMSIS-DSP"
+      },
+      {
+        "id": "cmsis-core",
+        "ref": "5.9.0",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/CMSIS_5.git",
+        "commitId": "2b7495b8535bdcb306dac29b9ded4cfb679d7e5c",
+        "destination": "third_party/CMSIS"
+      }
+    ],
+    "worktreePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-12",
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_workspace",
+    "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-12",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    }
+  },
+  "caseFile": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_staged_l1_20260726_12/case-authority/cases/d601-vm-stm32f405-qemu-arm2d-stage-d/case.json",
+  "caseRepo": "/root/hwlab-case-registry",
+  "specPath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_staged_l1_20260726_12/.hwlab/hwpod-spec.yaml",
+  "agentTask": {
+    "model": "gpt-5.6-luna",
+    "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中完成 STM32F405 QEMU 的 Arm-2D 阶段D：真实接入 Arm-2D/CMSIS-DSP，完成 ARM GCC build、QEMU load/start 和 UART 运行态证据。\n\nHarness 已按 case 中固定的 URL、ref 与 commit 将 Arm-2D、CMSIS-DSP 和 CMSIS Core 物化到 third_party；直接读取并使用这些资源，记录 repository、tag/version、commit、文件清单和 hash，不要再次 clone、fetch、覆盖或删除。禁止 mock、stub、API veneer、兼容子集和自制替代实现。只选用 Cortex-M4 所需最小源码；upstream 文件保持原文，arm_2d_cfg.h、framebuffer/display port、UART 和 demo glue 放在 src/ 等项目本地路径。HWPOD build/download 使用 CaseRun compiler 生成的不可变计划，不读取、修改或执行 subject 中的 scripts 构建入口。\n\n任务目标：通过标准 HWPOD workspace/cmd 入口修改项目本地源码；以 Arm-2D API 在 RAM framebuffer 上生成可验证 frame/tile 内容；UART 必须输出本次 runId、ARM-software/Arm-2D v1.2.4 与 commit、CMSIS-DSP 版本、heartbeat、frame counter 和 framebuffer/tile CRC 或摘要。开发中尽早运行 hwpod build，后续只按具体编译错误做窄范围修改；CaseRun flow 会在 Agent 完成后独立执行最终 build、download/QEMU start 和 UART read。最终回报完整 identity、provenance、diff、artifact hash、QEMU 状态和 UART 证据。",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 3600000,
+    "workspace": "subjectWorktree",
+    "constraints": [
+      "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
+      "只能修改隔离 subject worktree，不得修改 case registry、HWLAB repo 或原 subject checkout",
+      "资源与 skill 必须来自 AgentRun gitbundle，不得使用 workspaceFiles、seed files、host skill 或 ConfigMap fallback",
+      "必须使用 ARM-software/Arm-2D v1.2.4 真实 upstream；禁止 mock、stub、同名 API veneer、兼容子集或自制替代实现",
+      "CMSIS-DSP 必须来自真实 1.14.2 Pack/RTE 或 upstream，并记录 provenance；禁止手写 arm_math.h 或最小 stub",
+      "第三方 upstream 文件由 CaseRun Harness 在 Agent 启动前按固定 provenance 物化；Agent 不得重复 clone、fetch、覆盖、删除或通过 apply-patch 手工粘贴和重写",
+      "project-local 文本修改使用 HWPOD workspace apply-patch；禁止退化为 runner 直接文件操作",
+      "禁止读取、修改或执行 scripts/hwpod-qemu-cli.py、scripts/build、scripts/rebuild、scripts/download、scripts/reset；这些属于 Harness 边界",
+      "必须实际执行 build、download/QEMU start 和 UART read，并保留 operationId、jobId、return code、artifact 和原始错误",
+      "必须保留 netduinoplus2 已验证的 RCC_APB2ENR 和 USART1 寄存器映射及初始化，不得切换到 USART2 或其他串口",
+      "UART 必须在主循环持续输出本次 runId、ARM-software/Arm-2D、v1.2.4、commit、CMSIS-DSP、heartbeat、frame 和 CRC 或 tile 摘要，不能只在启动时输出一次",
+      "Agent completed 或 final response 不能替代 build、QEMU 和 UART 证据",
+      "结果只记录 raw trace/evidence，autoEvaluation=false"
+    ],
+    "pollIntervalMs": 2000,
+    "providerProfile": "gpt.pika",
+    "reasoningEffort": "low"
+  },
+  "createdAt": "2026-07-26T04:35:40.991Z",
+  "updatedAt": "2026-07-26T04:42:31.437Z",
+  "agentTrace": {
+    "lookup": {
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "source": "hwlab-cli.client.agent",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_59e47e607a0157e88ae36b7b",
+      "commands": {
+        "trace": "hwlab-cli client agent trace trc_harnessrl_59e47e607a0157e88ae36b7b --render web",
+        "result": "hwlab-cli client agent result trc_harnessrl_59e47e607a0157e88ae36b7b",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_59e47e607a0157e88ae36b7b",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_59e47e607a0157e88ae36b7b --render web --full",
+        "sessionStatus": "hwlab-cli client agent session status ses_c3cb8925-7fb3-45a9-ace7-ac47701f79a2"
+      },
+      "strategy": "id_plus_existing_cli",
+      "sessionId": "ses_c3cb8925-7fb3-45a9-ace7-ac47701f79a2",
+      "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-stage-d_run-embdagentbench-arm2d-staged-l1-20260726-12"
+    },
+    "source": "caserun-identity",
+    "status": "completed",
+    "traceId": "trc_harnessrl_59e47e607a0157e88ae36b7b",
+    "commands": [],
+    "httpStatus": 0,
+    "lookupOnly": true,
+    "commandCount": 0,
+    "terminalStatus": "completed",
+    "hwpodCommandCount": 0,
+    "keilJobCandidates": [],
+    "hwpodBuildCommandCount": 0
+  },
+  "definition": {
+    "flow": [
+      {
+        "id": "agent-mutation",
+        "kind": "agent"
+      },
+      {
+        "id": "build",
+        "kind": "hwpod.build"
+      },
+      {
+        "id": "download",
+        "kind": "hwpod.download"
+      },
+      {
+        "id": "uart-read",
+        "kind": "hwpod.uart.read",
+        "port": "uart1",
+        "maxBytes": 8192
+      }
+    ],
+    "mode": "agent-mutation-build-download-uart",
+    "notes": {
+      "stage": "D",
+      "target": "D601-VM-HOST Linux / STM32F405RGT6 / Netduino Plus 2 QEMU",
+      "purpose": "验证 Agent 从裸基线真实接入 Arm-2D/CMSIS-DSP，并通过 build、QEMU 和 UART 证据收口",
+      "autoEvaluation": false,
+      "middlewareSourcePolicy": "real-upstream-required"
+    },
+    "title": "D601 VM STM32F405 QEMU Arm-2D 阶段D真实运行",
+    "caseId": "d601-vm-stm32f405-qemu-arm2d-stage-d",
+    "subject": {
+      "subdir": "",
+      "commitId": "f909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9",
+      "resources": [
+        {
+          "id": "arm-2d",
+          "ref": "v1.2.4",
+          "kind": "git",
+          "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+          "commitId": "b73ec43b6567feffe57642861e8b5eb083788011",
+          "destination": "third_party/Arm-2D"
+        },
+        {
+          "id": "cmsis-dsp",
+          "ref": "v1.14.2",
+          "kind": "git",
+          "repoUrl": "https://github.com/ARM-software/CMSIS-DSP.git",
+          "commitId": "43aa2a9e7fc080e0d7541e9f5e083258403ac9ee",
+          "destination": "third_party/CMSIS-DSP"
+        },
+        {
+          "id": "cmsis-core",
+          "ref": "5.9.0",
+          "kind": "git",
+          "repoUrl": "https://github.com/ARM-software/CMSIS_5.git",
+          "commitId": "2b7495b8535bdcb306dac29b9ded4cfb679d7e5c",
+          "destination": "third_party/CMSIS"
+        }
+      ],
+      "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_workspace"
+    },
+    "expected": {
+      "diff": {
+        "contains": [
+          "arm_2d",
+          "ARM-software",
+          "CMSIS-DSP",
+          "runId",
+          "frame"
+        ],
+        "forbiddenPaths": [
+          "scripts/hwpod-qemu-cli.py",
+          "scripts/build",
+          "scripts/rebuild",
+          "scripts/download",
+          "scripts/reset"
+        ]
+      },
+      "uart": {
+        "port": "uart1",
+        "contains": [
+          "runId",
+          "ARM-software/Arm-2D",
+          "v1.2.4",
+          "CMSIS-DSP",
+          "heartbeat",
+          "frame"
+        ]
+      },
+      "compile": {
+        "success": true,
+        "artifactSuffixes": [
+          "build/stm32f405-qemu.elf"
+        ]
+      },
+      "download": {
+        "runtime": "qemu",
+        "attempted": true
+      }
+    },
+    "agentTask": {
+      "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中完成 STM32F405 QEMU 的 Arm-2D 阶段D：真实接入 Arm-2D/CMSIS-DSP，完成 ARM GCC build、QEMU load/start 和 UART 运行态证据。\n\nHarness 已按 case 中固定的 URL、ref 与 commit 将 Arm-2D、CMSIS-DSP 和 CMSIS Core 物化到 third_party；直接读取并使用这些资源，记录 repository、tag/version、commit、文件清单和 hash，不要再次 clone、fetch、覆盖或删除。禁止 mock、stub、API veneer、兼容子集和自制替代实现。只选用 Cortex-M4 所需最小源码；upstream 文件保持原文，arm_2d_cfg.h、framebuffer/display port、UART 和 demo glue 放在 src/ 等项目本地路径。HWPOD build/download 使用 CaseRun compiler 生成的不可变计划，不读取、修改或执行 subject 中的 scripts 构建入口。\n\n任务目标：通过标准 HWPOD workspace/cmd 入口修改项目本地源码；以 Arm-2D API 在 RAM framebuffer 上生成可验证 frame/tile 内容；UART 必须输出本次 runId、ARM-software/Arm-2D v1.2.4 与 commit、CMSIS-DSP 版本、heartbeat、frame counter 和 framebuffer/tile CRC 或摘要。开发中尽早运行 hwpod build，后续只按具体编译错误做窄范围修改；CaseRun flow 会在 Agent 完成后独立执行最终 build、download/QEMU start 和 UART read。最终回报完整 identity、provenance、diff、artifact hash、QEMU 状态和 UART 证据。",
+      "projectId": "prj_hwpod_workbench",
+      "timeoutMs": 3600000,
+      "workspace": "subjectWorktree",
+      "constraints": [
+        "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
+        "只能修改隔离 subject worktree，不得修改 case registry、HWLAB repo 或原 subject checkout",
+        "资源与 skill 必须来自 AgentRun gitbundle，不得使用 workspaceFiles、seed files、host skill 或 ConfigMap fallback",
+        "必须使用 ARM-software/Arm-2D v1.2.4 真实 upstream；禁止 mock、stub、同名 API veneer、兼容子集或自制替代实现",
+        "CMSIS-DSP 必须来自真实 1.14.2 Pack/RTE 或 upstream，并记录 provenance；禁止手写 arm_math.h 或最小 stub",
+        "第三方 upstream 文件由 CaseRun Harness 在 Agent 启动前按固定 provenance 物化；Agent 不得重复 clone、fetch、覆盖、删除或通过 apply-patch 手工粘贴和重写",
+        "project-local 文本修改使用 HWPOD workspace apply-patch；禁止退化为 runner 直接文件操作",
+        "禁止读取、修改或执行 scripts/hwpod-qemu-cli.py、scripts/build、scripts/rebuild、scripts/download、scripts/reset；这些属于 Harness 边界",
+        "必须实际执行 build、download/QEMU start 和 UART read，并保留 operationId、jobId、return code、artifact 和原始错误",
+        "必须保留 netduinoplus2 已验证的 RCC_APB2ENR 和 USART1 寄存器映射及初始化，不得切换到 USART2 或其他串口",
+        "UART 必须在主循环持续输出本次 runId、ARM-software/Arm-2D、v1.2.4、commit、CMSIS-DSP、heartbeat、frame 和 CRC 或 tile 摘要，不能只在启动时输出一次",
+        "Agent completed 或 final response 不能替代 build、QEMU 和 UART 证据",
+        "结果只记录 raw trace/evidence，autoEvaluation=false"
+      ],
+      "pollIntervalMs": 2000,
+      "providerProfile": "gpt.pika",
+      "resourceBundlePolicy": "caserun-with-skills"
+    },
+    "hwpodSpec": "hwpod-spec.yaml",
+    "diffCollection": {
+      "ignore": [
+        {
+          "reason": "真实 Arm-2D upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文",
+          "pattern": "third_party/Arm-2D/**"
+        },
+        {
+          "reason": "真实 CMSIS-DSP upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文",
+          "pattern": "third_party/CMSIS-DSP/**"
+        }
+      ]
+    },
+    "contractVersion": "hwpod-case-v1"
+  },
+  "compileOnly": false,
+  "sourceSpecPath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_staged_l1_20260726_12/case-authority/cases/d601-vm-stm32f405-qemu-arm2d-stage-d/hwpod-spec.yaml",
+  "validationPlan": {
+    "mode": "custom-runtime",
+    "steps": [
+      {
+        "args": {},
+        "kind": "build",
+        "stage": "post-agent-validation",
+        "actionId": "build",
+        "expectedOp": "debug.build"
+      },
+      {
+        "args": {},
+        "kind": "download",
+        "stage": "post-agent-validation",
+        "actionId": "download",
+        "expectedOp": "debug.download"
+      },
+      {
+        "args": {
+          "port": "uart1",
+          "maxBytes": 8192
+        },
+        "kind": "uart",
+        "stage": "post-agent-validation",
+        "actionId": "uart-read",
+        "expectedOp": "io.uart.read"
+      }
+    ],
+    "source": "case-definition.flow",
+    "compileOnly": false,
+    "contractVersion": "hwpod-case-validation-plan-v1"
+  },
+  "agentDiff": {
+    "diffStat": "src/main.c | 60 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--\n 1 file changed, 58 insertions(+), 2 deletions(-)\n/dev/null => src/arm_2d_cfg.h | 6 ++++++\n 1 file changed, 6 insertions(+)\n[omitted by CaseRun diffCollection]\n third_party/Arm-2D/** | 1 files omitted reason=真实 Arm-2D upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文 samples=third_party/Arm-2D\n third_party/CMSIS-DSP/** | 1 files omitted reason=真实 CMSIS-DSP upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文 samples=third_party/CMSIS-DSP\n third_party/** | 1 files omitted reason=third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches samples=third_party/CMSIS",
+    "requests": [
+      {
+        "label": "status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 48
+      },
+      {
+        "label": "diff-stat",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 126
+      },
+      {
+        "label": "diff-patch",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 2860
+      },
+      {
+        "label": "submodule-status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-ls-files",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 78
+      },
+      {
+        "label": "untracked-file-metadata",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:src/arm_2d_cfg.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 73
+      },
+      {
+        "label": "untracked-diff-patch:src/arm_2d_cfg.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 295
+      },
+      {
+        "label": "source-root-baseline",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      },
+      {
+        "label": "source-root-after-prepare",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      },
+      {
+        "label": "source-root-after-agent",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      }
+    ],
+    "statusShort": "M src/main.c\n?? src/arm_2d_cfg.h\n?? third_party/",
+    "diffPatchPath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_staged_l1_20260726_12/agent-diff.patch",
+    "diffCollection": {
+      "config": {
+        "ignore": [
+          {
+            "reason": "真实 Arm-2D upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文",
+            "pattern": "third_party/Arm-2D/**"
+          },
+          {
+            "reason": "真实 CMSIS-DSP upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文",
+            "pattern": "third_party/CMSIS-DSP/**"
+          },
+          {
+            "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+            "pattern": "vendor/**"
+          },
+          {
+            "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+            "pattern": "third_party/**"
+          }
+        ],
+        "include": []
+      },
+      "omitted": [
+        {
+          "path": "third_party/Arm-2D",
+          "rule": "third_party/Arm-2D/**",
+          "reason": "真实 Arm-2D upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/CMSIS-DSP",
+          "rule": "third_party/CMSIS-DSP/**",
+          "reason": "真实 CMSIS-DSP upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/CMSIS",
+          "rule": "third_party/**",
+          "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+          "source": "untracked"
+        }
+      ],
+      "tracked": {
+        "paths": [
+          "src/main.c"
+        ],
+        "diffStat": "src/main.c | 60 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--\n 1 file changed, 58 insertions(+), 2 deletions(-)",
+        "diffPatchSha256": "7fc6fc812a2e833e1705670e77a2a05545b749ce5f21815ded08d7702d0b2e8e"
+      },
+      "included": [
+        {
+          "path": "src/arm_2d_cfg.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        }
+      ],
+      "untracked": {
+        "total": 4,
+        "omitted": 3,
+        "included": 1
+      },
+      "submodules": [],
+      "omittedGroups": [
+        {
+          "rule": "third_party/Arm-2D/**",
+          "count": 1,
+          "reason": "真实 Arm-2D upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文",
+          "samplePaths": [
+            "third_party/Arm-2D"
+          ]
+        },
+        {
+          "rule": "third_party/CMSIS-DSP/**",
+          "count": 1,
+          "reason": "真实 CMSIS-DSP upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文",
+          "samplePaths": [
+            "third_party/CMSIS-DSP"
+          ]
+        },
+        {
+          "rule": "third_party/**",
+          "count": 1,
+          "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+          "samplePaths": [
+            "third_party/CMSIS"
+          ]
+        }
+      ],
+      "contractVersion": "hwpod-case-run-diff-collection-v1"
+    },
+    "diffPatchSha256": "9ba6acdfefe9280e8a6c135df0759735797be311922686f01df191e78b909b00",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterAgent": {
+      "label": "after-agent",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootStatusShort": "?? .worktree/",
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootChangedAfterAgent": false,
+    "sourceRootChangedAfterPrepare": false
+  },
+  "_control": {
+    "status": "completed",
+    "stage": "completed",
+    "updatedAt": "2026-07-26T04:42:31.437Z",
+    "completedAt": "2026-07-26T04:42:31.393Z",
+    "exitCode": 0,
+    "evidencePath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_staged_l1_20260726_12/evidence.json"
+  },
+  "status": "completed",
+  "evidencePath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_staged_l1_20260726_12/evidence.json"
+}

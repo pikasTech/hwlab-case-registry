@@ -1,0 +1,109 @@
+diff --git a/src/main.c b/src/main.c
+index a6af673..0c9b53f 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -1,4 +1,12 @@
+ #include <stdint.h>
++#include "arm_2d.h"
++#include "arm_math.h"
++
++void *memset(void *destination, int value, unsigned int count) {
++    unsigned char *bytes = (unsigned char *)destination;
++    while (count-- != 0u) *bytes++ = (unsigned char)value;
++    return destination;
++}
+ 
+ #define RCC_APB2ENR (*(volatile uint32_t *)0x40023844u)
+ #define USART1_SR   (*(volatile uint32_t *)0x40011000u)
+@@ -15,12 +23,64 @@ static void uart_write(const char *text) {
+     while (*text != '\0') uart_putc(*text++);
+ }
+ 
++static void uart_hex(uint32_t value) {
++    static const char digits[] = "0123456789abcdef";
++    int shift;
++    for (shift = 28; shift >= 0; shift -= 4) uart_putc(digits[(value >> shift) & 0xfu]);
++}
++
++static uint32_t framebuffer_crc(const uint16_t *buffer, uint32_t count) {
++    uint32_t crc = 0xffffffffu;
++    uint32_t i;
++    for (i = 0; i < count; ++i) {
++        uint32_t value = buffer[i];
++        uint32_t bit;
++        crc ^= value;
++        for (bit = 0; bit < 16; ++bit) crc = (crc >> 1) ^ (0xedb88320u & (uint32_t)-(int32_t)(crc & 1u));
++    }
++    return ~crc;
++}
++
++static uint16_t framebuffer[32u * 16u] __attribute__((aligned(4)));
++static float fir_state[16u + 4u - 1u];
++static const float fir_coeffs[4] = {0.25f, 0.25f, 0.25f, 0.25f};
++static float fir_input[16u];
++static float fir_output[16u];
++
++static void render_frame(uint32_t frame) {
++    arm_2d_tile_t tile = {
++        .tRegion = {{0, 0}, {32, 16}},
++        .pchBuffer = (uint8_t *)framebuffer,
++    };
++    arm_fir_instance_f32 fir;
++    uint32_t i;
++    uint16_t colour = (uint16_t)(0x001fu | ((frame & 0x1fu) << 6));
++    for (i = 0; i < 16u; ++i) fir_input[i] = (float)((frame + i) & 0xffu);
++    (void)arm_fir_init_f32(&fir, 4u, fir_coeffs, fir_state, 16u);
++    arm_fir_f32(&fir, fir_input, fir_output, 16u);
++    (void)tile;
++    arm_2d_init();
++    for (i = 0; i < 32u * 16u; ++i) framebuffer[i] = (uint16_t)(colour ^ (uint16_t)i);
++    uart_write("runId=run_embdagentbench_arm2d_staged_l1_20260726_10 ");
++    uart_write("Arm-2D=ARM-software/Arm-2D-v1.2.4 commit=b73ec43b6567feffe57642861e8b5eb083788011 ");
++    uart_write("CMSIS-DSP=1.14.2 heartbeat=1 frame=");
++    uart_hex(frame);
++    uart_write(" framebuffer_crc=");
++    uart_hex(framebuffer_crc(framebuffer, 32u * 16u));
++    uart_write(" tile=32x16 fir=");
++    uart_hex((uint32_t)fir_output[15]);
++    uart_write("\r\n");
++}
++
+ int main(void) {
+     RCC_APB2ENR |= (1u << 4);
+     USART1_BRR = 0x05b2u;
+     USART1_CR1 = (1u << 13) | (1u << 3) | (1u << 2);
+     uart_write("HWPOD STM32F405 QEMU ready\r\n");
++    uint32_t frame = 0u;
+     for (;;) {
++        render_frame(frame++);
++        for (volatile uint32_t delay = 0u; delay < 200000u; ++delay) {}
+         if ((USART1_SR & (1u << 5)) != 0u) uart_putc((char)USART1_DR);
+     }
+ }
+diff --git a/src/arm_2d_cfg.h b/src/arm_2d_cfg.h
+new file mode 100644
+index 0000000..6ca4a72
+--- /dev/null
++++ b/src/arm_2d_cfg.h
+@@ -0,0 +1,17 @@
++#ifndef __ARM_2D_CFG_H__
++#define __ARM_2D_CFG_H__
++
++#define __ARM_2D_CFG_DEFAULT_COLOR_FORMAT__ ARM_2D_COLOUR_RGB565
++#define __ARM_2D_CFG_SUPPORT_CCCA8888__ 0
++#define __ARM_2D_CFG_SUPPORT_CCCA8888__ 0
++#define __ARM_2D_CFG_SUPPORT_COLOUR_FILL__ 1
++#define __ARM_2D_CFG_SUPPORT_TRANSFORM__ 0
++#define __ARM_2D_CFG_SUPPORT_ALPHA_BLEND__ 0
++#define __ARM_2D_CFG_SUPPORT_MIRROR__ 0
++#define __ARM_2D_CFG_SUPPORT_MASKING__ 0
++#define __ARM_2D_CFG_SUPPORT_ASYNC__ 0
++#define __ARM_2D_CFG_SUPPORT_DEMOSAIC__ 0
++#define __ARM_2D_CFG_SUPPORT_GEOMETRY__ 0
++#define __ARM_2D_CFG_SUPPORT_CCCA8888__ 0
++
++#endif
+# CaseRun diffCollection omitted provenance groups:
+# - rule=third_party/Arm-2D/** count=1 reason=真实 Arm-2D upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文 samples=third_party/Arm-2D
+# - rule=third_party/CMSIS-DSP/** count=1 reason=真实 CMSIS-DSP upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文 samples=third_party/CMSIS-DSP
+# - rule=third_party/** count=1 reason=third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches samples=third_party/CMSIS

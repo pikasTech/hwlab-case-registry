@@ -1,0 +1,39 @@
+# HWPOD CaseRun d601-vm-stm32f405-qemu-arm2d-integration
+
+- runId: run_embdagentbench_arm2d_l1_20260724m
+- status: recorded
+- autoEvaluation: false
+- compileOnly: true
+- subjectRepoLocalPath: /home/ubuntu/workspace/hwpod_qemu_workspace
+- subjectCommitId: f909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9
+- subjectWorktreePath: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260724m
+- agentTraceId: trc_harnessrl_1119869cb93c9ad130c8fb3d
+- agentSessionId: 
+- requestedProviderProfile: gpt.pika
+- resolvedBackendProfile: gpt-pika
+- model: gpt-5.6-luna
+- infrastructureBackend: gpt-pika
+- traceLookupStrategy: id_plus_existing_cli
+- traceCommand: hwlab-cli client agent trace trc_harnessrl_1119869cb93c9ad130c8fb3d --render web
+- resultCommand: hwlab-cli client agent result trc_harnessrl_1119869cb93c9ad130c8fb3d
+- inspectCommand: hwlab-cli client agent inspect --trace-id trc_harnessrl_1119869cb93c9ad130c8fb3d
+- agentTraceCommandCount: 0
+- agentTraceHwpodCommandCount: 0
+- agentTraceHwpodBuildCommandCount: 0
+- agentTerminalStatus: completed
+- agentFinalPresent: false
+- agentFinalMissingReason: final-response-not-reported
+- postValidationStatus: 
+- agentReportedBuildWarningCount: 
+- runnerPostValidationWarningCount: 
+- agentToolCallSummaryCount: 
+- agentToolCallStatusCounts: {}
+- agentToolCallExitCodeCounts: {}
+- agentStageCommandCount: 0
+- agentStageKinds: 
+- diffPatchPath: /root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_l1_20260724m/agent-diff.patch
+- runnerHwpodSource: case-run-runner-post-agent-compile-check
+- hwpodExitCode: 0
+- jobId: 
+- runnerPostAgentCompileCheck: recorded
+

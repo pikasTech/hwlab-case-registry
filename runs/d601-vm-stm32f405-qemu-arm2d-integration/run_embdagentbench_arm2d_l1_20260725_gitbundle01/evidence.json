@@ -1,0 +1,970 @@
+{
+  "agent": {
+    "model": "gpt-5.6-luna",
+    "polls": 200,
+    "backend": "gpt-pika",
+    "baseUrl": "http://127.0.0.1:6677",
+    "traceId": "trc_harnessrl_19f87f7a41551f3f9d8d212d",
+    "timedOut": false,
+    "projectId": "prj_hwpod_workbench",
+    "promptPath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_l1_20260725_gitbundle01/agent-prompt.md",
+    "stageStatus": "completed",
+    "agentRunStatus": "completed",
+    "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-integration_run-embdagentbench-arm2d-l1-20260725-gitbundle01",
+    "lastHttpStatus": 200,
+    "terminalStatus": "completed",
+    "providerProfile": "gpt.pika",
+    "reasoningEffort": "low",
+    "infrastructureBackend": "gpt-pika",
+    "resolvedBackendProfile": "gpt-pika",
+    "requestedProviderProfile": "gpt.pika"
+  },
+  "hwpod": {
+    "source": "case-run-runner-post-agent-compile-check",
+    "command": [
+      "bun",
+      "hwpod-cli.ts",
+      "build",
+      "--spec",
+      "hwpod-spec.yaml",
+      "--reason",
+      "case-run d601-vm-stm32f405-qemu-arm2d-integration run_embdagentbench_arm2d_l1_20260725_gitbundle01 compile-only"
+    ],
+    "exitCode": 0,
+    "operation": {
+      "ok": true,
+      "op": "debug.build",
+      "opId": "op_01_debug_build",
+      "status": "completed",
+      "expected": {
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "hwpodId": "d601-vm-stm32f405-qemu",
+        "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01"
+      },
+      "observed": {
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "hwpodId": "d601-vm-stm32f405-qemu",
+        "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01"
+      },
+      "topology": {
+        "ok": true
+      },
+      "artifacts": [
+        "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01/build/stm32f405-qemu.elf"
+      ],
+      "authority": "case-hwpod-yaml",
+      "contractVersion": "hwpod-operation-result-v0.3",
+      "synchronousBuild": {
+        "ok": true,
+        "status": "completed",
+        "artifacts": [
+          "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01/build/stm32f405-qemu.elf"
+        ],
+        "sizeBytes": 11084,
+        "modifiedAt": "2026-07-25T09:57:26Z"
+      }
+    },
+    "stdoutJson": {
+      "ok": true,
+      "action": "hwpod-cli.invoke",
+      "status": "completed",
+      "results": [
+        {
+          "ok": true,
+          "op": "debug.build",
+          "opId": "op_01_debug_build",
+          "output": {
+            "ok": true,
+            "op": "debug.build",
+            "cwd": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01",
+            "stderr": "",
+            "stdout": "{\"ok\":true,\"action\":\"build\",\"status\":\"completed\",\"artifact\":\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01/build/stm32f405-qemu.elf\",\"sizeBytes\":11084,\"modifiedAt\":\"2026-07-25T09:57:26Z\",\"command\":[\"arm-none-eabi-gcc\",\"-mcpu=cortex-m4\",\"-mthumb\",\"-ffreestanding\",\"-O0\",\"-fdata-sections\",\"-ffunction-sections\",\"--specs=nosys.specs\",\"-DARM_MATH_CM4\",\"-DARM_MATH_DSP\",\"-Isrc\",\"-Ithird_party/Arm-2D/Library/Include\",\"-Ithird_party/CMSIS-DSP/Include\",\"-Ithird_party/CMSIS-DSP/PrivateInclude\",\"-Ithird_party/CMSIS_5/CMSIS/Core/Include\",\"-Wl,--gc-sections\",\"-Wl,-Map=/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01/build/stm32f405-qemu.map\",\"-T\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01/linker.ld\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01/src/startup.S\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01/src/main.c\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01/src/demo_glue.c\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01/third_party/Arm-2D/Library/Source/arm_2d.c\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01/third_party/CMSIS-DSP/Source/BasicMathFunctions/arm_add_f32.c\",\"-o\",\"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01/build/stm32f405-qemu.elf\"]}\n",
+            "command": [
+              "scripts/build"
+            ],
+            "exitCode": 0,
+            "elapsedMs": 401,
+            "bindingSource": "hwpod-node-ops.command"
+          },
+          "status": "completed"
+        }
+      ]
+    }
+  },
+  "runId": "run_embdagentbench_arm2d_l1_20260725_gitbundle01",
+  "apiUrl": "http://127.0.0.1:6681",
+  "caseId": "d601-vm-stm32f405-qemu-arm2d-integration",
+  "replay": {
+    "source": "archived-hwpod-operation-observations",
+    "planMode": "compile-only",
+    "actionIds": [
+      "validation_01_build"
+    ],
+    "operationIds": [
+      "op_01_debug_build"
+    ],
+    "relationships": [],
+    "observationIds": [],
+    "contractVersion": "hwpod-case-validation-replay-v1"
+  },
+  "status": "recorded",
+  "subject": {
+    "setup": {
+      "nodeId": "node-d601-vm-hwpod-qemu",
+      "planId": "run_embdagentbench_arm2d_l1_20260725_gitbundle01:prepare:v1:subject-prepare",
+      "stderr": "Preparing worktree (detached HEAD f909cda)",
+      "stdout": "HEAD is now at f909cda feat: add full QEMU rebuild operation\nf909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9",
+      "exitCode": 0,
+      "operation": {
+        "ops": [
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_01_subject_commit",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_02_subject_worktree_add",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_03_subject_worktree_head",
+            "status": "completed"
+          }
+        ],
+        "intent": "cmd.run",
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "planId": "run_embdagentbench_arm2d_l1_20260725_gitbundle01:prepare:v1:subject-prepare",
+        "hwpodId": "d601-vm-stm32f405-qemu",
+        "contractVersion": "hwpod-node-ops-v1"
+      },
+      "httpStatus": 200
+    },
+    "subdir": "",
+    "commitId": "f909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9",
+    "worktreePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01",
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_workspace",
+    "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    }
+  },
+  "warnings": {},
+  "agentDiff": {
+    "diffStat": "scripts/hwpod-qemu-cli.py | 13 ++++++++++---\n src/main.c                |  2 ++\n 2 files changed, 12 insertions(+), 3 deletions(-)\n/dev/null => THIRD_PARTY_PROVENANCE.md | 9 +++++++++\n 1 file changed, 9 insertions(+)\n/dev/null => src/arm_2d_cfg.h | 12 ++++++++++++\n 1 file changed, 12 insertions(+)\n/dev/null => src/arm_2d_user_arch_port.h | 11 +++++++++++\n 1 file changed, 11 insertions(+)\n/dev/null => src/demo_glue.c | 11 +++++++++++\n 1 file changed, 11 insertions(+)\n/dev/null => src/demo_glue.h | 4 ++++\n 1 file changed, 4 insertions(+)",
+    "requests": [
+      {
+        "label": "status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 175
+      },
+      {
+        "label": "diff-stat",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 130
+      },
+      {
+        "label": "diff-patch",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 1959
+      },
+      {
+        "label": "submodule-status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-ls-files",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 166
+      },
+      {
+        "label": "untracked-file-metadata",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:THIRD_PARTY_PROVENANCE.md",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 85
+      },
+      {
+        "label": "untracked-diff-patch:THIRD_PARTY_PROVENANCE.md",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 1033
+      },
+      {
+        "label": "untracked-diff-stat:src/arm_2d_cfg.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 81
+      },
+      {
+        "label": "untracked-diff-patch:src/arm_2d_cfg.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 554
+      },
+      {
+        "label": "untracked-diff-stat:src/arm_2d_user_arch_port.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 91
+      },
+      {
+        "label": "untracked-diff-patch:src/arm_2d_user_arch_port.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 415
+      },
+      {
+        "label": "untracked-diff-stat:src/demo_glue.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 79
+      },
+      {
+        "label": "untracked-diff-patch:src/demo_glue.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 386
+      },
+      {
+        "label": "untracked-diff-stat:src/demo_glue.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 70
+      },
+      {
+        "label": "untracked-diff-patch:src/demo_glue.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 222
+      },
+      {
+        "label": "untracked-diff-stat:third_party/Arm-2D",
+        "stderr": "error: Could not access 'third_party/Arm-2D/null'",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/Arm-2D",
+        "stderr": "error: Could not access 'third_party/Arm-2D/null'",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/CMSIS-DSP",
+        "stderr": "error: Could not access 'third_party/CMSIS-DSP/null'",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/CMSIS-DSP",
+        "stderr": "error: Could not access 'third_party/CMSIS-DSP/null'",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:third_party/CMSIS_5",
+        "stderr": "error: Could not access 'third_party/CMSIS_5/null'",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-patch:third_party/CMSIS_5",
+        "stderr": "error: Could not access 'third_party/CMSIS_5/null'",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "source-root-baseline",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      },
+      {
+        "label": "source-root-after-prepare",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      },
+      {
+        "label": "source-root-after-agent",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      }
+    ],
+    "statusShort": "M scripts/hwpod-qemu-cli.py\n M src/main.c\n?? THIRD_PARTY_PROVENANCE.md\n?? src/arm_2d_cfg.h\n?? src/arm_2d_user_arch_port.h\n?? src/demo_glue.c\n?? src/demo_glue.h\n?? third_party/",
+    "diffPatchPath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_l1_20260725_gitbundle01/agent-diff.patch",
+    "diffCollection": {
+      "config": {
+        "ignore": [],
+        "include": []
+      },
+      "omitted": [],
+      "tracked": {
+        "paths": [
+          "scripts/hwpod-qemu-cli.py",
+          "src/main.c"
+        ],
+        "diffStat": "scripts/hwpod-qemu-cli.py | 13 ++++++++++---\n src/main.c                |  2 ++\n 2 files changed, 12 insertions(+), 3 deletions(-)",
+        "diffPatchSha256": "30e29ebc669308d97d4c07c6b7c2fe786150b206ceab7bc645b398616019a542"
+      },
+      "included": [
+        {
+          "path": "THIRD_PARTY_PROVENANCE.md",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "src/arm_2d_cfg.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "src/arm_2d_user_arch_port.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "src/demo_glue.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "src/demo_glue.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/CMSIS-DSP",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/CMSIS_5",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        }
+      ],
+      "untracked": {
+        "total": 8,
+        "omitted": 0,
+        "included": 8
+      },
+      "submodules": [],
+      "contractVersion": "hwpod-case-run-diff-collection-v1"
+    },
+    "diffPatchSha256": "225c413648a0409baac4d14e4f8150c7638a622a5f9bed97397a18fcb71dd3a1",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterAgent": {
+      "label": "after-agent",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootStatusShort": "?? .worktree/",
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootChangedAfterAgent": false,
+    "sourceRootChangedAfterPrepare": false
+  },
+  "agentTask": {
+    "model": "gpt-5.6-luna",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 1800000,
+    "workspace": "subjectWorktree",
+    "constraints": [
+      "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
+      "只能修改隔离 subject worktree，不得修改 case registry、HWLAB repo 或原 subject checkout",
+      "资源与 skill 必须来自 AgentRun gitbundle，不得使用 workspaceFiles、seed files、host skill 或 ConfigMap fallback",
+      "必须使用 ARM-software/Arm-2D 的真实 upstream v1.2.4；禁止 mock、stub、同名 API veneer、兼容子集或自制替代实现",
+      "CMSIS-DSP 必须来自真实 1.14.2 Pack/RTE 或 upstream，并记录 provenance；禁止手写 arm_math.h 或最小 stub",
+      "第三方 upstream 文件必须由 HWPOD cmd/git/archive/已验证缓存物化，不得通过 apply-patch 手工粘贴或重写",
+      "project-local 文本修改使用 HWPOD workspace apply-patch；禁止退化为 runner 直接文件操作",
+      "只做 compile-only，不启动 QEMU，不读取 UART",
+      "结果只记录 raw trace/evidence，autoEvaluation=false"
+    ],
+    "promptSha256": "a288f00fe2bf87e0a80b90e166732c7f9a3ed1f21b847443846edada22badc85",
+    "pollIntervalMs": 2000,
+    "providerProfile": "gpt.pika",
+    "reasoningEffort": "low"
+  },
+  "artifacts": [
+    "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01/build/stm32f405-qemu.elf"
+  ],
+  "decisions": {
+    "reason": "CaseRun records Agent final independently and projects only authoritative HWPOD post-validation observations",
+    "autoEvaluation": false,
+    "runnerPostAgentCompileCheck": "recorded"
+  },
+  "agentFinal": {
+    "source": "agentrun-result",
+    "present": true,
+    "timedOut": false,
+    "naturalEnd": true,
+    "stageStatus": "completed",
+    "text": "已完成 D601 HWPOD 隔离 worktree 中的真实 Arm-2D/CMSIS-DSP 编译集成。\n\n- Arm-2D `v1.2.4`：`b73ec43b...`\n- CMSIS-DSP `v1.14.2`：`43aa2a9e...`\n- CMSIS Core `5.9.0`：`2b7495b8...`\n- 构建 operation：`hwpod_plan_acc874d5-5aba-471e-b8e5-4f136b8bf74d`\n- Return code：`0`\n- Warning：`0`\n- Artifact：`build/stm32f405-qemu.elf`\n- ELF 大小：`11084` bytes\n- SHA-256：`d1037dd5ce78a3c2f34d67297afc05308ee4f78b980cca11351dd92a9ffc81bc`\n\n已通过 HWPOD 完成源码读取、upstream 克隆、项目修改和编译验证；未下载、未启动 QEMU、未读取 UART。Provenance 记录位于 `THIRD_PARTY_PROVENANCE.md`。",
+    "textChars": 500,
+    "status": "completed",
+    "traceId": "trc_harnessrl_19f87f7a41551f3f9d8d212d"
+  },
+  "agentTrace": {
+    "traceId": "trc_harnessrl_19f87f7a41551f3f9d8d212d",
+    "status": "completed",
+    "httpStatus": 200,
+    "source": "hwlab-cli.client.agent.trace",
+    "lookup": {
+      "source": "hwlab-cli.client.agent",
+      "strategy": "id_plus_existing_cli",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_19f87f7a41551f3f9d8d212d",
+      "sessionId": "",
+      "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-integration_run-embdagentbench-arm2d-l1-20260725-gitbundle01",
+      "threadId": "",
+      "commands": {
+        "result": "hwlab-cli client agent result trc_harnessrl_19f87f7a41551f3f9d8d212d",
+        "trace": "hwlab-cli client agent trace trc_harnessrl_19f87f7a41551f3f9d8d212d --render web",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_19f87f7a41551f3f9d8d212d --render web --full",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_19f87f7a41551f3f9d8d212d"
+      }
+    },
+    "sourceEventCount": 273,
+    "renderedRowCount": 72,
+    "commandCount": 57,
+    "hwpodCommandCount": 41,
+    "hwpodBuildCommandCount": 6,
+    "keilJobCandidates": [],
+    "terminalStatus": "completed",
+    "commands": [
+      {
+        "source": "trace-row",
+        "seq": 4517,
+        "rowId": "tool:exec-4ea9cb70-a3af-426b-b211-54978e73ec42",
+        "header": "09:47:56",
+        "command": "bun tools/hwpod-cli.ts build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=234",
+        "normalizedCommand": "bun tools/hwpod-cli.ts build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=234",
+        "bodyPreview": "bun tools/hwpod-cli.ts build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=234\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4465,
+        "rowId": "tool:exec-925812e5-4124-49e3-b091-1a20f3040947",
+        "header": "09:46:24",
+        "command": "rg --files .agents/skills | rg '/(arm2d-skill|hwpod-cli|hwpod-ctl|hwlab-agent-runtime)/SKILL.md\"'$'\"'\noutput:\ncommandExecution started: /bin/bash -lc \"rg --files .agents/skills | rg '/(arm2d-skill|hwpod-cli|hwpod-ctl|hwlab-agent-runtime)/SKILL.md\"'$'\"'\"\noutputBytes=143",
+        "normalizedCommand": "rg --files .agents/skills | rg '/(arm2d-skill|hwpod-cli|hwpod-ctl|hwlab-agent-runtime)/SKILL.md\"'$'\"' output: commandExecution started: /bin/bash -lc \"rg --files .agents/skills | rg '/(arm2d-skill|hwpod-cli|hwpod-ctl|hwlab-agent-runtime)/SKILL.md\"'$'\"'\" outputBytes=143",
+        "bodyPreview": "rg --files .agents/skills | rg '/(arm2d-skill|hwpod-cli|hwpod-ctl|hwlab-agent-runtime)/SKILL.md\"'$'\"'\noutput:\ncommandExecution started: /bin/bash -lc \"rg --files .agents/skills | rg '/(arm2d-skill|hwpod-cli|hwpod-ctl|hwlab-agent-runtime)/SKILL.md\"'$'\"'\"\noutputBytes=143\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4467,
+        "rowId": "tool:exec-de5c9b10-7a81-49f8-8112-d18b9efa2a5d",
+        "header": "09:46:24",
+        "command": "rg --files tools | head -40\noutput:\ncommandExecution started: /bin/bash -lc 'rg --files tools | head -40'\noutputBytes=69",
+        "normalizedCommand": "rg --files tools | head -40 output: commandExecution started: /bin/bash -lc 'rg --files tools | head -40' outputBytes=69",
+        "bodyPreview": "rg --files tools | head -40\noutput:\ncommandExecution started: /bin/bash -lc 'rg --files tools | head -40'\noutputBytes=69\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4469,
+        "rowId": "tool:exec-76d8d4d8-1d49-4c25-9f4a-7829b8adbbfc",
+        "header": "09:46:24",
+        "command": "command -v hwpod; command -v hwpod-ctl; command -v hwpod-compiler\noutput:\ncommandExecution started: /bin/bash -lc 'command -v hwpod; command -v hwpod-ctl; command -v hwpod-compiler'\noutputBytes=107",
+        "normalizedCommand": "command -v hwpod; command -v hwpod-ctl; command -v hwpod-compiler output: commandExecution started: /bin/bash -lc 'command -v hwpod; command -v hwpod-ctl; command -v hwpod-compiler' outputBytes=107",
+        "bodyPreview": "command -v hwpod; command -v hwpod-ctl; command -v hwpod-compiler\noutput:\ncommandExecution started: /bin/bash -lc 'command -v hwpod; command -v hwpod-ctl; command -v hwpod-compiler'\noutputBytes=107\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4471,
+        "rowId": "tool:exec-49644e31-eefc-41d5-ade8-61b5e19462fc",
+        "header": "09:46:36",
+        "command": "sed -n '1,220p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/hwpod-cli/SKILL.md; sed -n '1,180p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/hwpod-ctl/SKILL.md\noutput:\ncommandExecution started: /bin/bash -lc \"sed -n '1,220p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/hwpod-cli/SKILL.md; sed -n '1,180p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/hwpod-ctl/SKILL.md\"\noutputBytes=248",
+        "normalizedCommand": "sed -n '1,220p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/hwpod-cli/SKILL.md; sed -n '1,180p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/hwpod-ctl/SKILL.md output: commandExecution started: /bin/bash -lc \"sed -n '1,220p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/hwpod-cli/SKILL.md; sed -n '1,180p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/hwpod-ctl/SKILL.md\" outputBytes=248",
+        "bodyPreview": "sed -n '1,220p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/hwpod-cli/SKILL.md; sed -n '1,180p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/hwpod-ctl/SKILL.md\noutput:\ncommandExecution started: /bin/bash -lc \"sed -n '1,220p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/hwpod-cli/SKILL.md; sed -n '1,180p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/hwpod-ctl/SKILL.md\"\noutputBytes=248\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4473,
+        "rowId": "tool:exec-42f6b381-2bb5-4cef-aa21-c94913786e3d",
+        "header": "09:46:36",
+        "command": "\"printf '%s\\n' \"\"'$AGENTRUN_SKILLS_DIRS\"; ls -la'\noutput:\ncommandExecution started: /bin/bash -lc \"printf '%s\\\\n' \\\"\"'$AGENTRUN_SKILLS_DIRS\"; ls -la'\noutputBytes=91",
+        "normalizedCommand": "printf '%s\\n' \"\"'$AGENTRUN_SKILLS_DIRS\"; ls -la' output: commandExecution started: /bin/bash -lc \"printf '%s\\\\n' \\\"\"'$AGENTRUN_SKILLS_DIRS\"; ls -la' outputBytes=91",
+        "bodyPreview": "\"printf '%s\\n' \"\"'$AGENTRUN_SKILLS_DIRS\"; ls -la'\noutput:\ncommandExecution started: /bin/bash -lc \"printf '%s\\\\n' \\\"\"'$AGENTRUN_SKILLS_DIRS\"; ls -la'\noutputBytes=91\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4475,
+        "rowId": "tool:exec-ad2fc809-1bfa-47bc-b77e-7a5200565b2f",
+        "header": "09:46:37",
+        "command": "sed -n '1,240p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/arm2d-skill/SKILL.md\noutput:\ncommandExecution started: /bin/bash -lc \"sed -n '1,240p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/arm2d-skill/SKILL.md\"\noutputBytes=146",
+        "normalizedCommand": "sed -n '1,240p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/arm2d-skill/SKILL.md output: commandExecution started: /bin/bash -lc \"sed -n '1,240p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/arm2d-skill/SKILL.md\" outputBytes=146",
+        "bodyPreview": "sed -n '1,240p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/arm2d-skill/SKILL.md\noutput:\ncommandExecution started: /bin/bash -lc \"sed -n '1,240p' /root/.gitbundle/agentrun/workspace-60c7fb2cde091684/.agents/skills/arm2d-skill/SKILL.md\"\noutputBytes=146\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4478,
+        "rowId": "tool:exec-e9683c74-1e54-4e31-a607-38811b90bc98",
+        "header": "09:46:50",
+        "command": "tools/hwpod-ctl spec validate --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"tools/hwpod-ctl spec validate --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=235",
+        "normalizedCommand": "tools/hwpod-ctl spec validate --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"tools/hwpod-ctl spec validate --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=235",
+        "bodyPreview": "tools/hwpod-ctl spec validate --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"tools/hwpod-ctl spec validate --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=235\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4479,
+        "rowId": "tool:exec-acd08538-a948-40d8-b617-8659e2957e9e",
+        "header": "09:46:52",
+        "command": "tools/hwpod inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"tools/hwpod inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=225",
+        "normalizedCommand": "tools/hwpod inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"tools/hwpod inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=225",
+        "bodyPreview": "tools/hwpod inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"tools/hwpod inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=225\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4482,
+        "rowId": "tool:exec-b316b72d-ca95-4986-9a6d-4398e4269f0c",
+        "header": "09:46:54",
+        "command": "tools/hwpod workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"tools/hwpod workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=230",
+        "normalizedCommand": "tools/hwpod workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"tools/hwpod workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=230",
+        "bodyPreview": "tools/hwpod workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"tools/hwpod workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=230\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4484,
+        "rowId": "tool:exec-7f48453c-c4ca-4e79-9f0d-a06d89a856ef",
+        "header": "09:47:03",
+        "command": "ls -l tools/hwpod tools/hwpod-ctl tools/hwpod-compiler; sed -n '1,80p' tools/hwpod\noutput:\ncommandExecution started: /bin/bash -lc \"ls -l tools/hwpod tools/hwpod-ctl tools/hwpod-compiler; sed -n '1,80p' tools/hwpod\"\noutputBytes=124",
+        "normalizedCommand": "ls -l tools/hwpod tools/hwpod-ctl tools/hwpod-compiler; sed -n '1,80p' tools/hwpod output: commandExecution started: /bin/bash -lc \"ls -l tools/hwpod tools/hwpod-ctl tools/hwpod-compiler; sed -n '1,80p' tools/hwpod\" outputBytes=124",
+        "bodyPreview": "ls -l tools/hwpod tools/hwpod-ctl tools/hwpod-compiler; sed -n '1,80p' tools/hwpod\noutput:\ncommandExecution started: /bin/bash -lc \"ls -l tools/hwpod tools/hwpod-ctl tools/hwpod-compiler; sed -n '1,80p' tools/hwpod\"\noutputBytes=124\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4676,
+        "rowId": "tool:exec-680e059d-bd5a-4a6d-b4b1-3fd17789e127",
+        "header": "09:55:37",
+        "command": "bun tools/hwpod-cli.ts workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' --reason \"Link ARM GCC nosys and runtime libraries\" --patch-content '*** Begin Patch\n*** Update File: scripts/hwpod-qemu-cli.py\n@@\n-        \"-O0\", \"-fdata-sections\", \"-ffunction-sections\", \"-nostdlib\",\n+        \"-O0\", \"-fdata-sections\", \"-ffunction-sections\",\n+        \"--specs=nosys.specs\",\n*** End Patch'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' --reason \\\"Link ARM GCC nosys and runtime libraries\\\" --patch-content '*** Begin Patch\n*** Update File: scripts/hwpod-qemu-cli.py\n@@\n-        \\\"-O0\\\", \\\"-fdata-sections\\\", \\\"-ffunction-sections\\\", \\\"-nostdlib\\\",\n+        \\\"-O0\n... clipped ...",
+        "normalizedCommand": "bun tools/hwpod-cli.ts workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' --reason \"Link ARM GCC nosys and runtime libraries\" --patch-content '*** Begin Patch *** Update File: scripts/hwpod-qemu-cli.py @@ - \"-O0\", \"-fdata-sections\", \"-ffunction-sections\", \"-nostdlib\", + \"-O0\", \"-fdata-sections\", \"-ffunction-sections\", + \"--specs=nosys.specs\", *** End Patch' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' --reason \\\"Link ARM GCC nosys and runtime libraries\\\" --patch-content '*** Begin Patch *** Update File: scripts/hwpod-qemu-cli.py @@ - \\\"-O0\\\", \\\"-fdata-sections\\\", \\\"-ffunction-sections\\\", \\\"-nostdlib\\\", + \\\"-O0\\\", \\\"-fdata-sections\\\", \\\"-ffuncti\n... clipped ...",
+        "bodyPreview": "bun tools/hwpod-cli.ts workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' --reason \"Link ARM GCC nosys and runtime libraries\" --patch-content '*** Begin Patch\n*** Update File: scripts/hwpod-qemu-cli.py\n@@\n-        \"-O0\", \"-fdata-sections\", \"-ffunction-sections\", \"-nostdlib\",\n+        \"-O0\", \"-fdata-sections\", \"-ffunction-sections\",\n+        \"--specs=nosys.specs\",\n*** End Patch'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' --reason \\\"Link ARM GCC nosys and runtime libraries\\\" --patch-content '*** Begin Patch\n*** Update File: scripts/hwpod-qemu-cli.py\n@@\n-        \\\"-O0\\\", \\\"-fdata-sections\\\", \\\"-ffunction-sections\\\", \\\"-nostdlib\\\",\n+        \\\"-O0\\\", \\\"-fdata-sections\\\", \\\"-ffunction-sections\\\",\n+        \\\"--specs=nosys.specs\\\",\n*** End Patch'\"\noutputBytes=575\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4679,
+        "rowId": "tool:exec-d671ca99-ea85-4390-be6b-5452b4ddbe6e",
+        "header": "09:55:53",
+        "command": "bun tools/hwpod-cli.ts build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=234",
+        "normalizedCommand": "bun tools/hwpod-cli.ts build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=234",
+        "bodyPreview": "bun tools/hwpod-cli.ts build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=234\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4683,
+        "rowId": "tool:exec-a71364a0-ec0d-4b95-830e-2e7f7f868987",
+        "header": "09:56:09",
+        "command": "bun tools/hwpod-cli.ts workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' --reason \"Record third-party provenance and compiled file manifest\" --patch-content '*** Begin Patch\n*** Add File: THIRD_PARTY_PROVENANCE.md\n+# Third-party provenance\n+\n+- Arm-2D: https://github.com/ARM-software/Arm-2D.git, tag v1.2.4, commit b73ec43b6567feffe57642861e8b5eb083788011.\n+  Compiled upstream files: Library/Source/arm_2d.c (which includes the upstream core and tile units), Library/Include/**.\n+- CMSIS-DSP: https://github.com/ARM-software/CMSIS-DSP.git, tag v1.14.2, commit 43aa2a9e7fc080e0d7541e9f5e083258403ac9ee.\n+  Compiled upstream file: Source/BasicMathFunctions/arm_add_f32.c; headers from Include/** and PrivateInclude/**.\n+- CMSIS Core: https://github.com/ARM-software/CMSIS_5.git, tag 5.9.0, used for Core/Include/cmsis_compiler.h and related compiler headers.\n+\n+Up\n... clipped ...",
+        "normalizedCommand": "bun tools/hwpod-cli.ts workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' --reason \"Record third-party provenance and compiled file manifest\" --patch-content '*** Begin Patch *** Add File: THIRD_PARTY_PROVENANCE.md +# Third-party provenance + +- Arm-2D: https://github.com/ARM-software/Arm-2D.git, tag v1.2.4, commit b73ec43b6567feffe57642861e8b5eb083788011. + Compiled upstream files: Library/Source/arm_2d.c (which includes the upstream core and tile units), Library/Include/**. +- CMSIS-DSP: https://github.com/ARM-software/CMSIS-DSP.git, tag v1.14.2, commit 43aa2a9e7fc080e0d7541e9f5e083258403ac9ee. + Compiled upstream file: Source/BasicMathFunctions/arm_add_f32.c; headers from Include/** and PrivateInclude/**. +- CMSIS Core: https://github.com/ARM-software/CMSIS_5.git, tag 5.9.0, used for Core/Include/cmsis_compiler.h and related compiler headers. + +Upst\n... clipped ...",
+        "bodyPreview": "bun tools/hwpod-cli.ts workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' --reason \"Record third-party provenance and compiled file manifest\" --patch-content '*** Begin Patch\n*** Add File: THIRD_PARTY_PROVENANCE.md\n+# Third-party provenance\n+\n+- Arm-2D: https://github.com/ARM-software/Arm-2D.git, tag v1.2.4, commit b73ec43b6567feffe57642861e8b5eb083788011.\n+  Compiled upstream files: Library/Source/arm_2d.c (which includes the upstream core and tile units), Library/Include/**.\n+- CMSIS-DSP: https://github.com/ARM-software/CMSIS-DSP.git, tag v1.14.2, commit 43aa2a9e7fc080e0d7541e9f5e083258403ac9ee.\n+  Compiled upstream file: Source/BasicMathFunctions/arm_add_f32.c; headers from Include/** and PrivateInclude/**.\n+- CMSIS Core: https://github.com/ARM-software/CMSIS_5.git, tag 5.9.0, used for Core/Include/cmsis_compiler.h and related compiler headers.\n+\n+Upstream repositories remain unmodified. Project-local configuration, display-independent framebuffer/demo glue, and build integration are under src/ and scripts/.\n*** End Patch'\noutput:\ncommandExecutio\n... clipped ..."
+      },
+      {
+        "source": "trace-row",
+        "seq": 4686,
+        "rowId": "tool:exec-6fdc4061-9aa1-4b84-a88a-0205708238ad",
+        "header": "09:56:21",
+        "command": "bun tools/hwpod-cli.ts cmd git -C third_party/Arm-2D rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd git -C third_party/Arm-2D rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=273",
+        "normalizedCommand": "bun tools/hwpod-cli.ts cmd git -C third_party/Arm-2D rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd git -C third_party/Arm-2D rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=273",
+        "bodyPreview": "bun tools/hwpod-cli.ts cmd git -C third_party/Arm-2D rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd git -C third_party/Arm-2D rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=273\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4689,
+        "rowId": "tool:exec-e3eade1b-7928-4c25-8368-2ceb00a525ed",
+        "header": "09:56:22",
+        "command": "bun tools/hwpod-cli.ts cmd git -C third_party/CMSIS-DSP rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd git -C third_party/CMSIS-DSP rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=276",
+        "normalizedCommand": "bun tools/hwpod-cli.ts cmd git -C third_party/CMSIS-DSP rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd git -C third_party/CMSIS-DSP rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=276",
+        "bodyPreview": "bun tools/hwpod-cli.ts cmd git -C third_party/CMSIS-DSP rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd git -C third_party/CMSIS-DSP rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=276\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4692,
+        "rowId": "tool:exec-c07a7f07-13e7-45d6-b605-628e7475a3cb",
+        "header": "09:56:23",
+        "command": "bun tools/hwpod-cli.ts cmd git -C third_party/CMSIS_5 rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd git -C third_party/CMSIS_5 rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=274",
+        "normalizedCommand": "bun tools/hwpod-cli.ts cmd git -C third_party/CMSIS_5 rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd git -C third_party/CMSIS_5 rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=274",
+        "bodyPreview": "bun tools/hwpod-cli.ts cmd git -C third_party/CMSIS_5 rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd git -C third_party/CMSIS_5 rev-parse HEAD --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=274\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4695,
+        "rowId": "tool:exec-ac6349cf-783f-4696-8dfd-47d6e5ac023a",
+        "header": "09:56:24",
+        "command": "bun tools/hwpod-cli.ts cmd sha256sum build/stm32f405-qemu.elf --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd sha256sum build/stm32f405-qemu.elf --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=267",
+        "normalizedCommand": "bun tools/hwpod-cli.ts cmd sha256sum build/stm32f405-qemu.elf --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd sha256sum build/stm32f405-qemu.elf --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=267",
+        "bodyPreview": "bun tools/hwpod-cli.ts cmd sha256sum build/stm32f405-qemu.elf --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd sha256sum build/stm32f405-qemu.elf --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=267\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4698,
+        "rowId": "tool:exec-0df78287-cf5f-48e4-8364-f52c11d9f91a",
+        "header": "09:56:25",
+        "command": "bun tools/hwpod-cli.ts cmd git status --short --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd git status --short --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=251",
+        "normalizedCommand": "bun tools/hwpod-cli.ts cmd git status --short --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd git status --short --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=251",
+        "bodyPreview": "bun tools/hwpod-cli.ts cmd git status --short --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd git status --short --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=251\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4701,
+        "rowId": "tool:exec-7e9421b9-f294-456c-8936-5787322552d2",
+        "header": "09:56:26",
+        "command": "bun tools/hwpod-cli.ts cmd git diff --stat --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd git diff --stat --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=248",
+        "normalizedCommand": "bun tools/hwpod-cli.ts cmd git diff --stat --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd git diff --stat --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=248",
+        "bodyPreview": "bun tools/hwpod-cli.ts cmd git diff --stat --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts cmd git diff --stat --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=248\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4704,
+        "rowId": "tool:exec-f87b3977-7d3e-4229-a53b-95e79273d5f5",
+        "header": "09:56:38",
+        "command": "bun tools/hwpod-cli.ts workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' --reason \"Complete CMSIS Core provenance commit\" --patch-content '*** Begin Patch\n*** Update File: THIRD_PARTY_PROVENANCE.md\n@@\n-- CMSIS Core: https://github.com/ARM-software/CMSIS_5.git, tag 5.9.0, used for Core/Include/cmsis_compiler.h and related compiler headers.\n+- CMSIS Core: https://github.com/ARM-software/CMSIS_5.git, tag 5.9.0, commit 2b7495b8535bdcb306dac29b9ded4cfb679d7e5c, used for Core/Include/cmsis_compiler.h and related compiler headers.\n*** End Patch'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' --reason \\\"Complete CMSIS Core provenance commit\\\" --patch-co\n... clipped ...",
+        "normalizedCommand": "bun tools/hwpod-cli.ts workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' --reason \"Complete CMSIS Core provenance commit\" --patch-content '*** Begin Patch *** Update File: THIRD_PARTY_PROVENANCE.md @@ -- CMSIS Core: https://github.com/ARM-software/CMSIS_5.git, tag 5.9.0, used for Core/Include/cmsis_compiler.h and related compiler headers. +- CMSIS Core: https://github.com/ARM-software/CMSIS_5.git, tag 5.9.0, commit 2b7495b8535bdcb306dac29b9ded4cfb679d7e5c, used for Core/Include/cmsis_compiler.h and related compiler headers. *** End Patch' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' --reason \\\"Complete CMSIS Core provenance commit\\\" --patch-co\n... clipped ...",
+        "bodyPreview": "bun tools/hwpod-cli.ts workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' --reason \"Complete CMSIS Core provenance commit\" --patch-content '*** Begin Patch\n*** Update File: THIRD_PARTY_PROVENANCE.md\n@@\n-- CMSIS Core: https://github.com/ARM-software/CMSIS_5.git, tag 5.9.0, used for Core/Include/cmsis_compiler.h and related compiler headers.\n+- CMSIS Core: https://github.com/ARM-software/CMSIS_5.git, tag 5.9.0, commit 2b7495b8535bdcb306dac29b9ded4cfb679d7e5c, used for Core/Include/cmsis_compiler.h and related compiler headers.\n*** End Patch'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace apply-patch --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' --reason \\\"Complete CMSIS Core provenance commit\\\" --patch-content '*** Begin Patch\n*** Update File: THIRD_PARTY_PROVENANCE.md\n@@\n-- CMSIS Core: https://github.com/ARM-software/CMSIS_5.git, tag 5.9.0, used for Core/Include/cmsis_compiler.h and related compiler \n... clipped ..."
+      },
+      {
+        "source": "trace-row",
+        "seq": 4490,
+        "rowId": "tool:exec-03b849fd-c55d-4842-a0c6-16300ff1a984",
+        "header": "09:47:18",
+        "command": "bun tools/hwpod-cli.ts inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=236",
+        "normalizedCommand": "bun tools/hwpod-cli.ts inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=236",
+        "bodyPreview": "bun tools/hwpod-cli.ts inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=236\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4491,
+        "rowId": "tool:exec-720a8f9f-9673-4073-8a45-3189c5d6dead",
+        "header": "09:47:18",
+        "command": "bun tools/hwpod-cli.ts workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=241",
+        "normalizedCommand": "bun tools/hwpod-cli.ts workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=241",
+        "bodyPreview": "bun tools/hwpod-cli.ts workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=241\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4498,
+        "rowId": "tool:exec-519b7b71-6649-4b57-85d8-f1297207e68d",
+        "header": "09:47:30",
+        "command": "bun tools/hwpod-cli.ts workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=241",
+        "normalizedCommand": "bun tools/hwpod-cli.ts workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=241",
+        "bodyPreview": "bun tools/hwpod-cli.ts workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=241\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4502,
+        "rowId": "tool:exec-e59c6375-62c7-4ca9-9b2a-577c62be88e2",
+        "header": "09:47:43",
+        "command": "bun tools/hwpod-cli.ts workspace cat src/main.c --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace cat src/main.c --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=253",
+        "normalizedCommand": "bun tools/hwpod-cli.ts workspace cat src/main.c --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace cat src/main.c --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=253",
+        "bodyPreview": "bun tools/hwpod-cli.ts workspace cat src/main.c --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace cat src/main.c --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=253\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4505,
+        "rowId": "tool:exec-5ad7a691-30ff-469e-9d84-55e7db6cd778",
+        "header": "09:47:44",
+        "command": "bun tools/hwpod-cli.ts workspace cat scripts/hwpod-qemu-cli.py --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace cat scripts/hwpod-qemu-cli.py --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=268",
+        "normalizedCommand": "bun tools/hwpod-cli.ts workspace cat scripts/hwpod-qemu-cli.py --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace cat scripts/hwpod-qemu-cli.py --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=268",
+        "bodyPreview": "bun tools/hwpod-cli.ts workspace cat scripts/hwpod-qemu-cli.py --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace cat scripts/hwpod-qemu-cli.py --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=268\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4508,
+        "rowId": "tool:exec-c8ca6fc9-3d12-41e0-9184-432fd8c61480",
+        "header": "09:47:45",
+        "command": "bun tools/hwpod-cli.ts workspace cat scripts/build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace cat scripts/build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=256",
+        "normalizedCommand": "bun tools/hwpod-cli.ts workspace cat scripts/build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace cat scripts/build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=256",
+        "bodyPreview": "bun tools/hwpod-cli.ts workspace cat scripts/build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace cat scripts/build --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=256\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4511,
+        "rowId": "tool:exec-1b4e4f0e-d464-4ee0-8fba-27f05db44a5e",
+        "header": "09:47:46",
+        "command": "bun tools/hwpod-cli.ts workspace cat linker.ld --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace cat linker.ld --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=252",
+        "normalizedCommand": "bun tools/hwpod-cli.ts workspace cat linker.ld --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace cat linker.ld --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=252",
+        "bodyPreview": "bun tools/hwpod-cli.ts workspace cat linker.ld --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace cat linker.ld --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=252\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4514,
+        "rowId": "tool:exec-aea6f72f-77c1-410f-8f1c-26261cf80309",
+        "header": "09:47:47",
+        "command": "bun tools/hwpod-cli.ts workspace cat hwpod-spec.yaml --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace cat hwpod-spec.yaml --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=258",
+        "normalizedCommand": "bun tools/hwpod-cli.ts workspace cat hwpod-spec.yaml --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01' output: commandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace cat hwpod-spec.yaml --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\" outputBytes=258",
+        "bodyPreview": "bun tools/hwpod-cli.ts workspace cat hwpod-spec.yaml --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\noutput:\ncommandExecution started: /bin/bash -lc \"bun tools/hwpod-cli.ts workspace cat hwpod-spec.yaml --hwpod-id d601-vm-stm32f405-qemu --workspace-path '/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01'\"\noutputBytes=258\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 4520,
+        "rowId": "tool:exec-e6cb3d67-93bc-4edb-8db7-e1a35e2498b7",
+        "header": "09:48:12",
+        "command": "bun tools/hwpod-cli.ts --help\noutput:\ncommandExecution started: /bin/bash -lc 'bun tools/hwpod-cli.ts --help'\noutputBytes=71",
+        "normalizedCommand": "bun tools/hwpod-cli.ts --help output: commandExecution started: /bin/bash -lc 'bun tools/hwpod-cli.ts --help' outputBytes=71",
+        "bodyPreview": "bun tools/hwpod-cli.ts --help\noutput:\ncommandExecution started: /bin/bash -lc 'bun tools/hwpod-cli.ts --help'\noutputBytes=71\nexitCode=null"
+      }
+    ]
+  },
+  "observedAt": "2026-07-25T09:57:27.177Z",
+  "validation": {
+    "plan": {
+      "mode": "compile-only",
+      "steps": [
+        {
+          "args": {},
+          "kind": "build",
+          "stage": "post-agent-validation",
+          "actionId": "validation_01_build",
+          "expectedOp": "debug.build"
+        }
+      ],
+      "source": "default-compile-only",
+      "compileOnly": true,
+      "contractVersion": "hwpod-case-validation-plan-v1"
+    },
+    "results": [
+      {
+        "operation": {
+          "ok": true,
+          "op": "debug.build",
+          "kind": "build",
+          "opId": "op_01_debug_build",
+          "stage": "post-agent-validation",
+          "status": "completed",
+          "actionId": "validation_01_build",
+          "expected": {
+            "op": "debug.build",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-stm32f405-qemu",
+            "actionId": "validation_01_build",
+            "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01"
+          },
+          "observed": {
+            "op": "debug.build",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-stm32f405-qemu",
+            "actionId": "op_01_debug_build",
+            "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260725-gitbundle01"
+          },
+          "topology": {
+            "ok": true
+          },
+          "authority": "hwpod-service",
+          "contractVersion": "hwpod-operation-result-v0.3"
+        }
+      }
+    ],
+    "archivePath": "validation-observations.json"
+  },
+  "compileOnly": true,
+  "traceLookup": {
+    "source": "hwlab-cli.client.agent",
+    "baseUrl": "http://127.0.0.1:6677",
+    "traceId": "trc_harnessrl_19f87f7a41551f3f9d8d212d",
+    "commands": {
+      "trace": "hwlab-cli client agent trace trc_harnessrl_19f87f7a41551f3f9d8d212d --render web",
+      "result": "hwlab-cli client agent result trc_harnessrl_19f87f7a41551f3f9d8d212d",
+      "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_19f87f7a41551f3f9d8d212d",
+      "traceFull": "hwlab-cli client agent trace trc_harnessrl_19f87f7a41551f3f9d8d212d --render web --full"
+    },
+    "strategy": "id_plus_existing_cli",
+    "threadId": "",
+    "sessionId": "",
+    "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-integration_run-embdagentbench-arm2d-l1-20260725-gitbundle01"
+  },
+  "autoEvaluation": false,
+  "postValidation": {
+    "source": "case-run-runner-post-agent-compile-check",
+    "boundary": "runner-post-agent-validation",
+    "returnCode": 0
+  },
+  "contractVersion": "hwpod-case-run-evidence-v1"
+}

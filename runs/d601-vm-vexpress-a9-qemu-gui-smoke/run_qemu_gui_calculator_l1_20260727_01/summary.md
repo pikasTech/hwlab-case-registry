@@ -1,0 +1,39 @@
+# HWPOD CaseRun d601-vm-vexpress-a9-qemu-gui-smoke
+
+- runId: run_qemu_gui_calculator_l1_20260727_01
+- status: recorded
+- autoEvaluation: false
+- compileOnly: false
+- subjectRepoLocalPath: /home/ubuntu/workspace/hwpod_qemu_gui_workspace
+- subjectCommitId: 8c992ce11dd7433b67d85414a9f3caa8799e8e2e
+- subjectWorktreePath: /home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-26d50834a0242411
+- agentTraceId: 
+- agentSessionId: 
+- requestedProviderProfile: 
+- resolvedBackendProfile: 
+- model: 
+- infrastructureBackend: 
+- traceLookupStrategy: 
+- traceCommand: 
+- resultCommand: 
+- inspectCommand: 
+- agentTraceCommandCount: 0
+- agentTraceHwpodCommandCount: 0
+- agentTraceHwpodBuildCommandCount: 0
+- agentTerminalStatus: 
+- agentFinalPresent: false
+- agentFinalMissingReason: final-response-not-reported
+- postValidationStatus: 
+- agentReportedBuildWarningCount: 
+- runnerPostValidationWarningCount: 
+- agentToolCallSummaryCount: 
+- agentToolCallStatusCounts: {}
+- agentToolCallExitCodeCounts: {}
+- agentStageCommandCount: 0
+- agentStageKinds: 
+- diffPatchPath: 
+- runnerHwpodSource: case-run-runner-post-agent-compile-check
+- hwpodExitCode: 0
+- jobId: 
+- runnerPostAgentCompileCheck: recorded
+

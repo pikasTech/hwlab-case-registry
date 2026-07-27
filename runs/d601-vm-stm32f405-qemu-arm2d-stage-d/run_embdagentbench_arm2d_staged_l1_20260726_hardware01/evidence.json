@@ -1,0 +1,1172 @@
+{
+  "agent": {
+    "polls": 333,
+    "backend": "gpt-pika",
+    "baseUrl": "http://127.0.0.1:6677",
+    "traceId": "trc_harnessrl_ccd987568ebc36d6dddc1a3d",
+    "timedOut": false,
+    "projectId": "prj_hwpod_workbench",
+    "sessionId": "ses_c95d4982-6d50-44fa-972e-e784903c3815",
+    "timeoutMs": 3600000,
+    "promptPath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_staged_l1_20260726_hardware01/agent-prompt.md",
+    "stageStatus": "completed",
+    "traceLookup": {
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "source": "hwlab-cli.client.agent",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_ccd987568ebc36d6dddc1a3d",
+      "commands": {
+        "trace": "hwlab-cli client agent trace trc_harnessrl_ccd987568ebc36d6dddc1a3d --render web",
+        "result": "hwlab-cli client agent result trc_harnessrl_ccd987568ebc36d6dddc1a3d",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_ccd987568ebc36d6dddc1a3d",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_ccd987568ebc36d6dddc1a3d --render web --full",
+        "sessionStatus": "hwlab-cli client agent session status ses_c95d4982-6d50-44fa-972e-e784903c3815"
+      },
+      "strategy": "id_plus_existing_cli",
+      "sessionId": "ses_c95d4982-6d50-44fa-972e-e784903c3815",
+      "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-stage-d_run-embdagentbench-arm2d-staged-l1-20260726-hardware01"
+    },
+    "promptSha256": "1127cd0ab7b5d57e5aa4e8499cc1326c7a07cb6180f41866caa3a5f92e90d90d",
+    "traceCommand": "hwlab-cli client agent trace trc_harnessrl_ccd987568ebc36d6dddc1a3d --render web",
+    "agentRunStatus": "completed",
+    "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-stage-d_run-embdagentbench-arm2d-staged-l1-20260726-hardware01",
+    "inspectCommand": "hwlab-cli client agent inspect --trace-id trc_harnessrl_ccd987568ebc36d6dddc1a3d",
+    "lastHttpStatus": 200,
+    "pollIntervalMs": 2000,
+    "sessionCommand": "hwlab-cli client agent session status ses_c95d4982-6d50-44fa-972e-e784903c3815",
+    "terminalStatus": "completed",
+    "nextPollCommand": "hwlab-cli client agent result trc_harnessrl_ccd987568ebc36d6dddc1a3d",
+    "providerProfile": "gpt.pika",
+    "infrastructureBackend": "gpt-pika",
+    "resolvedBackendProfile": "gpt-pika",
+    "requestedProviderProfile": "gpt.pika"
+  },
+  "hwpod": {
+    "source": "case-run-runner-post-agent-compile-check",
+    "command": [
+      "bun",
+      "hwpod-cli.ts",
+      "build",
+      "--spec",
+      "hwpod-spec.yaml",
+      "--reason",
+      "case-run d601-vm-stm32f405-qemu-arm2d-stage-d run_embdagentbench_arm2d_staged_l1_20260726_hardware01 custom-runtime"
+    ],
+    "exitCode": 0,
+    "operation": {
+      "ok": true,
+      "op": "debug.build",
+      "opId": "op_01_debug_build",
+      "status": "completed",
+      "expected": {
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "hwpodId": "d601-vm-stm32f405-qemu",
+        "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01"
+      },
+      "observed": {
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "hwpodId": "d601-vm-stm32f405-qemu",
+        "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01"
+      },
+      "topology": {
+        "ok": true
+      },
+      "artifacts": [
+        "build/stm32f405-qemu.elf"
+      ],
+      "authority": "case-hwpod-yaml",
+      "contractVersion": "hwpod-operation-result-v0.3",
+      "synchronousBuild": {
+        "ok": true,
+        "status": "completed",
+        "artifacts": [
+          "build/stm32f405-qemu.elf"
+        ],
+        "sizeBytes": 12368
+      }
+    },
+    "stdoutJson": {
+      "ok": true,
+      "action": "hwpod-cli.invoke",
+      "status": "completed"
+    }
+  },
+  "runId": "run_embdagentbench_arm2d_staged_l1_20260726_hardware01",
+  "apiUrl": "http://127.0.0.1:6681",
+  "caseId": "d601-vm-stm32f405-qemu-arm2d-stage-d",
+  "replay": {
+    "source": "archived-hwpod-operation-observations",
+    "planMode": "custom-runtime",
+    "actionIds": [
+      "build",
+      "download",
+      "uart-read"
+    ],
+    "operationIds": [
+      "op_01_debug_build",
+      "op_01_debug_download",
+      "op_03_io_uart_read"
+    ],
+    "relationships": [
+      {
+        "kind": "uart",
+        "stage": "post-agent-validation",
+        "actionId": "uart-read",
+        "operationId": "op_03_io_uart_read",
+        "evidenceLevel": "serial-log",
+        "observationId": "uart-read:op_03_io_uart_read"
+      }
+    ],
+    "observationIds": [
+      "uart-read:op_03_io_uart_read"
+    ],
+    "contractVersion": "hwpod-case-validation-replay-v1"
+  },
+  "status": "recorded",
+  "subject": {
+    "setup": {
+      "nodeId": "node-d601-vm-hwpod-qemu",
+      "planId": "run_embdagentbench_arm2d_staged_l1_20260726_hardware01:prepare:v1:subject-prepare",
+      "stderr": "Preparing worktree (detached HEAD f909cda)",
+      "stdout": "HEAD is now at f909cda feat: add full QEMU rebuild operation\nf909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9",
+      "exitCode": 0,
+      "operation": {
+        "ops": [
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_01_subject_commit",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_02_subject_worktree_add",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_03_subject_worktree_head",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "workspace.git-materialize",
+            "opId": "op_10_resource_arm-2d",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "workspace.git-materialize",
+            "opId": "op_11_resource_cmsis-dsp",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "workspace.git-materialize",
+            "opId": "op_12_resource_cmsis-core",
+            "status": "completed"
+          }
+        ],
+        "intent": "cmd.run",
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "planId": "run_embdagentbench_arm2d_staged_l1_20260726_hardware01:prepare:v1:subject-prepare",
+        "hwpodId": "d601-vm-stm32f405-qemu",
+        "contractVersion": "hwpod-node-ops-v1"
+      },
+      "resources": [
+        {
+          "id": "arm-2d",
+          "ref": "v1.2.4",
+          "kind": "git",
+          "reused": false,
+          "gitHead": "b73ec43b6567feffe57642861e8b5eb083788011",
+          "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+          "commitId": "b73ec43b6567feffe57642861e8b5eb083788011",
+          "destination": "third_party/Arm-2D",
+          "materialized": true
+        },
+        {
+          "id": "cmsis-dsp",
+          "ref": "v1.14.2",
+          "kind": "git",
+          "reused": false,
+          "gitHead": "43aa2a9e7fc080e0d7541e9f5e083258403ac9ee",
+          "repoUrl": "https://github.com/ARM-software/CMSIS-DSP.git",
+          "commitId": "43aa2a9e7fc080e0d7541e9f5e083258403ac9ee",
+          "destination": "third_party/CMSIS-DSP",
+          "materialized": true
+        },
+        {
+          "id": "cmsis-core",
+          "ref": "5.9.0",
+          "kind": "git",
+          "reused": false,
+          "gitHead": "2b7495b8535bdcb306dac29b9ded4cfb679d7e5c",
+          "repoUrl": "https://github.com/ARM-software/CMSIS_5.git",
+          "commitId": "2b7495b8535bdcb306dac29b9ded4cfb679d7e5c",
+          "destination": "third_party/CMSIS",
+          "materialized": true
+        }
+      ],
+      "httpStatus": 200
+    },
+    "subdir": "",
+    "commitId": "f909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9",
+    "resources": [
+      {
+        "id": "arm-2d",
+        "ref": "v1.2.4",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+        "commitId": "b73ec43b6567feffe57642861e8b5eb083788011",
+        "destination": "third_party/Arm-2D"
+      },
+      {
+        "id": "cmsis-dsp",
+        "ref": "v1.14.2",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/CMSIS-DSP.git",
+        "commitId": "43aa2a9e7fc080e0d7541e9f5e083258403ac9ee",
+        "destination": "third_party/CMSIS-DSP"
+      },
+      {
+        "id": "cmsis-core",
+        "ref": "5.9.0",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/CMSIS_5.git",
+        "commitId": "2b7495b8535bdcb306dac29b9ded4cfb679d7e5c",
+        "destination": "third_party/CMSIS"
+      }
+    ],
+    "worktreePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01",
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_workspace",
+    "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    }
+  },
+  "warnings": {},
+  "agentDiff": {
+    "diffStat": "src/main.c | 62 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--\n 1 file changed, 60 insertions(+), 2 deletions(-)\n/dev/null => src/arm_2d_cfg.h | 9 +++++++++\n 1 file changed, 9 insertions(+)\n[omitted by CaseRun diffCollection]\n third_party/Arm-2D/** | 1 files omitted reason=真实 Arm-2D upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文 samples=third_party/Arm-2D\n third_party/CMSIS-DSP/** | 1 files omitted reason=真实 CMSIS-DSP upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文 samples=third_party/CMSIS-DSP\n third_party/** | 1 files omitted reason=third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches samples=third_party/CMSIS",
+    "requests": [
+      {
+        "label": "status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 48
+      },
+      {
+        "label": "diff-stat",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 128
+      },
+      {
+        "label": "diff-patch",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 2909
+      },
+      {
+        "label": "submodule-status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-ls-files",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 78
+      },
+      {
+        "label": "untracked-file-metadata",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:src/arm_2d_cfg.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 76
+      },
+      {
+        "label": "untracked-diff-patch:src/arm_2d_cfg.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 413
+      },
+      {
+        "label": "source-root-baseline",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      },
+      {
+        "label": "source-root-after-prepare",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      },
+      {
+        "label": "source-root-after-agent",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      }
+    ],
+    "statusShort": "M src/main.c\n?? src/arm_2d_cfg.h\n?? third_party/",
+    "diffPatchPath": "/root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_staged_l1_20260726_hardware01/agent-diff.patch",
+    "diffCollection": {
+      "config": {
+        "ignore": [
+          {
+            "reason": "真实 Arm-2D upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文",
+            "pattern": "third_party/Arm-2D/**"
+          },
+          {
+            "reason": "真实 CMSIS-DSP upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文",
+            "pattern": "third_party/CMSIS-DSP/**"
+          },
+          {
+            "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+            "pattern": "vendor/**"
+          },
+          {
+            "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+            "pattern": "third_party/**"
+          }
+        ],
+        "include": []
+      },
+      "omitted": [
+        {
+          "path": "third_party/Arm-2D",
+          "rule": "third_party/Arm-2D/**",
+          "reason": "真实 Arm-2D upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/CMSIS-DSP",
+          "rule": "third_party/CMSIS-DSP/**",
+          "reason": "真实 CMSIS-DSP upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/CMSIS",
+          "rule": "third_party/**",
+          "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+          "source": "untracked"
+        }
+      ],
+      "tracked": {
+        "paths": [
+          "src/main.c"
+        ],
+        "diffStat": "src/main.c | 62 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--\n 1 file changed, 60 insertions(+), 2 deletions(-)",
+        "diffPatchSha256": "43648b5f01e282e7f4ef95aff03af869f8c5c990fb9abd81dd0ad3a10b83d7e6"
+      },
+      "included": [
+        {
+          "path": "src/arm_2d_cfg.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        }
+      ],
+      "untracked": {
+        "total": 4,
+        "omitted": 3,
+        "included": 1
+      },
+      "submodules": [],
+      "omittedGroups": [
+        {
+          "rule": "third_party/Arm-2D/**",
+          "count": 1,
+          "reason": "真实 Arm-2D upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文",
+          "samplePaths": [
+            "third_party/Arm-2D"
+          ]
+        },
+        {
+          "rule": "third_party/CMSIS-DSP/**",
+          "count": 1,
+          "reason": "真实 CMSIS-DSP upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文",
+          "samplePaths": [
+            "third_party/CMSIS-DSP"
+          ]
+        },
+        {
+          "rule": "third_party/**",
+          "count": 1,
+          "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+          "samplePaths": [
+            "third_party/CMSIS"
+          ]
+        }
+      ],
+      "contractVersion": "hwpod-case-run-diff-collection-v1"
+    },
+    "diffPatchSha256": "b3d1dac040d70bb11218d5c5ea157dbf2dd21a1d83061f1bc2eca68a21bc314d",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterAgent": {
+      "label": "after-agent",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootStatusShort": "?? .worktree/",
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootChangedAfterAgent": false,
+    "sourceRootChangedAfterPrepare": false
+  },
+  "agentTask": {
+    "model": "gpt-5.6-luna",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 3600000,
+    "workspace": "subjectWorktree",
+    "constraints": [
+      "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
+      "只能修改隔离 subject worktree，不得修改 case registry、HWLAB repo 或原 subject checkout",
+      "资源与 skill 必须来自 AgentRun gitbundle，不得使用 workspaceFiles、seed files、host skill 或 ConfigMap fallback",
+      "必须使用 ARM-software/Arm-2D v1.2.4 真实 upstream；禁止 mock、stub、同名 API veneer、兼容子集或自制替代实现",
+      "CMSIS-DSP 必须来自真实 1.14.2 Pack/RTE 或 upstream，并记录 provenance；禁止手写 arm_math.h 或最小 stub",
+      "第三方 upstream 文件由 CaseRun Harness 在 Agent 启动前按固定 provenance 物化；Agent 不得重复 clone、fetch、覆盖、删除或通过 apply-patch 手工粘贴和重写",
+      "project-local 文本修改使用 HWPOD workspace apply-patch；禁止退化为 runner 直接文件操作",
+      "禁止读取、修改或执行 scripts/hwpod-qemu-cli.py、scripts/build、scripts/rebuild、scripts/download、scripts/reset；这些属于 Harness 边界",
+      "必须实际执行 build、download/QEMU start 和 UART read，并保留 operationId、jobId、return code、artifact 和原始错误",
+      "必须保留 netduinoplus2 已验证的 RCC_APB2ENR 和 USART1 寄存器映射及初始化，不得切换到 USART2 或其他串口",
+      "UART 必须在主循环持续输出本次 runId、ARM-software/Arm-2D、v1.2.4、commit、CMSIS-DSP、heartbeat、frame 和 CRC 或 tile 摘要，不能只在启动时输出一次",
+      "Agent completed 或 final response 不能替代 build、QEMU 和 UART 证据",
+      "结果只记录 raw trace/evidence，autoEvaluation=false"
+    ],
+    "promptSha256": "1234199ff6ca3b677ae32a5b5179322b8690cdd38f0e760cda42128085ccd072",
+    "pollIntervalMs": 2000,
+    "providerProfile": "gpt.pika",
+    "reasoningEffort": "low"
+  },
+  "artifacts": [
+    "build/stm32f405-qemu.elf"
+  ],
+  "decisions": {
+    "reason": "CaseRun records Agent final independently and projects only authoritative HWPOD post-validation observations",
+    "autoEvaluation": false,
+    "runnerPostAgentCompileCheck": "recorded"
+  },
+  "agentFinal": {
+    "source": "agentrun-result",
+    "present": true,
+    "timedOut": false,
+    "naturalEnd": true,
+    "stageStatus": "completed",
+    "text": "已完成隔离 worktree 修改并验证：\n\n- 新增 `src/arm_2d_cfg.h`\n- 更新 `src/main.c`\n- 接入真实 Arm-2D v1.2.4 / commit `b73ec43...`\n- 接入真实 CMSIS-DSP v1.14.2 / commit `43aa2a9...`\n- 保留 USART1、RCC_APB2ENR 映射\n- 实现 framebuffer、tile、CRC、frame counter、heartbeat 和 provenance UART 输出\n- `hwpod build` 成功，ELF 大小 `12368` bytes\n- QEMU download 成功，PID `2767177`，UART `/dev/pts/3`\n- UART 已持续输出 `heartbeat=1`、frame、framebuffer CRC、tile 摘要\n\n注意：Harness 固定的最小 Arm-2D 源码集合中，颜色填充符号不可链接，因此最终帧填充使用项目本地 RGB565 framebuffer 逻辑；Arm-2D upstream 源码仍已真实参与编译。",
+    "textChars": 506,
+    "status": "completed",
+    "traceId": "trc_harnessrl_ccd987568ebc36d6dddc1a3d"
+  },
+  "agentTrace": {
+    "traceId": "trc_harnessrl_ccd987568ebc36d6dddc1a3d",
+    "status": "completed",
+    "httpStatus": 200,
+    "source": "hwlab-cli.client.agent.trace",
+    "lookup": {
+      "source": "hwlab-cli.client.agent",
+      "strategy": "id_plus_existing_cli",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_ccd987568ebc36d6dddc1a3d",
+      "sessionId": "ses_c95d4982-6d50-44fa-972e-e784903c3815",
+      "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-stage-d_run-embdagentbench-arm2d-staged-l1-20260726-hardware01",
+      "threadId": "",
+      "commands": {
+        "result": "hwlab-cli client agent result trc_harnessrl_ccd987568ebc36d6dddc1a3d",
+        "trace": "hwlab-cli client agent trace trc_harnessrl_ccd987568ebc36d6dddc1a3d --render web",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_ccd987568ebc36d6dddc1a3d --render web --full",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_ccd987568ebc36d6dddc1a3d",
+        "sessionStatus": "hwlab-cli client agent session status ses_c95d4982-6d50-44fa-972e-e784903c3815"
+      }
+    },
+    "sourceEventCount": 311,
+    "renderedRowCount": 113,
+    "commandCount": 62,
+    "hwpodCommandCount": 52,
+    "hwpodBuildCommandCount": 6,
+    "keilJobCandidates": [],
+    "terminalStatus": "completed",
+    "commands": [
+      {
+        "source": "trace-row",
+        "seq": 8719,
+        "rowId": "tool:exec-cfbf90c1-6d0e-4e1e-870a-e2fe00062241",
+        "header": "08:08:34",
+        "command": "hwpod-ctl spec validate --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-ctl.spec.validate\",\n  \"status\": \"succeeded\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"document\": {\n    \"apiVersion\": \"hwlab.dev/v0alpha1\",\n    \"kind\": \"Hwpod\",\n    \"metadata\": {\n      \"name\": \"d601-vm-stm32f405-qemu\"\n    },\n    \"spec\": {\n      \"nodeBinding\": {\n        \"nodeId\": \"node-d601-vm-hwpod-qemu\"\n      },\n      \"targetDevice\": {\n        \"board\": \"Netduino Plus 2 QEMU\",\n        \"mcu\": \"STM32F405RGT6\",\n        \"simulation\": true\n      },\n      \"workspace\": {\n        \"path\": \"/home/ubuntu/workspace/h\n... clipped ...",
+        "normalizedCommand": "hwpod-ctl spec validate --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 hwpod-id: d601-vm-stm32f405-qemu workspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 output: { \"ok\": true, \"action\": \"hwpod-ctl.spec.validate\", \"status\": \"succeeded\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"document\": { \"apiVersion\": \"hwlab.dev/v0alpha1\", \"kind\": \"Hwpod\", \"metadata\": { \"name\": \"d601-vm-stm32f405-qemu\" }, \"spec\": { \"nodeBinding\": { \"nodeId\": \"node-d601-vm-hwpod-qemu\" }, \"targetDevice\": { \"board\": \"Netduino Plus 2 QEMU\", \"mcu\": \"STM32F405RGT6\", \"simulation\": true }, \"workspace\": { \"path\": \"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\", \"toolchain\": \"a\n... clipped ...",
+        "bodyPreview": "hwpod-ctl spec validate --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-ctl.spec.validate\",\n  \"status\": \"succeeded\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"document\": {\n    \"apiVersion\": \"hwlab.dev/v0alpha1\",\n    \"kind\": \"Hwpod\",\n    \"metadata\": {\n      \"name\": \"d601-vm-stm32f405-qemu\"\n    },\n    \"spec\": {\n      \"nodeBinding\": {\n        \"nodeId\": \"node-d601-vm-hwpod-qemu\"\n      },\n      \"targetDevice\": {\n        \"board\": \"Netduino Plus 2 QEMU\",\n        \"mcu\": \"STM32F405RGT6\",\n        \"simulation\": true\n      },\n      \"workspace\": {\n        \"path\": \"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\",\n        \"toolchain\": \"arm-none-eabi-gcc\",\n        \"buildCommand\": \"scripts/build\",\n        \"rebuildComman\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8723,
+        "rowId": "tool:exec-6e1ad8e0-e052-4dde-9575-175ac11b132c",
+        "header": "08:08:36",
+        "command": "hwpod inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"inspect\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"inspect\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\"\n... clipped ...",
+        "normalizedCommand": "hwpod inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 hwpod-id: d601-vm-stm32f405-qemu workspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"inspect\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-stm32f405-qemu\", \"--intent\", \"inspect\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_3c4a426c-936d-4961-b9e9-340331fb47d4\", \"source\"\n... clipped ...",
+        "bodyPreview": "hwpod inspect --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"inspect\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"inspect\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_3c4a426c-936d-4961-b9e9-340331fb47d4\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n    \n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8907,
+        "rowId": "tool:exec-7e844e07-8fcf-4194-8a9c-bc4584dd099c",
+        "header": "08:14:26",
+        "command": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Add File: src/arm_2d_cfg.h\n+#ifndef ARM_2D_CFG_H\n+#define ARM_2D_CFG_H\n+\n+#define __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ 0\n+#define __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__ 0\n+#define __ARM_2D_CFG_SUPPORT_TRANSFORM__ 0\n+#define __ARM_2D_CFG_SUPPORT_ALPHA_BLENDING__ 0\n+\n+#endif\n*** Update File: src/main.c\n@@\n-#include <stdint.h>\n+#include <stdint.h>\n+#include \"arm_2d.h\"\n+#include \"arm_math.h\"\n@@\n static void uart_write(const char *text) {\n     while (*text \"'!= '\"'\\''\\0'\\'') uart_putc(*text++);\n }\n+\n+static void uart_hex(uint32_t value) {\n+    static const char digits[] = \"0123456789abcdef\";\n+    int shift;\n+    for (shift = 28; shift >= 0; shift -= 4) uart_putc(digits[(value >> shift) & 0xfu]);\n+}\n+\n+static uint32_t framebuffer_crc(const uint16_t *buffer, uint32_t count) {\n+    uint32_t crc = 0xffffffffu;\n+    uint32_t i;\n+    for (i = 0; i < count; ++i) {\n+        uint32_t value = buffer[i];\n+        int\n... clipped ...",
+        "normalizedCommand": "hwpod workspace apply-patch --patch-content '*** Begin Patch *** Add File: src/arm_2d_cfg.h +#ifndef ARM_2D_CFG_H +#define ARM_2D_CFG_H + +#define __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ 0 +#define __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__ 0 +#define __ARM_2D_CFG_SUPPORT_TRANSFORM__ 0 +#define __ARM_2D_CFG_SUPPORT_ALPHA_BLENDING__ 0 + +#endif *** Update File: src/main.c @@ -#include <stdint.h> +#include <stdint.h> +#include \"arm_2d.h\" +#include \"arm_math.h\" @@ static void uart_write(const char *text) { while (*text \"'!= '\"'\\''\\0'\\'') uart_putc(*text++); } + +static void uart_hex(uint32_t value) { + static const char digits[] = \"0123456789abcdef\"; + int shift; + for (shift = 28; shift >= 0; shift -= 4) uart_putc(digits[(value >> shift) & 0xfu]); +} + +static uint32_t framebuffer_crc(const uint16_t *buffer, uint32_t count) { + uint32_t crc = 0xffffffffu; + uint32_t i; + for (i = 0; i < count; ++i) { + uint32_t value = buffer[i]; + int bit; + crc \"'^= value; + for (bit = 0;\n... clipped ...",
+        "bodyPreview": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Add File: src/arm_2d_cfg.h\n+#ifndef ARM_2D_CFG_H\n+#define ARM_2D_CFG_H\n+\n+#define __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ 0\n+#define __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__ 0\n+#define __ARM_2D_CFG_SUPPORT_TRANSFORM__ 0\n+#define __ARM_2D_CFG_SUPPORT_ALPHA_BLENDING__ 0\n+\n+#endif\n*** Update File: src/main.c\n@@\n-#include <stdint.h>\n+#include <stdint.h>\n+#include \"arm_2d.h\"\n+#include \"arm_math.h\"\n@@\n static void uart_write(const char *text) {\n     while (*text \"'!= '\"'\\''\\0'\\'') uart_putc(*text++);\n }\n+\n+static void uart_hex(uint32_t value) {\n+    static const char digits[] = \"0123456789abcdef\";\n+    int shift;\n+    for (shift = 28; shift >= 0; shift -= 4) uart_putc(digits[(value >> shift) & 0xfu]);\n+}\n+\n+static uint32_t framebuffer_crc(const uint16_t *buffer, uint32_t count) {\n+    uint32_t crc = 0xffffffffu;\n+    uint32_t i;\n+    for (i = 0; i < count; ++i) {\n+        uint32_t value = buffer[i];\n+        int bit;\n+        crc \"'^= value;\n+        for (bit = 0; bit < 16; ++bit) crc = (crc >> 1) ''^ (0xedb88320u & (0u - (crc & 1u)));\n+    }\n+    return crc;\n+}\n+\n+static uint16_t framebuffer[32 * 16];\n+stat\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8972,
+        "rowId": "tool:exec-3ebfb692-51e4-46f7-bd74-e773600e33a1",
+        "header": "08:18:17",
+        "command": "hwpod build\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"debug.build\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"debug.build\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_c3cb415f-b386-474d-bc1a-61ca43c60f7f\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"r\n... clipped ...",
+        "normalizedCommand": "hwpod build output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"debug.build\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-stm32f405-qemu\", \"--intent\", \"debug.build\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_c3cb415f-b386-474d-bc1a-61ca43c60f7f\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://152.53.229.148:6681\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\",\n... clipped ...",
+        "bodyPreview": "hwpod build\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"debug.build\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"debug.build\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_c3cb415f-b386-474d-bc1a-61ca43c60f7f\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\": \"api\",\n    \"baseUrl\": \"http://152.53.229.148:6681\",\n    \"source\": \"runtime-env\",\n    \"sourceName\": \"HWLAB_RUNTIME_API_URL\",\n    \"explicitOverride\": false,\n    \"lane\": nu\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8976,
+        "rowId": "tool:exec-cd130c85-106e-42e7-a1ae-40e7a6dd1c07",
+        "header": "08:18:28",
+        "command": "hwpod download\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"debug.download\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"debug.download\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_8b23734c-1020-42fc-a231-801c0f04f8a2\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n\n... clipped ...",
+        "normalizedCommand": "hwpod download output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"debug.download\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-stm32f405-qemu\", \"--intent\", \"debug.download\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_8b23734c-1020-42fc-a231-801c0f04f8a2\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://152.53.229.148:6681\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_\n... clipped ...",
+        "bodyPreview": "hwpod download\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"debug.download\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"debug.download\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_8b23734c-1020-42fc-a231-801c0f04f8a2\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\": \"api\",\n    \"baseUrl\": \"http://152.53.229.148:6681\",\n    \"source\": \"runtime-env\",\n    \"sourceName\": \"HWLAB_RUNTIME_API_URL\",\n    \"explicitOverride\": false,\n    \"\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8979,
+        "rowId": "tool:exec-0aaf91ab-0a16-435d-a944-0d00b508692f",
+        "header": "08:18:35",
+        "command": "hwpod uart read --port uart1\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"io.uart.read\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"io.uart.read\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_433eafb4-c86e-49ce-a6e9-224adeba58e0\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-\n... clipped ...",
+        "normalizedCommand": "hwpod uart read --port uart1 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"io.uart.read\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-stm32f405-qemu\", \"--intent\", \"io.uart.read\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_433eafb4-c86e-49ce-a6e9-224adeba58e0\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://152.53.229.148:6681\", \"source\": \"runtime-env\", \"sourceName\": \"HWLA\n... clipped ...",
+        "bodyPreview": "hwpod uart read --port uart1\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"io.uart.read\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"io.uart.read\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_433eafb4-c86e-49ce-a6e9-224adeba58e0\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\": \"api\",\n    \"baseUrl\": \"http://152.53.229.148:6681\",\n    \"source\": \"runtime-env\",\n    \"sourceName\": \"HWLAB_RUNTIME_API_URL\",\n    \"explicitOverride\": fa\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8704,
+        "rowId": "tool:exec-cf9a5c76-6883-4154-b084-2a51b167f4ba",
+        "header": "08:08:18",
+        "command": "sed -n '1,220p' /root/.gitbundle/agentrun/workspace-5d390b15c70998cc/.agents/skills/arm2d-skill/SKILL.md\noutput:\n---\nname: arm2d-skyer\ndescription: 用于 ARM-2D 嵌入式 UI 开发工作：scene/PFB/generic loader/dirty region/RGB565 资源、GIF 精灵图与动画资源链路、Keil MDK/RTE/显示适配器集成、SRAM/Flash/帧率权衡，以及在 MCU 上实现伪 shader/demo-scene 特效。\n---\n\n# ARM-2D 嵌入式 UI 工作流\n\n这是一个通用 ARM-2D 嵌入式 UI 技能。核心目标不是写通用教程，而是让助手按可移植、可维护、贴合硬件约束的方式处理 ARM-2D 工程。\n\n## 默认背景\n\n- 常用语言：C。\n- 常用图形栈：ARM-2D、PFB、Scene Player、Generic Loader。\n- 常见工程环境：Keil MDK、CMSIS-Pack/RTE、RTOS 或裸机工程。\n- 常见显示链路：LCD/OLED/RGB/MIPI/Framebuffer、SPI/QSPI/8080/LTDC 等显示接口。\n- 常见像素格式：RGB565、RGB888、ARGB8888。\n- 常见任务：动态 UI、GIF/动画素材、局部刷\n... clipped ...",
+        "normalizedCommand": "sed -n '1,220p' /root/.gitbundle/agentrun/workspace-5d390b15c70998cc/.agents/skills/arm2d-skill/SKILL.md output: --- name: arm2d-skyer description: 用于 ARM-2D 嵌入式 UI 开发工作：scene/PFB/generic loader/dirty region/RGB565 资源、GIF 精灵图与动画资源链路、Keil MDK/RTE/显示适配器集成、SRAM/Flash/帧率权衡，以及在 MCU 上实现伪 shader/demo-scene 特效。 --- # ARM-2D 嵌入式 UI 工作流 这是一个通用 ARM-2D 嵌入式 UI 技能。核心目标不是写通用教程，而是让助手按可移植、可维护、贴合硬件约束的方式处理 ARM-2D 工程。 ## 默认背景 - 常用语言：C。 - 常用图形栈：ARM-2D、PFB、Scene Player、Generic Loader。 - 常见工程环境：Keil MDK、CMSIS-Pack/RTE、RTOS 或裸机工程。 - 常见显示链路：LCD/OLED/RGB/MIPI/Framebuffer、SPI/QSPI/8080/LTDC 等显示接口。 - 常见像素格式：RGB565、RGB888、ARGB8888。 - 常见任务：动态 UI、GIF/动画素材、局部刷新�\n... clipped ...",
+        "bodyPreview": "sed -n '1,220p' /root/.gitbundle/agentrun/workspace-5d390b15c70998cc/.agents/skills/arm2d-skill/SKILL.md\noutput:\n---\nname: arm2d-skyer\ndescription: 用于 ARM-2D 嵌入式 UI 开发工作：scene/PFB/generic loader/dirty region/RGB565 资源、GIF 精灵图与动画资源链路、Keil MDK/RTE/显示适配器集成、SRAM/Flash/帧率权衡，以及在 MCU 上实现伪 shader/demo-scene 特效。\n---\n\n# ARM-2D 嵌入式 UI 工作流\n\n这是一个通用 ARM-2D 嵌入式 UI 技能。核心目标不是写通用教程，而是让助手按可移植、可维护、贴合硬件约束的方式处理 ARM-2D 工程。\n\n## 默认背景\n\n- 常用语言：C。\n- 常用图形栈：ARM-2D、PFB、Scene Player、Generic Loader。\n- 常见工程环境：Keil MDK、CMSIS-Pack/RTE、RTOS 或裸机工程。\n- 常见显示链路：LCD/OLED/RGB/MIPI/Framebuffer、SPI/QSPI/8080/LTDC 等显示接口。\n- 常见像素格式：RGB565、RGB888、ARGB8888。\n- 常见任务：动态 UI、GIF/动画素材、局部刷新、低 RAM 渲染、伪 shader 特效。\n\n## 总原则\n\n- 优先写能在目标 MCU 上稳定跑起来的代码，不追求理论优雅。\n- 每次涉及动画/特效/大图资源时，都要主动\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8705,
+        "rowId": "tool:exec-24d35af7-2292-48c1-8a4c-25abc22223fa",
+        "header": "08:08:18",
+        "command": "command -v hwpod\noutput:\n/root/.gitbundle/agentrun/workspace-5d390b15c70998cc/tools/hwpod\noutputBytes=65\noutputRecoverable=true",
+        "normalizedCommand": "command -v hwpod output: /root/.gitbundle/agentrun/workspace-5d390b15c70998cc/tools/hwpod outputBytes=65 outputRecoverable=true",
+        "bodyPreview": "command -v hwpod\noutput:\n/root/.gitbundle/agentrun/workspace-5d390b15c70998cc/tools/hwpod\noutputBytes=65\noutputRecoverable=true\nexitCode=0",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8706,
+        "rowId": "tool:exec-1b30f1f3-403d-4d5c-a4ac-50b2ed57a189",
+        "header": "08:08:18",
+        "command": "sed -n '1,220p' /root/.gitbundle/agentrun/workspace-5d390b15c70998cc/.agents/skills/hwpod-ctl/SKILL.md\noutput:\n---\nname: hwpod-ctl\ndescription: Manage and validate HWLAB HWPOD runtime bindings from a code agent runner. The hwpod-ctl skill is separate from hwpod-cli and is used for hwpod-id validation, smoke checks, and explicit local spec import/export maintenance.\n---\n\n# hwpod-ctl\n\nThis skill follows Skill(cli-spec). It is the standard management entry for runtime-resolved HWPOD identity and node binding checks.\n\n## Scope\n\n`hwpod-ctl` is a peer of `hwpod-cli`, not a fallback task path. Use it to validate a service-resolved `hwpod-id`, inspect the four HWPOD elements, check node binding, and run smoke or temporary maintenance actions.\n\n`hwpod-ctl` does not replace `hwpod-cli` for task execution. When a task needs source lookup, use `hwpod workspace rg/search` for symbol hunting and `hwpod workspace cat` only for full file bodies; when a task needs build/download/UART/job status, hand i\n... clipped ...",
+        "normalizedCommand": "sed -n '1,220p' /root/.gitbundle/agentrun/workspace-5d390b15c70998cc/.agents/skills/hwpod-ctl/SKILL.md output: --- name: hwpod-ctl description: Manage and validate HWLAB HWPOD runtime bindings from a code agent runner. The hwpod-ctl skill is separate from hwpod-cli and is used for hwpod-id validation, smoke checks, and explicit local spec import/export maintenance. --- # hwpod-ctl This skill follows Skill(cli-spec). It is the standard management entry for runtime-resolved HWPOD identity and node binding checks. ## Scope `hwpod-ctl` is a peer of `hwpod-cli`, not a fallback task path. Use it to validate a service-resolved `hwpod-id`, inspect the four HWPOD elements, check node binding, and run smoke or temporary maintenance actions. `hwpod-ctl` does not replace `hwpod-cli` for task execution. When a task needs source lookup, use `hwpod workspace rg/search` for symbol hunting and `hwpod workspace cat` only for full file bodies; when a task needs build/download/UART/job status, hand it bac\n... clipped ...",
+        "bodyPreview": "sed -n '1,220p' /root/.gitbundle/agentrun/workspace-5d390b15c70998cc/.agents/skills/hwpod-ctl/SKILL.md\noutput:\n---\nname: hwpod-ctl\ndescription: Manage and validate HWLAB HWPOD runtime bindings from a code agent runner. The hwpod-ctl skill is separate from hwpod-cli and is used for hwpod-id validation, smoke checks, and explicit local spec import/export maintenance.\n---\n\n# hwpod-ctl\n\nThis skill follows Skill(cli-spec). It is the standard management entry for runtime-resolved HWPOD identity and node binding checks.\n\n## Scope\n\n`hwpod-ctl` is a peer of `hwpod-cli`, not a fallback task path. Use it to validate a service-resolved `hwpod-id`, inspect the four HWPOD elements, check node binding, and run smoke or temporary maintenance actions.\n\n`hwpod-ctl` does not replace `hwpod-cli` for task execution. When a task needs source lookup, use `hwpod workspace rg/search` for symbol hunting and `hwpod workspace cat` only for full file bodies; when a task needs build/download/UART/job status, hand it back to `hwpod-cli` and its compiler-backed plan path.\n\n## Commands\n\n- Validate runtime HWPOD before hardware work: `hwpod-ctl spec validate --hwpod-id d601-f103-v2 --workspace-path <run-worktree>`.\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8708,
+        "rowId": "tool:exec-68cf5e51-2ff8-4b13-8a74-c617063d47a4",
+        "header": "08:08:18",
+        "command": "sed -n '1,220p' /root/.gitbundle/agentrun/workspace-5d390b15c70998cc/.agents/skills/hwpod-cli/SKILL.md\noutput:\n---\nname: hwpod-cli\ndescription: Use HWLAB HWPOD from a code agent runner for hardware-development tasks. The hwpod-cli skill resolves an HWPOD by hwpod-id through the HWLAB runtime service, submits hwpod-node-ops through hwlab-api, and waits for hwpod-node results.\n---\n\n# hwpod-cli\n\nThis skill follows Skill(cli-spec). It is the standard task entry for operating an HWPOD from the HWLAB v0.2 Code Agent workspace.\n\n## Standard Path\n\n```text\nhwpod from PATH\n  -> tools/hwpod-cli.ts\n    -> runtime HWPOD registry by hwpod-id\n    -> compiler-backed hwpod-node-ops plan\n      -> /v1/hwpod-node-ops on hwlab-api\n        -> hwpod-node on the host side\n```\n\nThe HWPOD definition is runtime service state. The standard runner contract is `--hwpod-id <id>` plus `--workspace-path <run-worktree>` when the task is bound to a run-local workspace. A task may provide the complete `hwpodWorkspaceArgs\n... clipped ...",
+        "normalizedCommand": "sed -n '1,220p' /root/.gitbundle/agentrun/workspace-5d390b15c70998cc/.agents/skills/hwpod-cli/SKILL.md output: --- name: hwpod-cli description: Use HWLAB HWPOD from a code agent runner for hardware-development tasks. The hwpod-cli skill resolves an HWPOD by hwpod-id through the HWLAB runtime service, submits hwpod-node-ops through hwlab-api, and waits for hwpod-node results. --- # hwpod-cli This skill follows Skill(cli-spec). It is the standard task entry for operating an HWPOD from the HWLAB v0.2 Code Agent workspace. ## Standard Path ```text hwpod from PATH -> tools/hwpod-cli.ts -> runtime HWPOD registry by hwpod-id -> compiler-backed hwpod-node-ops plan -> /v1/hwpod-node-ops on hwlab-api -> hwpod-node on the host side ``` The HWPOD definition is runtime service state. The standard runner contract is `--hwpod-id <id>` plus `--workspace-path <run-worktree>` when the task is bound to a run-local workspace. A task may provide the complete `hwpodWorkspaceArgs` string; reuse it exactly. `\n... clipped ...",
+        "bodyPreview": "sed -n '1,220p' /root/.gitbundle/agentrun/workspace-5d390b15c70998cc/.agents/skills/hwpod-cli/SKILL.md\noutput:\n---\nname: hwpod-cli\ndescription: Use HWLAB HWPOD from a code agent runner for hardware-development tasks. The hwpod-cli skill resolves an HWPOD by hwpod-id through the HWLAB runtime service, submits hwpod-node-ops through hwlab-api, and waits for hwpod-node results.\n---\n\n# hwpod-cli\n\nThis skill follows Skill(cli-spec). It is the standard task entry for operating an HWPOD from the HWLAB v0.2 Code Agent workspace.\n\n## Standard Path\n\n```text\nhwpod from PATH\n  -> tools/hwpod-cli.ts\n    -> runtime HWPOD registry by hwpod-id\n    -> compiler-backed hwpod-node-ops plan\n      -> /v1/hwpod-node-ops on hwlab-api\n        -> hwpod-node on the host side\n```\n\nThe HWPOD definition is runtime service state. The standard runner contract is `--hwpod-id <id>` plus `--workspace-path <run-worktree>` when the task is bound to a run-local workspace. A task may provide the complete `hwpodWorkspaceArgs` string; reuse it exactly. `--spec <path>` is only an explicit debug/import path for a local exported YAML, not the default runner contract.\n\n## Commands\n\n- Inspect the HWPOD path: `hwpod inspect --h\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8710,
+        "rowId": "tool:exec-00e27f95-3d6d-4822-ba00-64dc8871bd4a",
+        "header": "08:08:18",
+        "command": "command -v hwpod-compiler\noutput:\n/root/.gitbundle/agentrun/workspace-5d390b15c70998cc/tools/hwpod-compiler\noutputBytes=74\noutputRecoverable=true",
+        "normalizedCommand": "command -v hwpod-compiler output: /root/.gitbundle/agentrun/workspace-5d390b15c70998cc/tools/hwpod-compiler outputBytes=74 outputRecoverable=true",
+        "bodyPreview": "command -v hwpod-compiler\noutput:\n/root/.gitbundle/agentrun/workspace-5d390b15c70998cc/tools/hwpod-compiler\noutputBytes=74\noutputRecoverable=true\nexitCode=0",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8712,
+        "rowId": "tool:exec-4b4f114b-3049-4b35-9ed4-238da91485e8",
+        "header": "08:08:18",
+        "command": "command -v hwpod-ctl\noutput:\n/root/.gitbundle/agentrun/workspace-5d390b15c70998cc/tools/hwpod-ctl\noutputBytes=69\noutputRecoverable=true",
+        "normalizedCommand": "command -v hwpod-ctl output: /root/.gitbundle/agentrun/workspace-5d390b15c70998cc/tools/hwpod-ctl outputBytes=69 outputRecoverable=true",
+        "bodyPreview": "command -v hwpod-ctl\noutput:\n/root/.gitbundle/agentrun/workspace-5d390b15c70998cc/tools/hwpod-ctl\noutputBytes=69\noutputRecoverable=true\nexitCode=0",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8721,
+        "rowId": "tool:exec-5202183c-c153-438c-9188-2c6239cc57fb",
+        "header": "08:08:35",
+        "command": "hwpod workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.ls\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"workspace.ls\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"c\n... clipped ...",
+        "normalizedCommand": "hwpod workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 hwpod-id: d601-vm-stm32f405-qemu workspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-stm32f405-qemu\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_648f6a31-833f-459d-97e1-1f435492\n... clipped ...",
+        "bodyPreview": "hwpod workspace ls --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.ls\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"workspace.ls\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_648f6a31-833f-459d-97e1-1f435492a049\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-stm32f\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8725,
+        "rowId": "tool:exec-ee3286b4-8b5c-4771-a9b1-2a6226f4bfbe",
+        "header": "08:08:37",
+        "command": "hwpod workspace rg 'USART1|RCC_APB2ENR|arm_2d|CMSIS' . --context 2 --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"nodeId\": \"node-d601-vm-hwpod-qemu\",\n  \"intent\": \"workspace.rg\",\n  \"operationId\": \"hwpod_plan_a4e3af23-420b-46d4-98e7-b7cb6d3ea97a\",\n  \"httpStatus\": 200,\n  \"results\": [\n    {\n      \"opId\": \"op_01_workspace_rg\",\n      \"op\": \"workspace.rg\",\n      \"ok\": true,\n      \"status\": \"completed\",\n      \"commands\": []\n    }\n  ],\n  \"extractedDiagnostics\": [],\n  \"outputDisclosure\": {\n    \"maxInlineBytes\": 10240,\n    \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.outp\n... clipped ...",
+        "normalizedCommand": "hwpod workspace rg 'USART1|RCC_APB2ENR|arm_2d|CMSIS' . --context 2 --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 hwpod-id: d601-vm-stm32f405-qemu workspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"nodeId\": \"node-d601-vm-hwpod-qemu\", \"intent\": \"workspace.rg\", \"operationId\": \"hwpod_plan_a4e3af23-420b-46d4-98e7-b7cb6d3ea97a\", \"httpStatus\": 200, \"results\": [ { \"opId\": \"op_01_workspace_rg\", \"op\": \"workspace.rg\", \"ok\": true, \"status\": \"completed\", \"commands\": [] } ], \"extractedDiagnostics\": [], \"outputDisclosure\": { \"maxInlineBytes\": 10240, \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\", \"fullPayloadDump\": { \"path\": \"/root/agentrun-v02/.state/output-du\n... clipped ...",
+        "bodyPreview": "hwpod workspace rg 'USART1|RCC_APB2ENR|arm_2d|CMSIS' . --context 2 --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"nodeId\": \"node-d601-vm-hwpod-qemu\",\n  \"intent\": \"workspace.rg\",\n  \"operationId\": \"hwpod_plan_a4e3af23-420b-46d4-98e7-b7cb6d3ea97a\",\n  \"httpStatus\": 200,\n  \"results\": [\n    {\n      \"opId\": \"op_01_workspace_rg\",\n      \"op\": \"workspace.rg\",\n      \"ok\": true,\n      \"status\": \"completed\",\n      \"commands\": []\n    }\n  ],\n  \"extractedDiagnostics\": [],\n  \"outputDisclosure\": {\n    \"maxInlineBytes\": 10240,\n    \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\",\n    \"fullPayloadDump\": {\n      \"path\": \"/root/agentrun-v02/.state/output-dumps/2026-07-26T08-08-37-641Z-4189110-79ef529e.json\",\n      \"bytes\": 42886,\n      \"sha256\": \"de6f4fa3f1e8c65a53945e454f38\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8947,
+        "rowId": "tool:exec-f6602149-965f-4d7c-8185-4aa57ab6e659",
+        "header": "08:17:00",
+        "command": "hwpod workspace rg 'rgb565_fill|fill_colour|fill_colour' third_party/Arm-2D --glob '*.h' --context 0\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"nodeId\": \"node-d601-vm-hwpod-qemu\",\n  \"intent\": \"workspace.rg\",\n  \"operationId\": \"hwpod_plan_06f9eb9c-8bf0-469c-a942-49278d034f92\",\n  \"httpStatus\": 200,\n  \"results\": [\n    {\n      \"opId\": \"op_01_workspace_rg\",\n      \"op\": \"workspace.rg\",\n      \"ok\": true,\n      \"status\": \"completed\",\n      \"commands\": []\n    }\n  ],\n  \"extractedDiagnostics\": [],\n  \"outputDisclosure\": {\n    \"maxInlineBytes\": 10240,\n    \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\",\n    \"fullPayloadDump\": {\n      \"path\": \"/root/agentrun-v02/.state/output-dumps/2026-07-26T08-17-00-362Z-38768-0989bc85.json\",\n      \"bytes\": 57156,\n      \"sha256\": \"824f3466538e4f3da820ed12f91ac5377ba004f9da06062b6b9204e3b5a14c65\",\n      \"thresholdBytes\": 10240,\n      \"configRef\": \"config/agent\n... clipped ...",
+        "normalizedCommand": "hwpod workspace rg 'rgb565_fill|fill_colour|fill_colour' third_party/Arm-2D --glob '*.h' --context 0 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"nodeId\": \"node-d601-vm-hwpod-qemu\", \"intent\": \"workspace.rg\", \"operationId\": \"hwpod_plan_06f9eb9c-8bf0-469c-a942-49278d034f92\", \"httpStatus\": 200, \"results\": [ { \"opId\": \"op_01_workspace_rg\", \"op\": \"workspace.rg\", \"ok\": true, \"status\": \"completed\", \"commands\": [] } ], \"extractedDiagnostics\": [], \"outputDisclosure\": { \"maxInlineBytes\": 10240, \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\", \"fullPayloadDump\": { \"path\": \"/root/agentrun-v02/.state/output-dumps/2026-07-26T08-17-00-362Z-38768-0989bc85.json\", \"bytes\": 57156, \"sha256\": \"824f3466538e4f3da820ed12f91ac5377ba004f9da06062b6b9204e3b5a14c65\", \"thresholdBytes\": 10240, \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\", \"contentType\": \"application/json\" }, \"valuesPrinted\":\n... clipped ...",
+        "bodyPreview": "hwpod workspace rg 'rgb565_fill|fill_colour|fill_colour' third_party/Arm-2D --glob '*.h' --context 0\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"nodeId\": \"node-d601-vm-hwpod-qemu\",\n  \"intent\": \"workspace.rg\",\n  \"operationId\": \"hwpod_plan_06f9eb9c-8bf0-469c-a942-49278d034f92\",\n  \"httpStatus\": 200,\n  \"results\": [\n    {\n      \"opId\": \"op_01_workspace_rg\",\n      \"op\": \"workspace.rg\",\n      \"ok\": true,\n      \"status\": \"completed\",\n      \"commands\": []\n    }\n  ],\n  \"extractedDiagnostics\": [],\n  \"outputDisclosure\": {\n    \"maxInlineBytes\": 10240,\n    \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\",\n    \"fullPayloadDump\": {\n      \"path\": \"/root/agentrun-v02/.state/output-dumps/2026-07-26T08-17-00-362Z-38768-0989bc85.json\",\n      \"bytes\": 57156,\n      \"sha256\": \"824f3466538e4f3da820ed12f91ac5377ba004f9da06062b6b9204e3b5a14c65\",\n      \"thresholdBytes\": 10240,\n      \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\",\n      \"contentType\": \"application/json\"\n    },\n    \"valuesPrinted\": false\n  }\n}\noutputBytes=1022\noutputRecoverable=true\noutputTruncated=true\nexitCode\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8949,
+        "rowId": "tool:exec-228a7c62-9898-4eb1-94e5-fbfc9dc59365",
+        "header": "08:17:01",
+        "command": "hwpod workspace rg 'arm_2d_op_fill|arm_2d_op_src' third_party/Arm-2D --glob '*.h' --context 0\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"nodeId\": \"node-d601-vm-hwpod-qemu\",\n  \"intent\": \"workspace.rg\",\n  \"operationId\": \"hwpod_plan_d5f28cea-5bf9-4263-aa57-33b1bfaeb8f6\",\n  \"httpStatus\": 200,\n  \"results\": [\n    {\n      \"opId\": \"op_01_workspace_rg\",\n      \"op\": \"workspace.rg\",\n      \"ok\": true,\n      \"status\": \"completed\",\n      \"commands\": []\n    }\n  ],\n  \"extractedDiagnostics\": [],\n  \"outputDisclosure\": {\n    \"maxInlineBytes\": 10240,\n    \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\",\n    \"fullPayloadDump\": {\n      \"path\": \"/root/agentrun-v02/.state/output-dumps/2026-07-26T08-17-01-116Z-38770-37ac6065.json\",\n      \"bytes\": 51695,\n      \"sha256\": \"9b11f03ce7a4fd6948baa26c7aec8ae9a2d83344b55d84e5fbae5c545a1a2d83\",\n      \"thresholdBytes\": 10240,\n      \"configRef\": \"config/agentrun.yam\n... clipped ...",
+        "normalizedCommand": "hwpod workspace rg 'arm_2d_op_fill|arm_2d_op_src' third_party/Arm-2D --glob '*.h' --context 0 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"nodeId\": \"node-d601-vm-hwpod-qemu\", \"intent\": \"workspace.rg\", \"operationId\": \"hwpod_plan_d5f28cea-5bf9-4263-aa57-33b1bfaeb8f6\", \"httpStatus\": 200, \"results\": [ { \"opId\": \"op_01_workspace_rg\", \"op\": \"workspace.rg\", \"ok\": true, \"status\": \"completed\", \"commands\": [] } ], \"extractedDiagnostics\": [], \"outputDisclosure\": { \"maxInlineBytes\": 10240, \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\", \"fullPayloadDump\": { \"path\": \"/root/agentrun-v02/.state/output-dumps/2026-07-26T08-17-01-116Z-38770-37ac6065.json\", \"bytes\": 51695, \"sha256\": \"9b11f03ce7a4fd6948baa26c7aec8ae9a2d83344b55d84e5fbae5c545a1a2d83\", \"thresholdBytes\": 10240, \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\", \"contentType\": \"application/json\" }, \"valuesPrinted\": false \n... clipped ...",
+        "bodyPreview": "hwpod workspace rg 'arm_2d_op_fill|arm_2d_op_src' third_party/Arm-2D --glob '*.h' --context 0\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"nodeId\": \"node-d601-vm-hwpod-qemu\",\n  \"intent\": \"workspace.rg\",\n  \"operationId\": \"hwpod_plan_d5f28cea-5bf9-4263-aa57-33b1bfaeb8f6\",\n  \"httpStatus\": 200,\n  \"results\": [\n    {\n      \"opId\": \"op_01_workspace_rg\",\n      \"op\": \"workspace.rg\",\n      \"ok\": true,\n      \"status\": \"completed\",\n      \"commands\": []\n    }\n  ],\n  \"extractedDiagnostics\": [],\n  \"outputDisclosure\": {\n    \"maxInlineBytes\": 10240,\n    \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\",\n    \"fullPayloadDump\": {\n      \"path\": \"/root/agentrun-v02/.state/output-dumps/2026-07-26T08-17-01-116Z-38770-37ac6065.json\",\n      \"bytes\": 51695,\n      \"sha256\": \"9b11f03ce7a4fd6948baa26c7aec8ae9a2d83344b55d84e5fbae5c545a1a2d83\",\n      \"thresholdBytes\": 10240,\n      \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\",\n      \"contentType\": \"application/json\"\n    },\n    \"valuesPrinted\": false\n  }\n}\noutputBytes=1022\noutputRecoverable=true\noutputTruncated=true\nexitCode=0",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8952,
+        "rowId": "tool:exec-78ab669b-f0bf-4bd3-ac14-ab8d62b86429",
+        "header": "08:17:15",
+        "command": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: src/main.c\n@@\n static void uart_write(const char *text) {\n     while (*text \"'!= '\"'\\''\\0'\\'') uart_putc(*text++);\n }\n+\n+void *memset(void *destination, int value, unsigned long count) {\n+    unsigned char *bytes = (unsigned char *)destination;\n+    while (count-- \"'!= 0u) *bytes++ = (unsigned char)value;\n+    return destination;\n+}\n@@\n-    arm_2d_fill_colour(&tile, NULL, (arm_2d_colour_t){.hwColour = (uint16_t)(0x1200u | (frame & 0x1fu))});\n+    arm_2d_rgb565_fill_colour(&tile, NULL, (arm_2d_colour_t){.hwColour = (uint16_t)(0x1200u | (frame & 0x1fu))});\n*** End Patch'\"'\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.apply-patch\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compile\n... clipped ...",
+        "normalizedCommand": "hwpod workspace apply-patch --patch-content '*** Begin Patch *** Update File: src/main.c @@ static void uart_write(const char *text) { while (*text \"'!= '\"'\\''\\0'\\'') uart_putc(*text++); } + +void *memset(void *destination, int value, unsigned long count) { + unsigned char *bytes = (unsigned char *)destination; + while (count-- \"'!= 0u) *bytes++ = (unsigned char)value; + return destination; +} @@ - arm_2d_fill_colour(&tile, NULL, (arm_2d_colour_t){.hwColour = (uint16_t)(0x1200u | (frame & 0x1fu))}); + arm_2d_rgb565_fill_colour(&tile, NULL, (arm_2d_colour_t){.hwColour = (uint16_t)(0x1200u | (frame & 0x1fu))}); *** End Patch'\"' output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.apply-patch\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \n... clipped ...",
+        "bodyPreview": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: src/main.c\n@@\n static void uart_write(const char *text) {\n     while (*text \"'!= '\"'\\''\\0'\\'') uart_putc(*text++);\n }\n+\n+void *memset(void *destination, int value, unsigned long count) {\n+    unsigned char *bytes = (unsigned char *)destination;\n+    while (count-- \"'!= 0u) *bytes++ = (unsigned char)value;\n+    return destination;\n+}\n@@\n-    arm_2d_fill_colour(&tile, NULL, (arm_2d_colour_t){.hwColour = (uint16_t)(0x1200u | (frame & 0x1fu))});\n+    arm_2d_rgb565_fill_colour(&tile, NULL, (arm_2d_colour_t){.hwColour = (uint16_t)(0x1200u | (frame & 0x1fu))});\n*** End Patch'\"'\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.apply-patch\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"worksp\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8957,
+        "rowId": "tool:exec-00eff5b9-902a-4977-86a2-863950e6253f",
+        "header": "08:17:27",
+        "command": "hwpod build\noutput:\n{\n  \"ok\": false,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"failed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"debug.build\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"debug.build\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_0fb201e6-eae6-4cfa-99f6-3c591b220eb9\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"run\n... clipped ...",
+        "normalizedCommand": "hwpod build output: { \"ok\": false, \"action\": \"hwpod-cli.invoke\", \"status\": \"failed\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"debug.build\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-stm32f405-qemu\", \"--intent\", \"debug.build\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_0fb201e6-eae6-4cfa-99f6-3c591b220eb9\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://152.53.229.148:6681\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\", \"\n... clipped ...",
+        "bodyPreview": "hwpod build\noutput:\n{\n  \"ok\": false,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"failed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"debug.build\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"debug.build\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_0fb201e6-eae6-4cfa-99f6-3c591b220eb9\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\": \"api\",\n    \"baseUrl\": \"http://152.53.229.148:6681\",\n    \"source\": \"runtime-env\",\n    \"sourceName\": \"HWLAB_RUNTIME_API_URL\",\n    \"explicitOverride\": false,\n    \"lane\": null\n... clipped ...",
+        "exitCode": 1
+      },
+      {
+        "source": "trace-row",
+        "seq": 8960,
+        "rowId": "tool:exec-7339dbfd-95f8-40ea-a6b5-feb85bbc2d37",
+        "header": "08:17:36",
+        "command": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: src/main.c\n@@\n-void *memset(void *destination, int value, unsigned long count) {\n+void *memset(void *destination, int value, unsigned int count) {\n*** End Patch'\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.apply-patch\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"workspace.apply-patch\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_5b843f3a-2e38-4f5e-a443-ff1668b\n... clipped ...",
+        "normalizedCommand": "hwpod workspace apply-patch --patch-content '*** Begin Patch *** Update File: src/main.c @@ -void *memset(void *destination, int value, unsigned long count) { +void *memset(void *destination, int value, unsigned int count) { *** End Patch' output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.apply-patch\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-stm32f405-qemu\", \"--intent\", \"workspace.apply-patch\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_5b843f3a-2e38-4f5e-a443-ff1668b775f0\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-stm32f405-qem\n... clipped ...",
+        "bodyPreview": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: src/main.c\n@@\n-void *memset(void *destination, int value, unsigned long count) {\n+void *memset(void *destination, int value, unsigned int count) {\n*** End Patch'\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.apply-patch\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"workspace.apply-patch\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_5b843f3a-2e38-4f5e-a443-ff1668b775f0\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"P\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8964,
+        "rowId": "tool:exec-a3ca8631-5efd-43d5-bc32-ed929ddf9409",
+        "header": "08:17:45",
+        "command": "hwpod build\noutput:\n{\n  \"ok\": false,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"failed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"debug.build\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"debug.build\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_c53477bd-4d99-4b58-bc10-645d209d8a08\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"run\n... clipped ...",
+        "normalizedCommand": "hwpod build output: { \"ok\": false, \"action\": \"hwpod-cli.invoke\", \"status\": \"failed\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"debug.build\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-stm32f405-qemu\", \"--intent\", \"debug.build\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_c53477bd-4d99-4b58-bc10-645d209d8a08\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://152.53.229.148:6681\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\", \"\n... clipped ...",
+        "bodyPreview": "hwpod build\noutput:\n{\n  \"ok\": false,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"failed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"debug.build\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"debug.build\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_c53477bd-4d99-4b58-bc10-645d209d8a08\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\": \"api\",\n    \"baseUrl\": \"http://152.53.229.148:6681\",\n    \"source\": \"runtime-env\",\n    \"sourceName\": \"HWLAB_RUNTIME_API_URL\",\n    \"explicitOverride\": false,\n    \"lane\": null\n... clipped ...",
+        "exitCode": 1
+      },
+      {
+        "source": "trace-row",
+        "seq": 8968,
+        "rowId": "tool:exec-19665568-030a-463a-b284-b24bdbb85f16",
+        "header": "08:18:07",
+        "command": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: src/main.c\n@@\n-    arm_2d_rgb565_fill_colour(&tile, NULL, (arm_2d_colour_t){.hwColour = (uint16_t)(0x1200u | (frame & 0x1fu))});\n-    framebuffer[(frame * 3u) % (32u * 16u)] = (uint16_t)(0x07e0u | (frame & 0x1fu));\n+    uint32_t i;\n+    uint16_t colour = (uint16_t)(0x1200u | (frame & 0x1fu));\n+    (void)tile;\n+    for (i = 0; i < 32u * 16u; ++i) framebuffer[i] = colour;\n+    framebuffer[(frame * 3u) % (32u * 16u)] = (uint16_t)(0x07e0u | (frame & 0x1fu));\n*** End Patch'\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.apply-patch\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n    \n... clipped ...",
+        "normalizedCommand": "hwpod workspace apply-patch --patch-content '*** Begin Patch *** Update File: src/main.c @@ - arm_2d_rgb565_fill_colour(&tile, NULL, (arm_2d_colour_t){.hwColour = (uint16_t)(0x1200u | (frame & 0x1fu))}); - framebuffer[(frame * 3u) % (32u * 16u)] = (uint16_t)(0x07e0u | (frame & 0x1fu)); + uint32_t i; + uint16_t colour = (uint16_t)(0x1200u | (frame & 0x1fu)); + (void)tile; + for (i = 0; i < 32u * 16u; ++i) framebuffer[i] = colour; + framebuffer[(frame * 3u) % (32u * 16u)] = (uint16_t)(0x07e0u | (frame & 0x1fu)); *** End Patch' output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.apply-patch\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-stm32f405-qemu\", \"--inten\n... clipped ...",
+        "bodyPreview": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: src/main.c\n@@\n-    arm_2d_rgb565_fill_colour(&tile, NULL, (arm_2d_colour_t){.hwColour = (uint16_t)(0x1200u | (frame & 0x1fu))});\n-    framebuffer[(frame * 3u) % (32u * 16u)] = (uint16_t)(0x07e0u | (frame & 0x1fu));\n+    uint32_t i;\n+    uint16_t colour = (uint16_t)(0x1200u | (frame & 0x1fu));\n+    (void)tile;\n+    for (i = 0; i < 32u * 16u; ++i) framebuffer[i] = colour;\n+    framebuffer[(frame * 3u) % (32u * 16u)] = (uint16_t)(0x07e0u | (frame & 0x1fu));\n*** End Patch'\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.apply-patch\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"workspace.apply-patch\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8732,
+        "rowId": "tool:exec-84ac57a9-501d-463c-babb-e8fa2c3c40ab",
+        "header": "08:08:50",
+        "command": "hwpod workspace ls third_party --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.ls\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"workspace.ls\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.comp\n... clipped ...",
+        "normalizedCommand": "hwpod workspace ls third_party --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 hwpod-id: d601-vm-stm32f405-qemu workspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-stm32f405-qemu\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_3dd0b121-c54f-4a5e-8\n... clipped ...",
+        "bodyPreview": "hwpod workspace ls third_party --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.ls\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"workspace.ls\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_3dd0b121-c54f-4a5e-8e87-1dd8ab72f8b7\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d6\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8734,
+        "rowId": "tool:exec-0fde301e-f012-4f76-a685-8d919845e712",
+        "header": "08:08:51",
+        "command": "hwpod workspace ls config --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.ls\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"workspace.ls\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n... clipped ...",
+        "normalizedCommand": "hwpod workspace ls config --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 hwpod-id: d601-vm-stm32f405-qemu workspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-stm32f405-qemu\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_04f3b2d3-6a13-4a1e-a0c7-9\n... clipped ...",
+        "bodyPreview": "hwpod workspace ls config --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.ls\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"workspace.ls\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_04f3b2d3-6a13-4a1e-a0c7-90b97463ebb9\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8736,
+        "rowId": "tool:exec-2bcbca32-9ed5-4497-9408-5ffadb74a508",
+        "header": "08:08:53",
+        "command": "hwpod workspace ls src --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.ls\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"workspace.ls\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n  \n... clipped ...",
+        "normalizedCommand": "hwpod workspace ls src --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 hwpod-id: d601-vm-stm32f405-qemu workspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-stm32f405-qemu\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_dc88edeb-9bd3-4843-8241-a801\n... clipped ...",
+        "bodyPreview": "hwpod workspace ls src --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.ls\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"workspace.ls\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_dc88edeb-9bd3-4843-8241-a8019939a274\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-st\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8738,
+        "rowId": "tool:exec-c4bebeba-e3e0-4810-a7fb-694d7d45b947",
+        "header": "08:08:54",
+        "command": "hwpod workspace rg 'RCC_APB2ENR' src --context 4 --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"h\n... clipped ...",
+        "normalizedCommand": "hwpod workspace rg 'RCC_APB2ENR' src --context 4 --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 hwpod-id: d601-vm-stm32f405-qemu workspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-stm32f405-qemu\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_1c\n... clipped ...",
+        "bodyPreview": "hwpod workspace rg 'RCC_APB2ENR' src --context 4 --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_1cd87901-9520-4e8c-95d1-5d266fca75c9\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"spec\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8740,
+        "rowId": "tool:exec-d76ee184-c6d3-4805-9b81-e479e1fa214a",
+        "header": "08:08:55",
+        "command": "hwpod workspace rg 'USART1' src --context 4 --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-\n... clipped ...",
+        "normalizedCommand": "hwpod workspace rg 'USART1' src --context 4 --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 hwpod-id: d601-vm-stm32f405-qemu workspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-stm32f405-qemu\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_4621659\n... clipped ...",
+        "bodyPreview": "hwpod workspace rg 'USART1' src --context 4 --hwpod-id d601-vm-stm32f405-qemu --workspace-path /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\nhwpod-id: d601-vm-stm32f405-qemu\nworkspace-path: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_46216594-99bb-49ce-b15e-46b1698f0997\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\"\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8840,
+        "rowId": "tool:exec-b40bd0f7-88f0-47f1-becc-14cc5fe0070d",
+        "header": "08:12:14",
+        "command": "hwpod-ctl spec validate\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-ctl.spec.validate\",\n  \"status\": \"succeeded\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"document\": {\n    \"apiVersion\": \"hwlab.dev/v0alpha1\",\n    \"kind\": \"Hwpod\",\n    \"metadata\": {\n      \"name\": \"d601-vm-stm32f405-qemu\"\n    },\n    \"spec\": {\n      \"nodeBinding\": {\n        \"nodeId\": \"node-d601-vm-hwpod-qemu\"\n      },\n      \"targetDevice\": {\n        \"board\": \"Netduino Plus 2 QEMU\",\n        \"mcu\": \"STM32F405RGT6\",\n        \"simulation\": true\n      },\n      \"workspace\": {\n        \"path\": \"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\",\n        \"toolchain\": \"arm-none-eabi-gcc\",\n        \"buildCommand\": \"scripts/build\",\n        \"rebuildCommand\": \"scripts/rebuild\"\n      },\n      \"debugProbe\": {\n        \"type\": \"qemu\",\n        \"adapter\": \"hwpod-qemu-workspace\",\n        \"downl\n... clipped ...",
+        "normalizedCommand": "hwpod-ctl spec validate output: { \"ok\": true, \"action\": \"hwpod-ctl.spec.validate\", \"status\": \"succeeded\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"document\": { \"apiVersion\": \"hwlab.dev/v0alpha1\", \"kind\": \"Hwpod\", \"metadata\": { \"name\": \"d601-vm-stm32f405-qemu\" }, \"spec\": { \"nodeBinding\": { \"nodeId\": \"node-d601-vm-hwpod-qemu\" }, \"targetDevice\": { \"board\": \"Netduino Plus 2 QEMU\", \"mcu\": \"STM32F405RGT6\", \"simulation\": true }, \"workspace\": { \"path\": \"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\", \"toolchain\": \"arm-none-eabi-gcc\", \"buildCommand\": \"scripts/build\", \"rebuildCommand\": \"scripts/rebuild\" }, \"debugProbe\": { \"type\": \"qemu\", \"adapter\": \"hwpod-qemu-workspace\", \"downloadCommand\": \"scripts/download\", \"resetCommand\": \"scripts/reset\", \"physicalProbe\": false }, \"ioProbe\": { \"uart\": { \"backend\": \"pyserial\", \"port\": \"/home/ubuntu/workspace/\n... clipped ...",
+        "bodyPreview": "hwpod-ctl spec validate\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-ctl.spec.validate\",\n  \"status\": \"succeeded\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"document\": {\n    \"apiVersion\": \"hwlab.dev/v0alpha1\",\n    \"kind\": \"Hwpod\",\n    \"metadata\": {\n      \"name\": \"d601-vm-stm32f405-qemu\"\n    },\n    \"spec\": {\n      \"nodeBinding\": {\n        \"nodeId\": \"node-d601-vm-hwpod-qemu\"\n      },\n      \"targetDevice\": {\n        \"board\": \"Netduino Plus 2 QEMU\",\n        \"mcu\": \"STM32F405RGT6\",\n        \"simulation\": true\n      },\n      \"workspace\": {\n        \"path\": \"/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01\",\n        \"toolchain\": \"arm-none-eabi-gcc\",\n        \"buildCommand\": \"scripts/build\",\n        \"rebuildCommand\": \"scripts/rebuild\"\n      },\n      \"debugProbe\": {\n        \"type\": \"qemu\",\n        \"adapter\": \"hwpod-qemu-workspace\",\n        \"downloadCommand\": \"scripts/download\",\n        \"resetCommand\": \"scripts/reset\",\n        \"physicalProbe\": false\n      },\n      \"ioProbe\": {\n        \"uart\": {\n          \"backend\": \"pyserial\",\n          \"port\"\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8842,
+        "rowId": "tool:exec-5e0b4616-b67b-471c-acb9-bcef3be3fc94",
+        "header": "08:12:15",
+        "command": "hwpod inspect\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"inspect\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"inspect\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_6133824d-6196-43d6-a7c6-10c1b6c0b706\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtime\n... clipped ...",
+        "normalizedCommand": "hwpod inspect output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"inspect\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-stm32f405-qemu\", \"--intent\", \"inspect\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_6133824d-6196-43d6-a7c6-10c1b6c0b706\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://152.53.229.148:6681\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_API_URL\", \"expl\n... clipped ...",
+        "bodyPreview": "hwpod inspect\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"inspect\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"inspect\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_6133824d-6196-43d6-a7c6-10c1b6c0b706\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\": \"api\",\n    \"baseUrl\": \"http://152.53.229.148:6681\",\n    \"source\": \"runtime-env\",\n    \"sourceName\": \"HWLAB_RUNTIME_API_URL\",\n    \"explicitOverride\": false,\n    \"lane\": null,\n  \n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8844,
+        "rowId": "tool:exec-2d9a067a-0846-45e0-b541-93212848f9df",
+        "header": "08:12:17",
+        "command": "hwpod workspace rg 'main|Arm-2D|arm_2d|USART1|RCC_APB2ENR|CMSIS' . --context 2\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"nodeId\": \"node-d601-vm-hwpod-qemu\",\n  \"intent\": \"workspace.rg\",\n  \"operationId\": \"hwpod_plan_c6cc6f6a-b823-44d6-adf4-0a1357e4a543\",\n  \"httpStatus\": 200,\n  \"results\": [\n    {\n      \"opId\": \"op_01_workspace_rg\",\n      \"op\": \"workspace.rg\",\n      \"ok\": true,\n      \"status\": \"completed\",\n      \"commands\": []\n    }\n  ],\n  \"extractedDiagnostics\": [],\n  \"outputDisclosure\": {\n    \"maxInlineBytes\": 10240,\n    \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\",\n    \"fullPayloadDump\": {\n      \"path\": \"/root/agentrun-v02/.state/output-dumps/2026-07-26T08-12-17-058Z-16118-2ae27c5e.json\",\n      \"bytes\": 43146,\n      \"sha256\": \"608f66fd1b9dca3c64dccf69527e5a06f112dec4321d09eabd09bc2e6258464a\",\n      \"thresholdBytes\": 10240,\n      \"configRef\": \"config/agentrun.yaml#nativeDevelop\n... clipped ...",
+        "normalizedCommand": "hwpod workspace rg 'main|Arm-2D|arm_2d|USART1|RCC_APB2ENR|CMSIS' . --context 2 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"nodeId\": \"node-d601-vm-hwpod-qemu\", \"intent\": \"workspace.rg\", \"operationId\": \"hwpod_plan_c6cc6f6a-b823-44d6-adf4-0a1357e4a543\", \"httpStatus\": 200, \"results\": [ { \"opId\": \"op_01_workspace_rg\", \"op\": \"workspace.rg\", \"ok\": true, \"status\": \"completed\", \"commands\": [] } ], \"extractedDiagnostics\": [], \"outputDisclosure\": { \"maxInlineBytes\": 10240, \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\", \"fullPayloadDump\": { \"path\": \"/root/agentrun-v02/.state/output-dumps/2026-07-26T08-12-17-058Z-16118-2ae27c5e.json\", \"bytes\": 43146, \"sha256\": \"608f66fd1b9dca3c64dccf69527e5a06f112dec4321d09eabd09bc2e6258464a\", \"thresholdBytes\": 10240, \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\", \"contentType\": \"application/json\" }, \"valuesPrinted\": false } } outputBytes\n... clipped ...",
+        "bodyPreview": "hwpod workspace rg 'main|Arm-2D|arm_2d|USART1|RCC_APB2ENR|CMSIS' . --context 2\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"nodeId\": \"node-d601-vm-hwpod-qemu\",\n  \"intent\": \"workspace.rg\",\n  \"operationId\": \"hwpod_plan_c6cc6f6a-b823-44d6-adf4-0a1357e4a543\",\n  \"httpStatus\": 200,\n  \"results\": [\n    {\n      \"opId\": \"op_01_workspace_rg\",\n      \"op\": \"workspace.rg\",\n      \"ok\": true,\n      \"status\": \"completed\",\n      \"commands\": []\n    }\n  ],\n  \"extractedDiagnostics\": [],\n  \"outputDisclosure\": {\n    \"maxInlineBytes\": 10240,\n    \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\",\n    \"fullPayloadDump\": {\n      \"path\": \"/root/agentrun-v02/.state/output-dumps/2026-07-26T08-12-17-058Z-16118-2ae27c5e.json\",\n      \"bytes\": 43146,\n      \"sha256\": \"608f66fd1b9dca3c64dccf69527e5a06f112dec4321d09eabd09bc2e6258464a\",\n      \"thresholdBytes\": 10240,\n      \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\",\n      \"contentType\": \"application/json\"\n    },\n    \"valuesPrinted\": false\n  }\n}\noutputBytes=1022\noutputRecoverable=true\noutputTruncated=true\nexitCode=0",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 8846,
+        "rowId": "tool:exec-bd86f4b7-7215-44f7-835f-fa9593bf4b6e",
+        "header": "08:12:18",
+        "command": "hwpod workspace ls\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.ls\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"workspace.ls\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_f85eba62-1fe9-479a-8610-27aadc271ede\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n\n... clipped ...",
+        "normalizedCommand": "hwpod workspace ls output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"hwpodId\": \"d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-stm32f405-qemu\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_f85eba62-1fe9-479a-8610-27aadc271ede\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://152.53.229.148:6681\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB_RUNTIME_\n... clipped ...",
+        "bodyPreview": "hwpod workspace ls\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n  \"hwpodId\": \"d601-vm-stm32f405-qemu\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.ls\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-stm32f405-qemu\",\n      \"--intent\",\n      \"workspace.ls\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_f85eba62-1fe9-479a-8610-27aadc271ede\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-stm32f405-qemu\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\": \"api\",\n    \"baseUrl\": \"http://152.53.229.148:6681\",\n    \"source\": \"runtime-env\",\n    \"sourceName\": \"HWLAB_RUNTIME_API_URL\",\n    \"explicitOverride\": false,\n    \"\n... clipped ...",
+        "exitCode": 0
+      }
+    ]
+  },
+  "observedAt": "2026-07-26T08:19:25.110Z",
+  "validation": {
+    "plan": {
+      "mode": "custom-runtime",
+      "steps": [
+        {
+          "args": {},
+          "kind": "build",
+          "stage": "post-agent-validation",
+          "actionId": "build",
+          "expectedOp": "debug.build"
+        },
+        {
+          "args": {},
+          "kind": "download",
+          "stage": "post-agent-validation",
+          "actionId": "download",
+          "expectedOp": "debug.download"
+        },
+        {
+          "args": {
+            "port": "uart1",
+            "maxBytes": 8192
+          },
+          "kind": "uart",
+          "stage": "post-agent-validation",
+          "actionId": "uart-read",
+          "expectedOp": "io.uart.read"
+        }
+      ],
+      "source": "case-definition.flow",
+      "compileOnly": false,
+      "contractVersion": "hwpod-case-validation-plan-v1"
+    },
+    "results": [
+      {
+        "result": {
+          "ok": true,
+          "op": "debug.build",
+          "opId": "op_01_debug_build",
+          "output": {
+            "ok": true,
+            "op": "debug.build",
+            "cwd": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01",
+            "stdout": "{\"ok\": true, \"status\": \"completed\", \"artifact\": \"build/stm32f405-qemu.elf\", \"sizeBytes\": 12368}"
+          },
+          "status": "completed",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01"
+        },
+        "operation": {
+          "ok": true,
+          "op": "debug.build",
+          "kind": "build",
+          "opId": "op_01_debug_build",
+          "stage": "post-agent-validation",
+          "status": "completed",
+          "actionId": "build",
+          "expected": {
+            "op": "debug.build",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-stm32f405-qemu",
+            "actionId": "build",
+            "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01"
+          },
+          "observed": {
+            "op": "debug.build",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-stm32f405-qemu",
+            "actionId": "op_01_debug_build",
+            "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01"
+          },
+          "topology": {
+            "ok": true
+          },
+          "authority": "hwpod-service",
+          "contractVersion": "hwpod-operation-result-v0.3"
+        }
+      },
+      {
+        "result": {
+          "ok": true,
+          "op": "debug.download",
+          "opId": "op_01_debug_download",
+          "output": {
+            "ok": true,
+            "op": "debug.download",
+            "cwd": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01",
+            "stderr": "",
+            "stdout": "{\"ok\": true, \"action\": \"download\", \"status\": \"running\", \"pid\": 2767804, \"artifact\": \"build/stm32f405-qemu.elf\", \"uartPath\": \".state/qemu/uart\", \"uartTarget\": \"/dev/pts/0\", \"immutableHarness\": true}\n",
+            "commands": [
+              {
+                "ok": true,
+                "cwd": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01",
+                "index": 0,
+                "stderr": "",
+                "stdout": "{\"ok\": true, \"action\": \"download\", \"status\": \"running\", \"pid\": 2767804, \"artifact\": \"build/stm32f405-qemu.elf\", \"uartPath\": \".state/qemu/uart\", \"uartTarget\": \"/dev/pts/0\", \"immutableHarness\": true}\n",
+                "command": [
+                  "python3",
+                  "-c",
+                  "import json,os,pathlib,re,signal,subprocess,sys,time\nartifact=pathlib.Path(\"build/stm32f405-qemu.elf\")\nstate=pathlib.Path('.state/qemu')\npid_file=state/'qemu.pid'\nlog_file=state/'qemu.log'\nuart=pathlib.Path(\".state/qemu/uart\")\ndef running(pid):\n  try: os.kill(pid,0); return True\n  except (ProcessLookupError,PermissionError): return False\nif not artifact.is_file(): print(json.dumps({'ok':False,'status':'failed','error':'artifact_missing','artifact':str(artifact)})); sys.exit(2)\nstate.mkdir(parents=True,exist_ok=True)\ntry: old_pid=int(pid_file.read_text().strip())\nexcept (FileNotFoundError,ValueError): old_pid=None\nif old_pid and running(old_pid):\n  os.kill(old_pid,signal.SIGTERM)\n  for _ in range(20):\n    if not running(old_pid): break\n    time.sleep(0.1)\npid_file.unlink(missing_ok=True)\nuart.unlink(missing_ok=True)\nstream=log_file.open('w',encoding='utf-8')\nproc=subprocess.Popen(['qemu-system-arm','-M','netduinoplus2','-cpu','cortex-m4','-kernel',str(artifact),'-nographic','-monitor','none','-serial','pty'],stdout=stream,stderr=subprocess.STDOUT,start_new_session=True)\nstream.close()\npid_file.write_text(f'{proc.pid}\\n')\npty=None\nfor _ in range(30):\n  time.sleep(0.1)\n  content=log_file.read_text(encoding='utf-8',errors='replace') if log_file.exists() else ''\n  match=re.search(r'(/dev/pts/\\d+)',content)\n  if match: pty=match.group(1); break\n  if proc.poll() is not None: break\nif proc.poll() is not None or not pty:\n  if proc.poll() is None: os.kill(proc.pid,signal.SIGTERM)\n  pid_file.unlink(missing_ok=True)\n  print(json.dumps({'ok':False,'status':'failed','error':'qemu_start_failed' if proc.poll() is not None else 'qemu_uart_pty_missing','exitCode':proc.poll(),'artifact':str(artifact),'logTail':content[-2000:]}))\n  sys.exit(proc.poll() or 1)\nuart.symlink_to(pty)\nprint(json.dumps({'ok':True,'action':'download','status':'running','pid':proc.pid,'artifact':str(artifact),'uartPath':str(uart),'uartTarget':pty,'immutableHarness':True}))"
+                ],
+                "exitCode": 0,
+                "elapsedMs": 2122
+              }
+            ],
+            "exitCode": 0,
+            "commandCount": 1,
+            "bindingSource": "hwpod-node-ops.commandRuns"
+          },
+          "status": "completed"
+        },
+        "operation": {
+          "ok": true,
+          "op": "debug.download",
+          "kind": "download",
+          "opId": "op_01_debug_download",
+          "stage": "post-agent-validation",
+          "status": "completed",
+          "actionId": "download",
+          "expected": {
+            "op": "debug.download",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-stm32f405-qemu",
+            "actionId": "download",
+            "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01"
+          },
+          "observed": {
+            "op": "debug.download",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-stm32f405-qemu",
+            "actionId": "op_01_debug_download",
+            "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01"
+          },
+          "topology": {
+            "ok": true
+          },
+          "authority": "hwpod-service",
+          "contractVersion": "hwpod-operation-result-v0.3"
+        }
+      },
+      {
+        "result": {
+          "ok": true,
+          "op": "io.uart.read",
+          "opId": "op_03_io_uart_read",
+          "output": {
+            "ok": true,
+            "port": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01/.state/qemu/uart",
+            "text": "amebuffer_crc=e51f02fb tile0=00001203\r\nheartbeat=1 frame=00004fa4 framebuffer_crc=de3f1882 tile0=00001204\r\nheartbeat=1 frame=00004fa5 framebuffer_crc=51e3419d tile0=00001205\r\nheartbeat=1 frame=00004fa6 framebuffer_crc=dd4e012a tile0=00001206\r\nheartbeat=1 frame=00004fa7 framebuffer_crc=47c87d05 tile0=00001207\r\nheartbeat=1 frame=00004fa8 framebuffer_crc=0ac2c5c7 tile0=00001208\r\nheartbeat=1 frame=00004fa9 framebuffer_crc=402fd5e7 tile0=00001209\r\nheartbeat=1 frame=00004faa framebuffer_crc=921040f8 tile0=0000120a\r\nheartbeat=1 frame=00004fab framebuffer_crc=eb17b3b3 tile0=0000120b\r\nheartbeat=1 frame=00004fac framebuffer_crc=15bca4aa tile0=0000120c\r\nheartb\n... [omitted middle; full output in outputDisclosure.fullPayloadDump] ...\n004fcc framebuffer_crc=fc96c5c3 tile0=0000120c\r\nheartbeat=1 frame=00004fcd framebuffer_crc=bd0cd839 tile0=0000120d\r\nheartbeat=1 frame=00004fce framebuffer_crc=f30e6576 tile0=0000120e\r\nheartbeat=1 frame=00004fcf framebuffer_crc=f23a78e7 tile0=0000120f\r\nheartbeat=1 frame=00004fd0 framebuffer_crc=b3231c7c tile0=00001210\r\nheartbeat=1 frame=00004fd1 framebuffer_crc=66d18a3a tile0=00001211\r\nheartbeat=1 frame=00004fd2 framebuffer_crc=175200bd tile0=00001212\r\nheartbeat=1 frame=00004fd3 framebuffer_crc=38ed9332 tile0=00001213\r\nheartbeat=1 frame=00004fd4 framebuffer_crc=3b3d6a5a tile0=00001214\r\nheartbeat=1 frame=00004fd5 framebuffer_crc=06c59261 tile0=00001215\r\nheartbeat=1 frame=00004fd6 framebuffer_crc=92e99980 tile0=00001216\r\nheartbeat=1 frame=00004fd7 framebuffer_crc=73bf4e43 tile0=00001217\r\nheartbeat=1 frame=00004fd8 framebuffer_crc=f0005ed2 tile0=00001218\r\nheartbeat=1 frame=00004fd9 framebuffer_crc=6d33a86c tile0=00001219\r\nheartbeat=1 frame=00004fda framebuffer_crc=af9db73d tile0=0000121a\r\nheartbeat=1 frame=00004fdb framebuffer_crc=f975560b tile0=0000121b\r\nheartbeat=1 frame=00004fdc framebuffer_crc=1099d81a tile0=0000121c\r\nheartbeat=1 frame=00004fdd framebuffer_crc=996be06b tile0=0000121d\r\nheartbeat=1 frame=00004fde framebuffer_crc=335ddbba tile0=0000121e\r\nheartbeat=1 frame=00004fdf framebuffer_crc=0",
+            "bytes": 4095,
+            "baudRate": 115200,
+            "reopened": false,
+            "truncated": true,
+            "dataBase64": "YW1lYnVmZmVyX2NyYz1lNTFmMDJmYiB0aWxlMD0wMDAwMTIwMw0KaGVhcnRiZWF0PTEgZnJhbWU9MDAwMDRmYTQgZnJhbWVidWZmZXJfY3JjPWRlM2YxODgyIHRpbGUwPTAwMDAxMjA0DQpoZWFydGJlYXQ9MSBmcmFtZT0wMDAwNGZhNSBmcmFtZWJ1ZmZlcl9jcmM9NTFlMzQxOWQgdGlsZTA9MDAwMDEyMDUNCmhlYXJ0YmVhdD0xIGZyYW1lPTAwMDA0ZmE2IGZyYW1lYnVmZmVyX2NyYz1kZDRlMDEyYSB0aWxlMD0wMDAwMTIwNg0KaGVhcnRiZWF0PTEgZnJhbWU9MDAwMDRmYTcgZnJhbWVidWZmZXJfY3JjPTQ3Yzg3ZDA1IHRpbGUwPTAwMDAxMjA3DQpoZWFydGJlYXQ9MSBmcmFtZT0wMDAwNGZhOCBmcmFtZWJ1ZmZlcl9jcmM9MGFjMmM1YzcgdGlsZTA9MDAwMDEyMDgNCmhlYXJ0YmVhdD0xIGZyYW1lPTAwMDA0ZmE5IGZyYW1lYnVmZmVyX2NyYz00MDJmZDVlNyB0aWxlMD0wMDAwMTIwOQ0KaGVhcnRiZWF0PTEgZnJhbWU9MDAwMDRmYWEgZnJhbWVidWZmZXJfY3JjPTkyM\n... [omitted middle; full output in outputDisclosure.fullPayloadDump] ...\nPTEgZnJhbWU9MDAwMDRmZDEgZnJhbWVidWZmZXJfY3JjPTY2ZDE4YTNhIHRpbGUwPTAwMDAxMjExDQpoZWFydGJlYXQ9MSBmcmFtZT0wMDAwNGZkMiBmcmFtZWJ1ZmZlcl9jcmM9MTc1MjAwYmQgdGlsZTA9MDAwMDEyMTINCmhlYXJ0YmVhdD0xIGZyYW1lPTAwMDA0ZmQzIGZyYW1lYnVmZmVyX2NyYz0zOGVkOTMzMiB0aWxlMD0wMDAwMTIxMw0KaGVhcnRiZWF0PTEgZnJhbWU9MDAwMDRmZDQgZnJhbWVidWZmZXJfY3JjPTNiM2Q2YTVhIHRpbGUwPTAwMDAxMjE0DQpoZWFydGJlYXQ9MSBmcmFtZT0wMDAwNGZkNSBmcmFtZWJ1ZmZlcl9jcmM9MDZjNTkyNjEgdGlsZTA9MDAwMDEyMTUNCmhlYXJ0YmVhdD0xIGZyYW1lPTAwMDA0ZmQ2IGZyYW1lYnVmZmVyX2NyYz05MmU5OTk4MCB0aWxlMD0wMDAwMTIxNg0KaGVhcnRiZWF0PTEgZnJhbWU9MDAwMDRmZDcgZnJhbWVidWZmZXJfY3JjPTczYmY0ZTQzIHRpbGUwPTAwMDAxMjE3DQpoZWFydGJlYXQ9MSBmcmFtZT0wMDAwNGZkOCBmcmFtZWJ1ZmZlcl9jcmM9ZjAwMDVlZDIgdGlsZTA9MDAwMDEyMTgNCmhlYXJ0YmVhdD0xIGZyYW1lPTAwMDA0ZmQ5IGZyYW1lYnVmZmVyX2NyYz02ZDMzYTg2YyB0aWxlMD0wMDAwMTIxOQ0KaGVhcnRiZWF0PTEgZnJhbWU9MDAwMDRmZGEgZnJhbWVidWZmZXJfY3JjPWFmOWRiNzNkIHRpbGUwPTAwMDAxMjFhDQpoZWFydGJlYXQ9MSBmcmFtZT0wMDAwNGZkYiBmcmFtZWJ1ZmZlcl9jcmM9Zjk3NTU2MGIgdGlsZTA9MDAwMDEyMWINCmhlYXJ0YmVhdD0xIGZyYW1lPTAwMDA0ZmRjIGZyYW1lYnVmZmVyX2NyYz0xMDk5ZDgxYSB0aWxlMD0wMDAwMTIxYw0KaGVhcnRiZWF0PTEgZnJhbWU9MDAwMDRmZGQgZnJhbWVidWZmZXJfY3JjPTk5NmJlMDZiIHRpbGUwPTAwMDAxMjFkDQpoZWFydGJlYXQ9MSBmcmFtZT0wMDAwNGZkZSBmcmFtZWJ1ZmZlcl9jcmM9MzM1ZGRiYmEgdGlsZTA9MDAwMDEyMWUNCmhlYXJ0YmVhdD0xIGZyYW1lPTAwMDA0ZmRmIGZyYW1lYnVmZmVyX2NyYz0w",
+            "bindingSource": "pyserial"
+          },
+          "status": "completed"
+        },
+        "operation": {
+          "ok": true,
+          "op": "io.uart.read",
+          "kind": "uart",
+          "opId": "op_03_io_uart_read",
+          "stage": "post-agent-validation",
+          "status": "completed",
+          "actionId": "uart-read",
+          "expected": {
+            "op": "io.uart.read",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-stm32f405-qemu",
+            "actionId": "uart-read"
+          },
+          "observed": {
+            "op": "io.uart.read",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-stm32f405-qemu",
+            "actionId": "op_03_io_uart_read",
+            "workspacePath": ""
+          },
+          "topology": {
+            "ok": true
+          },
+          "authority": "hwpod-service",
+          "contractVersion": "hwpod-operation-result-v0.3"
+        },
+        "observation": {
+          "ok": true,
+          "kind": "uart",
+          "stage": "post-agent-validation",
+          "status": "completed",
+          "actionId": "uart-read",
+          "authority": "hwpod-service",
+          "operationId": "op_03_io_uart_read",
+          "sampleCount": 32,
+          "evidenceLevel": "serial-log",
+          "observationId": "uart-read:op_03_io_uart_read",
+          "contractVersion": "hwpod-observation-result-v1"
+        }
+      }
+    ],
+    "archivePath": "validation-observations.json"
+  },
+  "compileOnly": false,
+  "traceLookup": {
+    "source": "hwlab-cli.client.agent",
+    "baseUrl": "http://127.0.0.1:6677",
+    "traceId": "trc_harnessrl_ccd987568ebc36d6dddc1a3d",
+    "commands": {
+      "trace": "hwlab-cli client agent trace trc_harnessrl_ccd987568ebc36d6dddc1a3d --render web",
+      "result": "hwlab-cli client agent result trc_harnessrl_ccd987568ebc36d6dddc1a3d",
+      "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_ccd987568ebc36d6dddc1a3d",
+      "traceFull": "hwlab-cli client agent trace trc_harnessrl_ccd987568ebc36d6dddc1a3d --render web --full",
+      "sessionStatus": "hwlab-cli client agent session status ses_c95d4982-6d50-44fa-972e-e784903c3815"
+    },
+    "strategy": "id_plus_existing_cli",
+    "threadId": "",
+    "sessionId": "ses_c95d4982-6d50-44fa-972e-e784903c3815",
+    "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-stage-d_run-embdagentbench-arm2d-staged-l1-20260726-hardware01"
+  },
+  "autoEvaluation": false,
+  "postValidation": {
+    "source": "case-run-runner-post-agent-compile-check",
+    "boundary": "runner-post-agent-validation",
+    "returnCode": 0
+  },
+  "contractVersion": "hwpod-case-run-evidence-v1"
+}

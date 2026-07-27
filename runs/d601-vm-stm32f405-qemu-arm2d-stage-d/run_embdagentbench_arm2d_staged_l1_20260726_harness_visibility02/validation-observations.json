@@ -1,0 +1,209 @@
+{
+  "contractVersion": "hwpod-case-validation-observations-v1",
+  "caseId": "d601-vm-stm32f405-qemu-arm2d-stage-d",
+  "runId": "run_embdagentbench_arm2d_staged_l1_20260726_harness_visibility02",
+  "observedAt": "2026-07-26T11:50:05.891Z",
+  "plan": {
+    "mode": "custom-runtime",
+    "steps": [
+      {
+        "args": {},
+        "kind": "build",
+        "stage": "post-agent-validation",
+        "actionId": "build",
+        "expectedOp": "debug.build"
+      },
+      {
+        "args": {},
+        "kind": "download",
+        "stage": "post-agent-validation",
+        "actionId": "download",
+        "expectedOp": "debug.download"
+      },
+      {
+        "args": {
+          "port": "uart1",
+          "maxBytes": 8192
+        },
+        "kind": "uart",
+        "stage": "post-agent-validation",
+        "actionId": "uart-read",
+        "expectedOp": "io.uart.read"
+      }
+    ],
+    "source": "case-definition.flow",
+    "compileOnly": false,
+    "contractVersion": "hwpod-case-validation-plan-v1"
+  },
+  "results": [
+    {
+      "operation": {
+        "contractVersion": "hwpod-operation-result-v0.3",
+        "authority": "hwpod-service",
+        "actionId": "build",
+        "stage": "post-agent-validation",
+        "kind": "build",
+        "op": "debug.build",
+        "opId": "op_01_debug_build",
+        "status": "completed",
+        "ok": true,
+        "expected": {
+          "hwpodId": "d601-vm-stm32f405-qemu",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-harness-visibility02",
+          "op": "debug.build",
+          "actionId": "build"
+        },
+        "observed": {
+          "hwpodId": "d601-vm-stm32f405-qemu",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-harness-visibility02",
+          "op": "debug.build",
+          "actionId": "op_01_debug_build"
+        },
+        "topology": {
+          "ok": true
+        }
+      },
+      "result": {
+        "opId": "op_01_debug_build",
+        "op": "debug.build",
+        "status": "completed",
+        "ok": true,
+        "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-harness-visibility02",
+        "output": {
+          "ok": true,
+          "op": "debug.build",
+          "cwd": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-harness-visibility02",
+          "stdout": "{\"ok\": true, \"status\": \"completed\", \"artifact\": \"build/stm32f405-qemu.elf\", \"sizeBytes\": 32544}"
+        }
+      }
+    },
+    {
+      "operation": {
+        "contractVersion": "hwpod-operation-result-v0.3",
+        "authority": "hwpod-service",
+        "actionId": "download",
+        "stage": "post-agent-validation",
+        "kind": "download",
+        "op": "debug.download",
+        "opId": "op_01_debug_download",
+        "status": "completed",
+        "ok": true,
+        "expected": {
+          "hwpodId": "d601-vm-stm32f405-qemu",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-harness-visibility02",
+          "op": "debug.download",
+          "actionId": "download"
+        },
+        "observed": {
+          "hwpodId": "d601-vm-stm32f405-qemu",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-harness-visibility02",
+          "op": "debug.download",
+          "actionId": "op_01_debug_download"
+        },
+        "topology": {
+          "ok": true
+        }
+      },
+      "result": {
+        "opId": "op_01_debug_download",
+        "op": "debug.download",
+        "status": "completed",
+        "ok": true,
+        "output": {
+          "ok": true,
+          "cwd": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-harness-visibility02",
+          "op": "debug.download",
+          "bindingSource": "hwpod-node-ops.commandRuns",
+          "commands": [
+            {
+              "index": 0,
+              "command": [
+                "python3",
+                "-c",
+                "import json,os,pathlib,re,signal,subprocess,sys,time\nartifact=pathlib.Path(\"build/stm32f405-qemu.elf\")\nstate=pathlib.Path('.state/qemu')\npid_file=state/'qemu.pid'\nlog_file=state/'qemu.log'\nuart=pathlib.Path(\".state/qemu/uart\")\ndef running(pid):\n  try: os.kill(pid,0); return True\n  except (ProcessLookupError,PermissionError): return False\nif not artifact.is_file(): print(json.dumps({'ok':False,'status':'failed','error':'artifact_missing','artifact':str(artifact)})); sys.exit(2)\nstate.mkdir(parents=True,exist_ok=True)\ntry: old_pid=int(pid_file.read_text().strip())\nexcept (FileNotFoundError,ValueError): old_pid=None\nif old_pid and running(old_pid):\n  os.kill(old_pid,signal.SIGTERM)\n  for _ in range(20):\n    if not running(old_pid): break\n    time.sleep(0.1)\npid_file.unlink(missing_ok=True)\nuart.unlink(missing_ok=True)\nstream=log_file.open('w',encoding='utf-8')\nproc=subprocess.Popen(['qemu-system-arm','-M','netduinoplus2','-cpu','cortex-m4','-kernel',str(artifact),'-nographic','-monitor','none','-serial','pty'],stdout=stream,stderr=subprocess.STDOUT,start_new_session=True)\nstream.close()\npid_file.write_text(f'{proc.pid}\\n')\npty=None\nfor _ in range(30):\n  time.sleep(0.1)\n  content=log_file.read_text(encoding='utf-8',errors='replace') if log_file.exists() else ''\n  match=re.search(r'(/dev/pts/\\d+)',content)\n  if match: pty=match.group(1); break\n  if proc.poll() is not None: break\nif proc.poll() is not None or not pty:\n  if proc.poll() is None: os.kill(proc.pid,signal.SIGTERM)\n  pid_file.unlink(missing_ok=True)\n  print(json.dumps({'ok':False,'status':'failed','error':'qemu_start_failed' if proc.poll() is not None else 'qemu_uart_pty_missing','exitCode':proc.poll(),'artifact':str(artifact),'logTail':content[-2000:]}))\n  sys.exit(proc.poll() or 1)\nuart.symlink_to(pty)\nprint(json.dumps({'ok':True,'action':'download','status':'running','pid':proc.pid,'artifact':str(artifact),'uartPath':str(uart),'uartTarget':pty,'immutableHarness':True}))"
+              ],
+              "ok": true,
+              "cwd": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-harness-visibility02",
+              "exitCode": 0,
+              "stdout": "{\"ok\": true, \"action\": \"download\", \"status\": \"running\", \"pid\": 2821219, \"artifact\": \"build/stm32f405-qemu.elf\", \"uartPath\": \".state/qemu/uart\", \"uartTarget\": \"/dev/pts/4\", \"immutableHarness\": true}\n",
+              "stderr": "",
+              "elapsedMs": 2124
+            }
+          ],
+          "commandCount": 1,
+          "exitCode": 0,
+          "stdout": "{\"ok\": true, \"action\": \"download\", \"status\": \"running\", \"pid\": 2821219, \"artifact\": \"build/stm32f405-qemu.elf\", \"uartPath\": \".state/qemu/uart\", \"uartTarget\": \"/dev/pts/4\", \"immutableHarness\": true}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "operation": {
+        "contractVersion": "hwpod-operation-result-v0.3",
+        "authority": "hwpod-service",
+        "actionId": "uart-read",
+        "stage": "post-agent-validation",
+        "kind": "uart",
+        "op": "io.uart.read",
+        "opId": "op_03_io_uart_read",
+        "status": "completed",
+        "ok": true,
+        "expected": {
+          "hwpodId": "d601-vm-stm32f405-qemu",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "op": "io.uart.read",
+          "actionId": "uart-read"
+        },
+        "observed": {
+          "hwpodId": "d601-vm-stm32f405-qemu",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "",
+          "op": "io.uart.read",
+          "actionId": "op_03_io_uart_read"
+        },
+        "topology": {
+          "ok": true
+        }
+      },
+      "result": {
+        "opId": "op_03_io_uart_read",
+        "op": "io.uart.read",
+        "status": "completed",
+        "ok": true,
+        "output": {
+          "ok": true,
+          "stdout": ""
+        }
+      },
+      "blocker": {
+        "code": "hwpod_validation_observation_missing",
+        "summary": "HWPOD uart operation returned no observation result",
+        "details": {
+          "actionId": "uart-read",
+          "operationId": "op_03_io_uart_read"
+        }
+      }
+    }
+  ],
+  "replay": {
+    "contractVersion": "hwpod-case-validation-replay-v1",
+    "source": "archived-hwpod-operation-observations",
+    "planMode": "custom-runtime",
+    "actionIds": [
+      "build",
+      "download",
+      "uart-read"
+    ],
+    "operationIds": [
+      "op_01_debug_build",
+      "op_01_debug_download",
+      "op_03_io_uart_read"
+    ],
+    "observationIds": [],
+    "relationships": []
+  }
+}

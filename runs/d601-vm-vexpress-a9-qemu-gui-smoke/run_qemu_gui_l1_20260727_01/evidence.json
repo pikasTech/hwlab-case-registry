@@ -1,0 +1,636 @@
+{
+  "agent": {
+    "polls": 39,
+    "backend": "gpt-pika",
+    "baseUrl": "http://127.0.0.1:6677",
+    "traceId": "trc_harnessrl_8058e61d70d9eab603318718",
+    "timedOut": false,
+    "projectId": "prj_hwpod_workbench",
+    "sessionId": "ses_bf4a1193-6d9c-4c19-ad7e-b87825841cfc",
+    "timeoutMs": 300000,
+    "promptPath": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_01/agent-prompt.md",
+    "stageStatus": "completed",
+    "traceLookup": {
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "source": "hwlab-cli.client.agent",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_8058e61d70d9eab603318718",
+      "commands": {
+        "trace": "hwlab-cli client agent trace trc_harnessrl_8058e61d70d9eab603318718 --render web",
+        "result": "hwlab-cli client agent result trc_harnessrl_8058e61d70d9eab603318718",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_8058e61d70d9eab603318718",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_8058e61d70d9eab603318718 --render web --full",
+        "sessionStatus": "hwlab-cli client agent session status ses_bf4a1193-6d9c-4c19-ad7e-b87825841cfc"
+      },
+      "strategy": "id_plus_existing_cli",
+      "sessionId": "ses_bf4a1193-6d9c-4c19-ad7e-b87825841cfc",
+      "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-smoke_run-qemu-gui-l1-20260727-01"
+    },
+    "promptSha256": "3ae24c12e773de99c49617e5a264c9331702bfb5cd0b05c0edfa0c2e3addfd21",
+    "traceCommand": "hwlab-cli client agent trace trc_harnessrl_8058e61d70d9eab603318718 --render web",
+    "agentRunStatus": "completed",
+    "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-smoke_run-qemu-gui-l1-20260727-01",
+    "inspectCommand": "hwlab-cli client agent inspect --trace-id trc_harnessrl_8058e61d70d9eab603318718",
+    "lastHttpStatus": 200,
+    "pollIntervalMs": 2000,
+    "sessionCommand": "hwlab-cli client agent session status ses_bf4a1193-6d9c-4c19-ad7e-b87825841cfc",
+    "terminalStatus": "completed",
+    "nextPollCommand": "hwlab-cli client agent result trc_harnessrl_8058e61d70d9eab603318718",
+    "providerProfile": "gpt.pika",
+    "infrastructureBackend": "gpt-pika",
+    "resolvedBackendProfile": "gpt-pika",
+    "requestedProviderProfile": "gpt.pika"
+  },
+  "hwpod": {
+    "source": "case-run-runner-post-agent-compile-check",
+    "command": [
+      "bun",
+      "hwpod-cli.ts",
+      "build",
+      "--spec",
+      "hwpod-spec.yaml",
+      "--reason",
+      "case-run d601-vm-vexpress-a9-qemu-gui-smoke run_qemu_gui_l1_20260727_01 custom-runtime"
+    ],
+    "exitCode": 0,
+    "operation": {
+      "ok": true,
+      "op": "debug.build",
+      "opId": "op_01_debug_build",
+      "status": "completed",
+      "expected": {
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+        "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01"
+      },
+      "observed": {
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+        "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01"
+      },
+      "topology": {
+        "ok": true
+      },
+      "authority": "case-hwpod-yaml",
+      "contractVersion": "hwpod-operation-result-v0.3"
+    },
+    "stdoutJson": {
+      "ok": true,
+      "action": "hwpod-cli.invoke",
+      "status": "completed",
+      "results": [
+        {
+          "ok": true,
+          "op": "debug.build",
+          "opId": "op_01_debug_build",
+          "output": {
+            "ok": true,
+            "op": "debug.build",
+            "cwd": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01",
+            "stderr": "",
+            "stdout": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n    584\t      0\t      0\t    584\t    248\t/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01/build/qemu-gui.elf\n",
+            "command": [
+              "scripts/build"
+            ],
+            "exitCode": 0,
+            "elapsedMs": 50,
+            "bindingSource": "hwpod-node-ops.command"
+          },
+          "status": "completed"
+        }
+      ]
+    },
+    "buildWaitBlocker": {
+      "code": "hwpod_build_result_missing",
+      "summary": "HWPOD build returned neither a waitable job nor a completed synchronous result"
+    }
+  },
+  "runId": "run_qemu_gui_l1_20260727_01",
+  "apiUrl": "http://127.0.0.1:6681",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-smoke",
+  "replay": {
+    "source": "archived-hwpod-operation-observations",
+    "planMode": "custom-runtime",
+    "actionIds": [
+      "build",
+      "display-capture"
+    ],
+    "operationIds": [
+      "op_01_debug_build"
+    ],
+    "relationships": [],
+    "observationIds": [],
+    "contractVersion": "hwpod-case-validation-replay-v1"
+  },
+  "status": "blocked",
+  "subject": {
+    "setup": {
+      "nodeId": "node-d601-vm-hwpod-qemu",
+      "planId": "run_qemu_gui_l1_20260727_01:prepare:v1:subject-prepare",
+      "stderr": "Preparing worktree (detached HEAD 4ed4040)",
+      "stdout": "HEAD is now at 4ed4040 feat: add VExpress-A9 QEMU GUI subject baseline\n4ed40401ff5686c86f9598ae8239b76374a98d00",
+      "exitCode": 0,
+      "operation": {
+        "ops": [
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_01_subject_commit",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_02_subject_worktree_add",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_03_subject_worktree_head",
+            "status": "completed"
+          }
+        ],
+        "intent": "cmd.run",
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "planId": "run_qemu_gui_l1_20260727_01:prepare:v1:subject-prepare",
+        "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+        "contractVersion": "hwpod-node-ops-v1"
+      },
+      "resources": [],
+      "httpStatus": 200
+    },
+    "subdir": "",
+    "commitId": "4ed40401ff5686c86f9598ae8239b76374a98d00",
+    "resources": [],
+    "worktreePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01",
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": ""
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": ""
+    }
+  },
+  "warnings": {},
+  "agentDiff": {
+    "requests": [
+      {
+        "label": "status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "diff-stat",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "diff-patch",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "submodule-status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "source-root-baseline",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": ""
+      },
+      {
+        "label": "source-root-after-prepare",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": ""
+      },
+      {
+        "label": "source-root-after-agent",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      }
+    ],
+    "diffPatchPath": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_01/agent-diff.patch",
+    "diffCollection": {
+      "config": {
+        "ignore": [
+          {
+            "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+            "pattern": "vendor/**"
+          },
+          {
+            "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+            "pattern": "third_party/**"
+          }
+        ],
+        "include": []
+      },
+      "omitted": [],
+      "tracked": {
+        "paths": [],
+        "diffStat": "",
+        "diffPatchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "included": [],
+      "untracked": {
+        "total": 0,
+        "omitted": 0,
+        "included": 0
+      },
+      "submodules": [],
+      "omittedGroups": [],
+      "contractVersion": "hwpod-case-run-diff-collection-v1"
+    },
+    "diffPatchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": ""
+    },
+    "sourceRootAfterAgent": {
+      "label": "after-agent",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootStatusShort": "?? .worktree/",
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": ""
+    },
+    "sourceRootChangedAfterAgent": true,
+    "sourceRootChangedAfterPrepare": false
+  },
+  "agentTask": {
+    "model": "gpt-5.6-luna",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 300000,
+    "workspace": "subjectWorktree",
+    "constraints": [
+      "只允许通过 HWPOD 读取 subject worktree",
+      "禁止修改任何文件",
+      "禁止由 Agent 启动 QEMU 或执行截图和视频采集",
+      "真实构建与显示采集只由 CaseRun Harness 后置验证执行"
+    ],
+    "promptSha256": "94051654a79b1313b204ff156e6eb0f82141e07ed43896ecaa305c7efdfc982b",
+    "pollIntervalMs": 2000,
+    "providerProfile": "gpt.pika",
+    "reasoningEffort": "low"
+  },
+  "artifacts": [],
+  "decisions": {
+    "reason": "CaseRun records Agent final independently and projects only authoritative HWPOD post-validation observations",
+    "autoEvaluation": false,
+    "runnerPostAgentCompileCheck": "recorded"
+  },
+  "agentFinal": {
+    "source": "agentrun-result",
+    "present": true,
+    "timedOut": false,
+    "naturalEnd": true,
+    "stageStatus": "completed",
+    "text": "已完成只读核查。\n\n- `hwpod-ctl spec validate`：成功，HWPOD 为 `d601-vm-vexpress-a9-qemu-gui`。\n- `hwpod inspect`：成功，目标工作区正确绑定。\n- 通过 HWPOD 读取 `src/main.c`：确认已配置：\n  - framebuffer 地址：`0x61000000`\n  - PL111 控制器地址：`0x10020000`\n  - 代码写入 PL111 控制寄存器并输出 `QEMU-GUI PL111 ready 640x480 RGB565`\n\n判断：当前源码已配置 PL111 framebuffer，符合 VExpress-A9 QEMU GUI 冒烟案例要求。未修改文件、未启动 QEMU、未执行构建或显示采集。",
+    "textChars": 357,
+    "status": "completed",
+    "traceId": "trc_harnessrl_8058e61d70d9eab603318718"
+  },
+  "agentTrace": {
+    "traceId": "trc_harnessrl_8058e61d70d9eab603318718",
+    "status": "completed",
+    "httpStatus": 200,
+    "source": "hwlab-cli.client.agent.trace",
+    "lookup": {
+      "source": "hwlab-cli.client.agent",
+      "strategy": "id_plus_existing_cli",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_8058e61d70d9eab603318718",
+      "sessionId": "ses_bf4a1193-6d9c-4c19-ad7e-b87825841cfc",
+      "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-smoke_run-qemu-gui-l1-20260727-01",
+      "threadId": "",
+      "commands": {
+        "result": "hwlab-cli client agent result trc_harnessrl_8058e61d70d9eab603318718",
+        "trace": "hwlab-cli client agent trace trc_harnessrl_8058e61d70d9eab603318718 --render web",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_8058e61d70d9eab603318718 --render web --full",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_8058e61d70d9eab603318718",
+        "sessionStatus": "hwlab-cli client agent session status ses_bf4a1193-6d9c-4c19-ad7e-b87825841cfc"
+      }
+    },
+    "sourceEventCount": 46,
+    "renderedRowCount": 11,
+    "commandCount": 6,
+    "hwpodCommandCount": 4,
+    "hwpodBuildCommandCount": 0,
+    "keilJobCandidates": [],
+    "terminalStatus": "completed",
+    "commands": [
+      {
+        "source": "trace-row",
+        "seq": 10406,
+        "rowId": "tool:exec-1ed123d3-fd57-4a24-9b66-875e4875998d",
+        "header": "20:39:26",
+        "command": "hwpod-ctl spec validate\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-ctl.spec.validate\",\n  \"status\": \"succeeded\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"document\": {\n    \"apiVersion\": \"hwlab.dev/v0alpha1\",\n    \"kind\": \"Hwpod\",\n    \"metadata\": {\n      \"name\": \"d601-vm-vexpress-a9-qemu-gui\"\n    },\n    \"spec\": {\n      \"nodeBinding\": {\n        \"nodeId\": \"node-d601-vm-hwpod-qemu\"\n      },\n      \"targetDevice\": {\n        \"board\": \"ARM VExpress-A9 QEMU GUI\",\n        \"cpu\": \"cortex-a9\",\n        \"emulator\": \"qemu-system-arm\",\n        \"machine\": \"vexpress-a9\",\n        \"simulation\": true\n      },\n      \"workspace\": {\n        \"path\": \"/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01\",\n        \"toolchain\": \"arm-none-eabi-gcc\",\n        \"buildCommand\": \"scripts/build\",\n        \"rebuildCommand\": \"scripts/rebuild\"\n      },\n      \"debugProbe\": {\n        \"type\n... clipped ...",
+        "normalizedCommand": "hwpod-ctl spec validate output: { \"ok\": true, \"action\": \"hwpod-ctl.spec.validate\", \"status\": \"succeeded\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"document\": { \"apiVersion\": \"hwlab.dev/v0alpha1\", \"kind\": \"Hwpod\", \"metadata\": { \"name\": \"d601-vm-vexpress-a9-qemu-gui\" }, \"spec\": { \"nodeBinding\": { \"nodeId\": \"node-d601-vm-hwpod-qemu\" }, \"targetDevice\": { \"board\": \"ARM VExpress-A9 QEMU GUI\", \"cpu\": \"cortex-a9\", \"emulator\": \"qemu-system-arm\", \"machine\": \"vexpress-a9\", \"simulation\": true }, \"workspace\": { \"path\": \"/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01\", \"toolchain\": \"arm-none-eabi-gcc\", \"buildCommand\": \"scripts/build\", \"rebuildCommand\": \"scripts/rebuild\" }, \"debugProbe\": { \"type\": \"qemu\", \"adapter\": \"hwpod-qemu-gui-workspace\", \"downloadCommand\": \"scripts/download\", \"resetCommand\": \"scripts/reset\", \"physicalProbe\": false }, \"ioProbe\": { \"uart\": {\n... clipped ...",
+        "bodyPreview": "hwpod-ctl spec validate\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-ctl.spec.validate\",\n  \"status\": \"succeeded\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"document\": {\n    \"apiVersion\": \"hwlab.dev/v0alpha1\",\n    \"kind\": \"Hwpod\",\n    \"metadata\": {\n      \"name\": \"d601-vm-vexpress-a9-qemu-gui\"\n    },\n    \"spec\": {\n      \"nodeBinding\": {\n        \"nodeId\": \"node-d601-vm-hwpod-qemu\"\n      },\n      \"targetDevice\": {\n        \"board\": \"ARM VExpress-A9 QEMU GUI\",\n        \"cpu\": \"cortex-a9\",\n        \"emulator\": \"qemu-system-arm\",\n        \"machine\": \"vexpress-a9\",\n        \"simulation\": true\n      },\n      \"workspace\": {\n        \"path\": \"/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01\",\n        \"toolchain\": \"arm-none-eabi-gcc\",\n        \"buildCommand\": \"scripts/build\",\n        \"rebuildCommand\": \"scripts/rebuild\"\n      },\n      \"debugProbe\": {\n        \"type\": \"qemu\",\n        \"adapter\": \"hwpod-qemu-gui-workspace\",\n        \"downloadCommand\": \"scripts/download\",\n        \"resetCommand\": \"scripts/reset\",\n        \"physicalProbe\": false\n      },\n      \"ioProbe\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 10408,
+        "rowId": "tool:exec-dd782633-4161-4590-b76b-a946ba437a00",
+        "header": "20:39:28",
+        "command": "hwpod inspect\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"inspect\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"inspect\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_f6f3b9f0-7bbe-45b0-9b09-6a650c946684\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-n\n... clipped ...",
+        "normalizedCommand": "hwpod inspect output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"inspect\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"inspect\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_f6f3b9f0-7bbe-45b0-9b09-6a650c946684\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://152.53.229.148:6681\", \"source\": \"runtime-env\", \"sourceName\": \"HWLAB\n... clipped ...",
+        "bodyPreview": "hwpod inspect\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"inspect\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"inspect\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_f6f3b9f0-7bbe-45b0-9b09-6a650c946684\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\": \"api\",\n    \"baseUrl\": \"http://152.53.229.148:6681\",\n    \"source\": \"runtime-env\",\n    \"sourceName\": \"HWLAB_RUNTIME_API_URL\",\n    \"explicitOverride\": fal\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 10399,
+        "rowId": "tool:exec-1894f469-b850-49e5-8f48-81efd9c2bd32",
+        "header": "20:39:04",
+        "command": "cat /root/.gitbundle/agentrun/workspace-edd110c49b9786f9/.agents/skills/hwpod-cli/SKILL.md && cat /root/.gitbundle/agentrun/workspace-edd110c49b9786f9/.agents/skills/hwpod-ctl/SKILL.md\noutput:\n---\nname: hwpod-cli\ndescription: Use HWLAB HWPOD from a code agent runner for hardware-development tasks. The hwpod-cli skill resolves an HWPOD by hwpod-id through the HWLAB runtime service, submits hwpod-node-ops through hwlab-api, and waits for hwpod-node results.\n---\n\n# hwpod-cli\n\nThis skill follows Skill(cli-spec). It is the standard task entry for operating an HWPOD from the HWLAB v0.2 Code Agent workspace.\n\n## Standard Path\n\n```text\nhwpod from PATH\n  -> tools/hwpod-cli.ts\n    -> runtime HWPOD registry by hwpod-id\n    -> compiler-backed hwpod-node-ops plan\n      -> /v1/hwpod-node-ops on hwlab-api\n        -> hwpod-node on the host side\n```\n\nThe HWPOD definition is runtime service state. The standard runner contract is `--hwpod-id <id>` plus `--workspace-path <run-worktree>` when the task is b\n... clipped ...",
+        "normalizedCommand": "cat /root/.gitbundle/agentrun/workspace-edd110c49b9786f9/.agents/skills/hwpod-cli/SKILL.md && cat /root/.gitbundle/agentrun/workspace-edd110c49b9786f9/.agents/skills/hwpod-ctl/SKILL.md output: --- name: hwpod-cli description: Use HWLAB HWPOD from a code agent runner for hardware-development tasks. The hwpod-cli skill resolves an HWPOD by hwpod-id through the HWLAB runtime service, submits hwpod-node-ops through hwlab-api, and waits for hwpod-node results. --- # hwpod-cli This skill follows Skill(cli-spec). It is the standard task entry for operating an HWPOD from the HWLAB v0.2 Code Agent workspace. ## Standard Path ```text hwpod from PATH -> tools/hwpod-cli.ts -> runtime HWPOD registry by hwpod-id -> compiler-backed hwpod-node-ops plan -> /v1/hwpod-node-ops on hwlab-api -> hwpod-node on the host side ``` The HWPOD definition is runtime service state. The standard runner contract is `--hwpod-id <id>` plus `--workspace-path <run-worktree>` when the task is bound to a run-local workspace\n... clipped ...",
+        "bodyPreview": "cat /root/.gitbundle/agentrun/workspace-edd110c49b9786f9/.agents/skills/hwpod-cli/SKILL.md && cat /root/.gitbundle/agentrun/workspace-edd110c49b9786f9/.agents/skills/hwpod-ctl/SKILL.md\noutput:\n---\nname: hwpod-cli\ndescription: Use HWLAB HWPOD from a code agent runner for hardware-development tasks. The hwpod-cli skill resolves an HWPOD by hwpod-id through the HWLAB runtime service, submits hwpod-node-ops through hwlab-api, and waits for hwpod-node results.\n---\n\n# hwpod-cli\n\nThis skill follows Skill(cli-spec). It is the standard task entry for operating an HWPOD from the HWLAB v0.2 Code Agent workspace.\n\n## Standard Path\n\n```text\nhwpod from PATH\n  -> tools/hwpod-cli.ts\n    -> runtime HWPOD registry by hwpod-id\n    -> compiler-backed hwpod-node-ops plan\n      -> /v1/hwpod-node-ops on hwlab-api\n        -> hwpod-node on the host side\n```\n\nThe HWPOD definition is runtime service state. The standard runner contract is `--hwpod-id <id>` plus `--workspace-path <run-worktree>` when the task is bound to a run-local workspace. A task may provide the complete `hwpodWorkspaceArgs` string; reuse it exactly. `--spec <path>` is only an explicit debug/import path for a local exported YAML, not the d\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 10401,
+        "rowId": "tool:exec-2ba92eae-892d-4900-85b2-1bcc4d0ed56c",
+        "header": "20:39:18",
+        "command": "command -v hwpod && command -v hwpod-ctl && command -v hwpod-compiler\noutput:\n/root/.gitbundle/agentrun/workspace-edd110c49b9786f9/tools/hwpod\n/root/.gitbundle/agentrun/workspace-edd110c49b9786f9/tools/hwpod-ctl\n/root/.gitbundle/agentrun/workspace-edd110c49b9786f9/tools/hwpod-compiler\noutputBytes=208\noutputRecoverable=true",
+        "normalizedCommand": "command -v hwpod && command -v hwpod-ctl && command -v hwpod-compiler output: /root/.gitbundle/agentrun/workspace-edd110c49b9786f9/tools/hwpod /root/.gitbundle/agentrun/workspace-edd110c49b9786f9/tools/hwpod-ctl /root/.gitbundle/agentrun/workspace-edd110c49b9786f9/tools/hwpod-compiler outputBytes=208 outputRecoverable=true",
+        "bodyPreview": "command -v hwpod && command -v hwpod-ctl && command -v hwpod-compiler\noutput:\n/root/.gitbundle/agentrun/workspace-edd110c49b9786f9/tools/hwpod\n/root/.gitbundle/agentrun/workspace-edd110c49b9786f9/tools/hwpod-ctl\n/root/.gitbundle/agentrun/workspace-edd110c49b9786f9/tools/hwpod-compiler\noutputBytes=208\noutputRecoverable=true\nexitCode=0",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 10412,
+        "rowId": "tool:exec-c7c8c488-3ab6-49ca-9dd5-372df60be61b",
+        "header": "20:39:37",
+        "command": "hwpod workspace rg -n -i 'pl111|framebuffer|fb' src/main.c\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_53154bbc-454f-4436-bd17-08e87b2746ec\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"r\n... clipped ...",
+        "normalizedCommand": "hwpod workspace rg -n -i 'pl111|framebuffer|fb' src/main.c output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_53154bbc-454f-4436-bd17-08e87b2746ec\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://152.53.229.1\n... clipped ...",
+        "bodyPreview": "hwpod workspace rg -n -i 'pl111|framebuffer|fb' src/main.c\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_53154bbc-454f-4436-bd17-08e87b2746ec\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\": \"api\",\n    \"baseUrl\": \"http://152.53.229.148:6681\",\n    \"source\": \"runtime-env\",\n    \"sourceName\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 10414,
+        "rowId": "tool:exec-02c1ca74-6ccd-4f25-935e-f4a21715fc42",
+        "header": "20:39:38",
+        "command": "hwpod workspace cat src/main.c\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.cat\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.cat\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_d5d6bece-4a2c-40e3-900b-0b16a0686de7\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"PO\n... clipped ...",
+        "normalizedCommand": "hwpod workspace cat src/main.c output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.cat\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"workspace.cat\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_d5d6bece-4a2c-40e3-900b-0b16a0686de7\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://152.53.229.148:6681\", \"source\": \"runti\n... clipped ...",
+        "bodyPreview": "hwpod workspace cat src/main.c\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.cat\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.cat\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_d5d6bece-4a2c-40e3-900b-0b16a0686de7\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\": \"api\",\n    \"baseUrl\": \"http://152.53.229.148:6681\",\n    \"source\": \"runtime-env\",\n    \"sourceName\": \"HWLAB_RUNTIME_API_URL\"\n... clipped ...",
+        "exitCode": 0
+      }
+    ]
+  },
+  "observedAt": "2026-07-26T20:40:08.006Z",
+  "validation": {
+    "plan": {
+      "mode": "custom-runtime",
+      "steps": [
+        {
+          "args": {},
+          "kind": "build",
+          "stage": "post-agent-validation",
+          "actionId": "build",
+          "expectedOp": "debug.build"
+        },
+        {
+          "args": {},
+          "kind": "displayCapture",
+          "stage": "post-agent-validation",
+          "actionId": "display-capture",
+          "expectedOp": "display.capture"
+        }
+      ],
+      "source": "case-definition.flow",
+      "compileOnly": false,
+      "contractVersion": "hwpod-case-validation-plan-v1"
+    },
+    "blocker": {
+      "code": "hwpod_build_result_missing",
+      "summary": "HWPOD build returned neither a waitable job nor a completed synchronous result"
+    },
+    "results": [
+      {
+        "result": {
+          "ok": true,
+          "op": "debug.build",
+          "opId": "op_01_debug_build",
+          "output": {
+            "ok": true,
+            "op": "debug.build",
+            "cwd": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01",
+            "stderr": "",
+            "stdout": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n    584\t      0\t      0\t    584\t    248\t/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01/build/qemu-gui.elf\n",
+            "command": [
+              "scripts/build"
+            ],
+            "exitCode": 0,
+            "elapsedMs": 50,
+            "bindingSource": "hwpod-node-ops.command"
+          },
+          "status": "completed"
+        },
+        "blocker": {
+          "code": "hwpod_build_result_missing",
+          "summary": "HWPOD build returned neither a waitable job nor a completed synchronous result"
+        },
+        "operation": {
+          "ok": true,
+          "op": "debug.build",
+          "kind": "build",
+          "opId": "op_01_debug_build",
+          "stage": "post-agent-validation",
+          "status": "completed",
+          "actionId": "build",
+          "expected": {
+            "op": "debug.build",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+            "actionId": "build",
+            "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01"
+          },
+          "observed": {
+            "op": "debug.build",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+            "actionId": "op_01_debug_build",
+            "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-01"
+          },
+          "topology": {
+            "ok": true
+          },
+          "authority": "hwpod-service",
+          "contractVersion": "hwpod-operation-result-v0.3"
+        }
+      }
+    ],
+    "archivePath": "validation-observations.json"
+  },
+  "compileOnly": false,
+  "traceLookup": {
+    "source": "hwlab-cli.client.agent",
+    "baseUrl": "http://127.0.0.1:6677",
+    "traceId": "trc_harnessrl_8058e61d70d9eab603318718",
+    "commands": {
+      "trace": "hwlab-cli client agent trace trc_harnessrl_8058e61d70d9eab603318718 --render web",
+      "result": "hwlab-cli client agent result trc_harnessrl_8058e61d70d9eab603318718",
+      "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_8058e61d70d9eab603318718",
+      "traceFull": "hwlab-cli client agent trace trc_harnessrl_8058e61d70d9eab603318718 --render web --full",
+      "sessionStatus": "hwlab-cli client agent session status ses_bf4a1193-6d9c-4c19-ad7e-b87825841cfc"
+    },
+    "strategy": "id_plus_existing_cli",
+    "threadId": "",
+    "sessionId": "ses_bf4a1193-6d9c-4c19-ad7e-b87825841cfc",
+    "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-smoke_run-qemu-gui-l1-20260727-01"
+  },
+  "autoEvaluation": false,
+  "postValidation": {
+    "source": "case-run-runner-post-agent-compile-check",
+    "boundary": "runner-post-agent-validation",
+    "returnCode": 0
+  },
+  "contractVersion": "hwpod-case-run-evidence-v1"
+}

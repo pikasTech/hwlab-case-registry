@@ -1,0 +1,88 @@
+diff --git a/scripts/hwpod-qemu-cli.py b/scripts/hwpod-qemu-cli.py
+index 4f6bd59..a89f430 100755
+--- a/scripts/hwpod-qemu-cli.py
++++ b/scripts/hwpod-qemu-cli.py
+@@ -30,12 +30,26 @@ def running():
+ 
+ def build(emit_result=True):
+     BUILD.mkdir(parents=True, exist_ok=True)
++    arm2d = ROOT / "third_party" / "Arm-2D"
++    cmsis_dsp = ROOT / "third_party" / "CMSIS-DSP"
+     command = [
+         "arm-none-eabi-gcc", "-mcpu=cortex-m4", "-mthumb", "-ffreestanding",
++        "-mfpu=fpv4-sp-d16", "-mfloat-abi=soft",
+         "-fdata-sections", "-ffunction-sections", "-nostdlib",
++        "-I", str(arm2d / "Library" / "Include"),
++        "-I", str(cmsis_dsp / "Include"),
++        "-I", str(ROOT / "src"),
++        "-I", str(ROOT / "third_party" / "CMSIS" / "CMSIS" / "Core" / "Include"),
+         "-Wl,--gc-sections", f"-Wl,-Map={BUILD / 'stm32f405-qemu.map'}",
+         "-T", str(ROOT / "linker.ld"), str(ROOT / "src/startup.S"),
+-        str(ROOT / "src/main.c"), "-o", str(ELF),
++        str(ROOT / "src/main.c"),
++        str(arm2d / "Library" / "Source" / "arm_2d.c"),
++        str(arm2d / "Library" / "Source" / "arm_2d_draw.c"),
++        str(arm2d / "Library" / "Source" / "arm_2d_async.c"),
++        str(cmsis_dsp / "Source" / "FilteringFunctions" / "arm_fir_f32.c"),
++        str(cmsis_dsp / "Source" / "FilteringFunctions" / "arm_fir_init_f32.c"),
++        "-lgcc",
++        "-o", str(ELF),
+     ]
+     result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
+     if result.returncode != 0:
+diff --git a/src/main.c b/src/main.c
+index a6af673..994640c 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -1,4 +1,24 @@
+ #include <stdint.h>
++#include "arm_2d.h"
++#include "arm_math.h"
++
++#define FRAME_WIDTH  32
++#define FRAME_HEIGHT 16
++static uint16_t framebuffer[FRAME_WIDTH * FRAME_HEIGHT];
++static arm_2d_tile_t framebuffer_tile = {
++    .tRegion = { .tSize = { FRAME_WIDTH, FRAME_HEIGHT } },
++    .pchBuffer = (uint8_t *)framebuffer,
++};
++static float32_t fir_state[4 + 4 - 1];
++static const float32_t fir_coeffs[4] = { 0.25f, 0.25f, 0.25f, 0.25f };
++static float32_t fir_input[4] = { 1.0f, 2.0f, 3.0f, 4.0f };
++static float32_t fir_output[4];
++
++void *memset(void *destination, int value, unsigned int count) {
++    uint8_t *bytes = (uint8_t *)destination;
++    while (count-- != 0u) *bytes++ = (uint8_t)value;
++    return destination;
++}
+ 
+ #define RCC_APB2ENR (*(volatile uint32_t *)0x40023844u)
+ #define USART1_SR   (*(volatile uint32_t *)0x40011000u)
+@@ -16,6 +36,13 @@ static void uart_write(const char *text) {
+ }
+ 
+ int main(void) {
++    arm_fir_instance_f32 fir;
++    arm_2d_init();
++    arm_fir_init_f32(&fir, 4, fir_coeffs, fir_state, 4);
++    arm_fir_f32(&fir, fir_input, fir_output, 4);
++    for (unsigned int index = 0u; index < FRAME_WIDTH * FRAME_HEIGHT; ++index) {
++        framebuffer[index] = 0x1234u;
++    }
+     RCC_APB2ENR |= (1u << 4);
+     USART1_BRR = 0x05b2u;
+     USART1_CR1 = (1u << 13) | (1u << 3) | (1u << 2);
+diff --git a/src/arm_2d_cfg.h b/src/arm_2d_cfg.h
+new file mode 100644
+index 0000000..b6ef027
+--- /dev/null
++++ b/src/arm_2d_cfg.h
+@@ -0,0 +1,7 @@
++#ifndef ARM_2D_CFG_H
++#define ARM_2D_CFG_H
++
++/* Minimal project configuration for the Cortex-M4 compile-only target. */
++#define __ARM_2D_CFG_DEFAULT_SUB_TASK_POOL_SIZE__ 4
++
++#endif

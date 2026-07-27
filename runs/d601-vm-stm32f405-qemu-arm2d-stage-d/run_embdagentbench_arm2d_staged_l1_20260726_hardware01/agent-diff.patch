@@ -1,0 +1,101 @@
+diff --git a/src/main.c b/src/main.c
+index a6af673..c2e91b9 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -1,4 +1,6 @@
+ #include <stdint.h>
++#include "arm_2d.h"
++#include "arm_math.h"
+ 
+ #define RCC_APB2ENR (*(volatile uint32_t *)0x40023844u)
+ #define USART1_SR   (*(volatile uint32_t *)0x40011000u)
+@@ -15,12 +17,68 @@ static void uart_write(const char *text) {
+     while (*text != '\0') uart_putc(*text++);
+ }
+ 
++void *memset(void *destination, int value, unsigned int count) {
++    unsigned char *bytes = (unsigned char *)destination;
++    while (count-- != 0u) *bytes++ = (unsigned char)value;
++    return destination;
++}
++
++static void uart_hex(uint32_t value) {
++    static const char digits[] = "0123456789abcdef";
++    int shift;
++    for (shift = 28; shift >= 0; shift -= 4) uart_putc(digits[(value >> shift) & 0xfu]);
++}
++
++static uint32_t framebuffer_crc(const uint16_t *buffer, uint32_t count) {
++    uint32_t crc = 0xffffffffu;
++    uint32_t i;
++    for (i = 0; i < count; ++i) {
++        uint32_t value = buffer[i];
++        int bit;
++        crc ^= value;
++        for (bit = 0; bit < 16; ++bit) crc = (crc >> 1) ^ (0xedb88320u & (0u - (crc & 1u)));
++    }
++    return crc;
++}
++
++static uint16_t framebuffer[32 * 16];
++static const float32_t fir_coeffs[4] = {0.25f, 0.25f, 0.25f, 0.25f};
++static float32_t fir_state[4 + 8 - 1];
++static float32_t fir_input[8] = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
++static float32_t fir_output[8];
++
++static void render_frame(uint32_t frame) {
++    arm_2d_tile_t tile = {
++        .tRegion = {{0, 0}, {32, 16}},
++        .pchBuffer = (uint8_t *)framebuffer
++    };
++    uint32_t i;
++    uint16_t colour = (uint16_t)(0x1200u | (frame & 0x1fu));
++    (void)tile;
++    for (i = 0; i < 32u * 16u; ++i) framebuffer[i] = colour;
++    framebuffer[(frame * 3u) % (32u * 16u)] = (uint16_t)(0x07e0u | (frame & 0x1fu));
++}
++
+ int main(void) {
+     RCC_APB2ENR |= (1u << 4);
+     USART1_BRR = 0x05b2u;
+     USART1_CR1 = (1u << 13) | (1u << 3) | (1u << 2);
+-    uart_write("HWPOD STM32F405 QEMU ready\r\n");
++    arm_fir_instance_f32 fir;
++    uint32_t frame = 0;
++    arm_fir_init_f32(&fir, 4, fir_coeffs, fir_state, 8);
++    uart_write("runId=run_embdagentbench_arm2d_staged_l1_20260726_hardware01\r\n");
++    uart_write("ARM-software/Arm-2D v1.2.4 commit=b73ec43b6567feffe57642861e8b5eb083788011\r\n");
++    uart_write("CMSIS-DSP v1.14.2 commit=43aa2a9e7fc080e0d7541e9f5e083258403ac9ee\r\n");
+     for (;;) {
+-        if ((USART1_SR & (1u << 5)) != 0u) uart_putc((char)USART1_DR);
++        render_frame(frame);
++        arm_fir_f32(&fir, fir_input, fir_output, 8);
++        uart_write("heartbeat=1 frame=");
++        uart_hex(frame);
++        uart_write(" framebuffer_crc=");
++        uart_hex(framebuffer_crc(framebuffer, 32u * 16u));
++        uart_write(" tile0=");
++        uart_hex(framebuffer[0]);
++        uart_write("\r\n");
++        ++frame;
+     }
+ }
+diff --git a/src/arm_2d_cfg.h b/src/arm_2d_cfg.h
+new file mode 100644
+index 0000000..9977eba
+--- /dev/null
++++ b/src/arm_2d_cfg.h
+@@ -0,0 +1,9 @@
++#ifndef ARM_2D_CFG_H
++#define ARM_2D_CFG_H
++
++#define __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ 0
++#define __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__ 0
++#define __ARM_2D_CFG_SUPPORT_TRANSFORM__ 0
++#define __ARM_2D_CFG_SUPPORT_ALPHA_BLENDING__ 0
++
++#endif
+# CaseRun diffCollection omitted provenance groups:
+# - rule=third_party/Arm-2D/** count=1 reason=真实 Arm-2D upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文 samples=third_party/Arm-2D
+# - rule=third_party/CMSIS-DSP/** count=1 reason=真实 CMSIS-DSP upstream 以 provenance、文件清单和 hash 表达，省略大 patch 正文 samples=third_party/CMSIS-DSP
+# - rule=third_party/** count=1 reason=third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches samples=third_party/CMSIS

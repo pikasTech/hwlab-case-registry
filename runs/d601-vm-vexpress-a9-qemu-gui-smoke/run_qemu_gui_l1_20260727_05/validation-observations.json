@@ -1,0 +1,165 @@
+{
+  "contractVersion": "hwpod-case-validation-observations-v1",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-smoke",
+  "runId": "run_qemu_gui_l1_20260727_05",
+  "observedAt": "2026-07-26T21:01:46.128Z",
+  "plan": {
+    "mode": "custom-runtime",
+    "steps": [
+      {
+        "args": {},
+        "kind": "build",
+        "stage": "post-agent-validation",
+        "actionId": "build",
+        "expectedOp": "debug.build"
+      },
+      {
+        "args": {},
+        "kind": "download",
+        "stage": "post-agent-validation",
+        "actionId": "download",
+        "expectedOp": "debug.download"
+      },
+      {
+        "args": {},
+        "kind": "displayCapture",
+        "stage": "post-agent-validation",
+        "actionId": "display-capture",
+        "expectedOp": "display.capture"
+      }
+    ],
+    "source": "case-definition.flow",
+    "compileOnly": false,
+    "contractVersion": "hwpod-case-validation-plan-v1"
+  },
+  "results": [
+    {
+      "operation": {
+        "contractVersion": "hwpod-operation-result-v0.3",
+        "authority": "hwpod-service",
+        "actionId": "build",
+        "stage": "post-agent-validation",
+        "kind": "build",
+        "op": "debug.build",
+        "opId": "op_01_debug_build",
+        "status": "completed",
+        "ok": true,
+        "expected": {
+          "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-05",
+          "op": "debug.build",
+          "actionId": "build"
+        },
+        "observed": {
+          "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-05",
+          "op": "debug.build",
+          "actionId": "op_01_debug_build"
+        },
+        "topology": {
+          "ok": true
+        }
+      },
+      "result": {
+        "opId": "op_01_debug_build",
+        "op": "debug.build",
+        "status": "completed",
+        "ok": true,
+        "output": {
+          "cwd": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-05",
+          "op": "debug.build",
+          "bindingSource": "hwpod-node-ops.command",
+          "ok": true,
+          "command": [
+            "scripts/build"
+          ],
+          "exitCode": 0,
+          "stdout": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n    584\t      0\t      0\t    584\t    248\t/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-05/build/qemu-gui.elf\n",
+          "stderr": "",
+          "elapsedMs": 30,
+          "artifactPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-05/build/qemu-gui.elf",
+          "sizeBytes": 5448
+        }
+      }
+    },
+    {
+      "operation": {
+        "contractVersion": "hwpod-operation-result-v0.3",
+        "authority": "hwpod-service",
+        "actionId": "download",
+        "stage": "post-agent-validation",
+        "kind": "download",
+        "op": "debug.download",
+        "opId": "op_01_debug_download",
+        "status": "failed",
+        "ok": false,
+        "expected": {
+          "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-05",
+          "op": "debug.download",
+          "actionId": "download"
+        },
+        "observed": {
+          "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-05",
+          "op": "debug.download",
+          "actionId": "op_01_debug_download"
+        },
+        "topology": {
+          "ok": true
+        },
+        "blocker": {
+          "code": "hwpod_node_command_failed",
+          "layer": "hwpod-node",
+          "retryable": true,
+          "summary": "debug.download node-side command exited with 1"
+        }
+      },
+      "result": {
+        "opId": "op_01_debug_download",
+        "op": "debug.download",
+        "status": "failed",
+        "ok": false,
+        "output": {
+          "cwd": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-05",
+          "op": "debug.download",
+          "bindingSource": "hwpod-node-ops.command",
+          "ok": false,
+          "command": [
+            "scripts/download"
+          ],
+          "exitCode": 1,
+          "stdout": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n    584\t      0\t      0\t    584\t    248\t/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-05/build/qemu-gui.elf\n",
+          "stderr": "qemu-system-arm: -qmp unix:/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-05/.state/qemu/qmp.sock,server=on,wait=off: UNIX socket path '/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-05/.state/qemu/qmp.sock' is too long\nPath must be less than 108 bytes\n",
+          "elapsedMs": 134
+        }
+      },
+      "blocker": {
+        "code": "hwpod_node_command_failed",
+        "layer": "hwpod-node",
+        "retryable": true,
+        "summary": "debug.download node-side command exited with 1"
+      }
+    }
+  ],
+  "replay": {
+    "contractVersion": "hwpod-case-validation-replay-v1",
+    "source": "archived-hwpod-operation-observations",
+    "planMode": "custom-runtime",
+    "actionIds": [
+      "build",
+      "download",
+      "display-capture"
+    ],
+    "operationIds": [
+      "op_01_debug_build",
+      "op_01_debug_download"
+    ],
+    "observationIds": [],
+    "relationships": []
+  }
+}

@@ -1,0 +1,44 @@
+diff --git a/src/main.c b/src/main.c
+index a6af673..1127884 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -1,4 +1,13 @@
+ #include <stdint.h>
++#include "arm_2d.h"
++#include "arm_math.h"
++
++#define FRAMEBUFFER_WIDTH  16u
++#define FRAMEBUFFER_HEIGHT 8u
++
++static uint16_t framebuffer[FRAMEBUFFER_WIDTH * FRAMEBUFFER_HEIGHT];
++static arm_2d_tile_t framebuffer_tile;
++static arm_fir_instance_f32 fir_instance;
+ 
+ #define RCC_APB2ENR (*(volatile uint32_t *)0x40023844u)
+ #define USART1_SR   (*(volatile uint32_t *)0x40011000u)
+@@ -16,6 +25,9 @@ static void uart_write(const char *text) {
+ }
+ 
+ int main(void) {
++    (void)framebuffer;
++    (void)framebuffer_tile;
++    (void)fir_instance;
+     RCC_APB2ENR |= (1u << 4);
+     USART1_BRR = 0x05b2u;
+     USART1_CR1 = (1u << 13) | (1u << 3) | (1u << 2);
+diff --git a/src/arm_2d_cfg.h b/src/arm_2d_cfg.h
+new file mode 100644
+index 0000000..639b588
+--- /dev/null
++++ b/src/arm_2d_cfg.h
+@@ -0,0 +1,8 @@
++#ifndef ARM_2D_CFG_H
++#define ARM_2D_CFG_H
++
++/* Minimal application configuration for the Cortex-M4 compile-only target. */
++#define __ARM_2D_CFG_DEFAULT_SUB_TASK_POOL_SIZE__ 4
++#define __ARM_2D_HAS_HW_ACC__ 0
++
++#endif
+# CaseRun diffCollection omitted provenance groups:
+# - rule=third_party/** count=3 reason=third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches samples=third_party/Arm-2D,third_party/CMSIS-DSP,third_party/CMSIS

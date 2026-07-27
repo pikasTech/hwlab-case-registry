@@ -1,0 +1,123 @@
+diff --git a/scripts/hwpod-qemu-cli.py b/scripts/hwpod-qemu-cli.py
+index 4f6bd59..193c138 100755
+--- a/scripts/hwpod-qemu-cli.py
++++ b/scripts/hwpod-qemu-cli.py
+@@ -30,13 +30,20 @@ def running():
+ 
+ def build(emit_result=True):
+     BUILD.mkdir(parents=True, exist_ok=True)
++    arm2d_sources = [str(ROOT / "third_party/Arm-2D/Library/Source/arm_2d.c")]
++    cmsis_sources = [str(ROOT / "third_party/CMSIS-DSP/Source/BasicMathFunctions/arm_add_f32.c")]
+     command = [
+         "arm-none-eabi-gcc", "-mcpu=cortex-m4", "-mthumb", "-ffreestanding",
+-        "-fdata-sections", "-ffunction-sections", "-nostdlib",
++        "-O0", "-fdata-sections", "-ffunction-sections",
++        "--specs=nosys.specs",
++        "-DARM_MATH_CM4", "-DARM_MATH_DSP",
++        "-Isrc", "-Ithird_party/Arm-2D/Library/Include",
++        "-Ithird_party/CMSIS-DSP/Include", "-Ithird_party/CMSIS-DSP/PrivateInclude",
++        "-Ithird_party/CMSIS_5/CMSIS/Core/Include",
+         "-Wl,--gc-sections", f"-Wl,-Map={BUILD / 'stm32f405-qemu.map'}",
+         "-T", str(ROOT / "linker.ld"), str(ROOT / "src/startup.S"),
+-        str(ROOT / "src/main.c"), "-o", str(ELF),
+-    ]
++        str(ROOT / "src/main.c"), str(ROOT / "src/demo_glue.c"),
++    ] + arm2d_sources + cmsis_sources + ["-o", str(ELF)]
+     result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
+     if result.returncode != 0:
+         print(json.dumps({"ok": False, "status": "failed", "command": command,
+diff --git a/src/main.c b/src/main.c
+index a6af673..355338f 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -1,4 +1,5 @@
+ #include <stdint.h>
++#include "demo_glue.h"
+ 
+ #define RCC_APB2ENR (*(volatile uint32_t *)0x40023844u)
+ #define USART1_SR   (*(volatile uint32_t *)0x40011000u)
+@@ -16,6 +17,7 @@ static void uart_write(const char *text) {
+ }
+ 
+ int main(void) {
++    arm2d_cmsis_demo();
+     RCC_APB2ENR |= (1u << 4);
+     USART1_BRR = 0x05b2u;
+     USART1_CR1 = (1u << 13) | (1u << 3) | (1u << 2);
+diff --git a/THIRD_PARTY_PROVENANCE.md b/THIRD_PARTY_PROVENANCE.md
+new file mode 100644
+index 0000000..f7fea0f
+--- /dev/null
++++ b/THIRD_PARTY_PROVENANCE.md
+@@ -0,0 +1,9 @@
++# Third-party provenance
++
++- Arm-2D: https://github.com/ARM-software/Arm-2D.git, tag v1.2.4, commit b73ec43b6567feffe57642861e8b5eb083788011.
++  Compiled upstream files: Library/Source/arm_2d.c (which includes the upstream core and tile units), Library/Include/**.
++- CMSIS-DSP: https://github.com/ARM-software/CMSIS-DSP.git, tag v1.14.2, commit 43aa2a9e7fc080e0d7541e9f5e083258403ac9ee.
++  Compiled upstream file: Source/BasicMathFunctions/arm_add_f32.c; headers from Include/** and PrivateInclude/**.
++- CMSIS Core: https://github.com/ARM-software/CMSIS_5.git, tag 5.9.0, commit 2b7495b8535bdcb306dac29b9ded4cfb679d7e5c, used for Core/Include/cmsis_compiler.h and related compiler headers.
++
++Upstream repositories remain unmodified. Project-local configuration, display-independent framebuffer/demo glue, and build integration are under src/ and scripts/.
+diff --git a/src/arm_2d_cfg.h b/src/arm_2d_cfg.h
+new file mode 100644
+index 0000000..e01b201
+--- /dev/null
++++ b/src/arm_2d_cfg.h
+@@ -0,0 +1,12 @@
++#ifndef ARM_2D_CFG_H
++#define ARM_2D_CFG_H
++#define __ARM_2D_CFG_DEFAULT_SUB_TASK_POOL_SIZE__ 4
++#define __ARM_2D_CFG_ENABLE_LOG__ 0
++#define __ARM_2D_HAS_ASYNC__ 0
++#define __ARM_2D_HAS_HELIUM__ 0
++#define __ARM_2D_HAS_ACI__ 0
++#define __ARM_2D_HAS_HW_ACC__ 0
++#define __ARM_2D_HAS_TIGHTLY_COUPLED_ACC__ 0
++#define __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__ 0
++#include "arm_2d_user_arch_port.h"
++#endif
+diff --git a/src/arm_2d_user_arch_port.h b/src/arm_2d_user_arch_port.h
+new file mode 100644
+index 0000000..75bcc00
+--- /dev/null
++++ b/src/arm_2d_user_arch_port.h
+@@ -0,0 +1,11 @@
++#ifndef ARM_2D_USER_ARCH_PORT_H
++#define ARM_2D_USER_ARCH_PORT_H
++
++#include <stdint.h>
++
++#ifndef arm_irq_safe
++#define arm_irq_safe arm_using(uint32_t ARM_2D_SAFE_NAME(temp) = 0)
++#define arm_exit_irq_safe continue
++#endif
++
++#endif
+diff --git a/src/demo_glue.c b/src/demo_glue.c
+new file mode 100644
+index 0000000..b7b9925
+--- /dev/null
++++ b/src/demo_glue.c
+@@ -0,0 +1,11 @@
++#include <arm_2d.h>
++#include <arm_math.h>
++
++void arm2d_cmsis_demo(void)
++{
++    float32_t input[4] = { 1.0f, 2.0f, 3.0f, 4.0f };
++    float32_t output[4];
++    arm_2d_init();
++    arm_add_f32(input, input, output, 4);
++    (void)output;
++}
+diff --git a/src/demo_glue.h b/src/demo_glue.h
+new file mode 100644
+index 0000000..85d5cdb
+--- /dev/null
++++ b/src/demo_glue.h
+@@ -0,0 +1,4 @@
++#ifndef DEMO_GLUE_H
++#define DEMO_GLUE_H
++void arm2d_cmsis_demo(void);
++#endif

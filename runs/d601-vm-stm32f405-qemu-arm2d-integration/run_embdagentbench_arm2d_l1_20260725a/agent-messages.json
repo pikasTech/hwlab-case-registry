@@ -1,0 +1,1027 @@
+{
+  "contractVersion": "hwpod-case-run-agent-messages-v1",
+  "renderer": "tools/src/hwlab-cli/trace-renderer:traceDisplayRows",
+  "traceSource": "caserun-identity",
+  "lookupOnly": true,
+  "traceLookup": {
+    "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+    "source": "hwlab-cli.client.agent",
+    "baseUrl": "http://127.0.0.1:6677",
+    "traceId": "trc_harnessrl_47820ed4a979db31afe2de39",
+    "commands": {
+      "trace": "hwlab-cli client agent trace trc_harnessrl_47820ed4a979db31afe2de39 --render web",
+      "result": "hwlab-cli client agent result trc_harnessrl_47820ed4a979db31afe2de39",
+      "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_47820ed4a979db31afe2de39",
+      "traceFull": "hwlab-cli client agent trace trc_harnessrl_47820ed4a979db31afe2de39 --render web --full",
+      "sessionStatus": "hwlab-cli client agent session status ses_7b7b706f-9ec3-4b30-9a3c-fe7e91ace814"
+    },
+    "strategy": "id_plus_existing_cli",
+    "sessionId": "ses_7b7b706f-9ec3-4b30-9a3c-fe7e91ace814",
+    "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-integration_run-embdagentbench-arm2d-l1-20260725a"
+  },
+  "traceId": "trc_harnessrl_47820ed4a979db31afe2de39",
+  "conversationId": "cnv_case_d601-vm-stm32f405-qemu-arm2d-integration_run-embdagentbench-arm2d-l1-20260725a",
+  "sessionId": "ses_7b7b706f-9ec3-4b30-9a3c-fe7e91ace814",
+  "status": "completed",
+  "sourceEventCount": 0,
+  "renderedRowCount": 0,
+  "noiseEventCount": 0,
+  "finalResponse": {
+    "present": false,
+    "reason": "finalResponse=null; no authoritative final assistant response was returned by the trace/result payload",
+    "status": "completed",
+    "terminalRows": []
+  },
+  "rows": [],
+  "diff": {
+    "path": "agent-diff.patch",
+    "sha256": "116a1fb41489f9a6497a66b13db7695d2b77082a8d1e4b7daf6470a3334162e8",
+    "statusShort": "M scripts/hwpod-qemu-cli.py\n M src/main.c\n?? src/arm2d_demo.c\n?? src/arm_2d_cfg.h\n?? src/arm_2d_user_arch_port.h\n?? third_party/",
+    "diffStat": "scripts/hwpod-qemu-cli.py | 11 +++++++++--\n src/main.c                |  3 +++\n 2 files changed, 12 insertions(+), 2 deletions(-)\n/dev/null => src/arm2d_demo.c | 19 +++++++++++++++++++\n 1 file changed, 19 insertions(+)\n/dev/null => src/arm_2d_cfg.h | 8 ++++++++\n 1 file changed, 8 insertions(+)\n/dev/null => src/arm_2d_user_arch_port.h | 1 +\n 1 file changed, 1 insertion(+)\n/dev/null => third_party/Arm-2D/.gitattributes | 1 +\n 1 file changed, 1 insertion(+)\n/dev/null => third_party/Arm-2D/.gitconfig | 3 +++\n 1 file changed, 3 insertions(+)\n/dev/null => third_party/Arm-2D/.github/dependabot.yml | 8 ++++++++\n 1 file changed, 8 insertions(+)\n.../Arm-2D/.github/workflows/build.yaml            | 36 ++++++++++++++++++++++\n 1 file changed, 36 insertions(+)\n/dev/null => third_party/Arm-2D/.gitignore | 66 ++++++++++++++++++++++++++++++\n 1 file changed, 66 insertions(+)\n.../Arm-2D/.vscode/c_cpp_properties.json           | 105 +++++++++++++++++++++\n 1 file changed, 105 insertions(+)\n/dev/null => third_party/Arm-2D/ARM.Arm-2D.pdsc | 1035 +++++++++++++++++++++++\n 1 file changed, 1035 insertions(+)\n/dev/null => third_party/Arm-2D/CMakeLists.txt | 262 +++++++++++++++++++++++++\n 1 file changed, 262 insertions(+)\n/dev/null => third_party/Arm-2D/LICENSE | 201 ++++++++++++++++++++++++++++++++\n 1 file changed, 201 insertions(+)\n.../Arm-2D/Library/Include/README.md               | 64 ++++++++++++++++++++++\n 1 file changed, 64 insertions(+)\n.../Arm-2D/Library/Include/__arm_2d_direct.h       | 11356 +++++++++++++++++++\n 1 file changed, 11356 insertions(+)\n.../__arm_2d_fill_colour_with_alpha_gradient.h     | 921 +++++++++++++++++++++\n 1 file changed, 921 insertions(+)\n...m_2d_fill_colour_with_alpha_gradient_and_mask.h | 1019 ++++++++++++++++++++\n 1 file changed, 1019 insertions(+)\n..._arm_2d_fill_colour_with_horizontal_line_mask.h | 275 +++++++++++++++++++++\n 1 file changed, 275 insertions(+)\n.../__arm_2d_fill_colour_with_mask_and_mirroring.h | 469 +++++++++++++++++++++\n 1 file changed, 469 insertions(+)\n.../__arm_2d_fill_colour_with_vertical_line_mask.h | 275 +++++++++++++++++++++\n 1 file changed, 275 insertions(+)\n.../Library/Include/__arm_2d_filter_iir_blur.h     | 237 +++++++++++++++++++++\n 1 file changed, 237 insertions(+)\n.../Include/__arm_2d_filter_reverse_colour.h       | 138 +++++++++++++++++++++\n 1 file changed, 138 insertions(+)\n.../Arm-2D/Library/Include/__arm_2d_impl.h         | 1930 ++++++++++++++++++++\n 1 file changed, 1930 insertions(+)\n.../Arm-2D/Library/Include/__arm_2d_math.h         | 325 +++++++++++++++++++++\n 1 file changed, 325 insertions(+)\n.../Arm-2D/Library/Include/__arm_2d_math_helium.h  | 425 +++++++++++++++++++++\n 1 file changed, 425 insertions(+)\n.../Arm-2D/Library/Include/__arm_2d_paving.h       | 818 +++++++++++++++++++++\n 1 file changed, 818 insertions(+)\n.../Library/Include/__arm_2d_paving_helium.h       | 704 +++++++++++++++++++++\n 1 file changed, 704 insertions(+)\n.../Include/__arm_2d_tile_2xssaa_transform.h       | 76 ++++++++++++++++++++++\n 1 file changed, 76 insertions(+)\n...arm_2d_tile_copy_with_source_mask_and_opacity.h | 180 +++++++++++++++++++++\n 1 file changed, 180 insertions(+)\n.../Include/__arm_2d_tile_fill_with_opacity.h      | 168 +++++++++++++++++++++\n 1 file changed, 168 insertions(+)\n...arm_2d_tile_fill_with_source_mask_and_opacity.h | 180 +++++++++++++++++++++\n 1 file changed, 180 insertions(+)\n.../Arm-2D/Library/Include/__arm_2d_utils_helium.h | 380 +++++++++++++++++++++\n 1 file changed, 380 insertions(+)\n.../Arm-2D/Library/Include/arm_2d.h                | 340 +++++++++++++++++++++\n 1 file changed, 340 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_alpha_blending.h | 4432 ++++++++++++++++++++\n 1 file changed, 4432 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_conversion.h     | 393 +++++++++++++++++++++\n 1 file changed, 393 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_draw.h           | 561 +++++++++++++++++++++\n 1 file changed, 561 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_features.h       | 288 +++++++++++++++++++++\n 1 file changed, 288 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_filter.h         | 55 ++++++++++++++++++++++\n 1 file changed, 55 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_op.h             | 893 +++++++++++++++++++++\n 1 file changed, 893 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_tile.h           | 2233 ++++++++++++++++++++\n 1 file changed, 2233 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_transform.h      | 5324 ++++++++++++++++++++\n 1 file changed, 5324 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_types.h          | 1285 ++++++++++++++++++++\n 1 file changed, 1285 insertions(+)\n.../Arm-2D/Library/Include/arm_2d_utils.h          | 1419 ++++++++++++++++++++\n 1 file changed, 1419 insertions(+)\n.../Arm-2D/Library/Include/template/arm_2d_cfg.h   | 297 +++++++++++++++++++++\n 1 file changed, 297 insertions(+)\n.../Library/Include/template/arm_2d_user_aci.h     | 72 ++++++++++++++++++++++\n 1 file changed, 72 insertions(+)\n.../Include/template/arm_2d_user_arch_port.h       | 88 ++++++++++++++++++++++\n 1 file changed, 88 insertions(+)\n.../Source/__arm_2d_alpha_blending_wrapper.inc     | 1627 ++++++++++++++++++++\n 1 file changed, 1627 insertions(+)\n.../Source/__arm_2d_ccca8888_transform_helium.c    | 3290 ++++++++++++++++++++\n 1 file changed, 3290 insertions(+)\n.../Library/Source/__arm_2d_conversion_helium.c    | 760 +++++++++++++++++++++\n 1 file changed, 760 insertions(+)\n.../Source/__arm_2d_copy_mirror_wrapper.inc        | 196 +++++++++++++++++++++\n 1 file changed, 196 insertions(+)\n..._copy_with_colour_keying_and_mirror_wrapper.inc | 190 +++++++++++++++++++++\n 1 file changed, 190 insertions(+)\n.../__arm_2d_copy_with_mask_and_mirror_wrapper.inc | 417 +++++++++++++++++++++\n 1 file changed, 417 insertions(+)\n.../Arm-2D/Library/Source/__arm_2d_core.c          | 2526 ++++++++++++++++++++\n 1 file changed, 2526 insertions(+)\n.../Library/Source/__arm_2d_expanded_helium.log    | 114692 ++++++++++++++++++\n 1 file changed, 114692 insertions(+)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/dev/null => third_party/Arm-2D/gen_pack.sh | 117 ++++++++++++++++++++++++++++\n 1 file changed, 117 insertions(+)\n/dev/null => third_party/Arm-2D/tools/Kabosu.c | 1683 ++++++++++++++++++++++++\n 1 file changed, 1683 insertions(+)\n/dev/null => third_party/Arm-2D/tools/README.md | 84 +++++++++++++++++++++++++\n 1 file changed, 84 insertions(+)\n/dev/null => third_party/Arm-2D/tools/img2c.py | 650 +++++++++++++++++++++++++\n 1 file changed, 650 insertions(+)\n/dev/null => third_party/Arm-2D/tools/jinja2c.py | 111 +++++++++++++++++++++++\n 1 file changed, 111 insertions(+)\n/dev/null => third_party/Arm-2D/tools/space_fleet.png | Bin 0 -> 2183570 bytes\n 1 file changed, 0 insertions(+), 0 deletions(-)\n/dev/null => third_party/Arm-2D/tools/ttf2c.py | 584 +++++++++++++++++++++++++\n 1 file changed, 584 insertions(+)\n\n\n.../arm2d-port/arm_2d_user_arch_port.h             | 82 ++++++++++++++++++++++\n 1 file changed, 82 insertions(+)",
+    "collection": {
+      "config": {
+        "ignore": [],
+        "include": []
+      },
+      "omitted": [],
+      "tracked": {
+        "paths": [
+          "scripts/hwpod-qemu-cli.py",
+          "src/main.c"
+        ],
+        "diffStat": "scripts/hwpod-qemu-cli.py | 11 +++++++++--\n src/main.c                |  3 +++\n 2 files changed, 12 insertions(+), 2 deletions(-)",
+        "diffPatchSha256": "e40bd95c44c39241d13aacbed41cc90c4d5cd5a721012d73c77d92e1ffbc1876"
+      },
+      "included": [
+        {
+          "path": "src/arm2d_demo.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "src/arm_2d_cfg.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "src/arm_2d_user_arch_port.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/.gitattributes",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/.gitconfig",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/.github/dependabot.yml",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/.github/workflows/build.yaml",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/.gitignore",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/.vscode/c_cpp_properties.json",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/ARM.Arm-2D.pdsc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/CMakeLists.txt",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/LICENSE",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/README.md",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_direct.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_alpha_gradient.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_alpha_gradient_and_mask.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_horizontal_line_mask.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_mask_and_mirroring.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_fill_colour_with_vertical_line_mask.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_filter_iir_blur.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_filter_reverse_colour.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_impl.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_math.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_math_helium.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_paving.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_paving_helium.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_tile_2xssaa_transform.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_tile_copy_with_source_mask_and_opacity.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_tile_fill_with_opacity.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_tile_fill_with_source_mask_and_opacity.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/__arm_2d_utils_helium.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_alpha_blending.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_conversion.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_draw.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_features.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_filter.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_op.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_tile.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_transform.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_types.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/arm_2d_utils.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/template/arm_2d_cfg.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/template/arm_2d_user_aci.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Include/template/arm_2d_user_arch_port.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_alpha_blending_wrapper.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ccca8888_transform_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_conversion_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_copy_mirror_wrapper.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_copy_with_colour_keying_and_mirror_wrapper.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_copy_with_mask_and_mirror_wrapper.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_core.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_expanded_helium.log",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient_and_mask.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_alpha_gradient_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_horizontal_line_mask.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_horizontal_line_mask_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_mask_and_mirroring.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_mask_and_mirroring_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_vertical_line_mask.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_fill_colour_with_vertical_line_mask_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_filter_iir_blur.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_filter_iir_blur_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_filter_reverse_colour.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_filter_reverse_colour_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_alpha_blending.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_alpha_mask.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_alpha_mask_helium.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_colour_filling_with_alpha.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_copy.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_copy_helium.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_draw_pattern.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_draw_pattern_helium.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_fill_colour.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_fill_colour_helium.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_ccca8888_trans.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_and_fill.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_with_masks.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_copy_with_masks_helium.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_trans_with_masks.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_meta_trans_with_masks_helium.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_transform.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_ll_transform_helium.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_with_colour_keying_and_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_with_des_mask_and_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_with_masks_and_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_copy_with_src_mask_and_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_with_colour_keying_and_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_with_des_mask_and_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_with_masks_and_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_meta_fill_with_src_mask_and_mirror.inc",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile_2xssaa_transform.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile_4xssaa_transform_src_mask_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile_copy_with_source_mask_and_opacity.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile_copy_with_source_mask_and_opacity_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile_fill_with_opacity.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile_fill_with_opacity_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile_fill_with_source_mask_and_opacity.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_tile_fill_with_source_mask_and_opacity_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/__arm_2d_transform_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/arm_2d.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/arm_2d_alpha_blending.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/arm_2d_async.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/arm_2d_conversion.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/arm_2d_draw.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/arm_2d_filter.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/arm_2d_helium.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/Source/arm_2d_transform.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/README.md",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_ccca8888_transform_helium.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_and_mask.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_and_mask.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_alpha_gradient_helium.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_horizontal_line_mask.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_horizontal_line_mask.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_mask_and_mirroring.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_mask_and_mirroring.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_vertical_line_mask.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_fill_colour_with_vertical_line_mask.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_filter_iir_blur.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_filter_iir_blur.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_filter_reverse_colour.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_filter_reverse_colour.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_2xssaa_transform.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_2xssaa_transform.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_copy_with_source_mask_and_opacity.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_copy_with_source_mask_and_opacity.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_opacity_helium.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity.h.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/jinja/__arm_2d_tile_fill_with_source_mask_and_opacity_helium.c.jinja",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/template/README.md",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/template/arm_2d_user_opcode_template_i_cp_src.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/template/arm_2d_user_opcode_template_i_cp_src.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/template/arm_2d_user_opcode_template_i_draw.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Library/template/arm_2d_user_opcode_template_i_draw.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/README.md",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/ReleaseNote.md",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Scripts/git/git-configure.sh",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Scripts/git/git-version.clean",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/Scripts/git/git-version.smudge",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/gen_pack.sh",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/tools/Kabosu.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/tools/README.md",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/tools/img2c.py",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/tools/jinja2c.py",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/tools/space_fleet.png",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/Arm-2D/tools/ttf2c.py",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/CMSIS-DSP",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/CMSIS_5",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "third_party/arm2d-port/arm_2d_user_arch_port.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        }
+      ],
+      "untracked": {
+        "total": 160,
+        "omitted": 0,
+        "included": 160
+      },
+      "submodules": [],
+      "contractVersion": "hwpod-case-run-diff-collection-v1"
+    },
+    "patchIncludedInTranscript": true
+  }
+}

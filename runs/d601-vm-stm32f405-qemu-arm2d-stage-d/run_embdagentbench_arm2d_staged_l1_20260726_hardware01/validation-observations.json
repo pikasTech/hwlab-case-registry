@@ -1,0 +1,232 @@
+{
+  "contractVersion": "hwpod-case-validation-observations-v1",
+  "caseId": "d601-vm-stm32f405-qemu-arm2d-stage-d",
+  "runId": "run_embdagentbench_arm2d_staged_l1_20260726_hardware01",
+  "observedAt": "2026-07-26T08:19:25.085Z",
+  "plan": {
+    "mode": "custom-runtime",
+    "steps": [
+      {
+        "args": {},
+        "kind": "build",
+        "stage": "post-agent-validation",
+        "actionId": "build",
+        "expectedOp": "debug.build"
+      },
+      {
+        "args": {},
+        "kind": "download",
+        "stage": "post-agent-validation",
+        "actionId": "download",
+        "expectedOp": "debug.download"
+      },
+      {
+        "args": {
+          "port": "uart1",
+          "maxBytes": 8192
+        },
+        "kind": "uart",
+        "stage": "post-agent-validation",
+        "actionId": "uart-read",
+        "expectedOp": "io.uart.read"
+      }
+    ],
+    "source": "case-definition.flow",
+    "compileOnly": false,
+    "contractVersion": "hwpod-case-validation-plan-v1"
+  },
+  "results": [
+    {
+      "operation": {
+        "contractVersion": "hwpod-operation-result-v0.3",
+        "authority": "hwpod-service",
+        "actionId": "build",
+        "stage": "post-agent-validation",
+        "kind": "build",
+        "op": "debug.build",
+        "opId": "op_01_debug_build",
+        "status": "completed",
+        "ok": true,
+        "expected": {
+          "hwpodId": "d601-vm-stm32f405-qemu",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01",
+          "op": "debug.build",
+          "actionId": "build"
+        },
+        "observed": {
+          "hwpodId": "d601-vm-stm32f405-qemu",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01",
+          "op": "debug.build",
+          "actionId": "op_01_debug_build"
+        },
+        "topology": {
+          "ok": true
+        }
+      },
+      "result": {
+        "opId": "op_01_debug_build",
+        "op": "debug.build",
+        "status": "completed",
+        "ok": true,
+        "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01",
+        "output": {
+          "ok": true,
+          "op": "debug.build",
+          "cwd": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01",
+          "stdout": "{\"ok\": true, \"status\": \"completed\", \"artifact\": \"build/stm32f405-qemu.elf\", \"sizeBytes\": 12368}"
+        }
+      }
+    },
+    {
+      "operation": {
+        "contractVersion": "hwpod-operation-result-v0.3",
+        "authority": "hwpod-service",
+        "actionId": "download",
+        "stage": "post-agent-validation",
+        "kind": "download",
+        "op": "debug.download",
+        "opId": "op_01_debug_download",
+        "status": "completed",
+        "ok": true,
+        "expected": {
+          "hwpodId": "d601-vm-stm32f405-qemu",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01",
+          "op": "debug.download",
+          "actionId": "download"
+        },
+        "observed": {
+          "hwpodId": "d601-vm-stm32f405-qemu",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01",
+          "op": "debug.download",
+          "actionId": "op_01_debug_download"
+        },
+        "topology": {
+          "ok": true
+        }
+      },
+      "result": {
+        "opId": "op_01_debug_download",
+        "op": "debug.download",
+        "status": "completed",
+        "ok": true,
+        "output": {
+          "ok": true,
+          "cwd": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01",
+          "op": "debug.download",
+          "bindingSource": "hwpod-node-ops.commandRuns",
+          "commands": [
+            {
+              "index": 0,
+              "command": [
+                "python3",
+                "-c",
+                "import json,os,pathlib,re,signal,subprocess,sys,time\nartifact=pathlib.Path(\"build/stm32f405-qemu.elf\")\nstate=pathlib.Path('.state/qemu')\npid_file=state/'qemu.pid'\nlog_file=state/'qemu.log'\nuart=pathlib.Path(\".state/qemu/uart\")\ndef running(pid):\n  try: os.kill(pid,0); return True\n  except (ProcessLookupError,PermissionError): return False\nif not artifact.is_file(): print(json.dumps({'ok':False,'status':'failed','error':'artifact_missing','artifact':str(artifact)})); sys.exit(2)\nstate.mkdir(parents=True,exist_ok=True)\ntry: old_pid=int(pid_file.read_text().strip())\nexcept (FileNotFoundError,ValueError): old_pid=None\nif old_pid and running(old_pid):\n  os.kill(old_pid,signal.SIGTERM)\n  for _ in range(20):\n    if not running(old_pid): break\n    time.sleep(0.1)\npid_file.unlink(missing_ok=True)\nuart.unlink(missing_ok=True)\nstream=log_file.open('w',encoding='utf-8')\nproc=subprocess.Popen(['qemu-system-arm','-M','netduinoplus2','-cpu','cortex-m4','-kernel',str(artifact),'-nographic','-monitor','none','-serial','pty'],stdout=stream,stderr=subprocess.STDOUT,start_new_session=True)\nstream.close()\npid_file.write_text(f'{proc.pid}\\n')\npty=None\nfor _ in range(30):\n  time.sleep(0.1)\n  content=log_file.read_text(encoding='utf-8',errors='replace') if log_file.exists() else ''\n  match=re.search(r'(/dev/pts/\\d+)',content)\n  if match: pty=match.group(1); break\n  if proc.poll() is not None: break\nif proc.poll() is not None or not pty:\n  if proc.poll() is None: os.kill(proc.pid,signal.SIGTERM)\n  pid_file.unlink(missing_ok=True)\n  print(json.dumps({'ok':False,'status':'failed','error':'qemu_start_failed' if proc.poll() is not None else 'qemu_uart_pty_missing','exitCode':proc.poll(),'artifact':str(artifact),'logTail':content[-2000:]}))\n  sys.exit(proc.poll() or 1)\nuart.symlink_to(pty)\nprint(json.dumps({'ok':True,'action':'download','status':'running','pid':proc.pid,'artifact':str(artifact),'uartPath':str(uart),'uartTarget':pty,'immutableHarness':True}))"
+              ],
+              "ok": true,
+              "cwd": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01",
+              "exitCode": 0,
+              "stdout": "{\"ok\": true, \"action\": \"download\", \"status\": \"running\", \"pid\": 2767804, \"artifact\": \"build/stm32f405-qemu.elf\", \"uartPath\": \".state/qemu/uart\", \"uartTarget\": \"/dev/pts/0\", \"immutableHarness\": true}\n",
+              "stderr": "",
+              "elapsedMs": 2122
+            }
+          ],
+          "commandCount": 1,
+          "exitCode": 0,
+          "stdout": "{\"ok\": true, \"action\": \"download\", \"status\": \"running\", \"pid\": 2767804, \"artifact\": \"build/stm32f405-qemu.elf\", \"uartPath\": \".state/qemu/uart\", \"uartTarget\": \"/dev/pts/0\", \"immutableHarness\": true}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "operation": {
+        "contractVersion": "hwpod-operation-result-v0.3",
+        "authority": "hwpod-service",
+        "actionId": "uart-read",
+        "stage": "post-agent-validation",
+        "kind": "uart",
+        "op": "io.uart.read",
+        "opId": "op_03_io_uart_read",
+        "status": "completed",
+        "ok": true,
+        "expected": {
+          "hwpodId": "d601-vm-stm32f405-qemu",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "op": "io.uart.read",
+          "actionId": "uart-read"
+        },
+        "observed": {
+          "hwpodId": "d601-vm-stm32f405-qemu",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "",
+          "op": "io.uart.read",
+          "actionId": "op_03_io_uart_read"
+        },
+        "topology": {
+          "ok": true
+        }
+      },
+      "result": {
+        "opId": "op_03_io_uart_read",
+        "op": "io.uart.read",
+        "status": "completed",
+        "ok": true,
+        "output": {
+          "ok": true,
+          "bindingSource": "pyserial",
+          "port": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-staged-l1-20260726-hardware01/.state/qemu/uart",
+          "baudRate": 115200,
+          "bytes": 4095,
+          "text": "amebuffer_crc=e51f02fb tile0=00001203\r\nheartbeat=1 frame=00004fa4 framebuffer_crc=de3f1882 tile0=00001204\r\nheartbeat=1 frame=00004fa5 framebuffer_crc=51e3419d tile0=00001205\r\nheartbeat=1 frame=00004fa6 framebuffer_crc=dd4e012a tile0=00001206\r\nheartbeat=1 frame=00004fa7 framebuffer_crc=47c87d05 tile0=00001207\r\nheartbeat=1 frame=00004fa8 framebuffer_crc=0ac2c5c7 tile0=00001208\r\nheartbeat=1 frame=00004fa9 framebuffer_crc=402fd5e7 tile0=00001209\r\nheartbeat=1 frame=00004faa framebuffer_crc=921040f8 tile0=0000120a\r\nheartbeat=1 frame=00004fab framebuffer_crc=eb17b3b3 tile0=0000120b\r\nheartbeat=1 frame=00004fac framebuffer_crc=15bca4aa tile0=0000120c\r\nheartb\n... [omitted middle; full output in outputDisclosure.fullPayloadDump] ...\n004fcc framebuffer_crc=fc96c5c3 tile0=0000120c\r\nheartbeat=1 frame=00004fcd framebuffer_crc=bd0cd839 tile0=0000120d\r\nheartbeat=1 frame=00004fce framebuffer_crc=f30e6576 tile0=0000120e\r\nheartbeat=1 frame=00004fcf framebuffer_crc=f23a78e7 tile0=0000120f\r\nheartbeat=1 frame=00004fd0 framebuffer_crc=b3231c7c tile0=00001210\r\nheartbeat=1 frame=00004fd1 framebuffer_crc=66d18a3a tile0=00001211\r\nheartbeat=1 frame=00004fd2 framebuffer_crc=175200bd tile0=00001212\r\nheartbeat=1 frame=00004fd3 framebuffer_crc=38ed9332 tile0=00001213\r\nheartbeat=1 frame=00004fd4 framebuffer_crc=3b3d6a5a tile0=00001214\r\nheartbeat=1 frame=00004fd5 framebuffer_crc=06c59261 tile0=00001215\r\nheartbeat=1 frame=00004fd6 framebuffer_crc=92e99980 tile0=00001216\r\nheartbeat=1 frame=00004fd7 framebuffer_crc=73bf4e43 tile0=00001217\r\nheartbeat=1 frame=00004fd8 framebuffer_crc=f0005ed2 tile0=00001218\r\nheartbeat=1 frame=00004fd9 framebuffer_crc=6d33a86c tile0=00001219\r\nheartbeat=1 frame=00004fda framebuffer_crc=af9db73d tile0=0000121a\r\nheartbeat=1 frame=00004fdb framebuffer_crc=f975560b tile0=0000121b\r\nheartbeat=1 frame=00004fdc framebuffer_crc=1099d81a tile0=0000121c\r\nheartbeat=1 frame=00004fdd framebuffer_crc=996be06b tile0=0000121d\r\nheartbeat=1 frame=00004fde framebuffer_crc=335ddbba tile0=0000121e\r\nheartbeat=1 frame=00004fdf framebuffer_crc=0",
+          "dataBase64": "YW1lYnVmZmVyX2NyYz1lNTFmMDJmYiB0aWxlMD0wMDAwMTIwMw0KaGVhcnRiZWF0PTEgZnJhbWU9MDAwMDRmYTQgZnJhbWVidWZmZXJfY3JjPWRlM2YxODgyIHRpbGUwPTAwMDAxMjA0DQpoZWFydGJlYXQ9MSBmcmFtZT0wMDAwNGZhNSBmcmFtZWJ1ZmZlcl9jcmM9NTFlMzQxOWQgdGlsZTA9MDAwMDEyMDUNCmhlYXJ0YmVhdD0xIGZyYW1lPTAwMDA0ZmE2IGZyYW1lYnVmZmVyX2NyYz1kZDRlMDEyYSB0aWxlMD0wMDAwMTIwNg0KaGVhcnRiZWF0PTEgZnJhbWU9MDAwMDRmYTcgZnJhbWVidWZmZXJfY3JjPTQ3Yzg3ZDA1IHRpbGUwPTAwMDAxMjA3DQpoZWFydGJlYXQ9MSBmcmFtZT0wMDAwNGZhOCBmcmFtZWJ1ZmZlcl9jcmM9MGFjMmM1YzcgdGlsZTA9MDAwMDEyMDgNCmhlYXJ0YmVhdD0xIGZyYW1lPTAwMDA0ZmE5IGZyYW1lYnVmZmVyX2NyYz00MDJmZDVlNyB0aWxlMD0wMDAwMTIwOQ0KaGVhcnRiZWF0PTEgZnJhbWU9MDAwMDRmYWEgZnJhbWVidWZmZXJfY3JjPTkyM\n... [omitted middle; full output in outputDisclosure.fullPayloadDump] ...\nPTEgZnJhbWU9MDAwMDRmZDEgZnJhbWVidWZmZXJfY3JjPTY2ZDE4YTNhIHRpbGUwPTAwMDAxMjExDQpoZWFydGJlYXQ9MSBmcmFtZT0wMDAwNGZkMiBmcmFtZWJ1ZmZlcl9jcmM9MTc1MjAwYmQgdGlsZTA9MDAwMDEyMTINCmhlYXJ0YmVhdD0xIGZyYW1lPTAwMDA0ZmQzIGZyYW1lYnVmZmVyX2NyYz0zOGVkOTMzMiB0aWxlMD0wMDAwMTIxMw0KaGVhcnRiZWF0PTEgZnJhbWU9MDAwMDRmZDQgZnJhbWVidWZmZXJfY3JjPTNiM2Q2YTVhIHRpbGUwPTAwMDAxMjE0DQpoZWFydGJlYXQ9MSBmcmFtZT0wMDAwNGZkNSBmcmFtZWJ1ZmZlcl9jcmM9MDZjNTkyNjEgdGlsZTA9MDAwMDEyMTUNCmhlYXJ0YmVhdD0xIGZyYW1lPTAwMDA0ZmQ2IGZyYW1lYnVmZmVyX2NyYz05MmU5OTk4MCB0aWxlMD0wMDAwMTIxNg0KaGVhcnRiZWF0PTEgZnJhbWU9MDAwMDRmZDcgZnJhbWVidWZmZXJfY3JjPTczYmY0ZTQzIHRpbGUwPTAwMDAxMjE3DQpoZWFydGJlYXQ9MSBmcmFtZT0wMDAwNGZkOCBmcmFtZWJ1ZmZlcl9jcmM9ZjAwMDVlZDIgdGlsZTA9MDAwMDEyMTgNCmhlYXJ0YmVhdD0xIGZyYW1lPTAwMDA0ZmQ5IGZyYW1lYnVmZmVyX2NyYz02ZDMzYTg2YyB0aWxlMD0wMDAwMTIxOQ0KaGVhcnRiZWF0PTEgZnJhbWU9MDAwMDRmZGEgZnJhbWVidWZmZXJfY3JjPWFmOWRiNzNkIHRpbGUwPTAwMDAxMjFhDQpoZWFydGJlYXQ9MSBmcmFtZT0wMDAwNGZkYiBmcmFtZWJ1ZmZlcl9jcmM9Zjk3NTU2MGIgdGlsZTA9MDAwMDEyMWINCmhlYXJ0YmVhdD0xIGZyYW1lPTAwMDA0ZmRjIGZyYW1lYnVmZmVyX2NyYz0xMDk5ZDgxYSB0aWxlMD0wMDAwMTIxYw0KaGVhcnRiZWF0PTEgZnJhbWU9MDAwMDRmZGQgZnJhbWVidWZmZXJfY3JjPTk5NmJlMDZiIHRpbGUwPTAwMDAxMjFkDQpoZWFydGJlYXQ9MSBmcmFtZT0wMDAwNGZkZSBmcmFtZWJ1ZmZlcl9jcmM9MzM1ZGRiYmEgdGlsZTA9MDAwMDEyMWUNCmhlYXJ0YmVhdD0xIGZyYW1lPTAwMDA0ZmRmIGZyYW1lYnVmZmVyX2NyYz0w",
+          "truncated": true,
+          "reopened": false
+        }
+      },
+      "observation": {
+        "contractVersion": "hwpod-observation-result-v1",
+        "authority": "hwpod-service",
+        "observationId": "uart-read:op_03_io_uart_read",
+        "actionId": "uart-read",
+        "operationId": "op_03_io_uart_read",
+        "stage": "post-agent-validation",
+        "kind": "uart",
+        "status": "completed",
+        "sampleCount": 32,
+        "evidenceLevel": "serial-log",
+        "ok": true
+      }
+    }
+  ],
+  "replay": {
+    "contractVersion": "hwpod-case-validation-replay-v1",
+    "source": "archived-hwpod-operation-observations",
+    "planMode": "custom-runtime",
+    "actionIds": [
+      "build",
+      "download",
+      "uart-read"
+    ],
+    "operationIds": [
+      "op_01_debug_build",
+      "op_01_debug_download",
+      "op_03_io_uart_read"
+    ],
+    "observationIds": [
+      "uart-read:op_03_io_uart_read"
+    ],
+    "relationships": [
+      {
+        "observationId": "uart-read:op_03_io_uart_read",
+        "actionId": "uart-read",
+        "operationId": "op_03_io_uart_read",
+        "stage": "post-agent-validation",
+        "kind": "uart",
+        "evidenceLevel": "serial-log"
+      }
+    ]
+  }
+}

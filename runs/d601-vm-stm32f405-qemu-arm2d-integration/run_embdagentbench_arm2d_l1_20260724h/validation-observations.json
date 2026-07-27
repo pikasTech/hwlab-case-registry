@@ -1,0 +1,106 @@
+{
+  "contractVersion": "hwpod-case-validation-observations-v1",
+  "caseId": "d601-vm-stm32f405-qemu-arm2d-integration",
+  "runId": "run_embdagentbench_arm2d_l1_20260724h",
+  "observedAt": "2026-07-24T16:01:47.528Z",
+  "plan": {
+    "mode": "compile-only",
+    "steps": [
+      {
+        "args": {},
+        "kind": "build",
+        "stage": "post-agent-validation",
+        "actionId": "validation_01_build",
+        "expectedOp": "debug.build"
+      }
+    ],
+    "source": "default-compile-only",
+    "compileOnly": true,
+    "contractVersion": "hwpod-case-validation-plan-v1"
+  },
+  "results": [
+    {
+      "operation": {
+        "contractVersion": "hwpod-operation-result-v0.3",
+        "authority": "hwpod-service",
+        "actionId": "validation_01_build",
+        "stage": "post-agent-validation",
+        "kind": "build",
+        "op": "debug.build",
+        "status": "unknown",
+        "ok": false,
+        "expected": {
+          "hwpodId": "d601-vm-stm32f405-qemu",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260724h",
+          "op": "debug.build",
+          "actionId": "validation_01_build"
+        },
+        "observed": {
+          "hwpodId": "",
+          "nodeId": "",
+          "workspacePath": "",
+          "op": "",
+          "actionId": "validation_01_build"
+        },
+        "topology": {
+          "ok": false,
+          "mismatches": [
+            {
+              "field": "hwpodId",
+              "expected": "d601-vm-stm32f405-qemu",
+              "observed": null
+            },
+            {
+              "field": "nodeId",
+              "expected": "node-d601-vm-hwpod-qemu",
+              "observed": null
+            },
+            {
+              "field": "workspacePath",
+              "expected": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260724h",
+              "observed": null
+            },
+            {
+              "field": "op",
+              "expected": "debug.build",
+              "observed": null
+            }
+          ]
+        }
+      },
+      "blocker": {
+        "code": "hwpod_topology_mismatch",
+        "summary": "HWPOD operation result does not match YAML-selected topology",
+        "details": [
+          {
+            "field": "hwpodId",
+            "expected": "d601-vm-stm32f405-qemu",
+            "observed": null
+          },
+          {
+            "field": "nodeId",
+            "expected": "node-d601-vm-hwpod-qemu",
+            "observed": null
+          },
+          {
+            "field": "workspacePath",
+            "expected": "/home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260724h",
+            "observed": null
+          }
+        ]
+      }
+    }
+  ],
+  "replay": {
+    "contractVersion": "hwpod-case-validation-replay-v1",
+    "source": "archived-hwpod-operation-observations",
+    "planMode": "compile-only",
+    "actionIds": [
+      "validation_01_build"
+    ],
+    "operationIds": [],
+    "observationIds": [],
+    "relationships": []
+  }
+}

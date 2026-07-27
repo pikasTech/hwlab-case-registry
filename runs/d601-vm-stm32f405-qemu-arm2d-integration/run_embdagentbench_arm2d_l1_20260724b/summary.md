@@ -1,0 +1,39 @@
+# HWPOD CaseRun d601-vm-stm32f405-qemu-arm2d-integration
+
+- runId: run_embdagentbench_arm2d_l1_20260724b
+- status: blocked
+- autoEvaluation: false
+- compileOnly: true
+- subjectRepoLocalPath: /home/ubuntu/workspace/hwpod_qemu_workspace
+- subjectCommitId: f909cdaf6f0cd579b1f1b66d2d1eee5235a09fb9
+- subjectWorktreePath: /home/ubuntu/workspace/hwpod_qemu_workspace/.worktree/caserun-run-embdagentbench-arm2d-l1-20260724b
+- agentTraceId: trc_harnessrl_ee3f54fb5a6c622de87182cb
+- agentSessionId: ses_2432ca60-6863-4b5a-b5e7-c3d2d4769e1e
+- requestedProviderProfile: sub2api
+- resolvedBackendProfile: 
+- model: 
+- infrastructureBackend: 
+- traceLookupStrategy: id_plus_existing_cli
+- traceCommand: hwlab-cli client agent trace trc_harnessrl_ee3f54fb5a6c622de87182cb --render web
+- resultCommand: hwlab-cli client agent result trc_harnessrl_ee3f54fb5a6c622de87182cb
+- inspectCommand: hwlab-cli client agent inspect --trace-id trc_harnessrl_ee3f54fb5a6c622de87182cb
+- agentTraceCommandCount: 0
+- agentTraceHwpodCommandCount: 0
+- agentTraceHwpodBuildCommandCount: 0
+- agentTerminalStatus: 
+- agentFinalPresent: false
+- agentFinalMissingReason: final-response-not-reported
+- postValidationStatus: 
+- agentReportedBuildWarningCount: 
+- runnerPostValidationWarningCount: 
+- agentToolCallSummaryCount: 
+- agentToolCallStatusCounts: {}
+- agentToolCallExitCodeCounts: {}
+- agentStageCommandCount: 0
+- agentStageKinds: 
+- diffPatchPath: /root/hwlab-v03/.state/harnessrl/runs/run_embdagentbench_arm2d_l1_20260724b/agent-diff.patch
+- runnerHwpodSource: case-run-runner-post-agent-compile-check
+- hwpodExitCode: 1
+- jobId: 
+- runnerPostAgentCompileCheck: recorded
+

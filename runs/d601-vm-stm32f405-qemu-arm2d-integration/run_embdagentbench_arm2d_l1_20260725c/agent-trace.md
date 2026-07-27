@@ -1,0 +1,170 @@
+# CaseRun Agent Transcript
+
+- caseId: d601-vm-stm32f405-qemu-arm2d-integration
+- runId: run_embdagentbench_arm2d_l1_20260725c
+- traceId: trc_harnessrl_71c1f77e2607e9929abfa954
+- conversationId: cnv_case_d601-vm-stm32f405-qemu-arm2d-integration_run-embdagentbench-arm2d-l1-20260725c
+- sessionId: ses_482faccc-20a6-42f0-bc6a-f1311e883b90
+- threadId: 
+- renderer: tools/src/hwlab-cli/trace-renderer:traceDisplayRows
+- traceLookupStrategy: id_plus_existing_cli
+- traceCommand: hwlab-cli client agent trace trc_harnessrl_71c1f77e2607e9929abfa954 --render web
+- resultCommand: hwlab-cli client agent result trc_harnessrl_71c1f77e2607e9929abfa954
+- inspectCommand: hwlab-cli client agent inspect --trace-id trc_harnessrl_71c1f77e2607e9929abfa954
+- lookupOnly: true
+- finalResponse: null
+- autoEvaluation: false
+
+## Messages
+_No rendered trace rows were returned._
+
+## Final Response
+finalResponse=null
+reason: finalResponse=null; no authoritative final assistant response was returned by the trace/result payload
+
+## Subject Diff
+
+statusShort:
+```text
+M scripts/hwpod-qemu-cli.py
+ M src/main.c
+?? PROVENANCE.md
+?? arm2d-local/
+?? src/arm2d_demo.c
+?? src/arm2d_demo.h
+?? third_party/
+```
+
+diffStat:
+```text
+scripts/hwpod-qemu-cli.py | 14 +++++++++++++-
+ src/main.c                |  2 ++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
+/dev/null => PROVENANCE.md | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+/dev/null => arm2d-local/arm_2d_user_cfg.h | 5 +++++
+ 1 file changed, 5 insertions(+)
+/dev/null => src/arm2d_demo.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+/dev/null => src/arm2d_demo.h | 4 ++++
+ 1 file changed, 4 insertions(+)
+```
+
+patch:
+```diff
+diff --git a/scripts/hwpod-qemu-cli.py b/scripts/hwpod-qemu-cli.py
+index 4f6bd59..a73933a 100755
+--- a/scripts/hwpod-qemu-cli.py
++++ b/scripts/hwpod-qemu-cli.py
+@@ -30,12 +30,24 @@ def running():
+ 
+ def build(emit_result=True):
+     BUILD.mkdir(parents=True, exist_ok=True)
++    arm2d = ROOT / "third_party" / "Arm-2D"
++    cmsis = ROOT / "third_party" / "CMSIS-DSP"
+     command = [
+         "arm-none-eabi-gcc", "-mcpu=cortex-m4", "-mthumb", "-ffreestanding",
+         "-fdata-sections", "-ffunction-sections", "-nostdlib",
++        "-D__ARM_2D_USER_APP_CFG_H__=\"arm2d-local/arm_2d_user_cfg.h\"",
++        "-I", str(arm2d / "Library/Include"),
++        "-I", str(arm2d / "Library/Include/template"),
++        "-I", str(ROOT),
++        "-I", str(cmsis / "Include"),
++        "-I", str(ROOT / "third_party/CMSIS_5/CMSIS/Core/Include"),
+         "-Wl,--gc-sections", f"-Wl,-Map={BUILD / 'stm32f405-qemu.map'}",
+         "-T", str(ROOT / "linker.ld"), str(ROOT / "src/startup.S"),
+-        str(ROOT / "src/main.c"), "-o", str(ELF),
++        str(ROOT / "src/main.c"), str(ROOT / "src/arm2d_demo.c"),
++        str(arm2d / "Library/Source/arm_2d.c"),
++        str(arm2d / "Library/Source/__arm_2d_core.c"),
++        str(cmsis / "Source/BasicMathFunctions/arm_dot_prod_q15.c"),
++        "-o", str(ELF),
+     ]
+     result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
+     if result.returncode != 0:
+diff --git a/src/main.c b/src/main.c
+index a6af673..95eb82f 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -1,4 +1,5 @@
+ #include <stdint.h>
++#include "arm2d_demo.h"
+ 
+ #define RCC_APB2ENR (*(volatile uint32_t *)0x40023844u)
+ #define USART1_SR   (*(volatile uint32_t *)0x40011000u)
+@@ -20,6 +21,7 @@ int main(void) {
+     USART1_BRR = 0x05b2u;
+     USART1_CR1 = (1u << 13) | (1u << 3) | (1u << 2);
+     uart_write("HWPOD STM32F405 QEMU ready\r\n");
++    arm2d_demo_run();
+     for (;;) {
+         if ((USART1_SR & (1u << 5)) != 0u) uart_putc((char)USART1_DR);
+     }
+diff --git a/PROVENANCE.md b/PROVENANCE.md
+new file mode 100644
+index 0000000..b52a7b1
+--- /dev/null
++++ b/PROVENANCE.md
+@@ -0,0 +1,11 @@
++# Third-party provenance
++
++- Arm-2D: https://github.com/ARM-software/Arm-2D.git, tag v1.2.4, commit b73ec43b6567feffe57642861e8b5eb083788011.
++  Compiled files: Library/Include headers, Library/Source/arm_2d.c and Library/Source/__arm_2d_core.c.
++- CMSIS-DSP: https://github.com/ARM-software/CMSIS-DSP.git, tag v1.14.2, commit 43aa2a9e7fc080e0d7541e9f5e083258403ac9ee.
++  Compiled files: Include headers and Source/BasicMathFunctions/arm_dot_prod_q15.c.
++- CMSIS-Core headers: https://github.com/ARM-software/CMSIS_5.git, tag 5.9.0, commit 2b7495b8535bdcb306dac29b9ded4cfb679d7e5c.
++  Compiled input uses CMSIS/Core/Include/cmsis_compiler.h and related headers.
++
++All upstream files remain unmodified. Local configuration and demo glue are under
++arm2d-local/ and src/.
+diff --git a/arm2d-local/arm_2d_user_cfg.h b/arm2d-local/arm_2d_user_cfg.h
+new file mode 100644
+index 0000000..e5e6395
+--- /dev/null
++++ b/arm2d-local/arm_2d_user_cfg.h
+@@ -0,0 +1,5 @@
++#ifndef ARM2D_LOCAL_USER_CFG_H
++#define ARM2D_LOCAL_USER_CFG_H
++#define __ARM_2D_HAS_ASYNC__ 0
++#define __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__ 0
++#endif
+diff --git a/src/arm2d_demo.c b/src/arm2d_demo.c
+new file mode 100644
+index 0000000..bcf73d8
+--- /dev/null
++++ b/src/arm2d_demo.c
+@@ -0,0 +1,23 @@
++#include <stdint.h>
++#include <stddef.h>
++#include "arm_2d.h"
++#include "arm_math.h"
++#include "arm2d_demo.h"
++static uint16_t framebuffer[16u * 16u];
++
++void *memset(void *dst, int value, size_t count)
++{
++    uint8_t *bytes = (uint8_t *)dst;
++    while (count-- != 0u) {
++        *bytes++ = (uint8_t)value;
++    }
++    return dst;
++}
++void arm2d_demo_run(void)
++{
++    const q15_t samples[4] = { 1, 2, 3, 4 };
++    q63_t dot = 0;
++    arm_2d_init();
++    arm_dot_prod_q15(samples, samples, 4u, &dot);
++    framebuffer[0] = (uint16_t)(dot & 0xffff);
++}
+diff --git a/src/arm2d_demo.h b/src/arm2d_demo.h
+new file mode 100644
+index 0000000..41486e0
+--- /dev/null
++++ b/src/arm2d_demo.h
+@@ -0,0 +1,4 @@
++#ifndef ARM2D_DEMO_H
++#define ARM2D_DEMO_H
++void arm2d_demo_run(void);
++#endif
+```

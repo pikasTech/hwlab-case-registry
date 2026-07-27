@@ -1,0 +1,195 @@
+{
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-smoke",
+  "runId": "run_qemu_gui_l1_20260727_04",
+  "runDir": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_04",
+  "caseRepo": "/root/hwlab-case-registry",
+  "caseDir": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_04/case-authority/cases/d601-vm-vexpress-a9-qemu-gui-smoke",
+  "caseFile": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_04/case-authority/cases/d601-vm-vexpress-a9-qemu-gui-smoke/case.json",
+  "sourceSpecPath": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_04/case-authority/cases/d601-vm-vexpress-a9-qemu-gui-smoke/hwpod-spec.yaml",
+  "specPath": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_04/.hwlab/hwpod-spec.yaml",
+  "apiUrl": "http://127.0.0.1:6681",
+  "compileOnly": false,
+  "validationPlan": {
+    "mode": "custom-runtime",
+    "steps": [
+      {
+        "args": {},
+        "kind": "build",
+        "stage": "post-agent-validation",
+        "actionId": "build",
+        "expectedOp": "debug.build"
+      },
+      {
+        "args": {},
+        "kind": "displayCapture",
+        "stage": "post-agent-validation",
+        "actionId": "display-capture",
+        "expectedOp": "display.capture"
+      }
+    ],
+    "source": "case-definition.flow",
+    "compileOnly": false,
+    "contractVersion": "hwpod-case-validation-plan-v1"
+  },
+  "createdAt": "2026-07-26T20:57:25.147Z",
+  "updatedAt": "2026-07-26T20:57:38.062Z",
+  "definition": {
+    "flow": [
+      {
+        "id": "build",
+        "kind": "hwpod.build"
+      },
+      {
+        "id": "display-capture",
+        "kind": "hwpod.display.capture"
+      }
+    ],
+    "mode": "harness-build-display-capture",
+    "notes": {
+      "target": "D601-VM-HOST Linux / VExpress-A9 / PL111 / QEMU",
+      "autoEvaluation": false,
+      "captureAuthority": "HWPOD display.capture operation result"
+    },
+    "title": "D601 VM VExpress-A9 QEMU GUI 采集冒烟",
+    "caseId": "d601-vm-vexpress-a9-qemu-gui-smoke",
+    "subject": {
+      "subdir": "",
+      "commitId": "4ed40401ff5686c86f9598ae8239b76374a98d00",
+      "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace"
+    },
+    "expected": {
+      "compile": {
+        "success": true,
+        "artifactSuffixes": [
+          "build/qemu-gui.elf"
+        ]
+      },
+      "display": {
+        "width": 640,
+        "height": 480,
+        "frameRate": 5,
+        "durationMs": 10000,
+        "videoFormat": "webm",
+        "screenshotFormat": "png"
+      }
+    },
+    "hwpodSpec": "hwpod-spec.yaml",
+    "contractVersion": "hwpod-case-v1"
+  },
+  "subject": {
+    "setup": {
+      "nodeId": "node-d601-vm-hwpod-qemu",
+      "planId": "run_qemu_gui_l1_20260727_04:prepare:v1:subject-prepare",
+      "stderr": "Preparing worktree (detached HEAD 4ed4040)",
+      "stdout": "HEAD is now at 4ed4040 feat: add VExpress-A9 QEMU GUI subject baseline\n4ed40401ff5686c86f9598ae8239b76374a98d00",
+      "exitCode": 0,
+      "operation": {
+        "ops": [
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_01_subject_commit",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_02_subject_worktree_add",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_03_subject_worktree_head",
+            "status": "completed"
+          }
+        ],
+        "intent": "cmd.run",
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "planId": "run_qemu_gui_l1_20260727_04:prepare:v1:subject-prepare",
+        "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+        "contractVersion": "hwpod-node-ops-v1"
+      },
+      "resources": [],
+      "httpStatus": 200
+    },
+    "subdir": "",
+    "commitId": "4ed40401ff5686c86f9598ae8239b76374a98d00",
+    "resources": [],
+    "worktreePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-04",
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/caserun-run-qemu-gui-l1-20260727-04",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    }
+  },
+  "agentTask": null,
+  "status": "blocked",
+  "stage": "blocked",
+  "_control": {
+    "status": "blocked",
+    "stage": "blocked",
+    "updatedAt": "2026-07-26T20:57:38.062Z",
+    "completedAt": "2026-07-26T20:57:38.055Z",
+    "exitCode": 0,
+    "evidencePath": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_04/evidence.json"
+  },
+  "evidencePath": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_l1_20260727_04/evidence.json"
+}
