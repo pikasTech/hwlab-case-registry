@@ -1,0 +1,70 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-render-large-lmsk",
+  "title": "D601 VM VExpress-A9 Arm-2D Large LMSK Render Test",
+  "mode": "harness-build-display-capture",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "commitId": "0392d851777d7b3ffe6a6832f51c70f88267053b",
+    "subdir": "",
+    "resources": [
+      {
+        "id": "arm-2d-main",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+        "ref": "main",
+        "commitId": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+        "destination": "third_party/Arm-2D-main"
+      }
+    ]
+  },
+  "diffCollection": {
+    "ignore": [
+      {
+        "pattern": "third_party/Arm-2D-main/**",
+        "reason": "官方 Arm-2D 资源以固定 commit 和物化清单表达，不展开 4.6 MiB LMSK 资产 diff"
+      }
+    ]
+  },
+  "flow": [
+    {
+      "id": "build",
+      "kind": "hwpod.build"
+    },
+    {
+      "id": "download",
+      "kind": "hwpod.download"
+    },
+    {
+      "id": "display-capture",
+      "kind": "hwpod.display.capture"
+    }
+  ],
+  "expected": {
+    "compile": {
+      "success": true,
+      "artifactSuffixes": [
+        "build/qemu-gui.elf"
+      ]
+    },
+    "display": {
+      "width": 640,
+      "height": 480,
+      "durationMs": 10000,
+      "frameRate": 24,
+      "screenshotFormat": "png",
+      "videoFormat": "webm"
+    }
+  },
+  "notes": {
+    "autoEvaluation": false,
+    "target": "D601-VM-HOST Linux / VExpress-A9 / PL111 / QEMU",
+    "demo": "ARM-software/Arm-2D main examples/render_tests/arm_2d_scene_large_lmsk.c",
+    "asset": "官方 Bad Apple 160x120、20列、3110帧 LMSK 资产",
+    "animation": "官方 Large LMSK decoder 与 scene，板级 PL111 双缓冲/VBlank 呈现",
+    "capture": "10秒、24 fps、240个原始帧；内容按VBlank时钟推进",
+    "knownBoundary": "上游 decoder 的 bDoWhile 标签仍为 TODO；本 case 验证前段动画窗口，不声明完整3110帧无断言",
+    "captureAuthority": "HWPOD display.capture operation result"
+  }
+}
