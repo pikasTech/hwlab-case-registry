@@ -1,0 +1,49 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-font-masks",
+  "title": "D601 VM VExpress-A9 Arm-2D 字体 Mask 层级",
+  "mode": "harness-build-display-capture",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "commitId": "b08d35dbc435767312e5b1c90937c5dbe9796830",
+    "subdir": ""
+  },
+  "flow": [
+    {
+      "id": "build",
+      "kind": "hwpod.build"
+    },
+    {
+      "id": "download",
+      "kind": "hwpod.download"
+    },
+    {
+      "id": "display-capture",
+      "kind": "hwpod.display.capture"
+    }
+  ],
+  "expected": {
+    "compile": {
+      "success": true,
+      "artifactSuffixes": [
+        "build/qemu-gui.elf"
+      ]
+    },
+    "display": {
+      "width": 640,
+      "height": 480,
+      "durationMs": 10000,
+      "frameRate": 5,
+      "screenshotFormat": "png",
+      "videoFormat": "webm"
+    }
+  },
+  "notes": {
+    "autoEvaluation": false,
+    "target": "D601-VM-HOST Linux / VExpress-A9 / PL111 / QEMU",
+    "demo": "ARM-software/Arm-2D v1.2.4 examples/demos/arm_2d_scene_basics.c，增加最小 A1 字体 Mask 示例",
+    "fontMasks": "A8/A4/A2 使用官方 DigitsFont，A1 使用官方 ARM_2D_FONT_6x8 与默认 A1 draw path",
+    "captureAuthority": "HWPOD display.capture operation result"
+  }
+}
