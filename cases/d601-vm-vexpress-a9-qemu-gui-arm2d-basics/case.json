@@ -1,0 +1,48 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-basics",
+  "title": "D601 VM VExpress-A9 Arm-2D 官方 Basic 场景",
+  "mode": "harness-build-display-capture",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "commitId": "14690267cef8efa7a16cb8d8eb06ff71144c2ebc",
+    "subdir": ""
+  },
+  "flow": [
+    {
+      "id": "build",
+      "kind": "hwpod.build"
+    },
+    {
+      "id": "download",
+      "kind": "hwpod.download"
+    },
+    {
+      "id": "display-capture",
+      "kind": "hwpod.display.capture"
+    }
+  ],
+  "expected": {
+    "compile": {
+      "success": true,
+      "artifactSuffixes": [
+        "build/qemu-gui.elf"
+      ]
+    },
+    "display": {
+      "width": 640,
+      "height": 480,
+      "durationMs": 10000,
+      "frameRate": 5,
+      "screenshotFormat": "png",
+      "videoFormat": "webm"
+    }
+  },
+  "notes": {
+    "autoEvaluation": false,
+    "target": "D601-VM-HOST Linux / VExpress-A9 / PL111 / QEMU",
+    "demo": "ARM-software/Arm-2D v1.2.4 examples/demos/arm_2d_scene_basics.c",
+    "captureAuthority": "HWPOD display.capture operation result"
+  }
+}
