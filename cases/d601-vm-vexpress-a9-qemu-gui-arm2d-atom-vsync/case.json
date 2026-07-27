@@ -1,0 +1,50 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-atom-vsync",
+  "title": "D601 VM VExpress-A9 Arm-2D Atom 帧同步动画",
+  "mode": "harness-build-display-capture",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "commitId": "b728643dccdf2c13d3cb366452b7a1b7cd422b45",
+    "subdir": ""
+  },
+  "flow": [
+    {
+      "id": "build",
+      "kind": "hwpod.build"
+    },
+    {
+      "id": "download",
+      "kind": "hwpod.download"
+    },
+    {
+      "id": "display-capture",
+      "kind": "hwpod.display.capture"
+    }
+  ],
+  "expected": {
+    "compile": {
+      "success": true,
+      "artifactSuffixes": [
+        "build/qemu-gui.elf"
+      ]
+    },
+    "display": {
+      "width": 640,
+      "height": 480,
+      "durationMs": 10000,
+      "frameRate": 5,
+      "screenshotFormat": "png",
+      "videoFormat": "webm"
+    }
+  },
+  "notes": {
+    "autoEvaluation": false,
+    "target": "D601-VM-HOST Linux / VExpress-A9 / PL111 / QEMU",
+    "demo": "ARM-software/Arm-2D v1.2.4 examples/demos/arm_2d_scene_atom.c",
+    "animation": "官方 scene_atom + 板级 PL111 双缓冲/VBlank 同步适配",
+    "frameSynchronization": "整帧完成后等待 PL111 VCOMP，再通过 LCDUPBASE 换页",
+    "captureAuthority": "HWPOD display.capture operation result"
+  }
+}
