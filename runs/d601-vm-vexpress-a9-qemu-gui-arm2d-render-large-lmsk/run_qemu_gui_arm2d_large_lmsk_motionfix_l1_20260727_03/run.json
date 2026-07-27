@@ -1,0 +1,259 @@
+{
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-render-large-lmsk",
+  "runId": "run_qemu_gui_arm2d_large_lmsk_motionfix_l1_20260727_03",
+  "runDir": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_arm2d_large_lmsk_motionfix_l1_20260727_03",
+  "caseRepo": "/root/hwlab-case-registry",
+  "caseDir": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_arm2d_large_lmsk_motionfix_l1_20260727_03/case-authority/cases/d601-vm-vexpress-a9-qemu-gui-arm2d-render-large-lmsk",
+  "caseFile": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_arm2d_large_lmsk_motionfix_l1_20260727_03/case-authority/cases/d601-vm-vexpress-a9-qemu-gui-arm2d-render-large-lmsk/case.json",
+  "sourceSpecPath": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_arm2d_large_lmsk_motionfix_l1_20260727_03/case-authority/cases/d601-vm-vexpress-a9-qemu-gui-arm2d-render-large-lmsk/hwpod-spec.yaml",
+  "specPath": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_arm2d_large_lmsk_motionfix_l1_20260727_03/.hwlab/hwpod-spec.yaml",
+  "apiUrl": "http://127.0.0.1:6681",
+  "compileOnly": false,
+  "validationPlan": {
+    "mode": "custom-runtime",
+    "steps": [
+      {
+        "args": {},
+        "kind": "build",
+        "stage": "post-agent-validation",
+        "actionId": "build",
+        "expectedOp": "debug.build"
+      },
+      {
+        "args": {},
+        "kind": "download",
+        "stage": "post-agent-validation",
+        "actionId": "download",
+        "expectedOp": "debug.download"
+      },
+      {
+        "args": {},
+        "kind": "displayCapture",
+        "stage": "post-agent-validation",
+        "actionId": "display-capture",
+        "expectedOp": "display.capture"
+      }
+    ],
+    "source": "case-definition.flow",
+    "compileOnly": false,
+    "contractVersion": "hwpod-case-validation-plan-v1"
+  },
+  "createdAt": "2026-07-27T18:01:33.221Z",
+  "updatedAt": "2026-07-27T18:03:20.292Z",
+  "definition": {
+    "flow": [
+      {
+        "id": "build",
+        "kind": "hwpod.build"
+      },
+      {
+        "id": "download",
+        "kind": "hwpod.download"
+      },
+      {
+        "id": "display-capture",
+        "kind": "hwpod.display.capture"
+      }
+    ],
+    "mode": "harness-build-display-capture",
+    "notes": {
+      "demo": "ARM-software/Arm-2D main examples/render_tests/arm_2d_scene_large_lmsk.c",
+      "asset": "官方 Bad Apple 160x120、20列、3110帧 LMSK 资产",
+      "target": "D601-VM-HOST Linux / VExpress-A9 / PL111 / QEMU",
+      "capture": "10秒、24 fps、240个原始帧；至少230个独立像素帧且连续转换，内容按1MHz板级自由运行时钟推进",
+      "animation": "官方 Large LMSK decoder 与 scene，板级 PL111 双缓冲/VBlank 呈现；subject 补齐上游 direct-ROM decoder 的 DO/WHILE 标签语义",
+      "acceptance": "视频可解码、连续动画无残影或冻结，UART 不得出现 arm_lmsk_decoder 断言",
+      "autoEvaluation": false,
+      "captureAuthority": "HWPOD display.capture operation result"
+    },
+    "title": "D601 VM VExpress-A9 Arm-2D Large LMSK Render Test",
+    "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-render-large-lmsk",
+    "subject": {
+      "subdir": "",
+      "commitId": "609d0571adc6ec60615360d75f785f7bbd574ad0",
+      "resources": [
+        {
+          "id": "arm-2d-main",
+          "ref": "main",
+          "kind": "git",
+          "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+          "commitId": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+          "destination": "third_party/Arm-2D-main"
+        }
+      ],
+      "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace"
+    },
+    "expected": {
+      "compile": {
+        "success": true,
+        "artifactSuffixes": [
+          "build/qemu-gui.elf"
+        ]
+      },
+      "display": {
+        "width": 640,
+        "height": 480,
+        "frameRate": 24,
+        "durationMs": 10000,
+        "videoFormat": "webm",
+        "screenshotFormat": "png"
+      }
+    },
+    "timeouts": {
+      "hwpodCommandTimeoutMs": 120000
+    },
+    "hwpodSpec": "hwpod-spec.yaml",
+    "diffCollection": {
+      "ignore": [
+        {
+          "reason": "官方 Arm-2D 资源以固定 commit 和物化清单表达，不展开 4.6 MiB LMSK 资产 diff",
+          "pattern": "third_party/Arm-2D-main/**"
+        }
+      ]
+    },
+    "contractVersion": "hwpod-case-v1"
+  },
+  "subject": {
+    "setup": {
+      "nodeId": "node-d601-vm-hwpod-qemu",
+      "planId": "run_qemu_gui_arm2d_large_lmsk_motionfix_l1_20260727_03:prepare:v1:subject-prepare",
+      "stderr": "Preparing worktree (detached HEAD 609d057)",
+      "stdout": "HEAD is now at 609d057 fix: restore Large LMSK animation\n609d0571adc6ec60615360d75f785f7bbd574ad0",
+      "exitCode": 0,
+      "operation": {
+        "ops": [
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_01_subject_commit",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_02_subject_worktree_add",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_03_subject_worktree_head",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "workspace.git-materialize",
+            "opId": "op_10_resource_arm-2d-main",
+            "status": "completed"
+          }
+        ],
+        "intent": "cmd.run",
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "planId": "run_qemu_gui_arm2d_large_lmsk_motionfix_l1_20260727_03:prepare:v1:subject-prepare",
+        "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+        "contractVersion": "hwpod-node-ops-v1"
+      },
+      "resources": [
+        {
+          "id": "arm-2d-main",
+          "ref": "main",
+          "kind": "git",
+          "reused": false,
+          "gitHead": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+          "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+          "commitId": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+          "destination": "third_party/Arm-2D-main",
+          "materialized": true
+        }
+      ],
+      "httpStatus": 200
+    },
+    "subdir": "",
+    "commitId": "609d0571adc6ec60615360d75f785f7bbd574ad0",
+    "resources": [
+      {
+        "id": "arm-2d-main",
+        "ref": "main",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+        "commitId": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+        "destination": "third_party/Arm-2D-main"
+      }
+    ],
+    "worktreePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-eadb99110e0f8c0f",
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-eadb99110e0f8c0f",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    }
+  },
+  "agentTask": null,
+  "status": "completed",
+  "stage": "completed",
+  "_control": {
+    "status": "completed",
+    "stage": "completed",
+    "updatedAt": "2026-07-27T18:03:20.292Z",
+    "completedAt": "2026-07-27T18:03:20.270Z",
+    "exitCode": 0,
+    "evidencePath": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_arm2d_large_lmsk_motionfix_l1_20260727_03/evidence.json"
+  },
+  "evidencePath": "/root/hwlab-v03/.state/harnessrl/runs/run_qemu_gui_arm2d_large_lmsk_motionfix_l1_20260727_03/evidence.json"
+}

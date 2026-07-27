@@ -1,0 +1,56 @@
+apiVersion: hwlab.dev/v0alpha1
+kind: Hwpod
+metadata:
+  name: d601-vm-vexpress-a9-qemu-gui
+spec:
+  nodeBinding:
+    nodeId: node-d601-vm-hwpod-qemu
+  targetDevice:
+    board: ARM VExpress-A9 QEMU GUI
+    cpu: cortex-a9
+    emulator: qemu-system-arm
+    machine: vexpress-a9
+    simulation: true
+  workspace:
+    path: "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-eadb99110e0f8c0f"
+    toolchain: arm-none-eabi-gcc
+    buildCommand: scripts/build
+    rebuildCommand: scripts/rebuild
+    buildArtifactPath: build/qemu-gui.elf
+  debugProbe:
+    type: qemu
+    adapter: hwpod-qemu-gui-workspace
+    downloadCommand: scripts/download
+    resetCommand: scripts/reset
+    physicalProbe: false
+  ioProbe:
+    uart:
+      backend: pyserial
+      port: /home/ubuntu/workspace/hwpod_qemu_gui_workspace/.state/qemu/uart
+      baudRate: 115200
+      captureWindowMs: 500
+      captureMaxBytes: 1048576
+      pollIntervalMs: 10
+      simulated: true
+  display:
+    kind: qemu
+    controller: pl111
+    width: 640
+    height: 480
+    pixelFormat: rgb565
+    capture:
+      qmpSocket: .state/qemu/qmp.sock
+      durationMs: 10000
+      frameRate: 24
+      screenshotFormat: png
+      videoFormat: webm
+      encoder:
+        command: ffmpeg
+        videoCodec: libvpx-vp9
+        pixelFormat: yuv420p
+  simulationBoundary:
+    physicalProbe: false
+    physicalFlash: false
+    powerControl: false
+    uart: qemu-pty
+    display: qemu-pl111
