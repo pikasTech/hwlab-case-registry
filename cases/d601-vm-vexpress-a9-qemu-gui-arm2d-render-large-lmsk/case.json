@@ -6,7 +6,7 @@
   "hwpodSpec": "hwpod-spec.yaml",
   "subject": {
     "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
-    "commitId": "0392d851777d7b3ffe6a6832f51c70f88267053b",
+    "commitId": "609d0571adc6ec60615360d75f785f7bbd574ad0",
     "subdir": "",
     "resources": [
       {
@@ -62,9 +62,9 @@
     "target": "D601-VM-HOST Linux / VExpress-A9 / PL111 / QEMU",
     "demo": "ARM-software/Arm-2D main examples/render_tests/arm_2d_scene_large_lmsk.c",
     "asset": "官方 Bad Apple 160x120、20列、3110帧 LMSK 资产",
-    "animation": "官方 Large LMSK decoder 与 scene，板级 PL111 双缓冲/VBlank 呈现",
-    "capture": "10秒、24 fps、240个原始帧；内容按VBlank时钟推进",
-    "knownBoundary": "上游 decoder 的 bDoWhile 标签仍为 TODO；本 case 验证前段动画窗口，不声明完整3110帧无断言",
+    "animation": "官方 Large LMSK decoder 与 scene，板级 PL111 双缓冲/VBlank 呈现；subject 补齐上游 direct-ROM decoder 的 DO/WHILE 标签语义",
+    "capture": "10秒、24 fps、240个原始帧；至少230个独立像素帧且连续转换，内容按1MHz板级自由运行时钟推进",
+    "acceptance": "视频可解码、连续动画无残影或冻结，UART 不得出现 arm_lmsk_decoder 断言",
     "captureAuthority": "HWPOD display.capture operation result"
   }
 }
