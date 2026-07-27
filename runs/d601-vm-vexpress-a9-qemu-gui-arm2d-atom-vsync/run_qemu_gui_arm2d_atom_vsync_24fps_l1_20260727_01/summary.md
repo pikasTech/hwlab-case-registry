@@ -1,0 +1,39 @@
+# HWPOD CaseRun d601-vm-vexpress-a9-qemu-gui-arm2d-atom-vsync
+
+- runId: run_qemu_gui_arm2d_atom_vsync_24fps_l1_20260727_01
+- status: recorded
+- autoEvaluation: false
+- compileOnly: false
+- subjectRepoLocalPath: /home/ubuntu/workspace/hwpod_qemu_gui_workspace
+- subjectCommitId: aba007243fe8cd13301ca01bc5f078b747f5fd50
+- subjectWorktreePath: /home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-52cce784f2e14c0c
+- agentTraceId: 
+- agentSessionId: 
+- requestedProviderProfile: 
+- resolvedBackendProfile: 
+- model: 
+- infrastructureBackend: 
+- traceLookupStrategy: 
+- traceCommand: 
+- resultCommand: 
+- inspectCommand: 
+- agentTraceCommandCount: 0
+- agentTraceHwpodCommandCount: 0
+- agentTraceHwpodBuildCommandCount: 0
+- agentTerminalStatus: 
+- agentFinalPresent: false
+- agentFinalMissingReason: final-response-not-reported
+- postValidationStatus: 
+- agentReportedBuildWarningCount: 
+- runnerPostValidationWarningCount: 
+- agentToolCallSummaryCount: 
+- agentToolCallStatusCounts: {}
+- agentToolCallExitCodeCounts: {}
+- agentStageCommandCount: 0
+- agentStageKinds: 
+- diffPatchPath: 
+- runnerHwpodSource: case-run-runner-post-agent-compile-check
+- hwpodExitCode: 0
+- jobId: 
+- runnerPostAgentCompileCheck: recorded
+
