@@ -1,0 +1,236 @@
+{
+  "contractVersion": "hwpod-case-validation-observations-v1",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-eyes",
+  "runId": "run_arm2d_eyes_official_l1_20260728_02",
+  "observedAt": "2026-07-28T02:55:50.775Z",
+  "plan": {
+    "mode": "custom-runtime",
+    "steps": [
+      {
+        "args": {},
+        "kind": "build",
+        "stage": "post-agent-validation",
+        "actionId": "build",
+        "expectedOp": "debug.build"
+      },
+      {
+        "args": {},
+        "kind": "download",
+        "stage": "post-agent-validation",
+        "actionId": "download",
+        "expectedOp": "debug.download"
+      },
+      {
+        "args": {},
+        "kind": "displayCapture",
+        "stage": "post-agent-validation",
+        "actionId": "display-capture",
+        "expectedOp": "display.capture"
+      }
+    ],
+    "source": "case-definition.flow",
+    "compileOnly": false,
+    "contractVersion": "hwpod-case-validation-plan-v1"
+  },
+  "results": [
+    {
+      "operation": {
+        "contractVersion": "hwpod-operation-result-v0.3",
+        "authority": "hwpod-service",
+        "actionId": "build",
+        "stage": "post-agent-validation",
+        "kind": "build",
+        "op": "debug.build",
+        "opId": "op_01_debug_build",
+        "status": "completed",
+        "ok": true,
+        "expected": {
+          "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-44ca3b68a65e6b87",
+          "op": "debug.build",
+          "actionId": "build"
+        },
+        "observed": {
+          "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-44ca3b68a65e6b87",
+          "op": "debug.build",
+          "actionId": "op_01_debug_build"
+        },
+        "topology": {
+          "ok": true
+        }
+      },
+      "result": {
+        "opId": "op_01_debug_build",
+        "op": "debug.build",
+        "status": "completed",
+        "ok": true,
+        "output": {
+          "cwd": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-44ca3b68a65e6b87",
+          "op": "debug.build",
+          "bindingSource": "hwpod-node-ops.command",
+          "ok": true,
+          "command": [
+            "scripts/build"
+          ],
+          "exitCode": 0,
+          "stdout": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n 129647\t    428\t 388504\t 518579\t  7e9b3\t/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-44ca3b68a65e6b87/build/qemu-gui.elf\n",
+          "stderr": "",
+          "elapsedMs": 26527,
+          "artifactPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-44ca3b68a65e6b87/build/qemu-gui.elf",
+          "sizeBytes": 169684
+        }
+      }
+    },
+    {
+      "operation": {
+        "contractVersion": "hwpod-operation-result-v0.3",
+        "authority": "hwpod-service",
+        "actionId": "download",
+        "stage": "post-agent-validation",
+        "kind": "download",
+        "op": "debug.download",
+        "opId": "op_01_debug_download",
+        "status": "completed",
+        "ok": true,
+        "expected": {
+          "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-44ca3b68a65e6b87",
+          "op": "debug.download",
+          "actionId": "download"
+        },
+        "observed": {
+          "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-44ca3b68a65e6b87",
+          "op": "debug.download",
+          "actionId": "op_01_debug_download"
+        },
+        "topology": {
+          "ok": true
+        }
+      },
+      "result": {
+        "opId": "op_01_debug_download",
+        "op": "debug.download",
+        "status": "completed",
+        "ok": true,
+        "output": {
+          "cwd": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-44ca3b68a65e6b87",
+          "op": "debug.download",
+          "bindingSource": "hwpod-node-ops.command",
+          "ok": true,
+          "command": [
+            "scripts/download"
+          ],
+          "exitCode": 0,
+          "stdout": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n 129647\t    428\t 388504\t 518579\t  7e9b3\t/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-44ca3b68a65e6b87/build/qemu-gui.elf\n{\"ok\":true,\"pid\":3337874,\"qmpSocket\":\".state/qemu/qmp.sock\",\"uart\":\"/dev/pts/21\"}\n",
+          "stderr": "",
+          "elapsedMs": 26954
+        }
+      }
+    },
+    {
+      "operation": {
+        "contractVersion": "hwpod-operation-result-v0.3",
+        "authority": "hwpod-service",
+        "actionId": "display-capture",
+        "stage": "post-agent-validation",
+        "kind": "displayCapture",
+        "op": "display.capture",
+        "opId": "op_01_display_capture",
+        "status": "completed",
+        "ok": true,
+        "expected": {
+          "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "op": "display.capture",
+          "actionId": "display-capture"
+        },
+        "observed": {
+          "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "workspacePath": "",
+          "op": "display.capture",
+          "actionId": "op_01_display_capture"
+        },
+        "topology": {
+          "ok": true
+        }
+      },
+      "result": {
+        "opId": "op_01_display_capture",
+        "op": "display.capture",
+        "status": "completed",
+        "ok": true,
+        "output": {
+          "captureId": "capture-1785207333624-9d798dc78bda40810d33a839",
+          "status": "completed",
+          "source": {
+            "emulator": "qemu-system-arm",
+            "machine": "vexpress-a9",
+            "displayController": "pl111",
+            "captureMethod": "qmp-screendump-ppm"
+          },
+          "media": {
+            "screenshot": {
+              "artifactId": "capture-1785207333624-9d798dc78bda40810d33a839-screenshot",
+              "fileName": "capture-1785207333624-9d798dc78bda40810d33a839-screenshot.png",
+              "mimeType": "image/png",
+              "bytes": 7827,
+              "sha256": "a3de819d2e427642fc040985a4ff51ad45ff838d25842bb86e2d9072309d6774",
+              "createdAt": "2026-07-28T02:55:47.927Z",
+              "artifactRef": "hwpod-media://capture-1785207333624-9d798dc78bda40810d33a839-screenshot",
+              "downloadUrl": "https://lab-dev-hwpod.hwpod.com/v1/hwpod/artifacts/capture-1785207333624-9d798dc78bda40810d33a839-screenshot",
+              "width": 640,
+              "height": 480,
+              "capturedAt": "2026-07-28T02:55:48.982Z"
+            },
+            "video": {
+              "artifactId": "capture-1785207333624-9d798dc78bda40810d33a839-video",
+              "fileName": "capture-1785207333624-9d798dc78bda40810d33a839-video.webm",
+              "mimeType": "video/webm",
+              "bytes": 40699,
+              "sha256": "d184a9a142dcaae76e90da0819bc7fa5dfea68e8e70a04ce0771eabd4df11ada",
+              "createdAt": "2026-07-28T02:55:48.866Z",
+              "artifactRef": "hwpod-media://capture-1785207333624-9d798dc78bda40810d33a839-video",
+              "downloadUrl": "https://lab-dev-hwpod.hwpod.com/v1/hwpod/artifacts/capture-1785207333624-9d798dc78bda40810d33a839-video",
+              "width": 640,
+              "height": 480,
+              "durationMs": 10000,
+              "frameRate": 24,
+              "startedAt": "2026-07-28T02:55:33.625Z",
+              "endedAt": "2026-07-28T02:55:48.982Z"
+            },
+            "rawFrames": {
+              "path": ".state/display-captures/capture-1785207333624-9d798dc78bda40810d33a839/frames",
+              "manifestPath": ".state/display-captures/capture-1785207333624-9d798dc78bda40810d33a839/raw-frames-manifest.json",
+              "manifestSha256": "5246c3a0d66a3265b59a73e2fea24794d22a396d6a3df5f032f8e76719499c13",
+              "frameCount": 240
+            }
+          }
+        }
+      }
+    }
+  ],
+  "replay": {
+    "contractVersion": "hwpod-case-validation-replay-v1",
+    "source": "archived-hwpod-operation-observations",
+    "planMode": "custom-runtime",
+    "actionIds": [
+      "build",
+      "download",
+      "display-capture"
+    ],
+    "operationIds": [
+      "op_01_debug_build",
+      "op_01_debug_download",
+      "op_01_display_capture"
+    ],
+    "observationIds": [],
+    "relationships": []
+  }
+}

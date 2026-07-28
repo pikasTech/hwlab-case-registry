@@ -1,0 +1,16 @@
+diff --git a/src/arm_2d_scene_binocular.c b/src/arm_2d_scene_binocular.c
+index 3aa23a1..2e4f240 100644
+--- a/src/arm_2d_scene_binocular.c
++++ b/src/arm_2d_scene_binocular.c
+@@ -40,7 +40,8 @@ static void __eyes_runtime_state(arm_2d_scene_t *ptScene)
+ 
+     (void)ptScene;
+     if (s_bEyesDemoEnabled) {
+-        wStep = (arm_2d_helper_get_system_timestamp() / 1000u) % 8u;
++        int64_t lElapsedMs = arm_2d_helper_convert_ticks_to_ms(arm_2d_helper_get_system_timestamp());
++        wStep = (uint32_t)((lElapsedMs / 1000ll) % 8ll);
+         if (wStep != s_wLastStep) {
+             s_wLastStep = wStep;
+         }
+# CaseRun diffCollection omitted provenance groups:
+# - rule=third_party/Arm-2D-main/** count=1 reason=官方 Arm-2D 资源由固定上游提交与物化清单表达 samples=third_party/Arm-2D-main

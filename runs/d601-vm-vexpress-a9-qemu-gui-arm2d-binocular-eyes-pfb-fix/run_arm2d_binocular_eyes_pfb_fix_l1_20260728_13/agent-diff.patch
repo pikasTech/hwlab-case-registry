@@ -1,0 +1,89 @@
+diff --git a/src/arm_2d_scene_binocular.c b/src/arm_2d_scene_binocular.c
+index 53d3b6f..f68515f 100644
+--- a/src/arm_2d_scene_binocular.c
++++ b/src/arm_2d_scene_binocular.c
+@@ -420,21 +420,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_blink_handler)
+     user_scene_blink_t *ptThis = (user_scene_blink_t *)pTarget;
+ 
+     arm_2d_canvas(ptTile, __top_canvas) {
+-        arm_2d_region_t tLeftPivot = {
+-            .tLocation = {
+-                .iX = (__top_canvas.tSize.iWidth >> 1) - 90,
+-                .iY = (__top_canvas.tSize.iHeight >> 1),
+-            },
+-            .tSize = c_tileLeftEyeMask.tRegion.tSize,
++        arm_2d_location_t tLeftPivot = {
++            .iX = (__top_canvas.tSize.iWidth >> 1) - 90,
++            .iY = (__top_canvas.tSize.iHeight >> 1),
++        };
++        arm_2d_location_t tRightPivot = {
++            .iX = (__top_canvas.tSize.iWidth >> 1) + 90,
++            .iY = (__top_canvas.tSize.iHeight >> 1),
+         };
+-        arm_2d_region_t tRightPivot = tLeftPivot;
+-        tRightPivot.tLocation.iX += 180;
+-        arm_2d_region_t tLeftEyeRegion = tLeftPivot;
+-        arm_2d_region_t tRightEyeRegion = tRightPivot;
+-        tLeftEyeRegion.tLocation.iX += this.EyeBallMove.tOffset.iX;
+-        tLeftEyeRegion.tLocation.iY += this.EyeBallMove.tOffset.iY;
+-        tRightEyeRegion.tLocation.iX += this.EyeBallMove.tOffset.iX;
+-        tRightEyeRegion.tLocation.iY += this.EyeBallMove.tOffset.iY;
+     /*-----------------------draw the scene begin-----------------------*/
+         arm_2d_location_t tPivot = {
+             .iX = __top_canvas.tSize.iWidth >> 1,
+@@ -446,35 +439,44 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_blink_handler)
+         spin_zoom_widget_show(  &this.LeftEye.tSocket, 
+                                 ptTile, 
+                                 NULL, 
+-                                &tPivot, 
++                                &tLeftPivot, 
+                                 255);
+         spin_zoom_widget_show(  &this.RightEye.tSocket,
+                                 ptTile,
+-                                &tRightPivot,
+                                 NULL,
++                                &tRightPivot,
+                                 255);
+ 
+         arm_2d_align_centre_open(__top_canvas, EYEBALL.tRegion.tSize) {
+ 
+-            arm_2d_region_t tEyeBallRegion = {
++            arm_2d_region_t tLeftEyeBallRegion = {
+                 .tLocation = {
+-                    .iX =  __centre_region.tLocation.iX + this.EyeBallMove.tOffset.iX,
++                    .iX = __centre_region.tLocation.iX - 90 + this.EyeBallMove.tOffset.iX,
+                     .iY = __centre_region.tLocation.iY + this.EyeBallMove.tOffset.iY,
+                 },
+                 .tSize = EYEBALL.tRegion.tSize,
+             };
+ 
+-            __arm_2d_hint_optimize_for_pfb__(tEyeBallRegion) {
++            __arm_2d_hint_optimize_for_pfb__(tLeftEyeBallRegion) {
+ 
+                 spin_zoom_widget_show(  &this.LeftEye.tEyeBall, 
+                                         ptTile, 
+-                                        &tEyeBallRegion, 
+-                                        &tPivot, 
++                                        &tLeftEyeBallRegion, 
++                                        &tLeftPivot, 
+                                         255);
++            }
++            arm_2d_region_t tRightEyeBallRegion = {
++                .tLocation = {
++                    .iX = __centre_region.tLocation.iX + 90 + this.EyeBallMove.tOffset.iX,
++                    .iY = __centre_region.tLocation.iY + this.EyeBallMove.tOffset.iY,
++                },
++                .tSize = EYEBALL.tRegion.tSize,
++            };
++            __arm_2d_hint_optimize_for_pfb__(tRightEyeBallRegion) {
+                 spin_zoom_widget_show(  &this.RightEye.tEyeBall,
+                                         ptTile,
+-                                        &tRightEyeRegion,
+-                                        NULL,
++                                        &tRightEyeBallRegion,
++                                        &tRightPivot,
+                                         255);
+             }
+         }
+# CaseRun diffCollection omitted provenance groups:
+# - rule=third_party/Arm-2D-main/** count=1 reason=官方 Arm-2D 资源由固定上游提交与物化清单表达 samples=third_party/Arm-2D-main

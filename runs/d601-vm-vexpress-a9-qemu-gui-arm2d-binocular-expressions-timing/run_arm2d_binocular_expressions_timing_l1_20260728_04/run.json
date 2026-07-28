@@ -1,0 +1,633 @@
+{
+  "agent": {
+    "polls": 54,
+    "result": {
+      "bytes": 10460,
+      "clipped": true,
+      "preview": "{\"ok\":true,\"traceId\":\"trc_harnessrl_9c200f8d57286ab7b807ad1d\",\"sessionId\":\"ses_24664677-cd7a-4ec5-900b-fe68c455ea01\",\"conversationId\":\"cnv_case_d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-expressions-timing_run-arm2d-binocular-expressions-timing-l1-20260728-04\",\"ownerUserId\":\"usr_native\",\"status\":\"completed\",\"message\":\"# HWPOD CaseRun 代码代理任务\\n\\n案例ID: d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-expressions-timing\\n运行ID: run_arm2d_binocular_expressions_timing_l1_20260728_04\\n主体仓库本地路径: /home/ubuntu/workspace/hwpod_qemu_gui_workspace\\n主体提交ID: e1d6a4d7b457b1268afdb8e927fea20422b8fd5d\\n主体隔离工作区路径: /home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-cfed9a1092eab28a\\nhwpodId: d601-vm-vexpress-a9-qemu-gui\\nHWPOD 环境默认: HWPOD_ID=d601-vm-vexpress-a9-qemu-gui；HWPOD_WORKSPACE_PATH=/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-cfed9a1092eab28a\\nhwpodWorkspaceArgs（仅用于显式诊断，通常不要传）: --hwpod-id d601-vm-vexpress-a9-qemu-gui --workspace-path '/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-cfed9a1092eab28a'\\n验证模式: custom-runtime；Agent final 与 CaseRun 后置 HWPOD validation 独立记录。\\nCaseRun 后置验证动作: build:build, download:download, display-capture:displayCapture\\n\\n## 运行时装配\\nAgentRun 通过 ResourceBundleRef kind=gitbundle 装配 HWLAB 运行时资源。工具命令从 bundle 暴露；skill 的真实位置以 AgentRun 初始资源 manifest 给出的绝对路径为准，不把 subject worktree 下的 `.agents/skills` 当作固定路径。CaseRun 不再发送临时 workspaceFiles 或 seed-file 载荷。\\n\\n## HWPOD 运行时\\n通过运行时服务按 ID 使用 HWPOD，不要求 runner 本地存在 `.hwlab/hwpod-spec.yaml`。\\n\\n## Harness 已物化资源\\n- arm-2d-main: third_party/Arm-2D-main | https://github.com/ARM-software/Arm-2D.git | ref=main | commit=3dd16b28b2d8c920e43736d644c8e5876180eb50 | reused=false\\nhwpod/hwpod-ctl 默认读取已注入的 HWPOD_ID 和 HWPOD_WORKSPACE_PATH；不要在每条命令中重复长参数。显式传入时必须与环境作用域精确一致。\\n本任务的标准冒烟步骤：\\n- `hwpod-ctl spec validate`\\n- `hwpod inspect`\\n- 工作区读取、搜索和编辑：`hwpod workspace ...`\\n- 编译检查：`hwpod build`\\n\\n## 任务\\n请在 D601-VM-HOST 的隔离 Linux subject worktree 中修复现有双目表情 demo 的唯一时钟单位问题。当前版本已真实 build/download/capture 成功，但 4 fps 视觉采样显示眼睛在一秒内高速轮转且标签总被 PFB 采到 `angry`。根因已经用官方 Arm-2D helper 源码确认：`arm_2d_helper_get_system_timestamp()` 返回 tick，而当前代码直接 `(timestamp / 1000u) % 8u`，没有调用官方 `arm_2d_helper_convert_ticks_to_ms(int64_t)`。\\n\\n只用小于 4 KiB 的定点读取定位 `wStep` 赋值，然后只用一次 `hwpod workspace apply-patch` 把它改成按官方毫秒换算后的秒数：先调用 `arm_2d_helper_convert_ticks_to_ms(arm_2d_helper_get_system_timestamp())`，再除以 1000，最后 `% 8`。使用足够宽的有符号中间类型，最后安全转为 `uint32_t`；每个状态应稳定约 1 秒，完整 8 状态周期约 8 秒。不得修改 expression 映射、angle/scale、gaze、标签、API、四条 frame-start、四条 show、PFB 或任何其他文件。\\n\\n补丁后定点读取确认该行确实使用 `arm_2d_helper_convert_ticks_to_ms`，再执行一次且只执行一个 `hwpod build`。若 Agent 内部 build 客户端发生已知长等待/退出 130，不要并发重试，如实结束；CaseRun Harness 会独立 build/download 和 10 秒 24 fps capture。最终视频必须能以 1 fps 采样看到不同标签和与标签一致的稳定双目状态。\\n\\n## 约束\\n- 思维过程和输出消息一律使用中文\\n- 只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径\\n- 只允许修改 src/arm_2d_scene_binocular.c 中的 demo 时钟换算\\n- 必须使用官方 arm_2d_helper_convert_ticks_to_ms 后再换算秒与 8 状态周期\\n- 不得修改 expression、gaze、标签、API、frame-start、show 或 PFB 语义\\n- 单次读取输出必须小于 4 KiB，文本修改必须使用 HWPOD workspace apply-patch\\n- 同一时刻只允许一个 hwpod build，不得因客户端长等待并发重试\\n- 禁止修改 headers、scripts、third_party、hwpod-spec.yaml、QEMU、PL111、下载和采集逻辑\\n- Agent final response 不能替代 Harness 独立 build、download 和 display.capture 证据\\n- 结果只记录 raw trace/evidence，autoEvaluation=false\\n- 只能修改 isolated subject worktree，不得修改 case registry repo。\\n- 不得修改原 subject repo checkout；所有源码修改必须落在 subjectWorktreePath。\\n- AgentRun 通过 kind=gitbundle 装配当前 v0.2 的 tools/ 与 skills；读取 skill 时使用初始资源 manifest 给出的绝对路径，不要假定 subject worktree 内存在 .agents/skills。若标准 hwpod 命令能力缺失，报告 gitbundle runtime assembly 问题，不要改走旁路。\\n- 不要依赖 workspaceFiles、seed files、hostPath skill 目录、ConfigMap 或 runner 本地 .hwlab/hwpod-spec.yaml 作为工具/skill/HWPOD 注入 fallback。\\n- 必须通过 HWPOD registry/service 引用 hwpodId=d601-vm-vexpress-a9-qemu-gui；Harness 已把该 HWPOD 与 subject workspace 注入工具作用域，可以省略 --hwpod-id d601-vm-vexpress-a9-qemu-gui --workspace-path '/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-cfed9"
+    },
+    "backend": "gpt-pika",
+    "baseUrl": "http://127.0.0.1:6677",
+    "traceId": "trc_harnessrl_9c200f8d57286ab7b807ad1d",
+    "accepted": {
+      "ok": true,
+      "reused": false,
+      "status": "running",
+      "traceId": "trc_harnessrl_9c200f8d57286ab7b807ad1d",
+      "accepted": true,
+      "sessionId": "ses_24664677-cd7a-4ec5-900b-fe68c455ea01",
+      "workflowId": "workbench-turn-trc_harnessrl_9c200f8d57286ab7b807ad1d",
+      "workflowRunId": "019fa710-a0ac-74af-9d9e-e9a6654e11de",
+      "orchestrationMode": "agentrun-native",
+      "resultSynthesized": false,
+      "terminalAuthority": "hwlab.event.v1"
+    },
+    "terminal": true,
+    "timedOut": false,
+    "projectId": "prj_hwpod_workbench",
+    "resultUrl": "http://127.0.0.1:6677/v1/agent/chat/result/trc_harnessrl_9c200f8d57286ab7b807ad1d",
+    "sessionId": "ses_24664677-cd7a-4ec5-900b-fe68c455ea01",
+    "timeoutMs": 1800000,
+    "lastPollAt": "2026-07-28T04:53:47.164Z",
+    "promptPath": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_expressions_timing_l1_20260728_04/agent-prompt.md",
+    "stageStatus": "completed",
+    "traceLookup": {
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "source": "hwlab-cli.client.agent",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_9c200f8d57286ab7b807ad1d",
+      "commands": {
+        "trace": "hwlab-cli client agent trace trc_harnessrl_9c200f8d57286ab7b807ad1d --render web",
+        "result": "hwlab-cli client agent result trc_harnessrl_9c200f8d57286ab7b807ad1d",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_9c200f8d57286ab7b807ad1d",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_9c200f8d57286ab7b807ad1d --render web --full",
+        "sessionStatus": "hwlab-cli client agent session status ses_24664677-cd7a-4ec5-900b-fe68c455ea01"
+      },
+      "strategy": "id_plus_existing_cli",
+      "sessionId": "ses_24664677-cd7a-4ec5-900b-fe68c455ea01",
+      "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-expressions-timing_run-arm2d-binocular-expressions-timing-l1-20260728-04"
+    },
+    "promptSha256": "2509cc51f2c3014c8da489772917a3cea886c6c1cfc31b985ced2cf0273aa519",
+    "traceCommand": "hwlab-cli client agent trace trc_harnessrl_9c200f8d57286ab7b807ad1d --render web",
+    "agentRunStatus": "completed",
+    "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-expressions-timing_run-arm2d-binocular-expressions-timing-l1-20260728-04",
+    "inspectCommand": "hwlab-cli client agent inspect --trace-id trc_harnessrl_9c200f8d57286ab7b807ad1d",
+    "lastHttpStatus": 200,
+    "pollIntervalMs": 2000,
+    "sessionCommand": "hwlab-cli client agent session status ses_24664677-cd7a-4ec5-900b-fe68c455ea01",
+    "terminalStatus": "completed",
+    "nextPollCommand": "hwlab-cli client agent result trc_harnessrl_9c200f8d57286ab7b807ad1d",
+    "providerProfile": "gpt.pika",
+    "sessionResponse": {
+      "ok": true,
+      "status": "created",
+      "session": {
+        "mode": "agentrun-native",
+        "status": "idle",
+        "messages": [],
+        "createdAt": "2026-07-28T04:51:51.820Z",
+        "ownerRole": "user",
+        "projectId": "prj_hwpod_workbench",
+        "sessionId": "ses_24664677-cd7a-4ec5-900b-fe68c455ea01",
+        "updatedAt": "2026-07-28T04:51:51.820Z",
+        "ownerUserId": "usr_native",
+        "launchContext": null,
+        "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-expressions-timing_run-arm2d-binocular-expressions-timing-l1-20260728-04",
+        "providerProfile": "gpt.pika"
+      },
+      "valuesRedacted": true,
+      "orchestrationMode": "agentrun-native",
+      "secretMaterialStored": false
+    },
+    "infrastructureBackend": "gpt-pika",
+    "resolvedBackendProfile": "gpt-pika",
+    "requestedProviderProfile": "gpt.pika"
+  },
+  "runId": "run_arm2d_binocular_expressions_timing_l1_20260728_04",
+  "stage": "completed",
+  "apiUrl": "http://127.0.0.1:6681",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-expressions-timing",
+  "runDir": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_expressions_timing_l1_20260728_04",
+  "caseDir": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_expressions_timing_l1_20260728_04/case-authority/cases/d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-expressions-timing",
+  "subject": {
+    "setup": {
+      "nodeId": "node-d601-vm-hwpod-qemu",
+      "planId": "run_arm2d_binocular_expressions_timing_l1_20260728_04:prepare:v1:subject-prepare",
+      "stderr": "Preparing worktree (detached HEAD e1d6a4d)",
+      "stdout": "HEAD is now at e1d6a4d fix: finalize binocular expression frame calls\ne1d6a4d7b457b1268afdb8e927fea20422b8fd5d",
+      "exitCode": 0,
+      "operation": {
+        "ops": [
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_01_subject_commit",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_02_subject_worktree_add",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_03_subject_worktree_head",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "workspace.git-materialize",
+            "opId": "op_10_resource_arm-2d-main",
+            "status": "completed"
+          }
+        ],
+        "intent": "cmd.run",
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "planId": "run_arm2d_binocular_expressions_timing_l1_20260728_04:prepare:v1:subject-prepare",
+        "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+        "contractVersion": "hwpod-node-ops-v1"
+      },
+      "resources": [
+        {
+          "id": "arm-2d-main",
+          "ref": "main",
+          "kind": "git",
+          "reused": false,
+          "gitHead": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+          "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+          "commitId": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+          "destination": "third_party/Arm-2D-main",
+          "materialized": true
+        }
+      ],
+      "httpStatus": 200
+    },
+    "subdir": "",
+    "commitId": "e1d6a4d7b457b1268afdb8e927fea20422b8fd5d",
+    "resources": [
+      {
+        "id": "arm-2d-main",
+        "ref": "main",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+        "commitId": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+        "destination": "third_party/Arm-2D-main"
+      }
+    ],
+    "worktreePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-cfed9a1092eab28a",
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-cfed9a1092eab28a",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    }
+  },
+  "caseFile": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_expressions_timing_l1_20260728_04/case-authority/cases/d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-expressions-timing/case.json",
+  "caseRepo": "/root/hwlab-case-registry",
+  "specPath": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_expressions_timing_l1_20260728_04/.hwlab/hwpod-spec.yaml",
+  "agentTask": {
+    "model": "gpt-5.6-luna",
+    "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中修复现有双目表情 demo 的唯一时钟单位问题。当前版本已真实 build/download/capture 成功，但 4 fps 视觉采样显示眼睛在一秒内高速轮转且标签总被 PFB 采到 `angry`。根因已经用官方 Arm-2D helper 源码确认：`arm_2d_helper_get_system_timestamp()` 返回 tick，而当前代码直接 `(timestamp / 1000u) % 8u`，没有调用官方 `arm_2d_helper_convert_ticks_to_ms(int64_t)`。\n\n只用小于 4 KiB 的定点读取定位 `wStep` 赋值，然后只用一次 `hwpod workspace apply-patch` 把它改成按官方毫秒换算后的秒数：先调用 `arm_2d_helper_convert_ticks_to_ms(arm_2d_helper_get_system_timestamp())`，再除以 1000，最后 `% 8`。使用足够宽的有符号中间类型，最后安全转为 `uint32_t`；每个状态应稳定约 1 秒，完整 8 状态周期约 8 秒。不得修改 expression 映射、angle/scale、gaze、标签、API、四条 frame-start、四条 show、PFB 或任何其他文件。\n\n补丁后定点读取确认该行确实使用 `arm_2d_helper_convert_ticks_to_ms`，再执行一次且只执行一个 `hwpod build`。若 Agent 内部 build 客户端发生已知长等待/退出 130，不要并发重试，如实结束；CaseRun Harness 会独立 build/download 和 10 秒 24 fps capture。最终视频必须能以 1 fps 采样看到不同标签和与标签一致的稳定双目状态。",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 1800000,
+    "workspace": "subjectWorktree",
+    "constraints": [
+      "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
+      "只允许修改 src/arm_2d_scene_binocular.c 中的 demo 时钟换算",
+      "必须使用官方 arm_2d_helper_convert_ticks_to_ms 后再换算秒与 8 状态周期",
+      "不得修改 expression、gaze、标签、API、frame-start、show 或 PFB 语义",
+      "单次读取输出必须小于 4 KiB，文本修改必须使用 HWPOD workspace apply-patch",
+      "同一时刻只允许一个 hwpod build，不得因客户端长等待并发重试",
+      "禁止修改 headers、scripts、third_party、hwpod-spec.yaml、QEMU、PL111、下载和采集逻辑",
+      "Agent final response 不能替代 Harness 独立 build、download 和 display.capture 证据",
+      "结果只记录 raw trace/evidence，autoEvaluation=false"
+    ],
+    "pollIntervalMs": 2000,
+    "providerProfile": "gpt.pika",
+    "reasoningEffort": "low"
+  },
+  "createdAt": "2026-07-28T04:51:19.469Z",
+  "updatedAt": "2026-07-28T04:56:25.943Z",
+  "agentTrace": {
+    "lookup": {
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "source": "hwlab-cli.client.agent",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_9c200f8d57286ab7b807ad1d",
+      "commands": {
+        "trace": "hwlab-cli client agent trace trc_harnessrl_9c200f8d57286ab7b807ad1d --render web",
+        "result": "hwlab-cli client agent result trc_harnessrl_9c200f8d57286ab7b807ad1d",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_9c200f8d57286ab7b807ad1d",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_9c200f8d57286ab7b807ad1d --render web --full",
+        "sessionStatus": "hwlab-cli client agent session status ses_24664677-cd7a-4ec5-900b-fe68c455ea01"
+      },
+      "strategy": "id_plus_existing_cli",
+      "sessionId": "ses_24664677-cd7a-4ec5-900b-fe68c455ea01",
+      "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-expressions-timing_run-arm2d-binocular-expressions-timing-l1-20260728-04"
+    },
+    "source": "caserun-identity",
+    "status": "completed",
+    "traceId": "trc_harnessrl_9c200f8d57286ab7b807ad1d",
+    "commands": [],
+    "httpStatus": 0,
+    "lookupOnly": true,
+    "commandCount": 0,
+    "terminalStatus": "completed",
+    "hwpodCommandCount": 0,
+    "keilJobCandidates": [],
+    "hwpodBuildCommandCount": 0
+  },
+  "definition": {
+    "flow": [
+      {
+        "id": "agent-mutation",
+        "kind": "agent"
+      },
+      {
+        "id": "build",
+        "kind": "hwpod.build"
+      },
+      {
+        "id": "download",
+        "kind": "hwpod.download"
+      },
+      {
+        "id": "display-capture",
+        "kind": "hwpod.display.capture"
+      }
+    ],
+    "mode": "agent-mutation-build-display-capture",
+    "notes": {
+      "target": "D601-VM-HOST Linux / VExpress-A9 / PL111 / QEMU",
+      "baseline": "可编译表情运行时提交 e1d6a4d7b457b1268afdb8e927fea20422b8fd5d",
+      "acceptance": "1 fps 多帧采样显示不同状态标签，每个状态稳定约 1 秒，双目形态与 gaze 匹配且无残影",
+      "autoEvaluation": false,
+      "captureAuthority": "HWPOD display.capture operation result"
+    },
+    "title": "D601 VM VExpress-A9 Binocular Expression Timing",
+    "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-expressions-timing",
+    "subject": {
+      "subdir": "",
+      "commitId": "e1d6a4d7b457b1268afdb8e927fea20422b8fd5d",
+      "resources": [
+        {
+          "id": "arm-2d-main",
+          "ref": "main",
+          "kind": "git",
+          "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+          "commitId": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+          "destination": "third_party/Arm-2D-main"
+        }
+      ],
+      "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace"
+    },
+    "expected": {
+      "diff": {
+        "contains": [
+          "arm_2d_helper_convert_ticks_to_ms",
+          "arm_2d_helper_get_system_timestamp",
+          "1000",
+          "% 8"
+        ],
+        "forbiddenPaths": [
+          "src/arm_2d_binocular_eyes.h",
+          "src/arm_2d_scene_blink.h",
+          "scripts/**",
+          "third_party/**",
+          "hwpod-spec.yaml"
+        ]
+      },
+      "compile": {
+        "success": true,
+        "artifactSuffixes": [
+          "build/qemu-gui.elf"
+        ]
+      },
+      "display": {
+        "width": 640,
+        "height": 480,
+        "frameRate": 24,
+        "durationMs": 10000,
+        "videoFormat": "webm",
+        "screenshotFormat": "png"
+      }
+    },
+    "timeouts": {
+      "hwpodCommandTimeoutMs": 120000
+    },
+    "agentTask": {
+      "model": "gpt-5.6-luna",
+      "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中修复现有双目表情 demo 的唯一时钟单位问题。当前版本已真实 build/download/capture 成功，但 4 fps 视觉采样显示眼睛在一秒内高速轮转且标签总被 PFB 采到 `angry`。根因已经用官方 Arm-2D helper 源码确认：`arm_2d_helper_get_system_timestamp()` 返回 tick，而当前代码直接 `(timestamp / 1000u) % 8u`，没有调用官方 `arm_2d_helper_convert_ticks_to_ms(int64_t)`。\n\n只用小于 4 KiB 的定点读取定位 `wStep` 赋值，然后只用一次 `hwpod workspace apply-patch` 把它改成按官方毫秒换算后的秒数：先调用 `arm_2d_helper_convert_ticks_to_ms(arm_2d_helper_get_system_timestamp())`，再除以 1000，最后 `% 8`。使用足够宽的有符号中间类型，最后安全转为 `uint32_t`；每个状态应稳定约 1 秒，完整 8 状态周期约 8 秒。不得修改 expression 映射、angle/scale、gaze、标签、API、四条 frame-start、四条 show、PFB 或任何其他文件。\n\n补丁后定点读取确认该行确实使用 `arm_2d_helper_convert_ticks_to_ms`，再执行一次且只执行一个 `hwpod build`。若 Agent 内部 build 客户端发生已知长等待/退出 130，不要并发重试，如实结束；CaseRun Harness 会独立 build/download 和 10 秒 24 fps capture。最终视频必须能以 1 fps 采样看到不同标签和与标签一致的稳定双目状态。",
+      "projectId": "prj_hwpod_workbench",
+      "timeoutMs": 1800000,
+      "workspace": "subjectWorktree",
+      "constraints": [
+        "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
+        "只允许修改 src/arm_2d_scene_binocular.c 中的 demo 时钟换算",
+        "必须使用官方 arm_2d_helper_convert_ticks_to_ms 后再换算秒与 8 状态周期",
+        "不得修改 expression、gaze、标签、API、frame-start、show 或 PFB 语义",
+        "单次读取输出必须小于 4 KiB，文本修改必须使用 HWPOD workspace apply-patch",
+        "同一时刻只允许一个 hwpod build，不得因客户端长等待并发重试",
+        "禁止修改 headers、scripts、third_party、hwpod-spec.yaml、QEMU、PL111、下载和采集逻辑",
+        "Agent final response 不能替代 Harness 独立 build、download 和 display.capture 证据",
+        "结果只记录 raw trace/evidence，autoEvaluation=false"
+      ],
+      "pollIntervalMs": 2000,
+      "providerProfile": "gpt.pika",
+      "reasoningEffort": "low",
+      "resourceBundlePolicy": "caserun-with-skills"
+    },
+    "hwpodSpec": "hwpod-spec.yaml",
+    "diffCollection": {
+      "ignore": [
+        {
+          "reason": "官方 Arm-2D 资源由固定上游提交与物化清单表达",
+          "pattern": "third_party/Arm-2D-main/**"
+        }
+      ]
+    },
+    "contractVersion": "hwpod-case-v1"
+  },
+  "compileOnly": false,
+  "sourceSpecPath": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_expressions_timing_l1_20260728_04/case-authority/cases/d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-expressions-timing/hwpod-spec.yaml",
+  "validationPlan": {
+    "mode": "custom-runtime",
+    "steps": [
+      {
+        "args": {},
+        "kind": "build",
+        "stage": "post-agent-validation",
+        "actionId": "build",
+        "expectedOp": "debug.build"
+      },
+      {
+        "args": {},
+        "kind": "download",
+        "stage": "post-agent-validation",
+        "actionId": "download",
+        "expectedOp": "debug.download"
+      },
+      {
+        "args": {},
+        "kind": "displayCapture",
+        "stage": "post-agent-validation",
+        "actionId": "display-capture",
+        "expectedOp": "display.capture"
+      }
+    ],
+    "source": "case-definition.flow",
+    "compileOnly": false,
+    "contractVersion": "hwpod-case-validation-plan-v1"
+  },
+  "agentDiff": {
+    "diffStat": "src/arm_2d_scene_binocular.c | 3 ++-\n 1 file changed, 2 insertions(+), 1 deletion(-)\n[omitted by CaseRun diffCollection]\n third_party/Arm-2D-main/** | 1 files omitted reason=官方 Arm-2D 资源由固定上游提交与物化清单表达 samples=third_party/Arm-2D-main",
+    "requests": [
+      {
+        "label": "status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 58
+      },
+      {
+        "label": "diff-stat",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 84
+      },
+      {
+        "label": "diff-patch",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 614
+      },
+      {
+        "label": "submodule-status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-ls-files",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 24
+      },
+      {
+        "label": "source-root-baseline",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      },
+      {
+        "label": "source-root-after-prepare",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      },
+      {
+        "label": "source-root-after-agent",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      }
+    ],
+    "statusShort": "M src/arm_2d_scene_binocular.c\n?? third_party/Arm-2D-main/",
+    "diffPatchPath": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_expressions_timing_l1_20260728_04/agent-diff.patch",
+    "diffCollection": {
+      "config": {
+        "ignore": [
+          {
+            "reason": "官方 Arm-2D 资源由固定上游提交与物化清单表达",
+            "pattern": "third_party/Arm-2D-main/**"
+          },
+          {
+            "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+            "pattern": "vendor/**"
+          },
+          {
+            "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+            "pattern": "third_party/**"
+          }
+        ],
+        "include": []
+      },
+      "omitted": [
+        {
+          "path": "third_party/Arm-2D-main",
+          "rule": "third_party/Arm-2D-main/**",
+          "reason": "官方 Arm-2D 资源由固定上游提交与物化清单表达",
+          "source": "untracked"
+        }
+      ],
+      "tracked": {
+        "paths": [
+          "src/arm_2d_scene_binocular.c"
+        ],
+        "diffStat": "src/arm_2d_scene_binocular.c | 3 ++-\n 1 file changed, 2 insertions(+), 1 deletion(-)",
+        "diffPatchSha256": "a1aa1f5cdeccd9864d9cb7247a5b17573949b2d44dfaa7fc852b6216c6cb324c"
+      },
+      "included": [],
+      "untracked": {
+        "total": 1,
+        "omitted": 1,
+        "included": 0
+      },
+      "submodules": [],
+      "omittedGroups": [
+        {
+          "rule": "third_party/Arm-2D-main/**",
+          "count": 1,
+          "reason": "官方 Arm-2D 资源由固定上游提交与物化清单表达",
+          "samplePaths": [
+            "third_party/Arm-2D-main"
+          ]
+        }
+      ],
+      "contractVersion": "hwpod-case-run-diff-collection-v1"
+    },
+    "diffPatchSha256": "a480f0c6cb1fba4aa601b844af3711f24af976df1017d4f21c62df8bf519699d",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterAgent": {
+      "label": "after-agent",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootStatusShort": "?? .worktree/",
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootChangedAfterAgent": false,
+    "sourceRootChangedAfterPrepare": false
+  },
+  "_control": {
+    "status": "completed",
+    "stage": "completed",
+    "updatedAt": "2026-07-28T04:56:25.943Z",
+    "completedAt": "2026-07-28T04:56:25.906Z",
+    "exitCode": 0,
+    "evidencePath": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_expressions_timing_l1_20260728_04/evidence.json"
+  },
+  "status": "completed",
+  "evidencePath": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_expressions_timing_l1_20260728_04/evidence.json"
+}
