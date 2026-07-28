@@ -1,0 +1,39 @@
+# HWPOD CaseRun d601-vm-vexpress-a9-qemu-gui-arm2d-eyes
+
+- runId: run_arm2d_eyes_official_l1_20260728_01
+- status: recorded
+- autoEvaluation: false
+- compileOnly: false
+- subjectRepoLocalPath: /home/ubuntu/workspace/hwpod_qemu_gui_workspace
+- subjectCommitId: 6daaa6eb8540469eae69aef3714a52d3d2ab0196
+- subjectWorktreePath: /home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-232b6b008c7ca67f
+- agentTraceId: 
+- agentSessionId: 
+- requestedProviderProfile: 
+- resolvedBackendProfile: 
+- model: 
+- infrastructureBackend: 
+- traceLookupStrategy: 
+- traceCommand: 
+- resultCommand: 
+- inspectCommand: 
+- agentTraceCommandCount: 0
+- agentTraceHwpodCommandCount: 0
+- agentTraceHwpodBuildCommandCount: 0
+- agentTerminalStatus: 
+- agentFinalPresent: false
+- agentFinalMissingReason: final-response-not-reported
+- postValidationStatus: 
+- agentReportedBuildWarningCount: 
+- runnerPostValidationWarningCount: 
+- agentToolCallSummaryCount: 
+- agentToolCallStatusCounts: {}
+- agentToolCallExitCodeCounts: {}
+- agentStageCommandCount: 0
+- agentStageKinds: 
+- diffPatchPath: 
+- runnerHwpodSource: case-run-runner-post-agent-compile-check
+- hwpodExitCode: 0
+- jobId: 
+- runnerPostAgentCompileCheck: recorded
+
