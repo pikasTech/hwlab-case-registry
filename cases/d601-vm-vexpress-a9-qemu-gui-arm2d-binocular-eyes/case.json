@@ -36,14 +36,15 @@
     "resourceBundlePolicy": "caserun-with-skills",
     "timeoutMs": 3600000,
     "pollIntervalMs": 2000,
-    "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中，把当前已通过的 Arm-2D 官方 arm_2d_scene_blink 单眼示例改造成双目动画。当前基线已经真实使用官方 Eyeball.c、LeftEye.c、spin_zoom_widget.c、随机注视和眨眼逻辑，并由 VExpress-A9 PL111 双缓冲与 VBlank 同步呈现。\n\n必须复用官方眼球位图、眼眶遮罩、spin_zoom_widget 变换和 scene blink 的状态逻辑，建立两个彼此独立的 eye/widget 实例；双眼在 640x480 画面中左右对称、大小一致，瞳孔注视方向同步，眨眼时序同步。可以在项目本地 scene/glue 中重构单眼状态为双实例，但不得用自行绘制的圆形、椭圆、矩形或另一套动画替代官方资产与控件。不得修改 HWPOD spec、QEMU helper、PL111 驱动、构建/下载/采集脚本或第三方上游文件来伪造结果。\n\n开发中先读取当前 main.c、arm_2d_scene_blink glue 与构建清单，使用 HWPOD workspace apply-patch 做项目本地修改，并尽早通过 HWPOD build 验证。完成后说明两个独立实例的位置、共享注视/眨眼状态和实际 build 结果。CaseRun Harness 会在 Agent 结束后独立执行最终 build、download 和 10 秒 24 fps display.capture。",
+    "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中，把当前已通过的 Arm-2D 官方 arm_2d_scene_blink 单眼示例改造成双目动画。当前基线已经真实使用官方 Eyeball.c、LeftEye.c、spin_zoom_widget.c、随机注视和眨眼逻辑，并由 VExpress-A9 PL111 双缓冲与 VBlank 同步呈现。\n\n必须复用官方眼球位图、眼眶遮罩、spin_zoom_widget 变换和 scene blink 的状态逻辑，建立两个彼此独立的 eye/widget 实例；双眼在 640x480 画面中左右对称、大小一致，瞳孔注视方向同步，眨眼时序同步。把官方 arm_2d_scene_blink.c 的必要实现复制或派生为项目本地 scene（例如 src/arm_2d_scene_binocular.c），在本地副本中完成双实例改造，不得用自行绘制的圆形、椭圆、矩形或另一套动画替代官方资产与控件。允许窄范围修改 scripts/build 和 scripts/rebuild 的源文件清单，使其编译项目本地 scene 而不是上游单眼 scene；除此之外不得改变编译选项、目标或 Harness 行为。不得修改 HWPOD spec、QEMU helper、PL111 驱动、下载/复位/采集脚本或第三方上游文件来伪造结果。\n\n开发中先读取当前 main.c、arm_2d_scene_blink glue 与构建清单，使用 HWPOD workspace apply-patch 做项目本地修改，并尽早通过 HWPOD build 验证。完成后说明两个独立实例的位置、共享注视/眨眼状态和实际 build 结果。CaseRun Harness 会在 Agent 结束后独立执行最终 build、download 和 10 秒 24 fps display.capture。",
     "constraints": [
       "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
       "只能修改隔离 subject worktree，不得修改 case registry、HWLAB repo 或原 subject checkout",
       "必须保留并复用官方 arm_2d_scene_blink、Eyeball、LeftEye 和 spin_zoom_widget，不得裸写图形替代",
       "必须创建两个独立眼睛实例，位置左右对称，注视方向一致，眨眼时序同步",
       "禁止修改 third_party/Arm-2D-main 中的上游文件",
-      "禁止修改 hwpod-spec.yaml、scripts/build、scripts/rebuild、scripts/download、scripts/reset、PL111 驱动或 QEMU helper",
+      "允许仅修改 scripts/build 和 scripts/rebuild 的 scene 源文件清单以编译项目本地双目 scene；禁止改变其他编译选项、目标或 Harness 行为",
+      "禁止修改 hwpod-spec.yaml、scripts/download、scripts/reset、PL111 驱动、QEMU helper 或采集逻辑",
       "project-local 文本修改使用 HWPOD workspace apply-patch，构建使用 HWPOD build",
       "Agent final response 不能替代 Harness 独立 build、download 和 display.capture 证据",
       "结果只记录 raw trace/evidence，autoEvaluation=false"
@@ -80,8 +81,6 @@
       ],
       "forbiddenPaths": [
         "hwpod-spec.yaml",
-        "scripts/build",
-        "scripts/rebuild",
         "scripts/download",
         "scripts/reset"
       ]
