@@ -1,0 +1,74 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-eyes",
+  "title": "D601 VM VExpress-A9 Arm-2D Official Eyes",
+  "mode": "harness-build-display-capture",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "commitId": "6daaa6eb8540469eae69aef3714a52d3d2ab0196",
+    "subdir": "",
+    "resources": [
+      {
+        "id": "arm-2d-main",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+        "ref": "main",
+        "commitId": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+        "destination": "third_party/Arm-2D-main"
+      }
+    ]
+  },
+  "diffCollection": {
+    "ignore": [
+      {
+        "pattern": "third_party/Arm-2D-main/**",
+        "reason": "官方 Arm-2D 资源由固定上游提交与物化清单表达"
+      }
+    ]
+  },
+  "flow": [
+    {
+      "id": "build",
+      "kind": "hwpod.build"
+    },
+    {
+      "id": "download",
+      "kind": "hwpod.download"
+    },
+    {
+      "id": "display-capture",
+      "kind": "hwpod.display.capture"
+    }
+  ],
+  "timeouts": {
+    "hwpodCommandTimeoutMs": 120000
+  },
+  "expected": {
+    "compile": {
+      "success": true,
+      "artifactSuffixes": [
+        "build/qemu-gui.elf"
+      ]
+    },
+    "display": {
+      "width": 640,
+      "height": 480,
+      "durationMs": 10000,
+      "frameRate": 24,
+      "screenshotFormat": "png",
+      "videoFormat": "webm"
+    }
+  },
+  "notes": {
+    "autoEvaluation": false,
+    "target": "D601-VM-HOST Linux / VExpress-A9 / PL111 / QEMU",
+    "demo": "ARM-software/Arm-2D main arm_2d_scene_blink",
+    "asset": "官方 Eyeball.c、LeftEye.c 与 spin_zoom_widget",
+    "animation": "官方随机注视移动、单次或双次眨眼；板级 PL111 双缓冲与 VBlank 呈现",
+    "capture": "10 秒、24 fps、240 个原始帧",
+    "acceptance": "截图必须出现一个官方眼睛，视频中瞳孔移动或眨眼连续可见且无残影",
+    "agentRunStarted": false,
+    "captureAuthority": "HWPOD display.capture operation result"
+  }
+}
