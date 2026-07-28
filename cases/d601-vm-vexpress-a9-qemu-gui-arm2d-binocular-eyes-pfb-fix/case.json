@@ -1,0 +1,112 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes-pfb-fix",
+  "title": "D601 VM VExpress-A9 Arm-2D Binocular Eyes PFB Fix",
+  "mode": "agent-mutation-build-display-capture",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "commitId": "ce6852e",
+    "subdir": "",
+    "resources": [
+      {
+        "id": "arm-2d-main",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+        "ref": "main",
+        "commitId": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+        "destination": "third_party/Arm-2D-main"
+      }
+    ]
+  },
+  "diffCollection": {
+    "ignore": [
+      {
+        "pattern": "third_party/Arm-2D-main/**",
+        "reason": "官方 Arm-2D 资源由固定上游提交与物化清单表达"
+      }
+    ]
+  },
+  "agentTask": {
+    "workspace": "subjectWorktree",
+    "providerProfile": "gpt.pika",
+    "model": "gpt-5.6-luna",
+    "reasoningEffort": "low",
+    "projectId": "prj_hwpod_workbench",
+    "resourceBundlePolicy": "caserun-with-skills",
+    "timeoutMs": 1800000,
+    "pollIntervalMs": 2000,
+    "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中修复现有 Arm-2D 双目 scene 的右眼 PFB 裁剪问题。当前基线已经真实编译、下载并采集到动画：左眼完整，右侧只有眼眶，原因是右眼球绘制被放在仅覆盖左眼 region 的 `__arm_2d_hint_optimize_for_pfb__` 作用域中。不要重写 scene，不要重新复制官方文件，只对 `src/arm_2d_scene_binocular.c` 的 draw 函数做最小修复。\n\n先用小于 4 KiB 的定点 `hwpod workspace rg` 查看 `tLeftPivot`、`tRightPivot`、`tEyeBallRegion`、`__arm_2d_hint_optimize_for_pfb__` 和四次 `spin_zoom_widget_show` 附近上下文。修复后必须满足：左右 pivot 都是独立的 `arm_2d_location_t`，X 为画面中心左右各约 90 像素、Y 相同；左右 socket 各用对应 pivot 绘制；从 `__centre_region` 分别建立 `tLeftEyeBallRegion` 和 `tRightEyeBallRegion`，X 分别减/加 90 后叠加同一 `EyeBallMove.tOffset`，size 保持官方 EYEBALL 大小；左眼球和右眼球分别位于以各自 region 为参数的独立 `__arm_2d_hint_optimize_for_pfb__` 作用域中。四次 `spin_zoom_widget_show` 都必须继续使用官方 LeftEye/RightEye socket/eyeball widget，第二参数为 `ptTile`，不得改成裸绘图。\n\n文本修改只用 `hwpod workspace apply-patch`。不得修改构建清单、生命周期、HWPOD spec、QEMU helper、PL111 驱动、下载/复位/采集脚本、第三方文件或其他项目文件。完成补丁后用小范围查询核对左右两个 region、两个 PFB 作用域和四次 show，再执行且只同时执行一个 `hwpod build`；退出码为零后结束，并如实报告改动和构建结果。CaseRun Harness 会独立执行最终 build、download 和 10 秒 24 fps display.capture。",
+    "constraints": [
+      "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
+      "只允许修改 src/arm_2d_scene_binocular.c",
+      "必须保留官方 LeftEye、RightEye、Eyeball 与 spin_zoom_widget 实现，不得裸写图形替代",
+      "左右 pivot 必须是独立 arm_2d_location_t，左右 eyeball region 必须独立",
+      "左右眼球必须分别位于以各自 region 为参数的独立 __arm_2d_hint_optimize_for_pfb__ 作用域",
+      "draw 中必须保留左右 socket 与左右 eyeball 共四次 spin_zoom_widget_show",
+      "单次读取输出必须小于 4 KiB，禁止读取大文件全文或 AgentRun output dump",
+      "文本修改必须使用 HWPOD workspace apply-patch",
+      "同一时刻只允许一个 hwpod build，退出码为零后才能结束",
+      "禁止修改 scripts、third_party、hwpod-spec.yaml、QEMU、PL111 和采集逻辑",
+      "Agent final response 不能替代 Harness 独立 build、download 和 display.capture 证据",
+      "结果只记录 raw trace/evidence，autoEvaluation=false"
+    ]
+  },
+  "flow": [
+    {
+      "id": "agent-mutation",
+      "kind": "agent"
+    },
+    {
+      "id": "build",
+      "kind": "hwpod.build"
+    },
+    {
+      "id": "download",
+      "kind": "hwpod.download"
+    },
+    {
+      "id": "display-capture",
+      "kind": "hwpod.display.capture"
+    }
+  ],
+  "timeouts": {
+    "hwpodCommandTimeoutMs": 120000
+  },
+  "expected": {
+    "diff": {
+      "contains": [
+        "tLeftEyeBallRegion",
+        "tRightEyeBallRegion",
+        "__arm_2d_hint_optimize_for_pfb__",
+        "spin_zoom_widget_show"
+      ],
+      "forbiddenPaths": [
+        "scripts/**",
+        "third_party/**",
+        "hwpod-spec.yaml"
+      ]
+    },
+    "compile": {
+      "success": true,
+      "artifactSuffixes": [
+        "build/qemu-gui.elf"
+      ]
+    },
+    "display": {
+      "width": 640,
+      "height": 480,
+      "durationMs": 10000,
+      "frameRate": 24,
+      "screenshotFormat": "png",
+      "videoFormat": "webm"
+    }
+  },
+  "notes": {
+    "autoEvaluation": false,
+    "target": "D601-VM-HOST Linux / VExpress-A9 / PL111 / QEMU",
+    "baseline": "已编译运行的双目中间提交 ce6852e",
+    "acceptance": "画面中必须真实出现两个完整官方眼睛；双眼注视和眨眼同步，10 秒 24 fps 视频无冻结、撕裂或残影",
+    "captureAuthority": "HWPOD display.capture operation result"
+  }
+}
