@@ -44,6 +44,9 @@
       "必须创建两个独立眼睛实例，位置左右对称，注视方向一致，眨眼时序同步",
       "禁止用整个 scene/widget 结构赋值复制第二眼；左右 widget 必须分别初始化并完整参与帧生命周期",
       "draw 中必须以两个分离且左右对称的 pivot/region 分别绘制左右 socket 与 eyeball，共四次 spin_zoom_widget_show",
+      "tLeftPivot 和 tRightPivot 必须先从官方已声明且可见的 tPivot 复制，再分别对 iX 减 90 和加 90；严禁在 arm_2d_align_centre_open 作用域外引用 __centre_region",
+      "左 socket 和左 eyeball 只能传 tLeftPivot，右 socket 和右 eyeball 只能传 tRightPivot；不得继续把官方居中 tPivot 传给任一眼睛",
+      "tLeftEyeBallRegion 与 tRightEyeBallRegion 只能在 arm_2d_align_centre_open 作用域内从 __centre_region 分别构造；左右 __arm_2d_hint_optimize_for_pfb__ 必须是先左后右的两个独立顺序作用域，禁止互相嵌套",
       "draw 的 pivot 必须是 arm_2d_location_t：左 X=画面中心-90、右 X=画面中心+90，Y 保持官方原值；两个 socket 都传 region=NULL 并分别传左/右 pivot；两个 eyeball region 都从 __centre_region 复制，X 分别减/加 90 后再叠加同一个 EyeBallMove 偏移，size 保持 EYEBALL 大小，并分别传对应 pivot",
       "左右 eyeball 必须分别放在各自的 __arm_2d_hint_optimize_for_pfb__(leftRegion/rightRegion) 作用域内绘制；禁止把右眼绘制放在仅以左眼 region 优化的作用域内，否则 PFB 会裁掉右眼",
       "左右 frame-start 必须写成彼此独立且完整的 spin_zoom_widget_on_frame_start_xy(widget, angle, scaleX, scaleY) 语句，不得嵌套或交错两个调用",
@@ -87,7 +90,11 @@
         "arm_2d_scene_blink",
         "spin_zoom_widget",
         "Eyeball",
-        "LeftEye"
+        "LeftEye",
+        "tLeftPivot = tPivot",
+        "tRightPivot = tPivot",
+        "tLeftEyeBallRegion",
+        "tRightEyeBallRegion"
       ],
       "forbiddenPaths": [
         "hwpod-spec.yaml",
