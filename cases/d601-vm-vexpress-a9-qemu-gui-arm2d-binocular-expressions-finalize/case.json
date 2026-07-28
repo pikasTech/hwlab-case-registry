@@ -1,0 +1,113 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-expressions-finalize",
+  "title": "D601 VM VExpress-A9 Finalize Binocular Expressions",
+  "mode": "agent-mutation-build-display-capture",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "commitId": "71af65456f2ae715639ea1c57a4a32e5feaa0ff3",
+    "subdir": "",
+    "resources": [
+      {
+        "id": "arm-2d-main",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+        "ref": "main",
+        "commitId": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+        "destination": "third_party/Arm-2D-main"
+      }
+    ]
+  },
+  "diffCollection": {
+    "ignore": [
+      {
+        "pattern": "third_party/Arm-2D-main/**",
+        "reason": "官方 Arm-2D 资源由固定上游提交与物化清单表达"
+      }
+    ]
+  },
+  "agentTask": {
+    "workspace": "subjectWorktree",
+    "providerProfile": "gpt.pika",
+    "model": "gpt-5.6-luna",
+    "reasoningEffort": "low",
+    "projectId": "prj_hwpod_workbench",
+    "resourceBundlePolicy": "caserun-with-skills",
+    "timeoutMs": 1800000,
+    "pollIntervalMs": 2000,
+    "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中完成现有双目表情运行时的最后编译修复。当前 `src/arm_2d_scene_binocular.c` 已接入六类 expression、8 步 demo、gaze、左右 angle/scale 和非 QOI 标签，但上一轮 Agent 声称 frame-start 是四参数，真实源码却在四条 `spin_zoom_widget_on_frame_start_xy` 中都残留了额外的第三个 `0`，形成五参数并导致 Harness build 失败。\n\n只用小于 4 KiB 的定点读取查看四条调用。然后只用一次 `hwpod workspace apply-patch` 删除每条 angle 后的残留 `0` 参数，并清理这几行的行尾空格。最终四条调用必须严格是：左 socket/eyeball `(widget, s_fEyesLeftAngle, EYE_SIZE_RATIO * s_fEyesScaleX, EYE_SIZE_RATIO * s_fEyesScaleY)`；右 socket/eyeball 同样使用 `s_fEyesRightAngle`。不得修改 expression 映射、demo 时序、gaze、标签、四次 show、PFB、header、scripts 或任何其他文件。\n\n补丁后先用定点读取逐条确认每个函数只有四参数，再执行一次且只执行一个 `hwpod build`。编译报错时只按直接诊断做最小修复，禁止扩展范围；退出码为零才结束。若 Agent 内部 build 客户端发生已知长等待/退出 130，不要并发重试，如实结束，CaseRun Harness 会独立执行最终 build、download 和 10 秒 24 fps display.capture。",
+    "constraints": [
+      "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
+      "只允许修改 src/arm_2d_scene_binocular.c",
+      "只修四条 spin_zoom_widget_on_frame_start_xy 的残留参数和相关空白，不得改表情语义",
+      "四条 frame-start 必须严格为 widget、angle、scaleX、scaleY 四参数",
+      "必须保留 expression、8 步 demo、gaze、标签、四次 show 和双 PFB",
+      "单次读取输出必须小于 4 KiB，文本修改必须使用 HWPOD workspace apply-patch",
+      "同一时刻只允许一个 hwpod build，不得因客户端长等待并发重试",
+      "禁止修改 headers、scripts、third_party、hwpod-spec.yaml、QEMU、PL111、下载和采集逻辑",
+      "Agent final response 不能替代 Harness 独立 build、download 和 display.capture 证据",
+      "结果只记录 raw trace/evidence，autoEvaluation=false"
+    ]
+  },
+  "flow": [
+    {
+      "id": "agent-mutation",
+      "kind": "agent"
+    },
+    {
+      "id": "build",
+      "kind": "hwpod.build"
+    },
+    {
+      "id": "download",
+      "kind": "hwpod.download"
+    },
+    {
+      "id": "display-capture",
+      "kind": "hwpod.display.capture"
+    }
+  ],
+  "timeouts": {
+    "hwpodCommandTimeoutMs": 120000
+  },
+  "expected": {
+    "diff": {
+      "contains": [
+        "spin_zoom_widget_on_frame_start_xy",
+        "s_fEyesLeftAngle",
+        "s_fEyesRightAngle",
+        "s_fEyesScaleX",
+        "s_fEyesScaleY"
+      ],
+      "forbiddenPaths": [
+        "src/arm_2d_binocular_eyes.h",
+        "src/arm_2d_scene_blink.h",
+        "scripts/**",
+        "third_party/**",
+        "hwpod-spec.yaml"
+      ]
+    },
+    "compile": {
+      "success": true,
+      "artifactSuffixes": [
+        "build/qemu-gui.elf"
+      ]
+    },
+    "display": {
+      "width": 640,
+      "height": 480,
+      "durationMs": 10000,
+      "frameRate": 24,
+      "screenshotFormat": "png",
+      "videoFormat": "webm"
+    }
+  },
+  "notes": {
+    "autoEvaluation": false,
+    "target": "D601-VM-HOST Linux / VExpress-A9 / PL111 / QEMU",
+    "baseline": "表情运行时接线提交 71af65456f2ae715639ea1c57a4a32e5feaa0ff3",
+    "acceptance": "Harness build/download/capture 成功，10 秒视频真实覆盖 8 个标注双目状态",
+    "captureAuthority": "HWPOD display.capture operation result"
+  }
+}
