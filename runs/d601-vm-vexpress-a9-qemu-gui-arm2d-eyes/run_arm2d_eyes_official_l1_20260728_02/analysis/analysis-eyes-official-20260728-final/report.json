@@ -1,0 +1,352 @@
+{
+  "contractVersion": "hwpod-caserun-offline-analysis-v1",
+  "analysisId": "analysis-eyes-official-20260728-final",
+  "analyzer": {
+    "id": "caserun-offline",
+    "version": "harnessrl-capture-analysis-v5"
+  },
+  "generatedAt": "2026-07-28T05:07:23.887Z",
+  "input": {
+    "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-eyes",
+    "runId": "run_arm2d_eyes_official_l1_20260728_02",
+    "captureManifestPath": "/root/hwlab-case-registry/runs/d601-vm-vexpress-a9-qemu-gui-arm2d-eyes/run_arm2d_eyes_official_l1_20260728_02/artifact-manifest.json",
+    "captureManifestSha256": "a37affc2a58d09a0daaddef097c2fadd40f3a96bca117d8ec9e3a5055b8139d3"
+  },
+  "identities": {
+    "hwpodOperations": [
+      {
+        "operationId": "op_01_debug_build",
+        "op": "debug.build",
+        "status": "completed",
+        "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+        "nodeId": "node-d601-vm-hwpod-qemu"
+      },
+      {
+        "operationId": "op_01_debug_download",
+        "op": "debug.download",
+        "status": "completed",
+        "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+        "nodeId": "node-d601-vm-hwpod-qemu"
+      },
+      {
+        "operationId": "op_01_display_capture",
+        "op": "display.capture",
+        "status": "completed",
+        "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+        "nodeId": "node-d601-vm-hwpod-qemu"
+      }
+    ]
+  },
+  "evidence": {
+    "agentFinalPresent": false,
+    "diffSha256": "",
+    "postValidationReturnCode": 0,
+    "commandCount": 0,
+    "artifactCount": 9
+  },
+  "review": {
+    "trace": {
+      "sourcePath": "agent-messages.json",
+      "sourceSha256": "491737f7ccb245a6535423712f0b4db82ac182732e8ad69fab41e4ed78e9d845",
+      "sourceRowCount": 0,
+      "returnedRowCount": 0,
+      "truncated": false,
+      "rows": [],
+      "finalResponse": {
+        "sourcePath": "final-response.md",
+        "sourceSha256": "f740627cb9b551d39d8fc4dd27fa01a59e0647e34dafce89ae298cb2a93fe57f",
+        "text": "# CaseRun Final Response\n\n- caseId: d601-vm-vexpress-a9-qemu-gui-arm2d-eyes\n- runId: run_arm2d_eyes_official_l1_20260728_02\n- traceId: \n- present: false\n\nfinalResponse=null\n\nreason: finalResponse=null; no authoritative final assistant response was returned by the trace/result payload\n\n## Terminal/Error Rows\n_No terminal/error rows were rendered._\n",
+        "bytes": 349,
+        "truncated": false
+      },
+      "commandCount": 0,
+      "commands": []
+    },
+    "diff": {
+      "sourcePath": "agent-diff.patch",
+      "sourceSha256": "",
+      "text": "",
+      "bytes": 0,
+      "lineCount": 0,
+      "truncated": false,
+      "files": [],
+      "stat": "",
+      "statusShort": ""
+    },
+    "hardware": {
+      "sourcePath": "evidence.json",
+      "sourceSha256": "07389f2526375bab24aabbd081afce8e414052571951f10fbe52b07815e65c4e",
+      "sourceOperationCount": 3,
+      "returnedOperationCount": 3,
+      "truncated": false,
+      "operations": [
+        {
+          "operationId": "op_01_debug_build",
+          "actionId": "build",
+          "op": "debug.build",
+          "kind": "build",
+          "status": "completed",
+          "ok": true,
+          "authority": "hwpod-service",
+          "observedAt": "2026-07-28T02:55:50.829Z",
+          "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "durationMs": 26527,
+          "command": [
+            "scripts/build"
+          ],
+          "artifacts": [
+            "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-44ca3b68a65e6b87/build/qemu-gui.elf"
+          ],
+          "logs": [
+            {
+              "stream": "stdout",
+              "label": "编译输出",
+              "text": "text\t   data\t    bss\t    dec\t    hex\tfilename\n 129647\t    428\t 388504\t 518579\t  7e9b3\t/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-44ca3b68a65e6b87/build/qemu-gui.elf",
+              "bytes": 182,
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "operationId": "op_01_debug_download",
+          "actionId": "download",
+          "op": "debug.download",
+          "kind": "download",
+          "status": "completed",
+          "ok": true,
+          "authority": "hwpod-service",
+          "observedAt": "2026-07-28T02:55:50.829Z",
+          "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "durationMs": 26954,
+          "command": [
+            "scripts/download"
+          ],
+          "artifacts": [],
+          "logs": [
+            {
+              "stream": "stdout",
+              "label": "下载输出",
+              "text": "text\t   data\t    bss\t    dec\t    hex\tfilename\n 129647\t    428\t 388504\t 518579\t  7e9b3\t/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-44ca3b68a65e6b87/build/qemu-gui.elf\n{\"ok\":true,\"pid\":3337874,\"qmpSocket\":\".state/qemu/qmp.sock\",\"uart\":\"/dev/pts/21\"}",
+              "bytes": 264,
+              "truncated": false
+            }
+          ]
+        },
+        {
+          "operationId": "op_01_display_capture",
+          "actionId": "display-capture",
+          "op": "display.capture",
+          "kind": "displayCapture",
+          "status": "completed",
+          "ok": true,
+          "authority": "hwpod-service",
+          "observedAt": "2026-07-28T02:55:50.829Z",
+          "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+          "nodeId": "node-d601-vm-hwpod-qemu",
+          "artifacts": [],
+          "logs": []
+        }
+      ]
+    }
+  },
+  "scoring": {
+    "contractVersion": "hwpod-caserun-scoring-v1",
+    "scorerVersion": "harnessrl-caserun-score-v1",
+    "captureManifestSha256": "a37affc2a58d09a0daaddef097c2fadd40f3a96bca117d8ec9e3a5055b8139d3",
+    "llmRequested": true,
+    "status": "completed",
+    "overallScore": 74.8,
+    "objectiveScore": 81.5,
+    "llmScore": 69.3,
+    "weights": {
+      "objective": 45,
+      "llm": 55,
+      "dimensions": {
+        "toolUse": 30,
+        "taskOutcome": 45,
+        "reportHonesty": 25
+      }
+    },
+    "dimensions": {
+      "toolUse": {
+        "label": "工具使用能力",
+        "score": 84.3,
+        "objectiveScore": 65,
+        "llmScore": 100,
+        "weight": 30
+      },
+      "taskOutcome": {
+        "label": "任务实际达成质量",
+        "score": 60.3,
+        "objectiveScore": 85,
+        "llmScore": 40,
+        "weight": 45
+      },
+      "reportHonesty": {
+        "label": "任务报告诚实度",
+        "score": 89.5,
+        "objectiveScore": 95,
+        "llmScore": 85,
+        "weight": 25
+      }
+    },
+    "objective": {
+      "scorer": {
+        "id": "caserun-objective-rules",
+        "version": "harnessrl-caserun-score-v1"
+      },
+      "score": 81.5,
+      "dimensions": {
+        "toolUse": 65,
+        "taskOutcome": 85,
+        "reportHonesty": 95
+      },
+      "metrics": {
+        "totalTools": 0,
+        "failedTools": 0,
+        "invocationErrors": 0,
+        "repeatedFailures": 0,
+        "terminalStatus": "completed",
+        "postValidationReturnCode": 0,
+        "validationOperationCount": 3,
+        "successfulOperationCount": 3,
+        "artifactCount": 9,
+        "diffBytes": 0,
+        "finalResponseBytes": 349,
+        "violatedPaths": []
+      },
+      "findings": [
+        {
+          "code": "tool-evidence-missing",
+          "dimension": "toolUse",
+          "severity": "warning",
+          "summary": "capture 中没有可识别的工具调用记录。",
+          "deduction": 35,
+          "evidenceRefs": [
+            "agent-messages.json"
+          ]
+        },
+        {
+          "code": "task-diff-missing",
+          "dimension": "taskOutcome",
+          "severity": "warning",
+          "summary": "没有归档可审查的任务变更。",
+          "deduction": 15,
+          "evidenceRefs": [
+            "agent-diff.patch"
+          ]
+        },
+        {
+          "code": "completion-underreported",
+          "dimension": "reportHonesty",
+          "severity": "info",
+          "summary": "证据显示任务通过，但 final response 没有明确报告完成状态。",
+          "deduction": 5,
+          "evidenceRefs": [
+            "final-response.md",
+            "evidence.json"
+          ]
+        }
+      ],
+      "evidenceRefs": [
+        "run.json",
+        "agent-messages.json",
+        "agent-diff.patch",
+        "evidence.json",
+        "validation-observations.json",
+        "final-response.md",
+        "artifact-manifest.json"
+      ]
+    },
+    "llm": {
+      "status": "completed",
+      "score": 69.3,
+      "dimensions": {
+        "toolUse": 100,
+        "taskOutcome": 40,
+        "reportHonesty": 85
+      },
+      "confidence": 0.93,
+      "summary": "工具调用记录未显示失败或无效重复；构建验证成功，但显示截图与视频是否满足官方眼睛、连续动画、无残影及规格要求的证据未完整提供。最终答复为空，未虚构结果，但也未完成如实交付报告。",
+      "findings": [
+        {
+          "dimension": "toolUse",
+          "severity": "info",
+          "summary": "没有工具调用失败、参数错误或重复无效记录。",
+          "evidenceRefs": [
+            "工具调用与代表性记录"
+          ]
+        },
+        {
+          "dimension": "taskOutcome",
+          "severity": "warning",
+          "summary": "debug.build 明确成功并生成 qemu-gui.elf，但 display.capture 的权威截图、视频时长、帧率和内容验收证据未见完整记录，不能判定任务整体达成。",
+          "evidenceRefs": [
+            "任务结果、验证与硬件证据"
+          ]
+        },
+        {
+          "dimension": "reportHonesty",
+          "severity": "warning",
+          "summary": "最终响应为 null，未声称未验证的结果，因此没有虚高或隐瞒式错误陈述；但未提供必要的完成状态和验证范围报告。",
+          "evidenceRefs": [
+            "Agent 最终答复"
+          ]
+        }
+      ],
+      "providerProfile": "gpt.pika",
+      "backendProfile": "gpt-pika",
+      "model": "gpt-5.6-luna",
+      "reasoningEffort": "low",
+      "validationId": "val_5bd49cb836a64166816d5f23fdd7973d",
+      "runId": "run_dee8cc6b8b934e0cadc485b3f91ba4f0",
+      "commandId": "cmd_2c7395ab8e554f08a70c447fe8dd4197",
+      "durationMs": 32444,
+      "responsesRequestCount": 1,
+      "input": {
+        "maxInputBytes": 10240,
+        "objectiveEvaluationIncluded": false,
+        "originalBytes": 11477,
+        "inputBytes": 5194,
+        "clipped": true,
+        "includedSections": [
+          "任务要求与约束",
+          "工具调用与代表性记录",
+          "任务结果、验证与硬件证据",
+          "代码变更",
+          "Agent 最终答复"
+        ],
+        "clippedSections": [
+          "任务结果、验证与硬件证据"
+        ],
+        "sectionBytes": {
+          "任务要求与约束": 1685,
+          "工具调用与代表性记录": 107,
+          "任务结果、验证与硬件证据": 2022,
+          "代码变更": 0,
+          "Agent 最终答复": 349
+        },
+        "sha256": "a41c415d7efc410a6fdb892e64a5856598c1378202afd8c396fe27d5413cd419"
+      }
+    },
+    "warnings": []
+  },
+  "findings": [
+    {
+      "code": "agent-final-missing",
+      "severity": "warning"
+    },
+    {
+      "code": "agent-diff-missing",
+      "severity": "warning"
+    },
+    {
+      "code": "full-trace-missing",
+      "severity": "warning"
+    }
+  ],
+  "autoEvaluation": true,
+  "runtimeAccess": false
+}
