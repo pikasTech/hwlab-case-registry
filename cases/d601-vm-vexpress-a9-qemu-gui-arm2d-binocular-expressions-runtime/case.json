@@ -1,0 +1,120 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-expressions-runtime",
+  "title": "D601 VM VExpress-A9 Arm-2D Binocular Expression Runtime",
+  "mode": "agent-mutation-build-display-capture",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "commitId": "de5ec0788f15f7d6208406288beacd6f4464cfd3",
+    "subdir": "",
+    "resources": [
+      {
+        "id": "arm-2d-main",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+        "ref": "main",
+        "commitId": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+        "destination": "third_party/Arm-2D-main"
+      }
+    ]
+  },
+  "diffCollection": {
+    "ignore": [
+      {
+        "pattern": "third_party/Arm-2D-main/**",
+        "reason": "官方 Arm-2D 资源由固定上游提交与物化清单表达"
+      }
+    ]
+  },
+  "agentTask": {
+    "workspace": "subjectWorktree",
+    "providerProfile": "gpt.pika",
+    "model": "gpt-5.6-luna",
+    "reasoningEffort": "low",
+    "projectId": "prj_hwpod_workbench",
+    "resourceBundlePolicy": "caserun-with-skills",
+    "timeoutMs": 3600000,
+    "pollIntervalMs": 2000,
+    "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中完成现有双目表情 API 脚手架的运行时接线。上一轮只新增了 `arm_2d_binocular_eyes.h`、Setter、全局状态和 struct 字段，却没有在 frame-start/draw 中读取这些状态；六类表情、gaze、demo 和标签都没有真实生效。不要再次只声明 API，也不要重写已视觉通过的双目/PFB 绘制。\n\n只修改 `src/arm_2d_scene_binocular.c`，复用现有 `s_tEyesExpression`、`s_iEyesGazeX/Y`、`s_bEyesDemoEnabled`。在每帧开始前形成一个确定的当前 expression/gaze：demo 关闭时直接使用调用方最后设置的状态，并禁止随机 blink/focus generator 覆盖；demo 开启时用系统毫秒时间每约 1 秒轮播 8 个步骤：neutral、happy、sad、angry、surprised、look-left、look-right、blink。look-left/right 使用 neutral expression 加 -28/+28 左右 gaze，其他步骤 gaze 回中；把步骤名保存为 draw 可读取的短标签。\n\n在现有四条 `spin_zoom_widget_on_frame_start_xy` 调用前，根据当前 expression 计算左右各自 angle、scaleX、scaleY。至少采用以下可验证区分：neutral 为 angle=0、X/Y=正常比例；happy 为明显纵向收窄并让左右眼形成开心的对称倾角；sad 与 happy 使用相反对称倾角且纵向比例不同；angry 使用更大的内收对称倾角和明显纵向收窄；surprised 的 X/Y 比例均明显放大；blink 的 Y 比例接近 0。左右 socket 和 eyeball 必须使用同一只眼对应的 angle/scale，保持两眼内部同步。gaze 必须直接驱动 `EyeBallMove.tOffset` 和 `tNewOffset`，不得继续被随机生成器覆盖。不得通过隐藏一只眼或只改标签伪造状态。\n\n在现有 draw 文本位置显示当前短标签，例如 `Eyes: neutral`、`Eyes: happy`、`Eyes: sad`、`Eyes: angry`、`Eyes: surprised`、`Eyes: look-left`、`Eyes: look-right`、`Eyes: blink`。状态形态本身必须肉眼可区分，标签只做辅助。保留现有左右 socket/eyeball 四次 `spin_zoom_widget_show` 的正确参数、两个独立 eyeball region、两个独立 PFB 作用域和左右 pivot，不改 scripts、header、third_party、HWPOD/QEMU/PL111/采集。\n\n先用小于 4 KiB 的定点查询定位 `__on_scene_blink_frame_start`、四条 frame-start、draw 文本和初始化位置，然后只用 `hwpod workspace apply-patch` 一次或少量补丁完成。完成后定点核对：每个枚举都进入运行时 switch、8 个标签都存在、demo=false 分支读取公开状态、gaze 写入 EyeBallMove、四条 frame-start 使用左右参数、四条 show 和双 PFB 未被破坏。最后只同时执行一个 `hwpod build`；若 Agent 内部 build 客户端发生已知长等待/退出 130，不要并发重试，如实结束，由 CaseRun Harness 独立 build/download/10 秒 24 fps capture。",
+    "constraints": [
+      "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
+      "只允许修改 src/arm_2d_scene_binocular.c",
+      "必须把已有 expression、gaze、demo API 接入每帧运行时，禁止只声明不使用",
+      "demo=false 时调用方最后指定的 expression 和 gaze 必须稳定保持，不得被随机逻辑覆盖",
+      "默认 demo 必须在 10 秒内覆盖 neutral、happy、sad、angry、surprised、look-left、look-right、blink",
+      "六类表情的双目 angle/scale 必须肉眼可区分，look-left/right 必须真实改变两只瞳孔注视方向",
+      "必须显示当前状态标签，但不得只改标签伪造表情",
+      "必须保留四个官方 widget、左右独立 region/pivot 和两个独立 PFB 作用域",
+      "单次读取输出必须小于 4 KiB，文本修改必须使用 HWPOD workspace apply-patch",
+      "同一时刻只允许一个 hwpod build，不得因客户端长等待并发重试",
+      "禁止修改 scripts、headers、third_party、hwpod-spec.yaml、QEMU、PL111、下载和采集逻辑",
+      "Agent final response 不能替代 Harness 独立 build、download 和 display.capture 证据",
+      "结果只记录 raw trace/evidence，autoEvaluation=false"
+    ]
+  },
+  "flow": [
+    {
+      "id": "agent-mutation",
+      "kind": "agent"
+    },
+    {
+      "id": "build",
+      "kind": "hwpod.build"
+    },
+    {
+      "id": "download",
+      "kind": "hwpod.download"
+    },
+    {
+      "id": "display-capture",
+      "kind": "hwpod.display.capture"
+    }
+  ],
+  "timeouts": {
+    "hwpodCommandTimeoutMs": 120000
+  },
+  "expected": {
+    "diff": {
+      "contains": [
+        "ARM2D_EYES_HAPPY",
+        "ARM2D_EYES_SAD",
+        "ARM2D_EYES_ANGRY",
+        "ARM2D_EYES_SURPRISED",
+        "ARM2D_EYES_BLINK",
+        "look-left",
+        "look-right",
+        "s_bEyesDemoEnabled",
+        "EyeBallMove.tOffset"
+      ],
+      "forbiddenPaths": [
+        "scripts/**",
+        "src/arm_2d_binocular_eyes.h",
+        "src/arm_2d_scene_blink.h",
+        "third_party/**",
+        "hwpod-spec.yaml"
+      ]
+    },
+    "compile": {
+      "success": true,
+      "artifactSuffixes": [
+        "build/qemu-gui.elf"
+      ]
+    },
+    "display": {
+      "width": 640,
+      "height": 480,
+      "durationMs": 10000,
+      "frameRate": 24,
+      "screenshotFormat": "png",
+      "videoFormat": "webm"
+    }
+  },
+  "notes": {
+    "autoEvaluation": false,
+    "target": "D601-VM-HOST Linux / VExpress-A9 / PL111 / QEMU",
+    "baseline": "表情 API 脚手架提交 de5ec0788f15f7d6208406288beacd6f4464cfd3",
+    "acceptance": "10 秒视频真实覆盖 8 个标注状态，表情和 gaze 均驱动双目形态；公开 API 在 demo=false 时可稳定指定任意状态",
+    "captureAuthority": "HWPOD display.capture operation result"
+  }
+}
