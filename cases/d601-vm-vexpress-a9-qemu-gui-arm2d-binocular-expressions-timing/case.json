@@ -1,0 +1,111 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-expressions-timing",
+  "title": "D601 VM VExpress-A9 Binocular Expression Timing",
+  "mode": "agent-mutation-build-display-capture",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "commitId": "e1d6a4d7b457b1268afdb8e927fea20422b8fd5d",
+    "subdir": "",
+    "resources": [
+      {
+        "id": "arm-2d-main",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+        "ref": "main",
+        "commitId": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+        "destination": "third_party/Arm-2D-main"
+      }
+    ]
+  },
+  "diffCollection": {
+    "ignore": [
+      {
+        "pattern": "third_party/Arm-2D-main/**",
+        "reason": "官方 Arm-2D 资源由固定上游提交与物化清单表达"
+      }
+    ]
+  },
+  "agentTask": {
+    "workspace": "subjectWorktree",
+    "providerProfile": "gpt.pika",
+    "model": "gpt-5.6-luna",
+    "reasoningEffort": "low",
+    "projectId": "prj_hwpod_workbench",
+    "resourceBundlePolicy": "caserun-with-skills",
+    "timeoutMs": 1800000,
+    "pollIntervalMs": 2000,
+    "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中修复现有双目表情 demo 的唯一时钟单位问题。当前版本已真实 build/download/capture 成功，但 4 fps 视觉采样显示眼睛在一秒内高速轮转且标签总被 PFB 采到 `angry`。根因已经用官方 Arm-2D helper 源码确认：`arm_2d_helper_get_system_timestamp()` 返回 tick，而当前代码直接 `(timestamp / 1000u) % 8u`，没有调用官方 `arm_2d_helper_convert_ticks_to_ms(int64_t)`。\n\n只用小于 4 KiB 的定点读取定位 `wStep` 赋值，然后只用一次 `hwpod workspace apply-patch` 把它改成按官方毫秒换算后的秒数：先调用 `arm_2d_helper_convert_ticks_to_ms(arm_2d_helper_get_system_timestamp())`，再除以 1000，最后 `% 8`。使用足够宽的有符号中间类型，最后安全转为 `uint32_t`；每个状态应稳定约 1 秒，完整 8 状态周期约 8 秒。不得修改 expression 映射、angle/scale、gaze、标签、API、四条 frame-start、四条 show、PFB 或任何其他文件。\n\n补丁后定点读取确认该行确实使用 `arm_2d_helper_convert_ticks_to_ms`，再执行一次且只执行一个 `hwpod build`。若 Agent 内部 build 客户端发生已知长等待/退出 130，不要并发重试，如实结束；CaseRun Harness 会独立 build/download 和 10 秒 24 fps capture。最终视频必须能以 1 fps 采样看到不同标签和与标签一致的稳定双目状态。",
+    "constraints": [
+      "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
+      "只允许修改 src/arm_2d_scene_binocular.c 中的 demo 时钟换算",
+      "必须使用官方 arm_2d_helper_convert_ticks_to_ms 后再换算秒与 8 状态周期",
+      "不得修改 expression、gaze、标签、API、frame-start、show 或 PFB 语义",
+      "单次读取输出必须小于 4 KiB，文本修改必须使用 HWPOD workspace apply-patch",
+      "同一时刻只允许一个 hwpod build，不得因客户端长等待并发重试",
+      "禁止修改 headers、scripts、third_party、hwpod-spec.yaml、QEMU、PL111、下载和采集逻辑",
+      "Agent final response 不能替代 Harness 独立 build、download 和 display.capture 证据",
+      "结果只记录 raw trace/evidence，autoEvaluation=false"
+    ]
+  },
+  "flow": [
+    {
+      "id": "agent-mutation",
+      "kind": "agent"
+    },
+    {
+      "id": "build",
+      "kind": "hwpod.build"
+    },
+    {
+      "id": "download",
+      "kind": "hwpod.download"
+    },
+    {
+      "id": "display-capture",
+      "kind": "hwpod.display.capture"
+    }
+  ],
+  "timeouts": {
+    "hwpodCommandTimeoutMs": 120000
+  },
+  "expected": {
+    "diff": {
+      "contains": [
+        "arm_2d_helper_convert_ticks_to_ms",
+        "arm_2d_helper_get_system_timestamp",
+        "1000",
+        "% 8"
+      ],
+      "forbiddenPaths": [
+        "src/arm_2d_binocular_eyes.h",
+        "src/arm_2d_scene_blink.h",
+        "scripts/**",
+        "third_party/**",
+        "hwpod-spec.yaml"
+      ]
+    },
+    "compile": {
+      "success": true,
+      "artifactSuffixes": [
+        "build/qemu-gui.elf"
+      ]
+    },
+    "display": {
+      "width": 640,
+      "height": 480,
+      "durationMs": 10000,
+      "frameRate": 24,
+      "screenshotFormat": "png",
+      "videoFormat": "webm"
+    }
+  },
+  "notes": {
+    "autoEvaluation": false,
+    "target": "D601-VM-HOST Linux / VExpress-A9 / PL111 / QEMU",
+    "baseline": "可编译表情运行时提交 e1d6a4d7b457b1268afdb8e927fea20422b8fd5d",
+    "acceptance": "1 fps 多帧采样显示不同状态标签，每个状态稳定约 1 秒，双目形态与 gaze 匹配且无残影",
+    "captureAuthority": "HWPOD display.capture operation result"
+  }
+}
