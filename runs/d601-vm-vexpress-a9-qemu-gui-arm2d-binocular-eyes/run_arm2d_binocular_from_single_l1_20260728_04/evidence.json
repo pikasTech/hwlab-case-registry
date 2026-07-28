@@ -1,0 +1,1179 @@
+{
+  "agent": {
+    "polls": 229,
+    "backend": "gpt-pika",
+    "baseUrl": "http://127.0.0.1:6677",
+    "traceId": "trc_harnessrl_aa0476b1716de4aa9205fa1f",
+    "timedOut": false,
+    "projectId": "prj_hwpod_workbench",
+    "sessionId": "ses_800d620a-85a9-4ca0-8d41-4f497d79d664",
+    "timeoutMs": 3600000,
+    "promptPath": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_from_single_l1_20260728_04/agent-prompt.md",
+    "stageStatus": "completed",
+    "traceLookup": {
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "source": "hwlab-cli.client.agent",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_aa0476b1716de4aa9205fa1f",
+      "commands": {
+        "trace": "hwlab-cli client agent trace trc_harnessrl_aa0476b1716de4aa9205fa1f --render web",
+        "result": "hwlab-cli client agent result trc_harnessrl_aa0476b1716de4aa9205fa1f",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_aa0476b1716de4aa9205fa1f",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_aa0476b1716de4aa9205fa1f --render web --full",
+        "sessionStatus": "hwlab-cli client agent session status ses_800d620a-85a9-4ca0-8d41-4f497d79d664"
+      },
+      "strategy": "id_plus_existing_cli",
+      "sessionId": "ses_800d620a-85a9-4ca0-8d41-4f497d79d664",
+      "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes_run-arm2d-binocular-from-single-l1-20260728-04"
+    },
+    "promptSha256": "54d4ec5313c9d10aca4648fcb19c68df23e26f5679b67e1b0205ab1218ba3483",
+    "traceCommand": "hwlab-cli client agent trace trc_harnessrl_aa0476b1716de4aa9205fa1f --render web",
+    "agentRunStatus": "completed",
+    "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes_run-arm2d-binocular-from-single-l1-20260728-04",
+    "inspectCommand": "hwlab-cli client agent inspect --trace-id trc_harnessrl_aa0476b1716de4aa9205fa1f",
+    "lastHttpStatus": 200,
+    "pollIntervalMs": 2000,
+    "sessionCommand": "hwlab-cli client agent session status ses_800d620a-85a9-4ca0-8d41-4f497d79d664",
+    "terminalStatus": "completed",
+    "nextPollCommand": "hwlab-cli client agent result trc_harnessrl_aa0476b1716de4aa9205fa1f",
+    "providerProfile": "gpt.pika",
+    "infrastructureBackend": "gpt-pika",
+    "resolvedBackendProfile": "gpt-pika",
+    "requestedProviderProfile": "gpt.pika"
+  },
+  "hwpod": {
+    "media": {
+      "video": {
+        "bytes": 47137,
+        "width": 640,
+        "height": 480,
+        "sha256": "25d719df042633ab0d0da2e9d984cb9c488921539dee8084141a13410c73b6eb",
+        "endedAt": "2026-07-28T06:44:37.053Z",
+        "fileName": "capture-1785221057995-f6977eb968d03c910e059870-video.webm",
+        "mimeType": "video/webm",
+        "createdAt": "2026-07-28T06:44:36.939Z",
+        "frameRate": 24,
+        "startedAt": "2026-07-28T06:44:17.996Z",
+        "artifactId": "capture-1785221057995-f6977eb968d03c910e059870-video",
+        "durationMs": 10000,
+        "artifactRef": "hwpod-media://capture-1785221057995-f6977eb968d03c910e059870-video",
+        "downloadUrl": "https://lab-dev-hwpod.hwpod.com/v1/hwpod/artifacts/capture-1785221057995-f6977eb968d03c910e059870-video"
+      },
+      "rawFrames": {
+        "path": ".state/display-captures/capture-1785221057995-f6977eb968d03c910e059870/frames",
+        "frameCount": 240,
+        "manifestPath": ".state/display-captures/capture-1785221057995-f6977eb968d03c910e059870/raw-frames-manifest.json",
+        "manifestSha256": "56d00fbba6b27fed336a8a9d13d1a0ea446072cc16858f33d228ab2dd963b820"
+      },
+      "screenshot": {
+        "bytes": 8384,
+        "width": 640,
+        "height": 480,
+        "sha256": "e310e881b1b838bb451e704af370a2f0ff87cd84bf648ffde457118add2e4625",
+        "fileName": "capture-1785221057995-f6977eb968d03c910e059870-screenshot.png",
+        "mimeType": "image/png",
+        "createdAt": "2026-07-28T06:44:35.901Z",
+        "artifactId": "capture-1785221057995-f6977eb968d03c910e059870-screenshot",
+        "capturedAt": "2026-07-28T06:44:37.053Z",
+        "artifactRef": "hwpod-media://capture-1785221057995-f6977eb968d03c910e059870-screenshot",
+        "downloadUrl": "https://lab-dev-hwpod.hwpod.com/v1/hwpod/artifacts/capture-1785221057995-f6977eb968d03c910e059870-screenshot"
+      }
+    },
+    "source": "case-run-runner-post-agent-compile-check",
+    "command": [
+      "bun",
+      "hwpod-cli.ts",
+      "build",
+      "--spec",
+      "hwpod-spec.yaml",
+      "--reason",
+      "case-run d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes run_arm2d_binocular_from_single_l1_20260728_04 custom-runtime",
+      "--timeout-ms",
+      "120000"
+    ],
+    "exitCode": 0,
+    "operation": {
+      "ok": true,
+      "op": "debug.build",
+      "opId": "op_01_debug_build",
+      "status": "completed",
+      "expected": {
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+        "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32"
+      },
+      "observed": {
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+        "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32"
+      },
+      "topology": {
+        "ok": true
+      },
+      "artifacts": [
+        "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32/build/qemu-gui.elf"
+      ],
+      "authority": "case-hwpod-yaml",
+      "contractVersion": "hwpod-operation-result-v0.3",
+      "synchronousBuild": {
+        "ok": true,
+        "status": "completed",
+        "artifacts": [
+          "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32/build/qemu-gui.elf"
+        ],
+        "sizeBytes": 169744
+      }
+    },
+    "stdoutJson": {
+      "ok": true,
+      "action": "hwpod-cli.invoke",
+      "status": "completed",
+      "results": [
+        {
+          "ok": true,
+          "op": "debug.build",
+          "opId": "op_01_debug_build",
+          "output": {
+            "ok": true,
+            "op": "debug.build",
+            "cwd": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32",
+            "stderr": "",
+            "stdout": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n 129699\t    428\t 389152\t 519279\t  7ec6f\t/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32/build/qemu-gui.elf\n",
+            "command": [
+              "scripts/build"
+            ],
+            "exitCode": 0,
+            "elapsedMs": 33393,
+            "sizeBytes": 169744,
+            "artifactPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32/build/qemu-gui.elf",
+            "bindingSource": "hwpod-node-ops.command"
+          },
+          "status": "completed"
+        }
+      ]
+    }
+  },
+  "runId": "run_arm2d_binocular_from_single_l1_20260728_04",
+  "apiUrl": "http://127.0.0.1:6681",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes",
+  "replay": {
+    "source": "archived-hwpod-operation-observations",
+    "planMode": "custom-runtime",
+    "actionIds": [
+      "build",
+      "download",
+      "display-capture"
+    ],
+    "operationIds": [
+      "op_01_debug_build",
+      "op_01_debug_download",
+      "op_01_display_capture"
+    ],
+    "relationships": [],
+    "observationIds": [],
+    "contractVersion": "hwpod-case-validation-replay-v1"
+  },
+  "status": "recorded",
+  "subject": {
+    "setup": {
+      "nodeId": "node-d601-vm-hwpod-qemu",
+      "planId": "run_arm2d_binocular_from_single_l1_20260728_04:prepare:v1:subject-prepare",
+      "stderr": "Preparing worktree (detached HEAD 6daaa6e)",
+      "stdout": "HEAD is now at 6daaa6e feat: run official Arm-2D eyes scene\n6daaa6eb8540469eae69aef3714a52d3d2ab0196",
+      "exitCode": 0,
+      "operation": {
+        "ops": [
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_01_subject_commit",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_02_subject_worktree_add",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_03_subject_worktree_head",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "workspace.git-materialize",
+            "opId": "op_10_resource_arm-2d-main",
+            "status": "completed"
+          }
+        ],
+        "intent": "cmd.run",
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "planId": "run_arm2d_binocular_from_single_l1_20260728_04:prepare:v1:subject-prepare",
+        "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+        "contractVersion": "hwpod-node-ops-v1"
+      },
+      "resources": [
+        {
+          "id": "arm-2d-main",
+          "ref": "main",
+          "kind": "git",
+          "reused": false,
+          "gitHead": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+          "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+          "commitId": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+          "destination": "third_party/Arm-2D-main",
+          "materialized": true
+        }
+      ],
+      "httpStatus": 200
+    },
+    "subdir": "",
+    "commitId": "6daaa6eb8540469eae69aef3714a52d3d2ab0196",
+    "resources": [
+      {
+        "id": "arm-2d-main",
+        "ref": "main",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+        "commitId": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+        "destination": "third_party/Arm-2D-main"
+      }
+    ],
+    "worktreePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32",
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    }
+  },
+  "warnings": {},
+  "agentDiff": {
+    "diffStat": "scripts/build | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)\n/dev/null => src/arm_2d_scene_binocular.c | 699 ++++++++++++++++++++++++++++++\n 1 file changed, 699 insertions(+)\n/dev/null => src/arm_2d_scene_blink.h | 166 ++++++++++++++++++++++++++++++++++\n 1 file changed, 166 insertions(+)\n[omitted by CaseRun diffCollection]\n third_party/Arm-2D-main/** | 1 files omitted reason=官方 Arm-2D 资源由固定上游提交与物化清单表达 samples=third_party/Arm-2D-main",
+    "requests": [
+      {
+        "label": "status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 103
+      },
+      {
+        "label": "diff-stat",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 67
+      },
+      {
+        "label": "diff-patch",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 414
+      },
+      {
+        "label": "submodule-status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-ls-files",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 78
+      },
+      {
+        "label": "untracked-file-metadata",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:src/arm_2d_scene_binocular.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:src/arm_2d_scene_binocular.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 24564
+      },
+      {
+        "label": "untracked-diff-stat:src/arm_2d_scene_blink.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:src/arm_2d_scene_blink.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 5192
+      },
+      {
+        "label": "source-root-baseline",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      },
+      {
+        "label": "source-root-after-prepare",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      },
+      {
+        "label": "source-root-after-agent",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      }
+    ],
+    "statusShort": "M scripts/build\n?? src/arm_2d_scene_binocular.c\n?? src/arm_2d_scene_blink.h\n?? third_party/Arm-2D-main/",
+    "diffPatchPath": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_from_single_l1_20260728_04/agent-diff.patch",
+    "diffCollection": {
+      "config": {
+        "ignore": [
+          {
+            "reason": "官方 Arm-2D 资源由固定上游提交与物化清单表达",
+            "pattern": "third_party/Arm-2D-main/**"
+          },
+          {
+            "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+            "pattern": "vendor/**"
+          },
+          {
+            "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+            "pattern": "third_party/**"
+          }
+        ],
+        "include": []
+      },
+      "omitted": [
+        {
+          "path": "third_party/Arm-2D-main",
+          "rule": "third_party/Arm-2D-main/**",
+          "reason": "官方 Arm-2D 资源由固定上游提交与物化清单表达",
+          "source": "untracked"
+        }
+      ],
+      "tracked": {
+        "paths": [
+          "scripts/build"
+        ],
+        "diffStat": "scripts/build | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)",
+        "diffPatchSha256": "3fcf1dd9d26388e3251437268f88d00393dea2b77c544d01608c2efeda51490d"
+      },
+      "included": [
+        {
+          "path": "src/arm_2d_scene_binocular.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "src/arm_2d_scene_blink.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        }
+      ],
+      "untracked": {
+        "total": 3,
+        "omitted": 1,
+        "included": 2
+      },
+      "submodules": [],
+      "omittedGroups": [
+        {
+          "rule": "third_party/Arm-2D-main/**",
+          "count": 1,
+          "reason": "官方 Arm-2D 资源由固定上游提交与物化清单表达",
+          "samplePaths": [
+            "third_party/Arm-2D-main"
+          ]
+        }
+      ],
+      "contractVersion": "hwpod-case-run-diff-collection-v1"
+    },
+    "diffPatchSha256": "99dd438e1774c16ea2cb226fdea0eaf4b8026ceaaafbedbd340b928d133e7ceb",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterAgent": {
+      "label": "after-agent",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootStatusShort": "?? .worktree/",
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootChangedAfterAgent": false,
+    "sourceRootChangedAfterPrepare": false
+  },
+  "agentTask": {
+    "model": "gpt-5.6-luna",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 3600000,
+    "workspace": "subjectWorktree",
+    "constraints": [
+      "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
+      "只能修改隔离 subject worktree，不得修改 case registry、HWLAB repo 或原 subject checkout",
+      "必须保留并复用官方 arm_2d_scene_blink、Eyeball、LeftEye 和 spin_zoom_widget，不得裸写图形替代",
+      "必须创建两个独立眼睛实例，位置左右对称，注视方向一致，眨眼时序同步",
+      "src/arm_2d_scene_blink.h 中必须删除旧的外层 Eye 成员，并在 user_scene_blink_t 的 ARM_PRIVATE 作用域直接声明 `struct { spin_zoom_widget_t tSocket; spin_zoom_widget_t tEyeBall; } LeftEye, RightEye;`；禁止形成 this.Eye.LeftEye 或 this.Eye.RightEye",
+      "禁止用整个 scene/widget 结构赋值复制第二眼；左右 widget 必须分别初始化并完整参与帧生命周期",
+      "draw 中必须以两个分离且左右对称的 pivot/region 分别绘制左右 socket 与 eyeball，共四次 spin_zoom_widget_show",
+      "tLeftPivot 和 tRightPivot 必须先从官方已声明且可见的 tPivot 复制，再分别对 iX 减 90 和加 90；严禁在 arm_2d_align_centre_open 作用域外引用 __centre_region",
+      "左 socket 和左 eyeball 只能传 tLeftPivot，右 socket 和右 eyeball 只能传 tRightPivot；不得继续把官方居中 tPivot 传给任一眼睛",
+      "tLeftEyeBallRegion 与 tRightEyeBallRegion 只能在 arm_2d_align_centre_open 作用域内从 __centre_region 分别构造；左右 __arm_2d_hint_optimize_for_pfb__ 必须是先左后右的两个独立顺序作用域，禁止互相嵌套",
+      "tRightEyeBallRegion 必须使用 `.tLocation = { .iX = ..., .iY = ... }` 的嵌套初始化；arm_2d_region_t 顶层禁止直接出现 `.iX` 或 `.iY`",
+      "包含左右 region 与左右 eyeball 绘制的同一个 arm_2d_align_centre_open 作用域只能在右 eyeball 的 spin_zoom_widget_show 之后关闭",
+      "左 eyeball 的 spin_zoom_widget_show 第三个参数必须是 &tLeftEyeBallRegion，右 eyeball 必须是 &tRightEyeBallRegion；双目源码中不得残留 &tEyeBallRegion",
+      "draw 的 pivot 必须是 arm_2d_location_t：左 X=画面中心-90、右 X=画面中心+90，Y 保持官方原值；两个 socket 都传 region=NULL 并分别传左/右 pivot；两个 eyeball region 都从 __centre_region 复制，X 分别减/加 90 后再叠加同一个 EyeBallMove 偏移，size 保持 EYEBALL 大小，并分别传对应 pivot",
+      "左右 eyeball 必须分别放在各自的 __arm_2d_hint_optimize_for_pfb__(leftRegion/rightRegion) 作用域内绘制；禁止把右眼绘制放在仅以左眼 region 优化的作用域内，否则 PFB 会裁掉右眼",
+      "左右 frame-start 必须写成彼此独立且完整的 spin_zoom_widget_on_frame_start_xy(widget, angle, scaleX, scaleY) 语句，不得嵌套或交错两个调用",
+      "spin_zoom_widget_show 固定使用五个参数且第二参数必须是 ptTile；左右 pivot/region 先声明为局部变量，禁止在宏参数中使用含逗号的复合字面量",
+      "完成最终补丁后必须实际执行 hwpod build；退出码非零时继续按编译错误修复，只有退出码为零才能结束 Agent 任务",
+      "禁止修改 third_party/Arm-2D-main 中的上游文件",
+      "允许用 hwpod cmd -- cp 把官方 scene 复制为项目本地初始副本；复制后所有文本修改必须使用 HWPOD workspace apply-patch",
+      "单次读取输出必须小于 4 KiB；禁止重复读取大文件全文或访问 AgentRun output dump",
+      "同一时刻只允许一个 hwpod build；必须等待当前构建终态后才能再次构建，禁止并发构建",
+      "允许仅修改 scripts/build 和 scripts/rebuild 的 scene 源文件清单以编译项目本地双目 scene；禁止改变其他编译选项、目标或 Harness 行为",
+      "禁止修改 hwpod-spec.yaml、scripts/download、scripts/reset、PL111 驱动、QEMU helper 或采集逻辑",
+      "project-local 文本修改使用 HWPOD workspace apply-patch，构建使用 HWPOD build",
+      "Agent final response 不能替代 Harness 独立 build、download 和 display.capture 证据",
+      "结果只记录 raw trace/evidence，autoEvaluation=false"
+    ],
+    "promptSha256": "7fd011a9bb492f8840810dafbffae76fe811dd4918b62bdab3524734dd28826c",
+    "pollIntervalMs": 2000,
+    "providerProfile": "gpt.pika",
+    "reasoningEffort": "low"
+  },
+  "artifacts": [
+    "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32/build/qemu-gui.elf"
+  ],
+  "decisions": {
+    "reason": "CaseRun records Agent final independently and projects only authoritative HWPOD post-validation observations",
+    "autoEvaluation": false,
+    "runnerPostAgentCompileCheck": "recorded"
+  },
+  "agentFinal": {
+    "source": "agentrun-result",
+    "present": true,
+    "timedOut": false,
+    "naturalEnd": true,
+    "stageStatus": "completed",
+    "text": "已完成双目改造并验证：\n\n- 新增独立 `LeftEye`、`RightEye` widget 实例。\n- 双眼共享注视目标与眨眼状态，位置左右对称偏移 ±90 像素。\n- load、depose、frame-start、frame-complete 均包含四个 widget 调用。\n- draw 中确认四次 `spin_zoom_widget_show`，左右 socket 与 eyeball 分离绘制。\n- 构建清单已切换至本地 `src/arm_2d_scene_binocular.c`。\n- `hwpod build` 已完成并生成 `build/qemu-gui.elf`（169744 bytes，退出成功）。\n\nHarness 后置 download 与 display capture 将独立执行。",
+    "textChars": 360,
+    "status": "completed",
+    "traceId": "trc_harnessrl_aa0476b1716de4aa9205fa1f"
+  },
+  "agentTrace": {
+    "traceId": "trc_harnessrl_aa0476b1716de4aa9205fa1f",
+    "status": "completed",
+    "httpStatus": 200,
+    "source": "hwlab-cli.client.agent.trace",
+    "lookup": {
+      "source": "hwlab-cli.client.agent",
+      "strategy": "id_plus_existing_cli",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_aa0476b1716de4aa9205fa1f",
+      "sessionId": "ses_800d620a-85a9-4ca0-8d41-4f497d79d664",
+      "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes_run-arm2d-binocular-from-single-l1-20260728-04",
+      "threadId": "",
+      "commands": {
+        "result": "hwlab-cli client agent result trc_harnessrl_aa0476b1716de4aa9205fa1f",
+        "trace": "hwlab-cli client agent trace trc_harnessrl_aa0476b1716de4aa9205fa1f --render web",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_aa0476b1716de4aa9205fa1f --render web --full",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_aa0476b1716de4aa9205fa1f",
+        "sessionStatus": "hwlab-cli client agent session status ses_800d620a-85a9-4ca0-8d41-4f497d79d664"
+      }
+    },
+    "sourceEventCount": 133,
+    "renderedRowCount": 36,
+    "commandCount": 29,
+    "hwpodCommandCount": 26,
+    "hwpodBuildCommandCount": 1,
+    "keilJobCandidates": [],
+    "terminalStatus": "completed",
+    "commands": [
+      {
+        "source": "trace-row",
+        "seq": 13150,
+        "rowId": "tool:exec-12c14d88-edb0-4ac0-af49-95f4f94e9fba",
+        "header": "06:34:25",
+        "command": "hwpod-ctl spec validate && hwpod inspect\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-ctl.spec.validate\",\n  \"status\": \"succeeded\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"document\": {\n    \"apiVersion\": \"hwlab.dev/v0alpha1\",\n    \"kind\": \"Hwpod\",\n    \"metadata\": {\n      \"name\": \"d601-vm-vexpress-a9-qemu-gui\"\n    },\n    \"spec\": {\n      \"nodeBinding\": {\n        \"nodeId\": \"node-d601-vm-hwpod-qemu\"\n      },\n      \"targetDevice\": {\n        \"board\": \"ARM VExpress-A9 QEMU GUI\",\n        \"cpu\": \"cortex-a9\",\n        \"emulator\": \"qemu-system-arm\",\n        \"machine\": \"vexpress-a9\",\n        \"simulation\": true\n      },\n      \"workspace\": {\n        \"path\": \"/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32\",\n        \"toolchain\": \"arm-none-eabi-gcc\",\n        \"buildCommand\": \"scripts/build\",\n        \"rebuildCommand\": \"scripts/rebuild\",\n        \"buildArtifactPath\": \"build/qemu-g\n... clipped ...",
+        "normalizedCommand": "hwpod-ctl spec validate && hwpod inspect output: { \"ok\": true, \"action\": \"hwpod-ctl.spec.validate\", \"status\": \"succeeded\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"document\": { \"apiVersion\": \"hwlab.dev/v0alpha1\", \"kind\": \"Hwpod\", \"metadata\": { \"name\": \"d601-vm-vexpress-a9-qemu-gui\" }, \"spec\": { \"nodeBinding\": { \"nodeId\": \"node-d601-vm-hwpod-qemu\" }, \"targetDevice\": { \"board\": \"ARM VExpress-A9 QEMU GUI\", \"cpu\": \"cortex-a9\", \"emulator\": \"qemu-system-arm\", \"machine\": \"vexpress-a9\", \"simulation\": true }, \"workspace\": { \"path\": \"/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32\", \"toolchain\": \"arm-none-eabi-gcc\", \"buildCommand\": \"scripts/build\", \"rebuildCommand\": \"scripts/rebuild\", \"buildArtifactPath\": \"build/qemu-gui.elf\" }, \"debugProbe\": { \"type\": \"qemu\", \"adapter\": \"hwpod-qemu-gui-workspace\", \"downloadCommand\": \"scripts/download\", \"resetCommand\": \"scripts/reset\", \"phy\n... clipped ...",
+        "bodyPreview": "hwpod-ctl spec validate && hwpod inspect\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-ctl.spec.validate\",\n  \"status\": \"succeeded\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"document\": {\n    \"apiVersion\": \"hwlab.dev/v0alpha1\",\n    \"kind\": \"Hwpod\",\n    \"metadata\": {\n      \"name\": \"d601-vm-vexpress-a9-qemu-gui\"\n    },\n    \"spec\": {\n      \"nodeBinding\": {\n        \"nodeId\": \"node-d601-vm-hwpod-qemu\"\n      },\n      \"targetDevice\": {\n        \"board\": \"ARM VExpress-A9 QEMU GUI\",\n        \"cpu\": \"cortex-a9\",\n        \"emulator\": \"qemu-system-arm\",\n        \"machine\": \"vexpress-a9\",\n        \"simulation\": true\n      },\n      \"workspace\": {\n        \"path\": \"/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32\",\n        \"toolchain\": \"arm-none-eabi-gcc\",\n        \"buildCommand\": \"scripts/build\",\n        \"rebuildCommand\": \"scripts/rebuild\",\n        \"buildArtifactPath\": \"build/qemu-gui.elf\"\n      },\n      \"debugProbe\": {\n        \"type\": \"qemu\",\n        \"adapter\": \"hwpod-qemu-gui-workspace\",\n        \"downloadCommand\": \"scripts/download\",\n        \"resetCommand\": \"scripts/reset\",\n  \n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13187,
+        "rowId": "tool:exec-8d8cf4ee-b34f-4063-baca-255591c659c4",
+        "header": "06:36:42",
+        "command": "hwpod workspace apply-patch --help\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.workspace.help\",\n  \"status\": \"succeeded\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"command\": \"workspace\",\n  \"subcommand\": \"apply-patch\",\n  \"usage\": [\n    \"hwpod workspace ls [path] --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\",\n    \"hwpod workspace cat <path> --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\",\n    \"hwpod workspace read <path> --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\",\n    \"hwpod workspace rg <pattern> [path] --context 3 --max-matches 20 --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\",\n    \"hwpod workspace write --path <path> --content <text> --expected-sha <sha>\",\n    \"hwpod workspace replace --path <path> --find <text> --replace <text> --expected-sha <sha>\",\n    \"hwpod workspace insert-after --path <path> --anchor <text> --line <text> --expected-sha <sha>\",\n    \"cat patch.txt | hwpod workspace apply-patch --hwpod-id d601-f103-v2 --workspace-pa\n... clipped ...",
+        "normalizedCommand": "hwpod workspace apply-patch --help output: { \"ok\": true, \"action\": \"hwpod-cli.workspace.help\", \"status\": \"succeeded\", \"contractVersion\": \"hwpod-node-ops-v1\", \"command\": \"workspace\", \"subcommand\": \"apply-patch\", \"usage\": [ \"hwpod workspace ls [path] --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\", \"hwpod workspace cat <path> --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\", \"hwpod workspace read <path> --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\", \"hwpod workspace rg <pattern> [path] --context 3 --max-matches 20 --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\", \"hwpod workspace write --path <path> --content <text> --expected-sha <sha>\", \"hwpod workspace replace --path <path> --find <text> --replace <text> --expected-sha <sha>\", \"hwpod workspace insert-after --path <path> --anchor <text> --line <text> --expected-sha <sha>\", \"cat patch.txt | hwpod workspace apply-patch --hwpod-id d601-f103-v2 --workspace-path <run-worktree> --reason <reason>\", \"hwpod w\n... clipped ...",
+        "bodyPreview": "hwpod workspace apply-patch --help\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.workspace.help\",\n  \"status\": \"succeeded\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"command\": \"workspace\",\n  \"subcommand\": \"apply-patch\",\n  \"usage\": [\n    \"hwpod workspace ls [path] --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\",\n    \"hwpod workspace cat <path> --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\",\n    \"hwpod workspace read <path> --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\",\n    \"hwpod workspace rg <pattern> [path] --context 3 --max-matches 20 --hwpod-id d601-f103-v2 --workspace-path <run-worktree>\",\n    \"hwpod workspace write --path <path> --content <text> --expected-sha <sha>\",\n    \"hwpod workspace replace --path <path> --find <text> --replace <text> --expected-sha <sha>\",\n    \"hwpod workspace insert-after --path <path> --anchor <text> --line <text> --expected-sha <sha>\",\n    \"cat patch.txt | hwpod workspace apply-patch --hwpod-id d601-f103-v2 --workspace-path <run-worktree> --reason <reason>\",\n    \"hwpod workspace apply-patch --hwpod-id d601-f103-v2 --workspace-path <run-worktree> --patch-content '<apply_patch v2 envelope>'\"\n  ],\n  \"aliases\": {\n    \"rea\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13231,
+        "rowId": "tool:exec-ceacf0d4-e619-45cc-bde6-173124a77744",
+        "header": "06:40:28",
+        "command": "hwpod build\noutput:\ncommandExecution started: /bin/bash -lc 'hwpod build'\noutputBytes=53",
+        "normalizedCommand": "hwpod build output: commandExecution started: /bin/bash -lc 'hwpod build' outputBytes=53",
+        "bodyPreview": "hwpod build\noutput:\ncommandExecution started: /bin/bash -lc 'hwpod build'\noutputBytes=53\nexitCode=null"
+      },
+      {
+        "source": "trace-row",
+        "seq": 13142,
+        "rowId": "tool:exec-59f52197-39ef-4e51-8763-7f065eb9c87b",
+        "header": "06:34:06",
+        "command": "\"command -v hwpod && command -v hwpod-ctl && command -v hwpod-compiler && printf '%s\\n' \"\"'$AGENTRUN_SKILLS_DIRS\"'\noutput:\n/root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/tools/hwpod\n/root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/tools/hwpod-ctl\n/root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/tools/hwpod-compiler\n/root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills\noutputBytes=276\noutputRecoverable=true",
+        "normalizedCommand": "command -v hwpod && command -v hwpod-ctl && command -v hwpod-compiler && printf '%s\\n' \"\"'$AGENTRUN_SKILLS_DIRS\"' output: /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/tools/hwpod /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/tools/hwpod-ctl /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/tools/hwpod-compiler /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills outputBytes=276 outputRecoverable=true",
+        "bodyPreview": "\"command -v hwpod && command -v hwpod-ctl && command -v hwpod-compiler && printf '%s\\n' \"\"'$AGENTRUN_SKILLS_DIRS\"'\noutput:\n/root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/tools/hwpod\n/root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/tools/hwpod-ctl\n/root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/tools/hwpod-compiler\n/root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills\noutputBytes=276\noutputRecoverable=true\nexitCode=0",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13144,
+        "rowId": "tool:exec-f741a575-d2dc-45f7-b72b-2be5303aeb99",
+        "header": "06:34:10",
+        "command": "wc -l /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-cli/SKILL.md /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-ctl/SKILL.md /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/arm2d-skill/SKILL.md\noutput:\n41 /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-cli/SKILL.md\n   26 /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-ctl/SKILL.md\n  202 /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/arm2d-skill/SKILL.md\n  269 total\noutputBytes=293\noutputRecoverable=true",
+        "normalizedCommand": "wc -l /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-cli/SKILL.md /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-ctl/SKILL.md /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/arm2d-skill/SKILL.md output: 41 /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-cli/SKILL.md 26 /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-ctl/SKILL.md 202 /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/arm2d-skill/SKILL.md 269 total outputBytes=293 outputRecoverable=true",
+        "bodyPreview": "wc -l /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-cli/SKILL.md /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-ctl/SKILL.md /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/arm2d-skill/SKILL.md\noutput:\n41 /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-cli/SKILL.md\n   26 /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-ctl/SKILL.md\n  202 /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/arm2d-skill/SKILL.md\n  269 total\noutputBytes=293\noutputRecoverable=true\nexitCode=0",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13146,
+        "rowId": "tool:exec-1309715d-5593-4255-a16b-8970ef1feb8e",
+        "header": "06:34:16",
+        "command": "sed -n '1,260p' /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-cli/SKILL.md; sed -n '1,200p' /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-ctl/SKILL.md; sed -n '1,260p' /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/arm2d-skill/SKILL.md\noutput:\n---\nname: hwpod-cli\ndescription: Use HWLAB HWPOD from a code agent runner for hardware-development tasks. The hwpod-cli skill resolves an HWPOD by hwpod-id through the HWLAB runtime service, submits hwpod-node-ops through hwlab-api, and waits for hwpod-node results.\n---\n\n# hwpod-cli\n\nThis skill follows Skill(cli-spec). It is the standard task entry for operating an HWPOD from the HWLAB v0.2 Code Agent workspace.\n\n## Standard Path\n\n```text\nhwpod from PATH\n  -> tools/hwpod-cli.ts\n    -> runtime HWPOD registry by hwpod-id\n    -> compiler-backed hwpod-node-ops plan\n      -> /v1/hwpod-node-ops on hwlab-api\n        -> hwpod-node on the host side\n```\n\nThe HWPOD definition is ru\n... clipped ...",
+        "normalizedCommand": "sed -n '1,260p' /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-cli/SKILL.md; sed -n '1,200p' /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-ctl/SKILL.md; sed -n '1,260p' /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/arm2d-skill/SKILL.md output: --- name: hwpod-cli description: Use HWLAB HWPOD from a code agent runner for hardware-development tasks. The hwpod-cli skill resolves an HWPOD by hwpod-id through the HWLAB runtime service, submits hwpod-node-ops through hwlab-api, and waits for hwpod-node results. --- # hwpod-cli This skill follows Skill(cli-spec). It is the standard task entry for operating an HWPOD from the HWLAB v0.2 Code Agent workspace. ## Standard Path ```text hwpod from PATH -> tools/hwpod-cli.ts -> runtime HWPOD registry by hwpod-id -> compiler-backed hwpod-node-ops plan -> /v1/hwpod-node-ops on hwlab-api -> hwpod-node on the host side ``` The HWPOD definition is runtime service state. The stan\n... clipped ...",
+        "bodyPreview": "sed -n '1,260p' /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-cli/SKILL.md; sed -n '1,200p' /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/hwpod-ctl/SKILL.md; sed -n '1,260p' /root/.gitbundle/agentrun/workspace-adaa3f964103b8d4/.agents/skills/arm2d-skill/SKILL.md\noutput:\n---\nname: hwpod-cli\ndescription: Use HWLAB HWPOD from a code agent runner for hardware-development tasks. The hwpod-cli skill resolves an HWPOD by hwpod-id through the HWLAB runtime service, submits hwpod-node-ops through hwlab-api, and waits for hwpod-node results.\n---\n\n# hwpod-cli\n\nThis skill follows Skill(cli-spec). It is the standard task entry for operating an HWPOD from the HWLAB v0.2 Code Agent workspace.\n\n## Standard Path\n\n```text\nhwpod from PATH\n  -> tools/hwpod-cli.ts\n    -> runtime HWPOD registry by hwpod-id\n    -> compiler-backed hwpod-node-ops plan\n      -> /v1/hwpod-node-ops on hwlab-api\n        -> hwpod-node on the host side\n```\n\nThe HWPOD definition is runtime service state. The standard runner contract is `--hwpod-id <id>` plus `--workspace-path <run-worktree>` when the task is bound to a run-local workspace. A task may provide the complete `hwpodWor\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13154,
+        "rowId": "tool:exec-2af5bd7b-d933-4e8b-a445-a8743c300aaf",
+        "header": "06:34:41",
+        "command": "hwpod workspace ls . && hwpod workspace rg 'arm_2d_scene_blink|main.c|scripts/build|scripts/rebuild' . --context 2\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.ls\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.ls\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_5c3c5d84-2b3e-483c-bd15-18cf55922ce9\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n   \n... clipped ...",
+        "normalizedCommand": "hwpod workspace ls . && hwpod workspace rg 'arm_2d_scene_blink|main.c|scripts/build|scripts/rebuild' . --context 2 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_5c3c5d84-2b3e-483c-bd15-18cf55922ce9\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEnd\n... clipped ...",
+        "bodyPreview": "hwpod workspace ls . && hwpod workspace rg 'arm_2d_scene_blink|main.c|scripts/build|scripts/rebuild' . --context 2\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.ls\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.ls\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_5c3c5d84-2b3e-483c-bd15-18cf55922ce9\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\": \"api\",\n    \"baseUrl\": \"http://152.53.229\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13159,
+        "rowId": "tool:exec-73671413-a427-4799-a2f9-01a98a4271ad",
+        "header": "06:35:01",
+        "command": "hwpod workspace ls src && hwpod workspace ls scripts && hwpod workspace rg 'spin_zoom_widget|user_scene_blink_t|arm_2d_scene_blink' src scripts --context 3\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.ls\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.ls\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_f3f29410-cb21-4525-87f0-ba231ee6c516\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"h\n... clipped ...",
+        "normalizedCommand": "hwpod workspace ls src && hwpod workspace ls scripts && hwpod workspace rg 'spin_zoom_widget|user_scene_blink_t|arm_2d_scene_blink' src scripts --context 3 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_f3f29410-cb21-4525-87f0-ba231ee6c516\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"p\n... clipped ...",
+        "bodyPreview": "hwpod workspace ls src && hwpod workspace ls scripts && hwpod workspace rg 'spin_zoom_widget|user_scene_blink_t|arm_2d_scene_blink' src scripts --context 3\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.ls\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.ls\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_f3f29410-cb21-4525-87f0-ba231ee6c516\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\":\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13164,
+        "rowId": "tool:exec-3fbfed75-f5d1-4e31-9386-7e75aa72dbd5",
+        "header": "06:35:22",
+        "command": "hwpod workspace cat src/main.c --start-line 285 --end-line 325 && hwpod workspace cat scripts/build --start-line 1 --end-line 120 && hwpod workspace cat scripts/rebuild --start-line 1 --end-line 40\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"nodeId\": \"node-d601-vm-hwpod-qemu\",\n  \"intent\": \"workspace.cat\",\n  \"operationId\": \"hwpod_plan_389d3e3f-63f5-4a35-9c49-fa210a2380b1\",\n  \"httpStatus\": 200,\n  \"results\": [\n    {\n      \"opId\": \"op_01_workspace_cat\",\n      \"op\": \"workspace.cat\",\n      \"ok\": true,\n      \"status\": \"completed\",\n      \"output\": {\n        \"stdout\": \"\",\n        \"sizeBytes\": 9589\n      },\n      \"commands\": []\n    }\n  ],\n  \"resultCount\": 1,\n  \"extractedDiagnostics\": [\n    \"uart_puts(\\\"Arm-2D assertion failed: \\\");\"\n  ],\n  \"outputDisclosure\": {\n    \"maxInlineBytes\": 10240,\n    \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\",\n    \"fullPayloadDump\": {\n      \"path\": \"/ro\n... clipped ...",
+        "normalizedCommand": "hwpod workspace cat src/main.c --start-line 285 --end-line 325 && hwpod workspace cat scripts/build --start-line 1 --end-line 120 && hwpod workspace cat scripts/rebuild --start-line 1 --end-line 40 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"nodeId\": \"node-d601-vm-hwpod-qemu\", \"intent\": \"workspace.cat\", \"operationId\": \"hwpod_plan_389d3e3f-63f5-4a35-9c49-fa210a2380b1\", \"httpStatus\": 200, \"results\": [ { \"opId\": \"op_01_workspace_cat\", \"op\": \"workspace.cat\", \"ok\": true, \"status\": \"completed\", \"output\": { \"stdout\": \"\", \"sizeBytes\": 9589 }, \"commands\": [] } ], \"resultCount\": 1, \"extractedDiagnostics\": [ \"uart_puts(\\\"Arm-2D assertion failed: \\\");\" ], \"outputDisclosure\": { \"maxInlineBytes\": 10240, \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\", \"fullPayloadDump\": { \"path\": \"/root/agentrun-v02/.state/output-dumps/2026-07-28T06-35-10-669Z-3801104-a8d652ac.json\", \"bytes\": 12289, \"sha256\": \"c183\n... clipped ...",
+        "bodyPreview": "hwpod workspace cat src/main.c --start-line 285 --end-line 325 && hwpod workspace cat scripts/build --start-line 1 --end-line 120 && hwpod workspace cat scripts/rebuild --start-line 1 --end-line 40\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"nodeId\": \"node-d601-vm-hwpod-qemu\",\n  \"intent\": \"workspace.cat\",\n  \"operationId\": \"hwpod_plan_389d3e3f-63f5-4a35-9c49-fa210a2380b1\",\n  \"httpStatus\": 200,\n  \"results\": [\n    {\n      \"opId\": \"op_01_workspace_cat\",\n      \"op\": \"workspace.cat\",\n      \"ok\": true,\n      \"status\": \"completed\",\n      \"output\": {\n        \"stdout\": \"\",\n        \"sizeBytes\": 9589\n      },\n      \"commands\": []\n    }\n  ],\n  \"resultCount\": 1,\n  \"extractedDiagnostics\": [\n    \"uart_puts(\\\"Arm-2D assertion failed: \\\");\"\n  ],\n  \"outputDisclosure\": {\n    \"maxInlineBytes\": 10240,\n    \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\",\n    \"fullPayloadDump\": {\n      \"path\": \"/root/agentrun-v02/.state/output-dumps/2026-07-28T06-35-10-669Z-3801104-a8d652ac.json\",\n      \"bytes\": 12289,\n      \"sha256\": \"c1830212851d0ed981ee46fcfcb42343650345398ec34b06441d4981c9ee82dc\",\n      \"th\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13169,
+        "rowId": "tool:exec-941ff11c-af20-4f2e-9341-fe2fea424929",
+        "header": "06:35:43",
+        "command": "hwpod cmd -- mkdir -p src && hwpod cmd -- cp 'third_party/Arm-2D-main/examples/[template][bare-metal][STM32F746G-Discovery]/project/mdk/RTE/Acceleration/arm_2d_scene_blink.c' src/arm_2d_scene_binocular.c && hwpod cmd -- cp 'third_party/Arm-2D-main/examples/[template][bare-metal][STM32F746G-Discovery]/project/mdk/RTE/Acceleration/arm_2d_scene_blink.h' src/arm_2d_scene_blink.h\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"cmd.run\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"cmd.run\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\":\n... clipped ...",
+        "normalizedCommand": "hwpod cmd -- mkdir -p src && hwpod cmd -- cp 'third_party/Arm-2D-main/examples/[template][bare-metal][STM32F746G-Discovery]/project/mdk/RTE/Acceleration/arm_2d_scene_blink.c' src/arm_2d_scene_binocular.c && hwpod cmd -- cp 'third_party/Arm-2D-main/examples/[template][bare-metal][STM32F746G-Discovery]/project/mdk/RTE/Acceleration/arm_2d_scene_blink.h' src/arm_2d_scene_blink.h output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"cmd.run\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"cmd.run\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan\n... clipped ...",
+        "bodyPreview": "hwpod cmd -- mkdir -p src && hwpod cmd -- cp 'third_party/Arm-2D-main/examples/[template][bare-metal][STM32F746G-Discovery]/project/mdk/RTE/Acceleration/arm_2d_scene_blink.c' src/arm_2d_scene_binocular.c && hwpod cmd -- cp 'third_party/Arm-2D-main/examples/[template][bare-metal][STM32F746G-Discovery]/project/mdk/RTE/Acceleration/arm_2d_scene_blink.h' src/arm_2d_scene_blink.h\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"cmd.run\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"cmd.run\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_2d9350b5-b198-431c-81f0-277e9fa38148\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"s\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13173,
+        "rowId": "tool:exec-afbf273c-d0fb-4d50-843b-d82f0bcff66e",
+        "header": "06:35:55",
+        "command": "hwpod workspace rg 'ARM_PRIVATE|spin_zoom_widget_init|on_frame_start|on_frame_complete|spin_zoom_widget_show|arm_2d_align_centre_open|tEyeBallRegion|tPivot|EyeBallMove' src/arm_2d_scene_binocular.c src/arm_2d_scene_blink.h --context 5\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_26f9fa81-729b-4e44-a615-e1379bfc3f4e\n... clipped ...",
+        "normalizedCommand": "hwpod workspace rg 'ARM_PRIVATE|spin_zoom_widget_init|on_frame_start|on_frame_complete|spin_zoom_widget_show|arm_2d_align_centre_open|tEyeBallRegion|tPivot|EyeBallMove' src/arm_2d_scene_binocular.c src/arm_2d_scene_blink.h --context 5 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_26f9fa81-729b-4e44-a615-e1379bfc3f4e\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-g\n... clipped ...",
+        "bodyPreview": "hwpod workspace rg 'ARM_PRIVATE|spin_zoom_widget_init|on_frame_start|on_frame_complete|spin_zoom_widget_show|arm_2d_align_centre_open|tEyeBallRegion|tPivot|EyeBallMove' src/arm_2d_scene_binocular.c src/arm_2d_scene_blink.h --context 5\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_26f9fa81-729b-4e44-a615-e1379bfc3f4e\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13178,
+        "rowId": "tool:exec-a82ec798-7727-46cf-8e09-db1ed5d1586f",
+        "header": "06:36:18",
+        "command": "hwpod workspace cat src/arm_2d_scene_binocular.c --start-line 345 --end-line 455 && hwpod workspace cat src/arm_2d_scene_binocular.c --start-line 535 --end-line 670 && hwpod workspace cat src/arm_2d_scene_blink.h --start-line 1 --end-line 130\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"nodeId\": \"node-d601-vm-hwpod-qemu\",\n  \"intent\": \"workspace.cat\",\n  \"operationId\": \"hwpod_plan_cc6d09a3-c4d8-49e3-975b-adfd3a688c9a\",\n  \"httpStatus\": 200,\n  \"results\": [\n    {\n      \"opId\": \"op_01_workspace_cat\",\n      \"op\": \"workspace.cat\",\n      \"ok\": true,\n      \"status\": \"completed\",\n      \"output\": {\n        \"stdout\": \"\",\n        \"sizeBytes\": 22394\n      },\n      \"commands\": []\n    }\n  ],\n  \"resultCount\": 1,\n  \"extractedDiagnostics\": [],\n  \"outputDisclosure\": {\n    \"maxInlineBytes\": 10240,\n    \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\",\n    \"fullPayloadDump\": {\n      \"path\": \"/root/ag\n... clipped ...",
+        "normalizedCommand": "hwpod workspace cat src/arm_2d_scene_binocular.c --start-line 345 --end-line 455 && hwpod workspace cat src/arm_2d_scene_binocular.c --start-line 535 --end-line 670 && hwpod workspace cat src/arm_2d_scene_blink.h --start-line 1 --end-line 130 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"nodeId\": \"node-d601-vm-hwpod-qemu\", \"intent\": \"workspace.cat\", \"operationId\": \"hwpod_plan_cc6d09a3-c4d8-49e3-975b-adfd3a688c9a\", \"httpStatus\": 200, \"results\": [ { \"opId\": \"op_01_workspace_cat\", \"op\": \"workspace.cat\", \"ok\": true, \"status\": \"completed\", \"output\": { \"stdout\": \"\", \"sizeBytes\": 22394 }, \"commands\": [] } ], \"resultCount\": 1, \"extractedDiagnostics\": [], \"outputDisclosure\": { \"maxInlineBytes\": 10240, \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\", \"fullPayloadDump\": { \"path\": \"/root/agentrun-v02/.state/output-dumps/2026-07-28T06-36-06-819Z-3804863-e588b22f.json\", \"bytes\": 25470, \"sha256\": \"aa7\n... clipped ...",
+        "bodyPreview": "hwpod workspace cat src/arm_2d_scene_binocular.c --start-line 345 --end-line 455 && hwpod workspace cat src/arm_2d_scene_binocular.c --start-line 535 --end-line 670 && hwpod workspace cat src/arm_2d_scene_blink.h --start-line 1 --end-line 130\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"nodeId\": \"node-d601-vm-hwpod-qemu\",\n  \"intent\": \"workspace.cat\",\n  \"operationId\": \"hwpod_plan_cc6d09a3-c4d8-49e3-975b-adfd3a688c9a\",\n  \"httpStatus\": 200,\n  \"results\": [\n    {\n      \"opId\": \"op_01_workspace_cat\",\n      \"op\": \"workspace.cat\",\n      \"ok\": true,\n      \"status\": \"completed\",\n      \"output\": {\n        \"stdout\": \"\",\n        \"sizeBytes\": 22394\n      },\n      \"commands\": []\n    }\n  ],\n  \"resultCount\": 1,\n  \"extractedDiagnostics\": [],\n  \"outputDisclosure\": {\n    \"maxInlineBytes\": 10240,\n    \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\",\n    \"fullPayloadDump\": {\n      \"path\": \"/root/agentrun-v02/.state/output-dumps/2026-07-28T06-36-06-819Z-3804863-e588b22f.json\",\n      \"bytes\": 25470,\n      \"sha256\": \"aa73fec917fdbdfe94af3ac46f815662f1e37015a4f3dd296ab64c7548cc9d84\",\n      \"thresho\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13211,
+        "rowId": "tool:exec-fcfff4fc-3302-41e7-85b2-674d77c6f032",
+        "header": "06:38:32",
+        "command": "hwpod workspace rg 'eyelidScale|spin_zoom_widget_on_frame_start_xy|float this|arm_qoi_loader_on_frame_start' src/arm_2d_scene_binocular.c --context 3\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_eb5f3191-7547-4a08-8def-66d0ffb62686\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod:/\n... clipped ...",
+        "normalizedCommand": "hwpod workspace rg 'eyelidScale|spin_zoom_widget_on_frame_start_xy|float this|arm_qoi_loader_on_frame_start' src/arm_2d_scene_binocular.c --context 3 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_eb5f3191-7547-4a08-8def-66d0ffb62686\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"path\": \n... clipped ...",
+        "bodyPreview": "hwpod workspace rg 'eyelidScale|spin_zoom_widget_on_frame_start_xy|float this|arm_qoi_loader_on_frame_start' src/arm_2d_scene_binocular.c --context 3\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_eb5f3191-7547-4a08-8def-66d0ffb62686\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\": \"api\"\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13214,
+        "rowId": "tool:exec-265b89b9-b6af-4dd6-935a-69209f0baf1a",
+        "header": "06:38:49",
+        "command": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: src/arm_2d_scene_binocular.c\n@@\n-    spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tSocket, 0, EYE_SIZE_RATIO, eyelidScale);\n-                                        0,\n-                                        EYE_SIZE_RATIO,\n-                                        (float)this.Blink.iEyelidOffset * EYE_SIZE_RATIO / 100.0f);\n+    spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tSocket, 0, EYE_SIZE_RATIO, eyelidScale);\n@@\n-    spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tEyeBall, 0, EYE_SIZE_RATIO, eyelidScale);\n-                                        0,\n-                                        EYE_SIZE_RATIO,\n-                                        (float)this.Blink.iEyelidOffset * EYE_SIZE_RATIO / 100.0f);\n+    spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tEyeBall, 0, EYE_SIZE_RATIO, eyelidScale);\n@@\n-    arm_qoi_loader_on_frame_start(&this.tQOIEyeball);\n+    spin_zoom_widget_on_frame_start_xy\n... clipped ...",
+        "normalizedCommand": "hwpod workspace apply-patch --patch-content '*** Begin Patch *** Update File: src/arm_2d_scene_binocular.c @@ - spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tSocket, 0, EYE_SIZE_RATIO, eyelidScale); - 0, - EYE_SIZE_RATIO, - (float)this.Blink.iEyelidOffset * EYE_SIZE_RATIO / 100.0f); + spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tSocket, 0, EYE_SIZE_RATIO, eyelidScale); @@ - spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tEyeBall, 0, EYE_SIZE_RATIO, eyelidScale); - 0, - EYE_SIZE_RATIO, - (float)this.Blink.iEyelidOffset * EYE_SIZE_RATIO / 100.0f); + spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tEyeBall, 0, EYE_SIZE_RATIO, eyelidScale); @@ - arm_qoi_loader_on_frame_start(&this.tQOIEyeball); + spin_zoom_widget_on_frame_start_xy(&this.RightEye.tSocket, 0, EYE_SIZE_RATIO, eyelidScale); + spin_zoom_widget_on_frame_start_xy(&this.RightEye.tEyeBall, 0, EYE_SIZE_RATIO, eyelidScale); + arm_qoi_loader_on_frame_start(&this.tQOIEyeball); *** End Patch' output: { \"ok\": true, \"action\": \n... clipped ...",
+        "bodyPreview": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: src/arm_2d_scene_binocular.c\n@@\n-    spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tSocket, 0, EYE_SIZE_RATIO, eyelidScale);\n-                                        0,\n-                                        EYE_SIZE_RATIO,\n-                                        (float)this.Blink.iEyelidOffset * EYE_SIZE_RATIO / 100.0f);\n+    spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tSocket, 0, EYE_SIZE_RATIO, eyelidScale);\n@@\n-    spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tEyeBall, 0, EYE_SIZE_RATIO, eyelidScale);\n-                                        0,\n-                                        EYE_SIZE_RATIO,\n-                                        (float)this.Blink.iEyelidOffset * EYE_SIZE_RATIO / 100.0f);\n+    spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tEyeBall, 0, EYE_SIZE_RATIO, eyelidScale);\n@@\n-    arm_qoi_loader_on_frame_start(&this.tQOIEyeball);\n+    spin_zoom_widget_on_frame_start_xy(&this.RightEye.tSocket, 0, EYE_SIZE_RATIO, eyelidScale);\n+    spin_zoom_widget_on_frame_start_xy(&this.RightEye.tEyeBall, 0, EYE_SIZE_RATIO, eyelidScale);\n+    arm_qoi_loader_on_frame_start(&this.tQO\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13217,
+        "rowId": "tool:exec-b23e2513-122b-40bf-92cc-982ef52d554b",
+        "header": "06:38:59",
+        "command": "hwpod workspace rg 'arm_2d_canvas\\(ptTile|arm_lcd_text_set_target_framebuffer' src/arm_2d_scene_binocular.c --context 25\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_11021cca-3f83-4dca-b9c5-994a9764dc39\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\n... clipped ...",
+        "normalizedCommand": "hwpod workspace rg 'arm_2d_canvas\\(ptTile|arm_lcd_text_set_target_framebuffer' src/arm_2d_scene_binocular.c --context 25 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_11021cca-3f83-4dca-b9c5-994a9764dc39\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runt\n... clipped ...",
+        "bodyPreview": "hwpod workspace rg 'arm_2d_canvas\\(ptTile|arm_lcd_text_set_target_framebuffer' src/arm_2d_scene_binocular.c --context 25\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_11021cca-3f83-4dca-b9c5-994a9764dc39\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\": \"api\",\n    \"baseUrl\": \"http://152.\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13220,
+        "rowId": "tool:exec-ffbc8210-e5b3-4cfb-9e86-91c8054b7276",
+        "header": "06:39:19",
+        "command": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: src/arm_2d_scene_binocular.c\n@@\n-        spin_zoom_widget_show(  &this.LeftEye.tSocket, \n+        arm_2d_location_t tLeftPivot = tPivot;\n+        arm_2d_location_t tRightPivot = tPivot;\n+        tLeftPivot.iX -= 90;\n+        tRightPivot.iX += 90;\n+        spin_zoom_widget_show(  &this.LeftEye.tSocket, \n@@\n-                                &tPivot, \n+                                &tLeftPivot, \n@@\n-                                        &tPivot, \n+                                        &tLeftPivot, \n*** End Patch'\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.apply-patch\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entryp\n... clipped ...",
+        "normalizedCommand": "hwpod workspace apply-patch --patch-content '*** Begin Patch *** Update File: src/arm_2d_scene_binocular.c @@ - spin_zoom_widget_show( &this.LeftEye.tSocket, + arm_2d_location_t tLeftPivot = tPivot; + arm_2d_location_t tRightPivot = tPivot; + tLeftPivot.iX -= 90; + tRightPivot.iX += 90; + spin_zoom_widget_show( &this.LeftEye.tSocket, @@ - &tPivot, + &tLeftPivot, @@ - &tPivot, + &tLeftPivot, *** End Patch' output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.apply-patch\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"workspace.apply-patch\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"c\n... clipped ...",
+        "bodyPreview": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: src/arm_2d_scene_binocular.c\n@@\n-        spin_zoom_widget_show(  &this.LeftEye.tSocket, \n+        arm_2d_location_t tLeftPivot = tPivot;\n+        arm_2d_location_t tRightPivot = tPivot;\n+        tLeftPivot.iX -= 90;\n+        tRightPivot.iX += 90;\n+        spin_zoom_widget_show(  &this.LeftEye.tSocket, \n@@\n-                                &tPivot, \n+                                &tLeftPivot, \n@@\n-                                        &tPivot, \n+                                        &tLeftPivot, \n*** End Patch'\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.apply-patch\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.apply-patch\",\n      \"--args\",\n     \n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13223,
+        "rowId": "tool:exec-6d408b11-5343-4b19-b0b4-565c53dbae3e",
+        "header": "06:39:29",
+        "command": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: scripts/build\n@@\n-  \"\"'$accel/arm_2d_scene_blink.c\" '\"\\\n+  \"\"'$root/src/arm_2d_scene_binocular.c\" '\"\\\n*** End Patch'\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.apply-patch\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.apply-patch\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_a656a4ec-711c-472e-ae78-c76ef4aa9b70\",\n    \"source\": {\n   \n... clipped ...",
+        "normalizedCommand": "hwpod workspace apply-patch --patch-content '*** Begin Patch *** Update File: scripts/build @@ - \"\"'$accel/arm_2d_scene_blink.c\" '\"\\ + \"\"'$root/src/arm_2d_scene_binocular.c\" '\"\\ *** End Patch' output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.apply-patch\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"workspace.apply-patch\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_a656a4ec-711c-472e-ae78-c76ef4aa9b70\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"y\n... clipped ...",
+        "bodyPreview": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: scripts/build\n@@\n-  \"\"'$accel/arm_2d_scene_blink.c\" '\"\\\n+  \"\"'$root/src/arm_2d_scene_binocular.c\" '\"\\\n*** End Patch'\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.apply-patch\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.apply-patch\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_a656a4ec-711c-472e-ae78-c76ef4aa9b70\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13226,
+        "rowId": "tool:exec-9ce989e6-0d99-49a9-96d8-30fec0de5ec9",
+        "header": "06:40:10",
+        "command": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: src/arm_2d_scene_binocular.c\n@@\n         spin_zoom_widget_show(  &this.LeftEye.tSocket, \n@@\n                                 255);\n+\n+        spin_zoom_widget_show(  &this.RightEye.tSocket,\n+                                ptTile,\n+                                NULL,\n+                                &tRightPivot,\n+                                255);\n@@\n-            arm_2d_region_t tEyeBallRegion = {\n-                .tLocation = {\n-                    .iX =  __centre_region.tLocation.iX + this.EyeBallMove.tOffset.iX,\n-                    .iY = __centre_region.tLocation.iY + this.EyeBallMove.tOffset.iY,\n-                },\n-                .tSize = EYEBALL.tRegion.tSize,\n-            };\n+            arm_2d_region_t tLeftEyeBallRegion = {\n+                .tLocation = {\n+                    .iX = __centre_region.tLocation.iX - 90 + this.EyeBallMove.tOffset.iX,\n+                    .iY = __centre_region.tLoc\n... clipped ...",
+        "normalizedCommand": "hwpod workspace apply-patch --patch-content '*** Begin Patch *** Update File: src/arm_2d_scene_binocular.c @@ spin_zoom_widget_show( &this.LeftEye.tSocket, @@ 255); + + spin_zoom_widget_show( &this.RightEye.tSocket, + ptTile, + NULL, + &tRightPivot, + 255); @@ - arm_2d_region_t tEyeBallRegion = { - .tLocation = { - .iX = __centre_region.tLocation.iX + this.EyeBallMove.tOffset.iX, - .iY = __centre_region.tLocation.iY + this.EyeBallMove.tOffset.iY, - }, - .tSize = EYEBALL.tRegion.tSize, - }; + arm_2d_region_t tLeftEyeBallRegion = { + .tLocation = { + .iX = __centre_region.tLocation.iX - 90 + this.EyeBallMove.tOffset.iX, + .iY = __centre_region.tLocation.iY + this.EyeBallMove.tOffset.iY, + }, + .tSize = EYEBALL.tRegion.tSize, + }; + arm_2d_region_t tRightEyeBallRegion = { .tLocation = { .iX = __centre_region.tLocation.iX + 90 + this.EyeBallMove.tOffset.iX, .iY = __centre_region.tLocation.iY + this.EyeBallMove.tOffset.iY }, .tSize = EYEBALL.tRegion.tSize }; @@ - __arm_2d_hint_optimize_for_\n... clipped ...",
+        "bodyPreview": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: src/arm_2d_scene_binocular.c\n@@\n         spin_zoom_widget_show(  &this.LeftEye.tSocket, \n@@\n                                 255);\n+\n+        spin_zoom_widget_show(  &this.RightEye.tSocket,\n+                                ptTile,\n+                                NULL,\n+                                &tRightPivot,\n+                                255);\n@@\n-            arm_2d_region_t tEyeBallRegion = {\n-                .tLocation = {\n-                    .iX =  __centre_region.tLocation.iX + this.EyeBallMove.tOffset.iX,\n-                    .iY = __centre_region.tLocation.iY + this.EyeBallMove.tOffset.iY,\n-                },\n-                .tSize = EYEBALL.tRegion.tSize,\n-            };\n+            arm_2d_region_t tLeftEyeBallRegion = {\n+                .tLocation = {\n+                    .iX = __centre_region.tLocation.iX - 90 + this.EyeBallMove.tOffset.iX,\n+                    .iY = __centre_region.tLocation.iY + this.EyeBallMove.tOffset.iY,\n+                },\n+                .tSize = EYEBALL.tRegion.tSize,\n+            };\n+            arm_2d_region_t tRightEyeBallRegion = { .tLocation = { .iX = _\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13229,
+        "rowId": "tool:exec-c15d89c5-cfe2-4ec8-86d4-646373346b86",
+        "header": "06:40:23",
+        "command": "hwpod workspace rg 'spin_zoom_widget_on_frame_start_xy|spin_zoom_widget_on_frame_complete|spin_zoom_widget_show|LeftEye|RightEye|tEyeBallRegion|arm_2d_align_centre_open|tLeftPivot|tRightPivot' src/arm_2d_scene_binocular.c src/arm_2d_scene_blink.h --context 1\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"nodeId\": \"node-d601-vm-hwpod-qemu\",\n  \"intent\": \"workspace.rg\",\n  \"operationId\": \"hwpod_plan_25f66824-9cd2-4d0e-8d0a-47bcb2a34713\",\n  \"httpStatus\": 200,\n  \"results\": [\n    {\n      \"opId\": \"op_01_workspace_rg\",\n      \"op\": \"workspace.rg\",\n      \"ok\": true,\n      \"status\": \"completed\",\n      \"output\": {\n        \"path\": \"/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32/src/arm_2d_scene_binocular.c\",\n        \"pattern\": \"spin_zoom_widget_on_frame_start_xy|spin_zoom_widget_on_frame_complete|spin_zoom_widget_show|LeftEye|RightEye|tEyeBallRegion|arm_2d_align_centre_open|tLeftPivot|tRi\n... clipped ...",
+        "normalizedCommand": "hwpod workspace rg 'spin_zoom_widget_on_frame_start_xy|spin_zoom_widget_on_frame_complete|spin_zoom_widget_show|LeftEye|RightEye|tEyeBallRegion|arm_2d_align_centre_open|tLeftPivot|tRightPivot' src/arm_2d_scene_binocular.c src/arm_2d_scene_blink.h --context 1 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"nodeId\": \"node-d601-vm-hwpod-qemu\", \"intent\": \"workspace.rg\", \"operationId\": \"hwpod_plan_25f66824-9cd2-4d0e-8d0a-47bcb2a34713\", \"httpStatus\": 200, \"results\": [ { \"opId\": \"op_01_workspace_rg\", \"op\": \"workspace.rg\", \"ok\": true, \"status\": \"completed\", \"output\": { \"path\": \"/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32/src/arm_2d_scene_binocular.c\", \"pattern\": \"spin_zoom_widget_on_frame_start_xy|spin_zoom_widget_on_frame_complete|spin_zoom_widget_show|LeftEye|RightEye|tEyeBallRegion|arm_2d_align_centre_open|tLeftPivot|tRightPivot\", \"scannedFiles\": 1, \"skippedFiles\": 0, \"skippedDirectories\n... clipped ...",
+        "bodyPreview": "hwpod workspace rg 'spin_zoom_widget_on_frame_start_xy|spin_zoom_widget_on_frame_complete|spin_zoom_widget_show|LeftEye|RightEye|tEyeBallRegion|arm_2d_align_centre_open|tLeftPivot|tRightPivot' src/arm_2d_scene_binocular.c src/arm_2d_scene_blink.h --context 1\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"nodeId\": \"node-d601-vm-hwpod-qemu\",\n  \"intent\": \"workspace.rg\",\n  \"operationId\": \"hwpod_plan_25f66824-9cd2-4d0e-8d0a-47bcb2a34713\",\n  \"httpStatus\": 200,\n  \"results\": [\n    {\n      \"opId\": \"op_01_workspace_rg\",\n      \"op\": \"workspace.rg\",\n      \"ok\": true,\n      \"status\": \"completed\",\n      \"output\": {\n        \"path\": \"/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32/src/arm_2d_scene_binocular.c\",\n        \"pattern\": \"spin_zoom_widget_on_frame_start_xy|spin_zoom_widget_on_frame_complete|spin_zoom_widget_show|LeftEye|RightEye|tEyeBallRegion|arm_2d_align_centre_open|tLeftPivot|tRightPivot\",\n        \"scannedFiles\": 1,\n        \"skippedFiles\": 0,\n        \"skippedDirectories\": 0,\n        \"matchCount\": 49,\n        \"truncated\": false,\n        \"matches\": [\n          {\n            \"pa\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13234,
+        "rowId": "tool:exec-cfdb117d-4a02-40ac-bd39-d3fc52570159",
+        "header": "06:41:11",
+        "command": "hwpod workspace ls build\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.ls\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.ls\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_1793a165-4290-458b-b12f-596cf0f4710a\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n   \n... clipped ...",
+        "normalizedCommand": "hwpod workspace ls build output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.ls\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"workspace.ls\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_1793a165-4290-458b-b12f-596cf0f4710a\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \"api\", \"baseUrl\": \"http://152.53.229.148:6681\", \"source\": \"runtime-env\",\n... clipped ...",
+        "bodyPreview": "hwpod workspace ls build\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.ls\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.ls\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_1793a165-4290-458b-b12f-596cf0f4710a\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\": \"api\",\n    \"baseUrl\": \"http://152.53.229.148:6681\",\n    \"source\": \"runtime-env\",\n    \"sourceName\": \"HWLAB_RUNTIME_API_URL\",\n    \"e\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13239,
+        "rowId": "tool:exec-2477ba45-3841-406f-bf87-adc6ae0f4ece",
+        "header": "06:41:32",
+        "command": "hwpod workspace rg 'spin_zoom_widget_show' src/arm_2d_scene_binocular.c --context 1 --max-matches 10 && hwpod workspace rg 'spin_zoom_widget_on_frame_start_xy|spin_zoom_widget_on_frame_complete' src/arm_2d_scene_binocular.c --context 0 --max-matches 10 && hwpod workspace rg 'arm_2d_region_t tRightEyeBallRegion|tEyeBallRegion' src/arm_2d_scene_binocular.c --context 2 --max-matches 10\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\"\n... clipped ...",
+        "normalizedCommand": "hwpod workspace rg 'spin_zoom_widget_show' src/arm_2d_scene_binocular.c --context 1 --max-matches 10 && hwpod workspace rg 'spin_zoom_widget_on_frame_start_xy|spin_zoom_widget_on_frame_complete' src/arm_2d_scene_binocular.c --context 0 --max-matches 10 && hwpod workspace rg 'arm_2d_region_t tRightEyeBallRegion|tEyeBallRegion' src/arm_2d_scene_binocular.c --context 2 --max-matches 10 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"pl\n... clipped ...",
+        "bodyPreview": "hwpod workspace rg 'spin_zoom_widget_show' src/arm_2d_scene_binocular.c --context 1 --max-matches 10 && hwpod workspace rg 'spin_zoom_widget_on_frame_start_xy|spin_zoom_widget_on_frame_complete' src/arm_2d_scene_binocular.c --context 0 --max-matches 10 && hwpod workspace rg 'arm_2d_region_t tRightEyeBallRegion|tEyeBallRegion' src/arm_2d_scene_binocular.c --context 2 --max-matches 10\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_1e8e0eea-d22b-4077-8851-5abbf75e9b82\",\n    \"source\": {\n      \"compiler\": \"hwpod-compi\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13181,
+        "rowId": "tool:exec-80a4213c-8185-4a06-8758-9180cf65c08c",
+        "header": "06:36:26",
+        "command": "hwpod workspace rg 'spin_zoom_widget_on_load|spin_zoom_widget_on_depose|spin_zoom_widget_init|spin_zoom_widget_show|arm_2d_scene_blink_init' src/arm_2d_scene_binocular.c --context 10\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_e8af72ee-ac99-4a87-b2b7-e2d72e317454\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler\n... clipped ...",
+        "normalizedCommand": "hwpod workspace rg 'spin_zoom_widget_on_load|spin_zoom_widget_on_depose|spin_zoom_widget_init|spin_zoom_widget_show|arm_2d_scene_blink_init' src/arm_2d_scene_binocular.c --context 10 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_e8af72ee-ac99-4a87-b2b7-e2d72e317454\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\" } }, \"rou\n... clipped ...",
+        "bodyPreview": "hwpod workspace rg 'spin_zoom_widget_on_load|spin_zoom_widget_on_depose|spin_zoom_widget_init|spin_zoom_widget_show|arm_2d_scene_blink_init' src/arm_2d_scene_binocular.c --context 10\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_e8af72ee-ac99-4a87-b2b7-e2d72e317454\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runt\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13184,
+        "rowId": "tool:exec-3128a477-a88d-4274-8531-ecf20bf409ad",
+        "header": "06:36:36",
+        "command": "hwpod workspace rg 'depose|tCFG|EYE_SIZE_RATIO|eyelidScale|ptTile' src/arm_2d_scene_binocular.c --context 4\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_16ef726e-7683-4306-a783-21ab3b13934f\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"spe\n... clipped ...",
+        "normalizedCommand": "hwpod workspace rg 'depose|tCFG|EYE_SIZE_RATIO|eyelidScale|ptTile' src/arm_2d_scene_binocular.c --context 4 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_16ef726e-7683-4306-a783-21ab3b13934f\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\":\n... clipped ...",
+        "bodyPreview": "hwpod workspace rg 'depose|tCFG|EYE_SIZE_RATIO|eyelidScale|ptTile' src/arm_2d_scene_binocular.c --context 4\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_16ef726e-7683-4306-a783-21ab3b13934f\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\": \"api\",\n    \"baseUrl\": \"http://152.53.229.148:66\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13192,
+        "rowId": "tool:exec-864f4ea7-3a6c-4a25-a0cd-1d91801b0fff",
+        "header": "06:37:04",
+        "command": "hwpod workspace cat src/arm_2d_scene_binocular.c --start-line 130 --end-line 175 && hwpod workspace cat src/arm_2d_scene_binocular.c --start-line 355 --end-line 450 && hwpod workspace cat src/arm_2d_scene_binocular.c --start-line 525 --end-line 655\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"nodeId\": \"node-d601-vm-hwpod-qemu\",\n  \"intent\": \"workspace.cat\",\n  \"operationId\": \"hwpod_plan_cd546c03-9e7a-4ceb-bc17-bffc053c4420\",\n  \"httpStatus\": 200,\n  \"results\": [\n    {\n      \"opId\": \"op_01_workspace_cat\",\n      \"op\": \"workspace.cat\",\n      \"ok\": true,\n      \"status\": \"completed\",\n      \"output\": {\n        \"stdout\": \"\",\n        \"sizeBytes\": 22394\n      },\n      \"commands\": []\n    }\n  ],\n  \"resultCount\": 1,\n  \"extractedDiagnostics\": [],\n  \"outputDisclosure\": {\n    \"maxInlineBytes\": 10240,\n    \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\",\n    \"fullPayloadDump\": {\n      \"path\": \"/r\n... clipped ...",
+        "normalizedCommand": "hwpod workspace cat src/arm_2d_scene_binocular.c --start-line 130 --end-line 175 && hwpod workspace cat src/arm_2d_scene_binocular.c --start-line 355 --end-line 450 && hwpod workspace cat src/arm_2d_scene_binocular.c --start-line 525 --end-line 655 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"nodeId\": \"node-d601-vm-hwpod-qemu\", \"intent\": \"workspace.cat\", \"operationId\": \"hwpod_plan_cd546c03-9e7a-4ceb-bc17-bffc053c4420\", \"httpStatus\": 200, \"results\": [ { \"opId\": \"op_01_workspace_cat\", \"op\": \"workspace.cat\", \"ok\": true, \"status\": \"completed\", \"output\": { \"stdout\": \"\", \"sizeBytes\": 22394 }, \"commands\": [] } ], \"resultCount\": 1, \"extractedDiagnostics\": [], \"outputDisclosure\": { \"maxInlineBytes\": 10240, \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\", \"fullPayloadDump\": { \"path\": \"/root/agentrun-v02/.state/output-dumps/2026-07-28T06-36-53-836Z-3807932-076b315e.json\", \"bytes\": 25470, \"sha256\"\n... clipped ...",
+        "bodyPreview": "hwpod workspace cat src/arm_2d_scene_binocular.c --start-line 130 --end-line 175 && hwpod workspace cat src/arm_2d_scene_binocular.c --start-line 355 --end-line 450 && hwpod workspace cat src/arm_2d_scene_binocular.c --start-line 525 --end-line 655\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"nodeId\": \"node-d601-vm-hwpod-qemu\",\n  \"intent\": \"workspace.cat\",\n  \"operationId\": \"hwpod_plan_cd546c03-9e7a-4ceb-bc17-bffc053c4420\",\n  \"httpStatus\": 200,\n  \"results\": [\n    {\n      \"opId\": \"op_01_workspace_cat\",\n      \"op\": \"workspace.cat\",\n      \"ok\": true,\n      \"status\": \"completed\",\n      \"output\": {\n        \"stdout\": \"\",\n        \"sizeBytes\": 22394\n      },\n      \"commands\": []\n    }\n  ],\n  \"resultCount\": 1,\n  \"extractedDiagnostics\": [],\n  \"outputDisclosure\": {\n    \"maxInlineBytes\": 10240,\n    \"configRef\": \"config/agentrun.yaml#nativeDevelopment.manager.runner.output\",\n    \"fullPayloadDump\": {\n      \"path\": \"/root/agentrun-v02/.state/output-dumps/2026-07-28T06-36-53-836Z-3807932-076b315e.json\",\n      \"bytes\": 25470,\n      \"sha256\": \"42c31d901321c249873fba62f6855b6ce52d3c7cda888b7cb405af4a318faea7\",\n      \"t\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13196,
+        "rowId": "tool:exec-eb37cc67-0918-4ec7-a71c-b540aa074824",
+        "header": "06:37:31",
+        "command": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: src/arm_2d_scene_blink.h\n@@\n-    struct {\n-        spin_zoom_widget_t tSocket;\n-        spin_zoom_widget_t tEyeBall;\n-    } Eye;\n+    struct {\n+        spin_zoom_widget_t tSocket;\n+        spin_zoom_widget_t tEyeBall;\n+    } LeftEye, RightEye;\n*** Update File: src/arm_2d_scene_binocular.c\n@@\n-    spin_zoom_widget_on_load(&this.Eye.tSocket);\n-    spin_zoom_widget_on_load(&this.Eye.tEyeBall);\n+    spin_zoom_widget_on_load(&this.LeftEye.tSocket);\n+    spin_zoom_widget_on_load(&this.LeftEye.tEyeBall);\n+    spin_zoom_widget_on_load(&this.RightEye.tSocket);\n+    spin_zoom_widget_on_load(&this.RightEye.tEyeBall);\n@@\n-    spin_zoom_widget_depose(&this.Eye.tSocket);\n-    spin_zoom_widget_depose(&this.Eye.tEyeBall);\n+    spin_zoom_widget_depose(&this.LeftEye.tSocket);\n+    spin_zoom_widget_depose(&this.LeftEye.tEyeBall);\n+    spin_zoom_widget_depose(&this.RightEye.tSocket);\n+    spin_zoom_widget_depose(&this.RightEye.t\n... clipped ...",
+        "normalizedCommand": "hwpod workspace apply-patch --patch-content '*** Begin Patch *** Update File: src/arm_2d_scene_blink.h @@ - struct { - spin_zoom_widget_t tSocket; - spin_zoom_widget_t tEyeBall; - } Eye; + struct { + spin_zoom_widget_t tSocket; + spin_zoom_widget_t tEyeBall; + } LeftEye, RightEye; *** Update File: src/arm_2d_scene_binocular.c @@ - spin_zoom_widget_on_load(&this.Eye.tSocket); - spin_zoom_widget_on_load(&this.Eye.tEyeBall); + spin_zoom_widget_on_load(&this.LeftEye.tSocket); + spin_zoom_widget_on_load(&this.LeftEye.tEyeBall); + spin_zoom_widget_on_load(&this.RightEye.tSocket); + spin_zoom_widget_on_load(&this.RightEye.tEyeBall); @@ - spin_zoom_widget_depose(&this.Eye.tSocket); - spin_zoom_widget_depose(&this.Eye.tEyeBall); + spin_zoom_widget_depose(&this.LeftEye.tSocket); + spin_zoom_widget_depose(&this.LeftEye.tEyeBall); + spin_zoom_widget_depose(&this.RightEye.tSocket); + spin_zoom_widget_depose(&this.RightEye.tEyeBall); @@ - spin_zoom_widget_on_frame_start_xy( &this.Eye.tSocket, + spin\n... clipped ...",
+        "bodyPreview": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: src/arm_2d_scene_blink.h\n@@\n-    struct {\n-        spin_zoom_widget_t tSocket;\n-        spin_zoom_widget_t tEyeBall;\n-    } Eye;\n+    struct {\n+        spin_zoom_widget_t tSocket;\n+        spin_zoom_widget_t tEyeBall;\n+    } LeftEye, RightEye;\n*** Update File: src/arm_2d_scene_binocular.c\n@@\n-    spin_zoom_widget_on_load(&this.Eye.tSocket);\n-    spin_zoom_widget_on_load(&this.Eye.tEyeBall);\n+    spin_zoom_widget_on_load(&this.LeftEye.tSocket);\n+    spin_zoom_widget_on_load(&this.LeftEye.tEyeBall);\n+    spin_zoom_widget_on_load(&this.RightEye.tSocket);\n+    spin_zoom_widget_on_load(&this.RightEye.tEyeBall);\n@@\n-    spin_zoom_widget_depose(&this.Eye.tSocket);\n-    spin_zoom_widget_depose(&this.Eye.tEyeBall);\n+    spin_zoom_widget_depose(&this.LeftEye.tSocket);\n+    spin_zoom_widget_depose(&this.LeftEye.tEyeBall);\n+    spin_zoom_widget_depose(&this.RightEye.tSocket);\n+    spin_zoom_widget_depose(&this.RightEye.tEyeBall);\n@@\n-    spin_zoom_widget_on_frame_start_xy( &this.Eye.tSocket, \n+    spin_zoom_widget_on_frame_start_xy( &this.LeftEye.tSocket, \n@@\n-    spin_zoom_widget_on_frame_start_xy( &this.Eye.tEyeBal\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13199,
+        "rowId": "tool:exec-5717b5b5-1be4-442c-a448-a5ea47a9f97a",
+        "header": "06:37:40",
+        "command": "hwpod workspace rg 'on_frame_start_xy|spin_zoom_widget_show|arm_2d_align_centre_open|tEyeBallRegion|tLeftPivot|tRightPivot' src/arm_2d_scene_binocular.c --context 4\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_3535498e-5d57-45ef-8dc1-2dd7bf24d908\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"spec\n... clipped ...",
+        "normalizedCommand": "hwpod workspace rg 'on_frame_start_xy|spin_zoom_widget_show|arm_2d_align_centre_open|tEyeBallRegion|tLeftPivot|tRightPivot' src/arm_2d_scene_binocular.c --context 4 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_3535498e-5d57-45ef-8dc1-2dd7bf24d908\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"\n... clipped ...",
+        "bodyPreview": "hwpod workspace rg 'on_frame_start_xy|spin_zoom_widget_show|arm_2d_align_centre_open|tEyeBallRegion|tLeftPivot|tRightPivot' src/arm_2d_scene_binocular.c --context 4\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_3535498e-5d57-45ef-8dc1-2dd7bf24d908\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n  \n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13202,
+        "rowId": "tool:exec-1018b174-eefd-45d3-b609-15bc558c1292",
+        "header": "06:37:50",
+        "command": "hwpod workspace rg 'this.LeftEye.tSocket|this.LeftEye.tEyeBall' src/arm_2d_scene_binocular.c --context 2\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_bb2627ac-9f6f-4578-ac77-30b36d7d8b44\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAu\n... clipped ...",
+        "normalizedCommand": "hwpod workspace rg 'this.LeftEye.tSocket|this.LeftEye.tEyeBall' src/arm_2d_scene_binocular.c --context 2 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_bb2627ac-9f6f-4578-ac77-30b36d7d8b44\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \n... clipped ...",
+        "bodyPreview": "hwpod workspace rg 'this.LeftEye.tSocket|this.LeftEye.tEyeBall' src/arm_2d_scene_binocular.c --context 2\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_bb2627ac-9f6f-4578-ac77-30b36d7d8b44\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\": \"api\",\n    \"baseUrl\": \"http://152.53.229.148:6681\"\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13205,
+        "rowId": "tool:exec-40395bf6-0833-4038-82dc-f972b95d145e",
+        "header": "06:37:59",
+        "command": "hwpod workspace rg 'spin_zoom_widget_on_frame_start_xy' src/arm_2d_scene_binocular.c --context 8\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_3ebc216a-1188-45bc-b4cb-7baafa7064cc\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\"\n... clipped ...",
+        "normalizedCommand": "hwpod workspace rg 'spin_zoom_widget_on_frame_start_xy' src/arm_2d_scene_binocular.c --context 8 output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.rg\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"--intent\", \"workspace.rg\", \"--args\", \"<json>\" ], \"exitCode\": 0, \"action\": \"hwpod-compiler.compile\", \"contractVersion\": \"hwpod-node-ops-v1\", \"planId\": \"hwpod_plan_3ebc216a-1188-45bc-b4cb-7baafa7064cc\", \"source\": { \"compiler\": \"hwpod-compiler-cli\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\" } }, \"route\": { \"method\": \"POST\", \"path\": \"/v1/hwpod-node-ops\" }, \"runtimeEndpoint\": { \"kind\": \n... clipped ...",
+        "bodyPreview": "hwpod workspace rg 'spin_zoom_widget_on_frame_start_xy' src/arm_2d_scene_binocular.c --context 8\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.rg\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.rg\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compiler.compile\",\n    \"contractVersion\": \"hwpod-node-ops-v1\",\n    \"planId\": \"hwpod_plan_3ebc216a-1188-45bc-b4cb-7baafa7064cc\",\n    \"source\": {\n      \"compiler\": \"hwpod-compiler-cli\",\n      \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n      \"specAuthority\": \"yaml-first-builtin\"\n    }\n  },\n  \"route\": {\n    \"method\": \"POST\",\n    \"path\": \"/v1/hwpod-node-ops\"\n  },\n  \"runtimeEndpoint\": {\n    \"kind\": \"api\",\n    \"baseUrl\": \"http://152.53.229.148:6681\",\n    \"s\n... clipped ...",
+        "exitCode": 0
+      },
+      {
+        "source": "trace-row",
+        "seq": 13208,
+        "rowId": "tool:exec-1505cf25-f135-4de8-bb45-466170ff1c34",
+        "header": "06:38:22",
+        "command": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: src/arm_2d_scene_binocular.c\n@@\n-    spin_zoom_widget_on_frame_start_xy( &this.LeftEye.tSocket, \n+    float eyelidScale = (float)this.Blink.iEyelidOffset * EYE_SIZE_RATIO / 100.0f;\n+    spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tSocket, 0, EYE_SIZE_RATIO, eyelidScale);\n@@\n-    spin_zoom_widget_on_frame_start_xy( &this.LeftEye.tEyeBall, \n+    spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tEyeBall, 0, EYE_SIZE_RATIO, eyelidScale);\n*** End Patch'\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.apply-patch\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"c\n... clipped ...",
+        "normalizedCommand": "hwpod workspace apply-patch --patch-content '*** Begin Patch *** Update File: src/arm_2d_scene_binocular.c @@ - spin_zoom_widget_on_frame_start_xy( &this.LeftEye.tSocket, + float eyelidScale = (float)this.Blink.iEyelidOffset * EYE_SIZE_RATIO / 100.0f; + spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tSocket, 0, EYE_SIZE_RATIO, eyelidScale); @@ - spin_zoom_widget_on_frame_start_xy( &this.LeftEye.tEyeBall, + spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tEyeBall, 0, EYE_SIZE_RATIO, eyelidScale); *** End Patch' output: { \"ok\": true, \"action\": \"hwpod-cli.invoke\", \"status\": \"completed\", \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\", \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\", \"specAuthority\": \"yaml-first-builtin\", \"intent\": \"workspace.apply-patch\", \"contractVersion\": \"hwpod-node-ops-v1\", \"compilerInvocation\": { \"compiler\": \"hwpod-compiler-cli\", \"mode\": \"in-process\", \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\", \"argv\": [ \"compile\", \"--hwpod-id\", \"d601-vm-vexpress-a9-qemu-gui\", \"-\n... clipped ...",
+        "bodyPreview": "hwpod workspace apply-patch --patch-content '*** Begin Patch\n*** Update File: src/arm_2d_scene_binocular.c\n@@\n-    spin_zoom_widget_on_frame_start_xy( &this.LeftEye.tSocket, \n+    float eyelidScale = (float)this.Blink.iEyelidOffset * EYE_SIZE_RATIO / 100.0f;\n+    spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tSocket, 0, EYE_SIZE_RATIO, eyelidScale);\n@@\n-    spin_zoom_widget_on_frame_start_xy( &this.LeftEye.tEyeBall, \n+    spin_zoom_widget_on_frame_start_xy(&this.LeftEye.tEyeBall, 0, EYE_SIZE_RATIO, eyelidScale);\n*** End Patch'\noutput:\n{\n  \"ok\": true,\n  \"action\": \"hwpod-cli.invoke\",\n  \"status\": \"completed\",\n  \"specPath\": \"hwpod://d601-vm-vexpress-a9-qemu-gui\",\n  \"hwpodId\": \"d601-vm-vexpress-a9-qemu-gui\",\n  \"specAuthority\": \"yaml-first-builtin\",\n  \"intent\": \"workspace.apply-patch\",\n  \"contractVersion\": \"hwpod-node-ops-v1\",\n  \"compilerInvocation\": {\n    \"compiler\": \"hwpod-compiler-cli\",\n    \"mode\": \"in-process\",\n    \"entrypoint\": \"tools/src/hwpod-harness-lib.ts\",\n    \"argv\": [\n      \"compile\",\n      \"--hwpod-id\",\n      \"d601-vm-vexpress-a9-qemu-gui\",\n      \"--intent\",\n      \"workspace.apply-patch\",\n      \"--args\",\n      \"<json>\"\n    ],\n    \"exitCode\": 0,\n    \"action\": \"hwpod-compil\n... clipped ...",
+        "exitCode": 0
+      }
+    ]
+  },
+  "observedAt": "2026-07-28T06:44:40.062Z",
+  "validation": {
+    "plan": {
+      "mode": "custom-runtime",
+      "steps": [
+        {
+          "args": {},
+          "kind": "build",
+          "stage": "post-agent-validation",
+          "actionId": "build",
+          "expectedOp": "debug.build"
+        },
+        {
+          "args": {},
+          "kind": "download",
+          "stage": "post-agent-validation",
+          "actionId": "download",
+          "expectedOp": "debug.download"
+        },
+        {
+          "args": {},
+          "kind": "displayCapture",
+          "stage": "post-agent-validation",
+          "actionId": "display-capture",
+          "expectedOp": "display.capture"
+        }
+      ],
+      "source": "case-definition.flow",
+      "compileOnly": false,
+      "contractVersion": "hwpod-case-validation-plan-v1"
+    },
+    "results": [
+      {
+        "result": {
+          "ok": true,
+          "op": "debug.build",
+          "opId": "op_01_debug_build",
+          "output": {
+            "ok": true,
+            "op": "debug.build",
+            "cwd": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32",
+            "stderr": "",
+            "stdout": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n 129699\t    428\t 389152\t 519279\t  7ec6f\t/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32/build/qemu-gui.elf\n",
+            "command": [
+              "scripts/build"
+            ],
+            "exitCode": 0,
+            "elapsedMs": 33393,
+            "sizeBytes": 169744,
+            "artifactPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32/build/qemu-gui.elf",
+            "bindingSource": "hwpod-node-ops.command"
+          },
+          "status": "completed"
+        },
+        "operation": {
+          "ok": true,
+          "op": "debug.build",
+          "kind": "build",
+          "opId": "op_01_debug_build",
+          "stage": "post-agent-validation",
+          "status": "completed",
+          "actionId": "build",
+          "expected": {
+            "op": "debug.build",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+            "actionId": "build",
+            "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32"
+          },
+          "observed": {
+            "op": "debug.build",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+            "actionId": "op_01_debug_build",
+            "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32"
+          },
+          "topology": {
+            "ok": true
+          },
+          "authority": "hwpod-service",
+          "contractVersion": "hwpod-operation-result-v0.3"
+        }
+      },
+      {
+        "result": {
+          "ok": true,
+          "op": "debug.download",
+          "opId": "op_01_debug_download",
+          "output": {
+            "ok": true,
+            "op": "debug.download",
+            "cwd": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32",
+            "stderr": "",
+            "stdout": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n 129699\t    428\t 389152\t 519279\t  7ec6f\t/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32/build/qemu-gui.elf\n{\"ok\":true,\"pid\":3400126,\"qmpSocket\":\".state/qemu/qmp.sock\",\"uart\":\"/dev/pts/27\"}\n",
+            "command": [
+              "scripts/download"
+            ],
+            "exitCode": 0,
+            "elapsedMs": 40373,
+            "bindingSource": "hwpod-node-ops.command"
+          },
+          "status": "completed"
+        },
+        "operation": {
+          "ok": true,
+          "op": "debug.download",
+          "kind": "download",
+          "opId": "op_01_debug_download",
+          "stage": "post-agent-validation",
+          "status": "completed",
+          "actionId": "download",
+          "expected": {
+            "op": "debug.download",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+            "actionId": "download",
+            "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32"
+          },
+          "observed": {
+            "op": "debug.download",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+            "actionId": "op_01_debug_download",
+            "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32"
+          },
+          "topology": {
+            "ok": true
+          },
+          "authority": "hwpod-service",
+          "contractVersion": "hwpod-operation-result-v0.3"
+        }
+      },
+      {
+        "result": {
+          "ok": true,
+          "op": "display.capture",
+          "opId": "op_01_display_capture",
+          "output": {
+            "media": {
+              "video": {
+                "bytes": 47137,
+                "width": 640,
+                "height": 480,
+                "sha256": "25d719df042633ab0d0da2e9d984cb9c488921539dee8084141a13410c73b6eb",
+                "endedAt": "2026-07-28T06:44:37.053Z",
+                "fileName": "capture-1785221057995-f6977eb968d03c910e059870-video.webm",
+                "mimeType": "video/webm",
+                "createdAt": "2026-07-28T06:44:36.939Z",
+                "frameRate": 24,
+                "startedAt": "2026-07-28T06:44:17.996Z",
+                "artifactId": "capture-1785221057995-f6977eb968d03c910e059870-video",
+                "durationMs": 10000,
+                "artifactRef": "hwpod-media://capture-1785221057995-f6977eb968d03c910e059870-video",
+                "downloadUrl": "https://lab-dev-hwpod.hwpod.com/v1/hwpod/artifacts/capture-1785221057995-f6977eb968d03c910e059870-video"
+              },
+              "rawFrames": {
+                "path": ".state/display-captures/capture-1785221057995-f6977eb968d03c910e059870/frames",
+                "frameCount": 240,
+                "manifestPath": ".state/display-captures/capture-1785221057995-f6977eb968d03c910e059870/raw-frames-manifest.json",
+                "manifestSha256": "56d00fbba6b27fed336a8a9d13d1a0ea446072cc16858f33d228ab2dd963b820"
+              },
+              "screenshot": {
+                "bytes": 8384,
+                "width": 640,
+                "height": 480,
+                "sha256": "e310e881b1b838bb451e704af370a2f0ff87cd84bf648ffde457118add2e4625",
+                "fileName": "capture-1785221057995-f6977eb968d03c910e059870-screenshot.png",
+                "mimeType": "image/png",
+                "createdAt": "2026-07-28T06:44:35.901Z",
+                "artifactId": "capture-1785221057995-f6977eb968d03c910e059870-screenshot",
+                "capturedAt": "2026-07-28T06:44:37.053Z",
+                "artifactRef": "hwpod-media://capture-1785221057995-f6977eb968d03c910e059870-screenshot",
+                "downloadUrl": "https://lab-dev-hwpod.hwpod.com/v1/hwpod/artifacts/capture-1785221057995-f6977eb968d03c910e059870-screenshot"
+              }
+            },
+            "source": {
+              "machine": "vexpress-a9",
+              "emulator": "qemu-system-arm",
+              "captureMethod": "qmp-screendump-ppm",
+              "displayController": "pl111"
+            },
+            "status": "completed",
+            "captureId": "capture-1785221057995-f6977eb968d03c910e059870"
+          },
+          "status": "completed"
+        },
+        "operation": {
+          "ok": true,
+          "op": "display.capture",
+          "kind": "displayCapture",
+          "opId": "op_01_display_capture",
+          "stage": "post-agent-validation",
+          "status": "completed",
+          "actionId": "display-capture",
+          "expected": {
+            "op": "display.capture",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+            "actionId": "display-capture"
+          },
+          "observed": {
+            "op": "display.capture",
+            "nodeId": "node-d601-vm-hwpod-qemu",
+            "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+            "actionId": "op_01_display_capture",
+            "workspacePath": ""
+          },
+          "topology": {
+            "ok": true
+          },
+          "authority": "hwpod-service",
+          "contractVersion": "hwpod-operation-result-v0.3"
+        }
+      }
+    ],
+    "archivePath": "validation-observations.json"
+  },
+  "compileOnly": false,
+  "traceLookup": {
+    "source": "hwlab-cli.client.agent",
+    "baseUrl": "http://127.0.0.1:6677",
+    "traceId": "trc_harnessrl_aa0476b1716de4aa9205fa1f",
+    "commands": {
+      "trace": "hwlab-cli client agent trace trc_harnessrl_aa0476b1716de4aa9205fa1f --render web",
+      "result": "hwlab-cli client agent result trc_harnessrl_aa0476b1716de4aa9205fa1f",
+      "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_aa0476b1716de4aa9205fa1f",
+      "traceFull": "hwlab-cli client agent trace trc_harnessrl_aa0476b1716de4aa9205fa1f --render web --full",
+      "sessionStatus": "hwlab-cli client agent session status ses_800d620a-85a9-4ca0-8d41-4f497d79d664"
+    },
+    "strategy": "id_plus_existing_cli",
+    "threadId": "",
+    "sessionId": "ses_800d620a-85a9-4ca0-8d41-4f497d79d664",
+    "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes_run-arm2d-binocular-from-single-l1-20260728-04"
+  },
+  "autoEvaluation": false,
+  "postValidation": {
+    "source": "case-run-runner-post-agent-compile-check",
+    "boundary": "runner-post-agent-validation",
+    "returnCode": 0
+  },
+  "contractVersion": "hwpod-case-run-evidence-v1"
+}

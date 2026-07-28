@@ -1,0 +1,722 @@
+{
+  "agent": {
+    "polls": 229,
+    "result": {
+      "bytes": 17731,
+      "clipped": true,
+      "preview": "{\"ok\":true,\"traceId\":\"trc_harnessrl_aa0476b1716de4aa9205fa1f\",\"sessionId\":\"ses_800d620a-85a9-4ca0-8d41-4f497d79d664\",\"conversationId\":\"cnv_case_d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes_run-arm2d-binocular-from-single-l1-20260728-04\",\"ownerUserId\":\"usr_native\",\"status\":\"completed\",\"message\":\"# HWPOD CaseRun 代码代理任务\\n\\n案例ID: d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes\\n运行ID: run_arm2d_binocular_from_single_l1_20260728_04\\n主体仓库本地路径: /home/ubuntu/workspace/hwpod_qemu_gui_workspace\\n主体提交ID: 6daaa6eb8540469eae69aef3714a52d3d2ab0196\\n主体隔离工作区路径: /home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32\\nhwpodId: d601-vm-vexpress-a9-qemu-gui\\nHWPOD 环境默认: HWPOD_ID=d601-vm-vexpress-a9-qemu-gui；HWPOD_WORKSPACE_PATH=/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32\\nhwpodWorkspaceArgs（仅用于显式诊断，通常不要传）: --hwpod-id d601-vm-vexpress-a9-qemu-gui --workspace-path '/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32'\\n验证模式: custom-runtime；Agent final 与 CaseRun 后置 HWPOD validation 独立记录。\\nCaseRun 后置验证动作: build:build, download:download, display-capture:displayCapture\\n\\n## 运行时装配\\nAgentRun 通过 ResourceBundleRef kind=gitbundle 装配 HWLAB 运行时资源。工具命令从 bundle 暴露；skill 的真实位置以 AgentRun 初始资源 manifest 给出的绝对路径为准，不把 subject worktree 下的 `.agents/skills` 当作固定路径。CaseRun 不再发送临时 workspaceFiles 或 seed-file 载荷。\\n\\n## HWPOD 运行时\\n通过运行时服务按 ID 使用 HWPOD，不要求 runner 本地存在 `.hwlab/hwpod-spec.yaml`。\\n\\n## Harness 已物化资源\\n- arm-2d-main: third_party/Arm-2D-main | https://github.com/ARM-software/Arm-2D.git | ref=main | commit=3dd16b28b2d8c920e43736d644c8e5876180eb50 | reused=false\\nhwpod/hwpod-ctl 默认读取已注入的 HWPOD_ID 和 HWPOD_WORKSPACE_PATH；不要在每条命令中重复长参数。显式传入时必须与环境作用域精确一致。\\n本任务的标准冒烟步骤：\\n- `hwpod-ctl spec validate`\\n- `hwpod inspect`\\n- 工作区读取、搜索和编辑：`hwpod workspace ...`\\n- 编译检查：`hwpod build`\\n\\n## 任务\\n请在 D601-VM-HOST 的隔离 Linux subject worktree 中，把当前已通过的 Arm-2D 官方 arm_2d_scene_blink 单眼示例改造成双目动画。当前基线已经真实使用官方 Eyeball.c、LeftEye.c、spin_zoom_widget.c、随机注视和眨眼逻辑，并由 VExpress-A9 PL111 双缓冲与 VBlank 同步呈现。\\n\\n必须复用官方眼球位图、眼眶遮罩、spin_zoom_widget 变换和 scene blink 的状态逻辑，建立两个彼此独立的 eye/widget 实例；双眼在 640x480 画面中左右对称、大小一致，瞳孔注视方向同步，眨眼时序同步。先用 `hwpod cmd -- mkdir -p src` 和 `hwpod cmd -- cp <官方 arm_2d_scene_blink.c 路径> src/arm_2d_scene_binocular.c` 建立项目本地副本；同时把官方 `arm_2d_scene_blink.h` 复制到 `src/arm_2d_scene_blink.h`，在本地头文件中把原有 `Eye` 成员改成两个结构相同但内存独立的 `LeftEye`、`RightEye`。不要通过 cat 全文或 AgentRun output dump 搬运源码。随后只用小于 4 KiB 的定点 `hwpod workspace rg` 上下文读取，并用 `hwpod workspace apply-patch` 在本地副本中完成双实例改造。不得用自行绘制的圆形、椭圆、矩形或另一套动画替代官方资产与控件。允许窄范围修改 scripts/build 和 scripts/rebuild 的源文件清单，使其编译项目本地 scene 而不是上游单眼 scene；除此之外不得改变编译选项、目标或 Harness 行为。不得修改 HWPOD spec、QEMU helper、PL111 驱动、下载/复位/采集脚本或第三方上游文件来伪造结果。\\n\\n上一轮失败实现只初始化了名为 `s_SecondEye` 的对象，却在 draw 中仍只绘制主眼，因此真实视频始终只有一只眼。不要照搬这种实现，也不要通过 `s_SecondEye = this` 复制包含内部状态的整个 scene/widget 结构。必须分别初始化左右眼的 socket 与 eyeball widget；每帧对左右两套 widget 都执行 frame-start 和 frame-complete；draw 中必须建立两个明确分离且左右对称的 pivot/region，并分别绘制左 socket、左 eyeball、右 socket、右 eyeball。共享注视目标和眨眼进度可以由同一状态机产生，但两个实例的 widget 运行状态和绘制调用必须独立。\\n\\n请按以下已验证的最小结构一次完成，不要先提交半成品再靠宽搜索猜测：在 socket 配置块中用同一个只读 `tCFG` 分别调用 `spin_zoom_widget_init(&this.LeftEye.tSocket, &tCFG)` 和 `spin_zoom_widget_init(&this.RightEye.tSocket, &tCFG)`；在 eyeball 配置块中同理分别初始化两个 eyeball。load、depose、frame-complete 都各调用四个 widget。frame-start 必须是四条彼此完整、顺序执行的 `spin_zoom_widget_on_frame_start_xy(widget, 0, EYE_SIZE_RATIO, eyelidScale)`，不要把注视偏移误当成该函数的 angle/scale 参数，也不要嵌套调用。draw 先声明 `tLeftPivot`、`tRightPivot` 两个局部位置，X 以画面中心左右各偏移约 90 像素，Y 相同；再声明左右两个 eyeball region，分别以对应眼睛中心叠加同一个 `EyeBallMove.tOffset`。四次 `spin_zoom_widget_show` 的第二参数都必须是 `ptTile`，依次绘制左 socket、右 socket、左 eyeball、右 eyeball；第五参数为 255，禁止把 `__top_canvas`、mask tile 或含逗号的复合字面量误传到参数位。\\n\\n右眼 region 必须与左眼 region 一起完整保留在同一个 `arm_2d_align_centre_open(__top_canvas, EYEBALL.tRegion.tSize) { ... }` 词法作用域内，直到左右两次 eyeball 绘制全部结束后才关闭该作用域。右眼必须使用完整嵌套初始化：`arm_2d_region_t tRightEyeBallRegion = { .tLocation = { .iX = __centre_region.tLocation.iX "
+    },
+    "backend": "gpt-pika",
+    "baseUrl": "http://127.0.0.1:6677",
+    "traceId": "trc_harnessrl_aa0476b1716de4aa9205fa1f",
+    "accepted": {
+      "ok": true,
+      "reused": false,
+      "status": "running",
+      "traceId": "trc_harnessrl_aa0476b1716de4aa9205fa1f",
+      "accepted": true,
+      "sessionId": "ses_800d620a-85a9-4ca0-8d41-4f497d79d664",
+      "workflowId": "workbench-turn-trc_harnessrl_aa0476b1716de4aa9205fa1f",
+      "workflowRunId": "019fa76d-b237-7f1b-ad17-a4924515af59",
+      "orchestrationMode": "agentrun-native",
+      "resultSynthesized": false,
+      "terminalAuthority": "hwlab.event.v1"
+    },
+    "terminal": true,
+    "timedOut": false,
+    "projectId": "prj_hwpod_workbench",
+    "resultUrl": "http://127.0.0.1:6677/v1/agent/chat/result/trc_harnessrl_aa0476b1716de4aa9205fa1f",
+    "sessionId": "ses_800d620a-85a9-4ca0-8d41-4f497d79d664",
+    "timeoutMs": 3600000,
+    "lastPollAt": "2026-07-28T06:41:42.607Z",
+    "promptPath": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_from_single_l1_20260728_04/agent-prompt.md",
+    "stageStatus": "completed",
+    "traceLookup": {
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "source": "hwlab-cli.client.agent",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_aa0476b1716de4aa9205fa1f",
+      "commands": {
+        "trace": "hwlab-cli client agent trace trc_harnessrl_aa0476b1716de4aa9205fa1f --render web",
+        "result": "hwlab-cli client agent result trc_harnessrl_aa0476b1716de4aa9205fa1f",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_aa0476b1716de4aa9205fa1f",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_aa0476b1716de4aa9205fa1f --render web --full",
+        "sessionStatus": "hwlab-cli client agent session status ses_800d620a-85a9-4ca0-8d41-4f497d79d664"
+      },
+      "strategy": "id_plus_existing_cli",
+      "sessionId": "ses_800d620a-85a9-4ca0-8d41-4f497d79d664",
+      "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes_run-arm2d-binocular-from-single-l1-20260728-04"
+    },
+    "promptSha256": "54d4ec5313c9d10aca4648fcb19c68df23e26f5679b67e1b0205ab1218ba3483",
+    "traceCommand": "hwlab-cli client agent trace trc_harnessrl_aa0476b1716de4aa9205fa1f --render web",
+    "agentRunStatus": "completed",
+    "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes_run-arm2d-binocular-from-single-l1-20260728-04",
+    "inspectCommand": "hwlab-cli client agent inspect --trace-id trc_harnessrl_aa0476b1716de4aa9205fa1f",
+    "lastHttpStatus": 200,
+    "pollIntervalMs": 2000,
+    "sessionCommand": "hwlab-cli client agent session status ses_800d620a-85a9-4ca0-8d41-4f497d79d664",
+    "terminalStatus": "completed",
+    "nextPollCommand": "hwlab-cli client agent result trc_harnessrl_aa0476b1716de4aa9205fa1f",
+    "providerProfile": "gpt.pika",
+    "sessionResponse": {
+      "ok": true,
+      "status": "created",
+      "session": {
+        "mode": "agentrun-native",
+        "status": "idle",
+        "messages": [],
+        "createdAt": "2026-07-28T06:33:30.610Z",
+        "ownerRole": "user",
+        "projectId": "prj_hwpod_workbench",
+        "sessionId": "ses_800d620a-85a9-4ca0-8d41-4f497d79d664",
+        "updatedAt": "2026-07-28T06:33:30.610Z",
+        "ownerUserId": "usr_native",
+        "launchContext": null,
+        "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes_run-arm2d-binocular-from-single-l1-20260728-04",
+        "providerProfile": "gpt.pika"
+      },
+      "valuesRedacted": true,
+      "orchestrationMode": "agentrun-native",
+      "secretMaterialStored": false
+    },
+    "infrastructureBackend": "gpt-pika",
+    "resolvedBackendProfile": "gpt-pika",
+    "requestedProviderProfile": "gpt.pika"
+  },
+  "runId": "run_arm2d_binocular_from_single_l1_20260728_04",
+  "stage": "completed",
+  "apiUrl": "http://127.0.0.1:6681",
+  "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes",
+  "runDir": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_from_single_l1_20260728_04",
+  "caseDir": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_from_single_l1_20260728_04/case-authority/cases/d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes",
+  "subject": {
+    "setup": {
+      "nodeId": "node-d601-vm-hwpod-qemu",
+      "planId": "run_arm2d_binocular_from_single_l1_20260728_04:prepare:v1:subject-prepare",
+      "stderr": "Preparing worktree (detached HEAD 6daaa6e)",
+      "stdout": "HEAD is now at 6daaa6e feat: run official Arm-2D eyes scene\n6daaa6eb8540469eae69aef3714a52d3d2ab0196",
+      "exitCode": 0,
+      "operation": {
+        "ops": [
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_01_subject_commit",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_02_subject_worktree_add",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "cmd.run",
+            "opId": "op_03_subject_worktree_head",
+            "status": "completed"
+          },
+          {
+            "ok": true,
+            "op": "workspace.git-materialize",
+            "opId": "op_10_resource_arm-2d-main",
+            "status": "completed"
+          }
+        ],
+        "intent": "cmd.run",
+        "nodeId": "node-d601-vm-hwpod-qemu",
+        "planId": "run_arm2d_binocular_from_single_l1_20260728_04:prepare:v1:subject-prepare",
+        "hwpodId": "d601-vm-vexpress-a9-qemu-gui",
+        "contractVersion": "hwpod-node-ops-v1"
+      },
+      "resources": [
+        {
+          "id": "arm-2d-main",
+          "ref": "main",
+          "kind": "git",
+          "reused": false,
+          "gitHead": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+          "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+          "commitId": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+          "destination": "third_party/Arm-2D-main",
+          "materialized": true
+        }
+      ],
+      "httpStatus": 200
+    },
+    "subdir": "",
+    "commitId": "6daaa6eb8540469eae69aef3714a52d3d2ab0196",
+    "resources": [
+      {
+        "id": "arm-2d-main",
+        "ref": "main",
+        "kind": "git",
+        "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+        "commitId": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+        "destination": "third_party/Arm-2D-main"
+      }
+    ],
+    "worktreePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32",
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "workspacePath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace/.worktree/cr-2dbad690c531cd32",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    }
+  },
+  "caseFile": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_from_single_l1_20260728_04/case-authority/cases/d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes/case.json",
+  "caseRepo": "/root/hwlab-case-registry",
+  "specPath": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_from_single_l1_20260728_04/.hwlab/hwpod-spec.yaml",
+  "agentTask": {
+    "model": "gpt-5.6-luna",
+    "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中，把当前已通过的 Arm-2D 官方 arm_2d_scene_blink 单眼示例改造成双目动画。当前基线已经真实使用官方 Eyeball.c、LeftEye.c、spin_zoom_widget.c、随机注视和眨眼逻辑，并由 VExpress-A9 PL111 双缓冲与 VBlank 同步呈现。\n\n必须复用官方眼球位图、眼眶遮罩、spin_zoom_widget 变换和 scene blink 的状态逻辑，建立两个彼此独立的 eye/widget 实例；双眼在 640x480 画面中左右对称、大小一致，瞳孔注视方向同步，眨眼时序同步。先用 `hwpod cmd -- mkdir -p src` 和 `hwpod cmd -- cp <官方 arm_2d_scene_blink.c 路径> src/arm_2d_scene_binocular.c` 建立项目本地副本；同时把官方 `arm_2d_scene_blink.h` 复制到 `src/arm_2d_scene_blink.h`，在本地头文件中把原有 `Eye` 成员改成两个结构相同但内存独立的 `LeftEye`、`RightEye`。不要通过 cat 全文或 AgentRun output dump 搬运源码。随后只用小于 4 KiB 的定点 `hwpod workspace rg` 上下文读取，并用 `hwpod workspace apply-patch` 在本地副本中完成双实例改造。不得用自行绘制的圆形、椭圆、矩形或另一套动画替代官方资产与控件。允许窄范围修改 scripts/build 和 scripts/rebuild 的源文件清单，使其编译项目本地 scene 而不是上游单眼 scene；除此之外不得改变编译选项、目标或 Harness 行为。不得修改 HWPOD spec、QEMU helper、PL111 驱动、下载/复位/采集脚本或第三方上游文件来伪造结果。\n\n上一轮失败实现只初始化了名为 `s_SecondEye` 的对象，却在 draw 中仍只绘制主眼，因此真实视频始终只有一只眼。不要照搬这种实现，也不要通过 `s_SecondEye = this` 复制包含内部状态的整个 scene/widget 结构。必须分别初始化左右眼的 socket 与 eyeball widget；每帧对左右两套 widget 都执行 frame-start 和 frame-complete；draw 中必须建立两个明确分离且左右对称的 pivot/region，并分别绘制左 socket、左 eyeball、右 socket、右 eyeball。共享注视目标和眨眼进度可以由同一状态机产生，但两个实例的 widget 运行状态和绘制调用必须独立。\n\n请按以下已验证的最小结构一次完成，不要先提交半成品再靠宽搜索猜测：在 socket 配置块中用同一个只读 `tCFG` 分别调用 `spin_zoom_widget_init(&this.LeftEye.tSocket, &tCFG)` 和 `spin_zoom_widget_init(&this.RightEye.tSocket, &tCFG)`；在 eyeball 配置块中同理分别初始化两个 eyeball。load、depose、frame-complete 都各调用四个 widget。frame-start 必须是四条彼此完整、顺序执行的 `spin_zoom_widget_on_frame_start_xy(widget, 0, EYE_SIZE_RATIO, eyelidScale)`，不要把注视偏移误当成该函数的 angle/scale 参数，也不要嵌套调用。draw 先声明 `tLeftPivot`、`tRightPivot` 两个局部位置，X 以画面中心左右各偏移约 90 像素，Y 相同；再声明左右两个 eyeball region，分别以对应眼睛中心叠加同一个 `EyeBallMove.tOffset`。四次 `spin_zoom_widget_show` 的第二参数都必须是 `ptTile`，依次绘制左 socket、右 socket、左 eyeball、右 eyeball；第五参数为 255，禁止把 `__top_canvas`、mask tile 或含逗号的复合字面量误传到参数位。\n\n右眼 region 必须与左眼 region 一起完整保留在同一个 `arm_2d_align_centre_open(__top_canvas, EYEBALL.tRegion.tSize) { ... }` 词法作用域内，直到左右两次 eyeball 绘制全部结束后才关闭该作用域。右眼必须使用完整嵌套初始化：`arm_2d_region_t tRightEyeBallRegion = { .tLocation = { .iX = __centre_region.tLocation.iX + 90 + this.EyeBallMove.tOffset.iX, .iY = __centre_region.tLocation.iY + this.EyeBallMove.tOffset.iY }, .tSize = EYEBALL.tRegion.tSize };`。禁止把 `.iX`、`.iY` 直接写成 `arm_2d_region_t` 顶层成员；禁止在第一个 align 作用域结束后继续引用 `__centre_region`。左右 `__arm_2d_hint_optimize_for_pfb__` 是同一 align 作用域内先后相邻的两个独立块，不得嵌套。结束前用四个小范围查询分别核对 init、frame-start/frame-complete、draw、load/depose，确认第二眼五阶段均有真实调用、draw 确实有四次 `spin_zoom_widget_show`，并定点读取整个 align 块确认右眼 region 没有跑出作用域。\n\n开发中先读取当前 main.c 和构建清单，不要重复读取超过 4 KiB 的输出，也不要访问 AgentRun output dump；使用上述复制、定点读取和 apply-patch 小回环。只允许同时存在一个 `hwpod build`：必须等待当前构建明确返回后才能根据诊断修改或再次构建，禁止在旧构建仍运行时并发启动第二次构建。完成最终补丁后执行一次 `hwpod build`，退出码为零才可结束。完成后说明两个独立实例的位置、共享注视/眨眼状态、四个绘制调用和实际 build 结果。CaseRun Harness 会在 Agent 结束后独立执行最终 build、download 和 10 秒 24 fps display.capture。",
+    "projectId": "prj_hwpod_workbench",
+    "timeoutMs": 3600000,
+    "workspace": "subjectWorktree",
+    "constraints": [
+      "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
+      "只能修改隔离 subject worktree，不得修改 case registry、HWLAB repo 或原 subject checkout",
+      "必须保留并复用官方 arm_2d_scene_blink、Eyeball、LeftEye 和 spin_zoom_widget，不得裸写图形替代",
+      "必须创建两个独立眼睛实例，位置左右对称，注视方向一致，眨眼时序同步",
+      "src/arm_2d_scene_blink.h 中必须删除旧的外层 Eye 成员，并在 user_scene_blink_t 的 ARM_PRIVATE 作用域直接声明 `struct { spin_zoom_widget_t tSocket; spin_zoom_widget_t tEyeBall; } LeftEye, RightEye;`；禁止形成 this.Eye.LeftEye 或 this.Eye.RightEye",
+      "禁止用整个 scene/widget 结构赋值复制第二眼；左右 widget 必须分别初始化并完整参与帧生命周期",
+      "draw 中必须以两个分离且左右对称的 pivot/region 分别绘制左右 socket 与 eyeball，共四次 spin_zoom_widget_show",
+      "tLeftPivot 和 tRightPivot 必须先从官方已声明且可见的 tPivot 复制，再分别对 iX 减 90 和加 90；严禁在 arm_2d_align_centre_open 作用域外引用 __centre_region",
+      "左 socket 和左 eyeball 只能传 tLeftPivot，右 socket 和右 eyeball 只能传 tRightPivot；不得继续把官方居中 tPivot 传给任一眼睛",
+      "tLeftEyeBallRegion 与 tRightEyeBallRegion 只能在 arm_2d_align_centre_open 作用域内从 __centre_region 分别构造；左右 __arm_2d_hint_optimize_for_pfb__ 必须是先左后右的两个独立顺序作用域，禁止互相嵌套",
+      "tRightEyeBallRegion 必须使用 `.tLocation = { .iX = ..., .iY = ... }` 的嵌套初始化；arm_2d_region_t 顶层禁止直接出现 `.iX` 或 `.iY`",
+      "包含左右 region 与左右 eyeball 绘制的同一个 arm_2d_align_centre_open 作用域只能在右 eyeball 的 spin_zoom_widget_show 之后关闭",
+      "左 eyeball 的 spin_zoom_widget_show 第三个参数必须是 &tLeftEyeBallRegion，右 eyeball 必须是 &tRightEyeBallRegion；双目源码中不得残留 &tEyeBallRegion",
+      "draw 的 pivot 必须是 arm_2d_location_t：左 X=画面中心-90、右 X=画面中心+90，Y 保持官方原值；两个 socket 都传 region=NULL 并分别传左/右 pivot；两个 eyeball region 都从 __centre_region 复制，X 分别减/加 90 后再叠加同一个 EyeBallMove 偏移，size 保持 EYEBALL 大小，并分别传对应 pivot",
+      "左右 eyeball 必须分别放在各自的 __arm_2d_hint_optimize_for_pfb__(leftRegion/rightRegion) 作用域内绘制；禁止把右眼绘制放在仅以左眼 region 优化的作用域内，否则 PFB 会裁掉右眼",
+      "左右 frame-start 必须写成彼此独立且完整的 spin_zoom_widget_on_frame_start_xy(widget, angle, scaleX, scaleY) 语句，不得嵌套或交错两个调用",
+      "spin_zoom_widget_show 固定使用五个参数且第二参数必须是 ptTile；左右 pivot/region 先声明为局部变量，禁止在宏参数中使用含逗号的复合字面量",
+      "完成最终补丁后必须实际执行 hwpod build；退出码非零时继续按编译错误修复，只有退出码为零才能结束 Agent 任务",
+      "禁止修改 third_party/Arm-2D-main 中的上游文件",
+      "允许用 hwpod cmd -- cp 把官方 scene 复制为项目本地初始副本；复制后所有文本修改必须使用 HWPOD workspace apply-patch",
+      "单次读取输出必须小于 4 KiB；禁止重复读取大文件全文或访问 AgentRun output dump",
+      "同一时刻只允许一个 hwpod build；必须等待当前构建终态后才能再次构建，禁止并发构建",
+      "允许仅修改 scripts/build 和 scripts/rebuild 的 scene 源文件清单以编译项目本地双目 scene；禁止改变其他编译选项、目标或 Harness 行为",
+      "禁止修改 hwpod-spec.yaml、scripts/download、scripts/reset、PL111 驱动、QEMU helper 或采集逻辑",
+      "project-local 文本修改使用 HWPOD workspace apply-patch，构建使用 HWPOD build",
+      "Agent final response 不能替代 Harness 独立 build、download 和 display.capture 证据",
+      "结果只记录 raw trace/evidence，autoEvaluation=false"
+    ],
+    "pollIntervalMs": 2000,
+    "providerProfile": "gpt.pika",
+    "reasoningEffort": "low"
+  },
+  "createdAt": "2026-07-28T06:32:34.651Z",
+  "updatedAt": "2026-07-28T06:44:40.327Z",
+  "agentTrace": {
+    "lookup": {
+      "note": "CaseRun records trace/session identity and reuses existing HWLAB Web-equivalent agent CLI for trace/result/inspect; it does not implement a separate trace query path.",
+      "source": "hwlab-cli.client.agent",
+      "baseUrl": "http://127.0.0.1:6677",
+      "traceId": "trc_harnessrl_aa0476b1716de4aa9205fa1f",
+      "commands": {
+        "trace": "hwlab-cli client agent trace trc_harnessrl_aa0476b1716de4aa9205fa1f --render web",
+        "result": "hwlab-cli client agent result trc_harnessrl_aa0476b1716de4aa9205fa1f",
+        "inspect": "hwlab-cli client agent inspect --trace-id trc_harnessrl_aa0476b1716de4aa9205fa1f",
+        "traceFull": "hwlab-cli client agent trace trc_harnessrl_aa0476b1716de4aa9205fa1f --render web --full",
+        "sessionStatus": "hwlab-cli client agent session status ses_800d620a-85a9-4ca0-8d41-4f497d79d664"
+      },
+      "strategy": "id_plus_existing_cli",
+      "sessionId": "ses_800d620a-85a9-4ca0-8d41-4f497d79d664",
+      "conversationId": "cnv_case_d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes_run-arm2d-binocular-from-single-l1-20260728-04"
+    },
+    "source": "caserun-identity",
+    "status": "completed",
+    "traceId": "trc_harnessrl_aa0476b1716de4aa9205fa1f",
+    "commands": [],
+    "httpStatus": 0,
+    "lookupOnly": true,
+    "commandCount": 0,
+    "terminalStatus": "completed",
+    "hwpodCommandCount": 0,
+    "keilJobCandidates": [],
+    "hwpodBuildCommandCount": 0
+  },
+  "definition": {
+    "flow": [
+      {
+        "id": "agent-mutation",
+        "kind": "agent"
+      },
+      {
+        "id": "build",
+        "kind": "hwpod.build"
+      },
+      {
+        "id": "download",
+        "kind": "hwpod.download"
+      },
+      {
+        "id": "display-capture",
+        "kind": "hwpod.display.capture"
+      }
+    ],
+    "mode": "agent-mutation-build-display-capture",
+    "notes": {
+      "target": "D601-VM-HOST Linux / VExpress-A9 / PL111 / QEMU",
+      "baseline": "官方 arm_2d_scene_blink 单眼提交 6daaa6eb8540469eae69aef3714a52d3d2ab0196",
+      "acceptance": "画面中必须真实出现两个官方眼睛；双眼注视和眨眼同步，10 秒 24 fps 视频无冻结、撕裂或残影",
+      "autoEvaluation": false,
+      "captureAuthority": "HWPOD display.capture operation result"
+    },
+    "title": "D601 VM VExpress-A9 Arm-2D Binocular Eyes",
+    "caseId": "d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes",
+    "subject": {
+      "subdir": "",
+      "commitId": "6daaa6eb8540469eae69aef3714a52d3d2ab0196",
+      "resources": [
+        {
+          "id": "arm-2d-main",
+          "ref": "main",
+          "kind": "git",
+          "repoUrl": "https://github.com/ARM-software/Arm-2D.git",
+          "commitId": "3dd16b28b2d8c920e43736d644c8e5876180eb50",
+          "destination": "third_party/Arm-2D-main"
+        }
+      ],
+      "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace"
+    },
+    "expected": {
+      "diff": {
+        "contains": [
+          "arm_2d_scene_blink",
+          "spin_zoom_widget",
+          "Eyeball",
+          "LeftEye",
+          "tLeftPivot = tPivot",
+          "tRightPivot = tPivot",
+          "tLeftEyeBallRegion",
+          "tRightEyeBallRegion",
+          "&tLeftEyeBallRegion",
+          "&tRightEyeBallRegion",
+          "} LeftEye, RightEye;"
+        ],
+        "forbiddenPaths": [
+          "hwpod-spec.yaml",
+          "scripts/download",
+          "scripts/reset"
+        ]
+      },
+      "compile": {
+        "success": true,
+        "artifactSuffixes": [
+          "build/qemu-gui.elf"
+        ]
+      },
+      "display": {
+        "width": 640,
+        "height": 480,
+        "frameRate": 24,
+        "durationMs": 10000,
+        "videoFormat": "webm",
+        "screenshotFormat": "png"
+      }
+    },
+    "timeouts": {
+      "hwpodCommandTimeoutMs": 120000
+    },
+    "agentTask": {
+      "model": "gpt-5.6-luna",
+      "prompt": "请在 D601-VM-HOST 的隔离 Linux subject worktree 中，把当前已通过的 Arm-2D 官方 arm_2d_scene_blink 单眼示例改造成双目动画。当前基线已经真实使用官方 Eyeball.c、LeftEye.c、spin_zoom_widget.c、随机注视和眨眼逻辑，并由 VExpress-A9 PL111 双缓冲与 VBlank 同步呈现。\n\n必须复用官方眼球位图、眼眶遮罩、spin_zoom_widget 变换和 scene blink 的状态逻辑，建立两个彼此独立的 eye/widget 实例；双眼在 640x480 画面中左右对称、大小一致，瞳孔注视方向同步，眨眼时序同步。先用 `hwpod cmd -- mkdir -p src` 和 `hwpod cmd -- cp <官方 arm_2d_scene_blink.c 路径> src/arm_2d_scene_binocular.c` 建立项目本地副本；同时把官方 `arm_2d_scene_blink.h` 复制到 `src/arm_2d_scene_blink.h`，在本地头文件中把原有 `Eye` 成员改成两个结构相同但内存独立的 `LeftEye`、`RightEye`。不要通过 cat 全文或 AgentRun output dump 搬运源码。随后只用小于 4 KiB 的定点 `hwpod workspace rg` 上下文读取，并用 `hwpod workspace apply-patch` 在本地副本中完成双实例改造。不得用自行绘制的圆形、椭圆、矩形或另一套动画替代官方资产与控件。允许窄范围修改 scripts/build 和 scripts/rebuild 的源文件清单，使其编译项目本地 scene 而不是上游单眼 scene；除此之外不得改变编译选项、目标或 Harness 行为。不得修改 HWPOD spec、QEMU helper、PL111 驱动、下载/复位/采集脚本或第三方上游文件来伪造结果。\n\n上一轮失败实现只初始化了名为 `s_SecondEye` 的对象，却在 draw 中仍只绘制主眼，因此真实视频始终只有一只眼。不要照搬这种实现，也不要通过 `s_SecondEye = this` 复制包含内部状态的整个 scene/widget 结构。必须分别初始化左右眼的 socket 与 eyeball widget；每帧对左右两套 widget 都执行 frame-start 和 frame-complete；draw 中必须建立两个明确分离且左右对称的 pivot/region，并分别绘制左 socket、左 eyeball、右 socket、右 eyeball。共享注视目标和眨眼进度可以由同一状态机产生，但两个实例的 widget 运行状态和绘制调用必须独立。\n\n请按以下已验证的最小结构一次完成，不要先提交半成品再靠宽搜索猜测：在 socket 配置块中用同一个只读 `tCFG` 分别调用 `spin_zoom_widget_init(&this.LeftEye.tSocket, &tCFG)` 和 `spin_zoom_widget_init(&this.RightEye.tSocket, &tCFG)`；在 eyeball 配置块中同理分别初始化两个 eyeball。load、depose、frame-complete 都各调用四个 widget。frame-start 必须是四条彼此完整、顺序执行的 `spin_zoom_widget_on_frame_start_xy(widget, 0, EYE_SIZE_RATIO, eyelidScale)`，不要把注视偏移误当成该函数的 angle/scale 参数，也不要嵌套调用。draw 先声明 `tLeftPivot`、`tRightPivot` 两个局部位置，X 以画面中心左右各偏移约 90 像素，Y 相同；再声明左右两个 eyeball region，分别以对应眼睛中心叠加同一个 `EyeBallMove.tOffset`。四次 `spin_zoom_widget_show` 的第二参数都必须是 `ptTile`，依次绘制左 socket、右 socket、左 eyeball、右 eyeball；第五参数为 255，禁止把 `__top_canvas`、mask tile 或含逗号的复合字面量误传到参数位。\n\n右眼 region 必须与左眼 region 一起完整保留在同一个 `arm_2d_align_centre_open(__top_canvas, EYEBALL.tRegion.tSize) { ... }` 词法作用域内，直到左右两次 eyeball 绘制全部结束后才关闭该作用域。右眼必须使用完整嵌套初始化：`arm_2d_region_t tRightEyeBallRegion = { .tLocation = { .iX = __centre_region.tLocation.iX + 90 + this.EyeBallMove.tOffset.iX, .iY = __centre_region.tLocation.iY + this.EyeBallMove.tOffset.iY }, .tSize = EYEBALL.tRegion.tSize };`。禁止把 `.iX`、`.iY` 直接写成 `arm_2d_region_t` 顶层成员；禁止在第一个 align 作用域结束后继续引用 `__centre_region`。左右 `__arm_2d_hint_optimize_for_pfb__` 是同一 align 作用域内先后相邻的两个独立块，不得嵌套。结束前用四个小范围查询分别核对 init、frame-start/frame-complete、draw、load/depose，确认第二眼五阶段均有真实调用、draw 确实有四次 `spin_zoom_widget_show`，并定点读取整个 align 块确认右眼 region 没有跑出作用域。\n\n开发中先读取当前 main.c 和构建清单，不要重复读取超过 4 KiB 的输出，也不要访问 AgentRun output dump；使用上述复制、定点读取和 apply-patch 小回环。只允许同时存在一个 `hwpod build`：必须等待当前构建明确返回后才能根据诊断修改或再次构建，禁止在旧构建仍运行时并发启动第二次构建。完成最终补丁后执行一次 `hwpod build`，退出码为零才可结束。完成后说明两个独立实例的位置、共享注视/眨眼状态、四个绘制调用和实际 build 结果。CaseRun Harness 会在 Agent 结束后独立执行最终 build、download 和 10 秒 24 fps display.capture。",
+      "projectId": "prj_hwpod_workbench",
+      "timeoutMs": 3600000,
+      "workspace": "subjectWorktree",
+      "constraints": [
+        "只能通过 HWPOD service/node 操作隔离 subject worktree，不得直接 SSH、cd 或编辑目标 host 路径",
+        "只能修改隔离 subject worktree，不得修改 case registry、HWLAB repo 或原 subject checkout",
+        "必须保留并复用官方 arm_2d_scene_blink、Eyeball、LeftEye 和 spin_zoom_widget，不得裸写图形替代",
+        "必须创建两个独立眼睛实例，位置左右对称，注视方向一致，眨眼时序同步",
+        "src/arm_2d_scene_blink.h 中必须删除旧的外层 Eye 成员，并在 user_scene_blink_t 的 ARM_PRIVATE 作用域直接声明 `struct { spin_zoom_widget_t tSocket; spin_zoom_widget_t tEyeBall; } LeftEye, RightEye;`；禁止形成 this.Eye.LeftEye 或 this.Eye.RightEye",
+        "禁止用整个 scene/widget 结构赋值复制第二眼；左右 widget 必须分别初始化并完整参与帧生命周期",
+        "draw 中必须以两个分离且左右对称的 pivot/region 分别绘制左右 socket 与 eyeball，共四次 spin_zoom_widget_show",
+        "tLeftPivot 和 tRightPivot 必须先从官方已声明且可见的 tPivot 复制，再分别对 iX 减 90 和加 90；严禁在 arm_2d_align_centre_open 作用域外引用 __centre_region",
+        "左 socket 和左 eyeball 只能传 tLeftPivot，右 socket 和右 eyeball 只能传 tRightPivot；不得继续把官方居中 tPivot 传给任一眼睛",
+        "tLeftEyeBallRegion 与 tRightEyeBallRegion 只能在 arm_2d_align_centre_open 作用域内从 __centre_region 分别构造；左右 __arm_2d_hint_optimize_for_pfb__ 必须是先左后右的两个独立顺序作用域，禁止互相嵌套",
+        "tRightEyeBallRegion 必须使用 `.tLocation = { .iX = ..., .iY = ... }` 的嵌套初始化；arm_2d_region_t 顶层禁止直接出现 `.iX` 或 `.iY`",
+        "包含左右 region 与左右 eyeball 绘制的同一个 arm_2d_align_centre_open 作用域只能在右 eyeball 的 spin_zoom_widget_show 之后关闭",
+        "左 eyeball 的 spin_zoom_widget_show 第三个参数必须是 &tLeftEyeBallRegion，右 eyeball 必须是 &tRightEyeBallRegion；双目源码中不得残留 &tEyeBallRegion",
+        "draw 的 pivot 必须是 arm_2d_location_t：左 X=画面中心-90、右 X=画面中心+90，Y 保持官方原值；两个 socket 都传 region=NULL 并分别传左/右 pivot；两个 eyeball region 都从 __centre_region 复制，X 分别减/加 90 后再叠加同一个 EyeBallMove 偏移，size 保持 EYEBALL 大小，并分别传对应 pivot",
+        "左右 eyeball 必须分别放在各自的 __arm_2d_hint_optimize_for_pfb__(leftRegion/rightRegion) 作用域内绘制；禁止把右眼绘制放在仅以左眼 region 优化的作用域内，否则 PFB 会裁掉右眼",
+        "左右 frame-start 必须写成彼此独立且完整的 spin_zoom_widget_on_frame_start_xy(widget, angle, scaleX, scaleY) 语句，不得嵌套或交错两个调用",
+        "spin_zoom_widget_show 固定使用五个参数且第二参数必须是 ptTile；左右 pivot/region 先声明为局部变量，禁止在宏参数中使用含逗号的复合字面量",
+        "完成最终补丁后必须实际执行 hwpod build；退出码非零时继续按编译错误修复，只有退出码为零才能结束 Agent 任务",
+        "禁止修改 third_party/Arm-2D-main 中的上游文件",
+        "允许用 hwpod cmd -- cp 把官方 scene 复制为项目本地初始副本；复制后所有文本修改必须使用 HWPOD workspace apply-patch",
+        "单次读取输出必须小于 4 KiB；禁止重复读取大文件全文或访问 AgentRun output dump",
+        "同一时刻只允许一个 hwpod build；必须等待当前构建终态后才能再次构建，禁止并发构建",
+        "允许仅修改 scripts/build 和 scripts/rebuild 的 scene 源文件清单以编译项目本地双目 scene；禁止改变其他编译选项、目标或 Harness 行为",
+        "禁止修改 hwpod-spec.yaml、scripts/download、scripts/reset、PL111 驱动、QEMU helper 或采集逻辑",
+        "project-local 文本修改使用 HWPOD workspace apply-patch，构建使用 HWPOD build",
+        "Agent final response 不能替代 Harness 独立 build、download 和 display.capture 证据",
+        "结果只记录 raw trace/evidence，autoEvaluation=false"
+      ],
+      "pollIntervalMs": 2000,
+      "providerProfile": "gpt.pika",
+      "reasoningEffort": "low",
+      "resourceBundlePolicy": "caserun-with-skills"
+    },
+    "hwpodSpec": "hwpod-spec.yaml",
+    "diffCollection": {
+      "ignore": [
+        {
+          "reason": "官方 Arm-2D 资源由固定上游提交与物化清单表达",
+          "pattern": "third_party/Arm-2D-main/**"
+        }
+      ]
+    },
+    "contractVersion": "hwpod-case-v1"
+  },
+  "compileOnly": false,
+  "sourceSpecPath": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_from_single_l1_20260728_04/case-authority/cases/d601-vm-vexpress-a9-qemu-gui-arm2d-binocular-eyes/hwpod-spec.yaml",
+  "validationPlan": {
+    "mode": "custom-runtime",
+    "steps": [
+      {
+        "args": {},
+        "kind": "build",
+        "stage": "post-agent-validation",
+        "actionId": "build",
+        "expectedOp": "debug.build"
+      },
+      {
+        "args": {},
+        "kind": "download",
+        "stage": "post-agent-validation",
+        "actionId": "download",
+        "expectedOp": "debug.download"
+      },
+      {
+        "args": {},
+        "kind": "displayCapture",
+        "stage": "post-agent-validation",
+        "actionId": "display-capture",
+        "expectedOp": "display.capture"
+      }
+    ],
+    "source": "case-definition.flow",
+    "compileOnly": false,
+    "contractVersion": "hwpod-case-validation-plan-v1"
+  },
+  "agentDiff": {
+    "diffStat": "scripts/build | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)\n/dev/null => src/arm_2d_scene_binocular.c | 699 ++++++++++++++++++++++++++++++\n 1 file changed, 699 insertions(+)\n/dev/null => src/arm_2d_scene_blink.h | 166 ++++++++++++++++++++++++++++++++++\n 1 file changed, 166 insertions(+)\n[omitted by CaseRun diffCollection]\n third_party/Arm-2D-main/** | 1 files omitted reason=官方 Arm-2D 资源由固定上游提交与物化清单表达 samples=third_party/Arm-2D-main",
+    "requests": [
+      {
+        "label": "status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 103
+      },
+      {
+        "label": "diff-stat",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 67
+      },
+      {
+        "label": "diff-patch",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 414
+      },
+      {
+        "label": "submodule-status",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-ls-files",
+        "stderr": "",
+        "exitCode": 0,
+        "httpStatus": 200,
+        "stdoutBytes": 78
+      },
+      {
+        "label": "untracked-file-metadata",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 0
+      },
+      {
+        "label": "untracked-diff-stat:src/arm_2d_scene_binocular.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:src/arm_2d_scene_binocular.c",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 24564
+      },
+      {
+        "label": "untracked-diff-stat:src/arm_2d_scene_blink.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 113
+      },
+      {
+        "label": "untracked-diff-patch:src/arm_2d_scene_blink.h",
+        "stderr": "",
+        "exitCode": 1,
+        "httpStatus": 409,
+        "stdoutBytes": 5192
+      },
+      {
+        "label": "source-root-baseline",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      },
+      {
+        "label": "source-root-after-prepare",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      },
+      {
+        "label": "source-root-after-agent",
+        "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "statusShort": "?? .worktree/"
+      }
+    ],
+    "statusShort": "M scripts/build\n?? src/arm_2d_scene_binocular.c\n?? src/arm_2d_scene_blink.h\n?? third_party/Arm-2D-main/",
+    "diffPatchPath": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_from_single_l1_20260728_04/agent-diff.patch",
+    "diffCollection": {
+      "config": {
+        "ignore": [
+          {
+            "reason": "官方 Arm-2D 资源由固定上游提交与物化清单表达",
+            "pattern": "third_party/Arm-2D-main/**"
+          },
+          {
+            "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+            "pattern": "vendor/**"
+          },
+          {
+            "reason": "third-party staging trees are recorded as omitted provenance instead of expanded into per-file patches",
+            "pattern": "third_party/**"
+          }
+        ],
+        "include": []
+      },
+      "omitted": [
+        {
+          "path": "third_party/Arm-2D-main",
+          "rule": "third_party/Arm-2D-main/**",
+          "reason": "官方 Arm-2D 资源由固定上游提交与物化清单表达",
+          "source": "untracked"
+        }
+      ],
+      "tracked": {
+        "paths": [
+          "scripts/build"
+        ],
+        "diffStat": "scripts/build | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)",
+        "diffPatchSha256": "3fcf1dd9d26388e3251437268f88d00393dea2b77c544d01608c2efeda51490d"
+      },
+      "included": [
+        {
+          "path": "src/arm_2d_scene_binocular.c",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        },
+        {
+          "path": "src/arm_2d_scene_blink.h",
+          "rule": "default-include-untracked",
+          "reason": "included by default because untracked files are part of the agent diff",
+          "source": "untracked"
+        }
+      ],
+      "untracked": {
+        "total": 3,
+        "omitted": 1,
+        "included": 2
+      },
+      "submodules": [],
+      "omittedGroups": [
+        {
+          "rule": "third_party/Arm-2D-main/**",
+          "count": 1,
+          "reason": "官方 Arm-2D 资源由固定上游提交与物化清单表达",
+          "samplePaths": [
+            "third_party/Arm-2D-main"
+          ]
+        }
+      ],
+      "contractVersion": "hwpod-case-run-diff-collection-v1"
+    },
+    "diffPatchSha256": "99dd438e1774c16ea2cb226fdea0eaf4b8026ceaaafbedbd340b928d133e7ceb",
+    "sourceRootBaseline": {
+      "label": "before-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootAfterAgent": {
+      "label": "after-agent",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootStatusShort": "?? .worktree/",
+    "sourceRootAfterPrepare": {
+      "label": "after-prepare",
+      "commands": {
+        "status": {
+          "label": "source-root-status",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 13
+        },
+        "diffStat": {
+          "label": "source-root-diff-stat",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        },
+        "diffPatch": {
+          "label": "source-root-diff-patch",
+          "stderr": "",
+          "exitCode": 0,
+          "httpStatus": 200,
+          "stdoutBytes": 0
+        }
+      },
+      "diffStat": "",
+      "diffBytes": 0,
+      "diffSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "statusShort": "?? .worktree/"
+    },
+    "sourceRootChangedAfterAgent": false,
+    "sourceRootChangedAfterPrepare": false
+  },
+  "_control": {
+    "status": "completed",
+    "stage": "completed",
+    "updatedAt": "2026-07-28T06:44:40.325Z",
+    "completedAt": "2026-07-28T06:44:40.233Z",
+    "exitCode": 0,
+    "evidencePath": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_from_single_l1_20260728_04/evidence.json"
+  },
+  "status": "completed",
+  "evidencePath": "/root/hwlab-v03/.state/harnessrl/runs/run_arm2d_binocular_from_single_l1_20260728_04/evidence.json"
+}
