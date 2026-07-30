@@ -1,0 +1,91 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "cy014-01-hmi-ra6m3-agent-smoke",
+  "title": "CY014-01 RA6M3 HMI 真实 Agent 构建下载串口冒烟",
+  "mode": "agent-mutation-build-download-uart",
+  "hwpodId": "cy014-01-hmi-ra6m3",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "/root/workspace/hmi-board-ra6m3-bringup",
+    "commitId": "9463e9d259c3c9c7bb520e1070064a692bf98903",
+    "subdir": ""
+  },
+  "agentTask": {
+    "workspace": "subjectWorktree",
+    "providerProfile": "gpt.pika",
+    "model": "gpt-5.6-luna",
+    "reasoningEffort": "low",
+    "projectId": "prj_hwpod_workbench",
+    "resourceBundlePolicy": "caserun-with-skills",
+    "timeoutMs": 900000,
+    "pollIntervalMs": 2000,
+    "prompt": "请在 CY014-01 的隔离 subject worktree 中完成一个最小、真实且可验证的 RA6M3 HMI 开发任务。只修改 projects/project_0/src/hal_entry.c：在现有 `Hello RT-Thread!` 输出之后增加一条独立的 `rt_kprintf`，输出 `[CY014 CaseRun] runId=<本次运行ID>`，其中运行ID必须使用 CaseRun 上下文给出的真实 runId，不得写占位符。不要改变 LED 循环、BSP、构建脚本、HWPOD spec 或其他文件。先用小范围 HWPOD read/rg 确认上下文，再用 `hwpod workspace apply-patch` 修改；禁止直接访问宿主机路径。完成修改后通过 runtime HWPOD `cy014-01-hmi-ra6m3` 执行一次 `hwpod build`，等待明确终态后如实报告修改和编译结果。Harness 会在 Agent 结束后独立执行 build、download 和 UART 采集。",
+    "constraints": [
+      "只能修改隔离 subject worktree 的 projects/project_0/src/hal_entry.c",
+      "必须使用 HWPOD 工具读取、修改和编译，不得 SSH 或直接操作宿主机路径",
+      "启动标记必须包含本次真实 runId，禁止保留占位符",
+      "不得修改 case registry、HWPOD spec、构建脚本、下载配置或原 subject checkout",
+      "同一时刻只能运行一个 hwpod build，并等待终态",
+      "Agent final response 不能替代 Harness 独立 build、download 和 UART 证据"
+    ]
+  },
+  "flow": [
+    {
+      "id": "agent-mutation",
+      "kind": "agent"
+    },
+    {
+      "id": "build",
+      "kind": "hwpod.build"
+    },
+    {
+      "id": "download",
+      "kind": "hwpod.download"
+    },
+    {
+      "id": "uart-read",
+      "kind": "hwpod.uart.read",
+      "port": "/dev/ttyACM0",
+      "maxBytes": 16384,
+      "captureWindowMs": 3000
+    }
+  ],
+  "timeouts": {
+    "hwpodCommandTimeoutMs": 180000
+  },
+  "expected": {
+    "diff": {
+      "files": [
+        "projects/project_0/src/hal_entry.c"
+      ],
+      "contains": [
+        "[CY014 CaseRun]",
+        "runId="
+      ],
+      "forbiddenPaths": [
+        "hwpod-spec.yaml",
+        "projects/project_0/SConstruct",
+        "projects/project_0/rtconfig.py"
+      ]
+    },
+    "compile": {
+      "success": true,
+      "artifactSuffixes": [
+        "projects/project_0/rtthread.hex"
+      ]
+    },
+    "download": {
+      "attempted": true
+    },
+    "uart": {
+      "port": "/dev/ttyACM0",
+      "containsHint": "[CY014 CaseRun]"
+    }
+  },
+  "notes": {
+    "autoEvaluation": false,
+    "hwpodAuthority": "runtime",
+    "hwpodSpecUsage": "case-local topology snapshot only; never register as YAML built-in",
+    "target": "CY014-01 Linux / Renesas RA6M3 HMI-Board / physical CMSIS-DAP / physical UART"
+  }
+}
