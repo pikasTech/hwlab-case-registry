@@ -43,6 +43,7 @@
       "必须使用 HWPOD 工具读取、修改和编译，不得 SSH 或直接操作宿主机路径",
       "必须使用已物化的官方 LVGL v8.3.11 benchmark demo 和真实 SCons 构建闭包，不得 clone、修改第三方资源、自绘页面或用 UART 文本冒充 GUI",
       "必须复用现有 RT-Thread LVGL 线程、display port、tick 和 lv_timer_handler；Benchmark 不需要触摸输入，禁止修改 board/lvgl/lv_port_indev.c 或新增 RT_USING_TOUCH、BSP_USING_TOUCH、RT_TOUCH_PIN_IRQ",
+      "最终 HWPOD build 前必须通过 HWPOD read/rg 验证 projects/project_0/.config（或当前工程实际使用的等价生成配置）已启用 CONFIG_PKG_USING_LVGL=y、CONFIG_BSP_USING_LVGL=y、CONFIG_BSP_USING_LVGL_DEMO=y、CONFIG_BSP_USING_LCD=y、CONFIG_RT_USING_PWM=y 和 CONFIG_BSP_USING_PWM=y，并确认生成的 rtconfig.h 具有对应生效项；若当前工程使用等价配置名，必须以真实配置文件为准完成同样的显示构建闭包，禁止只修改源文件后直接 build",
       "官方 benchmark 源文件必须实际进入 SCons 编译图，lv_demo_benchmark() 必须从实际调用的 lv_user_gui_init() 到达",
       "启动标记必须包含本次真实 runId，禁止占位符和固定历史 runId",
       "不得修改 HWPOD spec、下载配置、Harness 或第三方上游文件",
