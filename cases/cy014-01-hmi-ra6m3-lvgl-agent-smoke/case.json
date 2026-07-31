@@ -1,0 +1,95 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "cy014-01-hmi-ra6m3-lvgl-agent-smoke",
+  "title": "CY014-01 RA6M3 HMI 真实 LVGL Agent 构建下载串口冒烟",
+  "mode": "agent-mutation-build-download-uart",
+  "hwpodId": "cy014-01-hmi-ra6m3",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "/root/workspace/hmi-board-ra6m3-bringup",
+    "commitId": "9463e9d259c3c9c7bb520e1070064a692bf98903",
+    "subdir": ""
+  },
+  "agentTask": {
+    "workspace": "subjectWorktree",
+    "providerProfile": "gpt.pika",
+    "model": "gpt-5.6-luna",
+    "reasoningEffort": "low",
+    "projectId": "prj_hwpod_workbench",
+    "resourceBundlePolicy": "caserun-with-skills",
+    "timeoutMs": 1200000,
+    "pollIntervalMs": 3000,
+    "prompt": "请在 CY014-01 的隔离 subject worktree 中完成一个真实、最小且可验证的 LVGL HMI 任务。先用 HWPOD read/rg 检查现有 projects/project_0/board/lvgl 端口、board/Kconfig、构建入口和真实依赖，再通过 HWPOD 把官方 LVGL 依赖接入当前 RT-Thread 工程并启用生成配置；禁止伪造 lvgl.h 或用 UART 文本替代 GUI。复用现有 lv_port_disp_init/lv_port_indev_init，初始化 lv_init()，在活动屏幕创建一个清晰的 LVGL 标签（内容包含 CY014 LVGL），进入稳定的 lv_timer_handler() 循环并提供 LVGL tick。启动后通过 rt_kprintf 输出 [CY014 LVGL CaseRun] runId=<本次 CaseRun 上下文提供的真实 runId> state=ready；不得写占位符。只用 HWPOD 工具读写 subject worktree，不得 SSH 或直接操作宿主机路径。完成后用 runtime HWPOD 执行一次 build，等待明确终态并如实报告。Harness 会在 Agent 结束后独立执行 build、download 和 UART 采集。",
+    "constraints": [
+      "只能修改隔离 subject worktree 中完成 LVGL 所需的项目文件和官方依赖文件",
+      "必须使用 HWPOD 工具读取、修改和编译，不得 SSH 或直接访问宿主机路径",
+      "必须复用现有 LVGL display/input port，使用真实官方 LVGL 依赖，不得添加伪造头文件、空实现或 UART GUI 替代物",
+      "启动标记必须包含本次真实 runId，禁止占位符或固定历史 runId",
+      "不得修改 case registry、hwpod-spec.yaml、原 subject checkout、HWPOD runtime spec 或下载配置",
+      "不得用删除工程文件或改变目标板的方式规避编译错误",
+      "同一时刻只能运行一个 hwpod build，并等待明确终态",
+      "Agent final response 不能替代 Harness 独立 build、download 和 UART 证据"
+    ]
+  },
+  "flow": [
+    {
+      "id": "agent-mutation",
+      "kind": "agent"
+    },
+    {
+      "id": "build",
+      "kind": "hwpod.build"
+    },
+    {
+      "id": "download",
+      "kind": "hwpod.download"
+    },
+    {
+      "id": "uart-read",
+      "kind": "hwpod.uart.read",
+      "port": "/dev/ttyACM0",
+      "maxBytes": 16384,
+      "captureWindowMs": 3000
+    }
+  ],
+  "timeouts": {
+    "hwpodCommandTimeoutMs": 300000
+  },
+  "expected": {
+    "diff": {
+      "contains": [
+        "[CY014 LVGL CaseRun]",
+        "lv_init()",
+        "lv_port_disp_init()",
+        "lv_timer_handler()"
+      ],
+      "forbiddenPaths": [
+        "hwpod-spec.yaml",
+        ".hwlab",
+        "case.json",
+        "projects/project_0/SConstruct",
+        "projects/project_0/rtconfig.py"
+      ]
+    },
+    "compile": {
+      "success": true,
+      "artifactSuffixes": [
+        "projects/project_0/rtthread.hex"
+      ]
+    },
+    "download": {
+      "attempted": true
+    },
+    "uart": {
+      "port": "/dev/ttyACM0",
+      "containsHint": "[CY014 LVGL CaseRun]"
+    }
+  },
+  "notes": {
+    "autoEvaluation": false,
+    "hwpodAuthority": "runtime",
+    "hwpodSpecUsage": "case-local topology snapshot only; never register as YAML built-in",
+    "target": "CY014-01 Linux / Renesas RA6M3 HMI-Board / physical CMSIS-DAP / physical UART",
+    "dependencyPolicy": "official LVGL source only; retain source/version evidence in subject diff"
+  }
+}

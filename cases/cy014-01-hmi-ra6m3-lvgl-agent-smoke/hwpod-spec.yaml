@@ -1,0 +1,50 @@
+# CaseRun topology snapshot only. Runtime authority is hwpodId=cy014-01-hmi-ra6m3.
+# Do not add this file to a YAML built-in registry.
+apiVersion: hwlab.dev/v0alpha1
+kind: Hwpod
+metadata:
+  name: cy014-01-hmi-ra6m3
+spec:
+  nodeBinding:
+    nodeId: node-cy014-01-hmi-ra6m3
+  targetDevice:
+    board: Renesas RA6M3 HMI-Board
+    mcu: R7FA6M3AH3CFC
+    cpu: cortex-m4f
+    clockHz: 120000000
+    simulation: false
+  workspace:
+    path: /root/workspace/hmi-board-ra6m3-bringup
+    toolchain: arm-none-eabi-gcc
+    projectRoot: projects/project_0
+    buildCommand: scons -C projects/project_0
+    rebuildCommand: scons -C projects/project_0 -c && scons -C projects/project_0
+    buildArtifactPath: projects/project_0/rtthread.hex
+  debugProbe:
+    type: cmsis-dap
+    adapter: pyocd
+    probeUid: 4FFD60F76436
+    probeName: XIVN1987 XV-Link CMSIS-DAP
+    programBackend: pyocd
+    downloadCommand: pyocd flash -u 4FFD60F76436 projects/project_0/rtthread.hex
+    resetCommand: pyocd reset -u 4FFD60F76436
+    physicalProbe: true
+  ioProbe:
+    uart:
+      backend: pyserial
+      port: /dev/ttyACM0
+      baudRate: 115200
+      dataBits: 8
+      stopBits: 1
+      parity: none
+      captureWindowMs: 3000
+      captureMaxBytes: 1048576
+      pollIntervalMs: 10
+  display:
+    kind: physical-lcd
+    panel: 4.3-inch RGB888 LCD
+  simulationBoundary:
+    physicalProbe: true
+    physicalFlash: true
+    powerControl: false
+    uart: physical
