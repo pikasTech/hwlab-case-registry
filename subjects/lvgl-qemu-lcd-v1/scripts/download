@@ -1,0 +1,19 @@
+#!/bin/sh
+set -eu
+root="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
+state="$root/.state/qemu"
+"$root/scripts/build"
+mkdir -p "$state"
+if [ -f "$state/pid" ]; then kill "$(cat "$state/pid")" 2>/dev/null || true; fi
+rm -f "$state/qmp.sock" "$state/uart" "$state/qemu.stderr" "$state/qemu.stdout"
+nohup qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -m 256M -display none -monitor none -audio driver=none -serial pty -qmp "unix:$state/qmp.sock,server=on,wait=off" -kernel "$root/build/qemu-gui.elf" >"$state/qemu.stdout" 2>"$state/qemu.stderr" &
+pid=$!
+printf '%s\n' "$pid" >"$state/pid"
+count=0
+while [ "$count" -lt 100 ]; do
+  uart="$(sed -n 's/.*char device redirected to \(\/dev\/pts\/[0-9][0-9]*\).*/\1/p' "$state/qemu.stdout" "$state/qemu.stderr" | tail -n 1)"
+  if [ -S "$state/qmp.sock" ] && [ -n "$uart" ]; then ln -s "$uart" "$state/uart"; printf '{"ok":true,"pid":%s}\n' "$pid"; exit 0; fi
+  if ! kill -0 "$pid" 2>/dev/null; then cat "$state/qemu.stderr" >&2; exit 1; fi
+  sleep 0.1; count=$((count + 1))
+done
+cat "$state/qemu.stderr" >&2; exit 1
