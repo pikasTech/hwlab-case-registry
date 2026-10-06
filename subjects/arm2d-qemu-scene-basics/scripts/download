@@ -3,7 +3,7 @@ set -eu
 root="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 state="$root/.state/qemu"
 hash="$(printf '%s' "$root" | sha256sum | cut -c1-12)"
-short_qmp="/tmp/hwlab-qemu-qmp-$hash.sock"
+short_qmp="${HWPOD_RUNTIME_QMP_SOCKET:-/tmp/hwlab-qemu-qmp-$hash.sock}"
 "$root/scripts/build"
 mkdir -p "$state"
 if [ -f "$state/pid" ]; then
@@ -38,8 +38,7 @@ while [ "$count" -lt 100 ]; do
       exit 1
     fi
     ln -s "$uart" "$state/uart"
-    ln -s "$short_qmp" "$state/qmp.sock"
-    printf '{"ok":true,"pid":%s,"qmpSocket":".state/qemu/qmp.sock","uart":"%s"}\n' "$pid" "$uart"
+    printf '{"ok":true,"pid":%s,"qmpSocket":"%s","uart":"%s"}\n' "$pid" "$short_qmp" "$uart"
     exit 0
   fi
   if ! kill -0 "$pid" 2>/dev/null; then

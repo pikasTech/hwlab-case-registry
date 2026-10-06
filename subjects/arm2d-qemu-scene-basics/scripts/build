@@ -5,7 +5,6 @@ arm2d="$root/third_party/Arm-2D"
 mkdir -p "$root/build"
 
 set -- \
-  "$root/src/startup.S" \
   "$root/src/main.c" \
   "$root/src/arm_2d_disp_adapter_0.c" \
   "$arm2d/examples/demos/arm_2d_scene_basics.c" \
@@ -34,8 +33,12 @@ set -- \
   "$arm2d/Helper/Source/arm_2d_helper_shape.c" \
   "$arm2d/Helper/Source/busy_wheel.c"
 
-arm-none-eabi-gcc -mcpu=cortex-a9 -marm -ffreestanding -fno-builtin -O2 \
-  -ffunction-sections -fdata-sections -w -D_RTE_ \
+printf '%s\n' 'compiler phase: startup assembler (cortex-a9)' >&2
+arm-none-eabi-gcc -mcpu=cortex-a9 -marm -c "$root/src/startup.S" -o "$root/build/startup.o"
+printf '%s\n' 'compiler phase: C gnu17 and link (cortex-a9, CMSIS adapter)' >&2
+arm-none-eabi-gcc -std=gnu17 -fms-extensions -Wno-error=int-conversion -mcpu=cortex-a9 -marm -ffreestanding -fno-builtin -O2 \
+  -ffunction-sections -fdata-sections -D_RTE_ \
+  -include "$root/src/cmsis_gcc_a9_compat.h" \
   -include "$root/src/RTE_Components.h" \
   -I"$root/src" \
   -I"$arm2d/Library/Include" \
@@ -44,6 +47,5 @@ arm-none-eabi-gcc -mcpu=cortex-a9 -marm -ffreestanding -fno-builtin -O2 \
   -I"$arm2d/examples/demos" \
   -I"$arm2d/examples/common/controls" \
   -nostdlib -Wl,--build-id=none -Wl,--gc-sections -Wl,-T,"$root/linker.ld" \
-  "$@" -lgcc -o "$root/build/qemu-gui.elf"
+  "$root/build/startup.o" "$@" -lgcc -o "$root/build/qemu-gui.elf"
 arm-none-eabi-size "$root/build/qemu-gui.elf"
-

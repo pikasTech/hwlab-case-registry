@@ -3,7 +3,8 @@ set -eu
 root="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 state="$root/.state/qemu"
 workspace="$(CDPATH= cd -- "$root/../.." && pwd)"
-short_qmp="$workspace/.state/qemu-qmp.sock"
+hash="$(printf '%s' "$root" | sha256sum | cut -c1-12)"
+short_qmp="${HWPOD_RUNTIME_QMP_SOCKET:-/tmp/hwlab-qemu-qmp-$hash.sock}"
 "$root/scripts/build"
 mkdir -p "$state" "$workspace/.state"
 if [ -f "$state/pid" ]; then kill "$(cat "$state/pid")" 2>/dev/null || true; fi
@@ -14,7 +15,7 @@ printf '%s\n' "$pid" >"$state/pid"
 count=0
 while [ "$count" -lt 100 ]; do
   uart="$(sed -n 's/.*char device redirected to \(\/dev\/pts\/[0-9][0-9]*\).*/\1/p' "$state/qemu.stdout" "$state/qemu.stderr" | tail -n 1)"
-  if [ -S "$short_qmp" ] && [ -n "$uart" ]; then ln -s "$uart" "$state/uart"; ln -s "$short_qmp" "$state/qmp.sock"; printf '{"ok":true,"pid":%s,"qmpSocket":".state/qemu/qmp.sock"}\n' "$pid"; exit 0; fi
+  if [ -S "$short_qmp" ] && [ -n "$uart" ]; then ln -s "$uart" "$state/uart"; printf '{"ok":true,"pid":%s,"qmpSocket":"%s"}\n' "$pid" "$short_qmp"; exit 0; fi
   if ! kill -0 "$pid" 2>/dev/null; then cat "$state/qemu.stderr" >&2; exit 1; fi
   sleep 0.1; count=$((count + 1))
 done

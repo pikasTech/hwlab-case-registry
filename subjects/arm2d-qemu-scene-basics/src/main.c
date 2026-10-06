@@ -188,17 +188,6 @@ double fabs(double value) {
     return value < 0.0 ? -value : value;
 }
 
-int __QADD(int left, int right) {
-    long long sum = (long long)left + (long long)right;
-    if (sum > 2147483647LL) {
-        return 2147483647;
-    }
-    if (sum < -2147483647LL - 1LL) {
-        return (-2147483647 - 1);
-    }
-    return (int)sum;
-}
-
 int32_t Disp0_DrawBitmap(int16_t x, int16_t y, int16_t width, int16_t height,
                          const uint8_t *bitmap) {
     const uint16_t *source = (const uint16_t *)bitmap;
