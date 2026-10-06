@@ -9,7 +9,7 @@ short_qmp="${HWPOD_RUNTIME_QMP_SOCKET:-/tmp/hwlab-qemu-qmp-$hash.sock}"
 mkdir -p "$state" "$workspace/.state"
 if [ -f "$state/pid" ]; then kill "$(cat "$state/pid")" 2>/dev/null || true; fi
 rm -f "$state/qmp.sock" "$short_qmp" "$state/uart" "$state/qemu.stderr" "$state/qemu.stdout"
-nohup qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -m 256M -display none -monitor none -audio driver=none -serial pty -qmp "unix:$short_qmp,server=on,wait=off" -kernel "$root/build/qemu-gui.elf" >"$state/qemu.stdout" 2>"$state/qemu.stderr" &
+nohup qemu-system-arm -M vexpress-a9 -cpu cortex-a9 -m 256M -display none -monitor none -audio driver=none -serial pty -qmp "unix:$short_qmp,server=on,wait=off" -kernel "$root/build/lvgl-qemu.elf" >"$state/qemu.stdout" 2>"$state/qemu.stderr" &
 pid=$!
 printf '%s\n' "$pid" >"$state/pid"
 count=0
