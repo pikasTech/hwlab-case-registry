@@ -1,0 +1,53 @@
+#!/bin/sh
+set -eu
+root="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
+state="$root/.state/qemu"
+hash="$(printf '%s' "$root" | sha256sum | cut -c1-12)"
+short_qmp="${HWPOD_RUNTIME_QMP_SOCKET:-/tmp/hwlab-qemu-qmp-$hash.sock}"
+"$root/scripts/build"
+mkdir -p "$state"
+if [ -f "$state/pid" ]; then
+  old_pid="$(cat "$state/pid")"
+  if [ -r "/proc/$old_pid/cmdline" ] && tr '\0' ' ' <"/proc/$old_pid/cmdline" | grep -Fq "$root/build/qemu-gui.elf"; then
+    kill "$old_pid" 2>/dev/null || true
+    wait_count=0
+    while kill -0 "$old_pid" 2>/dev/null && [ "$wait_count" -lt 30 ]; do
+      sleep 0.1
+      wait_count=$((wait_count + 1))
+    done
+  fi
+fi
+rm -f "$state/qmp.sock" "$short_qmp" "$state/uart" "$state/qemu.stderr" "$state/qemu.stdout"
+nohup qemu-system-arm \
+  -M vexpress-a9 -cpu cortex-a9 -m 256M \
+  -display none -monitor none \
+  -audio driver=none \
+  -serial pty \
+  -qmp "unix:$short_qmp,server=on,wait=off" \
+  -device "loader,file=$root/build/qemu-gui.elf,cpu-num=0" \
+  >"$state/qemu.stdout" 2>"$state/qemu.stderr" &
+pid=$!
+printf '%s\n' "$pid" >"$state/pid"
+count=0
+while [ "$count" -lt 100 ]; do
+  uart="$(sed -n 's/.*char device redirected to \(\/dev\/pts\/[0-9][0-9]*\).*/\1/p' "$state/qemu.stdout" "$state/qemu.stderr" | tail -n 1)"
+  if [ -S "$short_qmp" ] && [ -n "$uart" ]; then
+    sleep 0.3
+    if ! kill -0 "$pid" 2>/dev/null; then
+      tail -n 20 "$state/qemu.stderr" >&2
+      exit 1
+    fi
+    ln -s "$uart" "$state/uart"
+    printf '{"ok":true,"pid":%s,"qmpSocket":"%s","uart":"%s"}\n' "$pid" "$short_qmp" "$uart"
+    exit 0
+  fi
+  if ! kill -0 "$pid" 2>/dev/null; then
+    tail -n 20 "$state/qemu.stderr" >&2
+    exit 1
+  fi
+  sleep 0.1
+  count=$((count + 1))
+done
+echo "QEMU did not expose QMP and UART within 10 seconds" >&2
+tail -n 20 "$state/qemu.stderr" >&2
+exit 1

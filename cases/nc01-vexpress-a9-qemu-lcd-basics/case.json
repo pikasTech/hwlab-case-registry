@@ -1,0 +1,58 @@
+{
+  "contractVersion": "hwpod-case-v1",
+  "caseId": "nc01-vexpress-a9-qemu-lcd-basics",
+  "projectGroupId": "pgrp_abeceb1e-0bb2-4aea-a6e2-0fb77b9ae4e3",
+  "title": "NC01 VExpress-A9 裸 LCD QEMU 基线",
+  "mode": "harness-build-display-capture",
+  "hwpodSpec": "hwpod-spec.yaml",
+  "subject": {
+    "repoLocalPath": "/home/ubuntu/workspace/hwpod_qemu_gui_workspace",
+    "commitId": "42be147d7b9793d1ad6029655a8b043453c724b8",
+    "subdir": "subjects/lcd-qemu-lcd-v1",
+    "repoUrl": "https://github.com/pikasTech/hwlab-case-registry.git",
+    "ref": "42be147d7b9793d1ad6029655a8b043453c724b8"
+  },
+  "sourceLock": "subjects/lcd-qemu-lcd-v1/source-lock.json",
+  "flow": [
+    {
+      "id": "build",
+      "kind": "hwpod.build"
+    },
+    {
+      "id": "download",
+      "kind": "hwpod.download"
+    },
+    {
+      "id": "display-capture",
+      "kind": "hwpod.display.capture"
+    }
+  ],
+  "expected": {
+    "compile": {
+      "success": true,
+      "artifactSuffixes": [
+        "subjects/lcd-qemu-lcd-v1/build/qemu-gui.elf"
+      ]
+    },
+    "display": {
+      "width": 640,
+      "height": 480,
+      "durationMs": 10000,
+      "frameRate": 5,
+      "screenshotFormat": "png",
+      "videoFormat": "webm"
+    }
+  },
+  "notes": {
+    "autoEvaluation": false,
+    "target": "NC01 / Cortex-A9 / PL111 / QEMU",
+    "demo": "bare LCD RGB565 baseline",
+    "captureAuthority": "HWPOD display.capture operation result"
+  },
+  "ephemeralHwpod": {
+    "enabled": true,
+    "baselineId": "qemu-lcd-base-v1",
+    "imageDigest": "sha256:18332e4331ae8110b544ea0b04646b1ead859d1b2adc1b3b1a65594104d96954",
+    "workspacePolicy": "ephemeral"
+  }
+}

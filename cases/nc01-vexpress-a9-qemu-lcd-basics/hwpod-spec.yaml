@@ -1,0 +1,58 @@
+apiVersion: hwlab.dev/v0alpha1
+kind: Hwpod
+metadata:
+  name: nc01-qemu-lcd-v1
+spec:
+  nodeBinding:
+    nodeId: node-nc01-docker-case-runner-v1
+  targetDevice:
+    board: ARM VExpress-A9 QEMU GUI
+    cpu: cortex-a9
+    emulator: qemu-system-arm
+    machine: vexpress-a9
+    simulation: true
+  workspace:
+    path: /root/hwlab-case-registry
+    toolchain: arm-none-eabi-gcc
+    buildCommand: subjects/lcd-qemu-lcd-v1/scripts/build
+    rebuildCommand: subjects/lcd-qemu-lcd-v1/scripts/rebuild
+    buildArtifactPath: subjects/lcd-qemu-lcd-v1/build/qemu-gui.elf
+  debugProbe:
+    type: qemu
+    adapter: hwpod-qemu-gui-workspace
+    downloadCommand: subjects/lcd-qemu-lcd-v1/scripts/download
+    resetCommand: subjects/lcd-qemu-lcd-v1/scripts/reset
+    physicalProbe: false
+  ioProbe:
+    uart:
+      backend: pyserial
+      port: subjects/lcd-qemu-lcd-v1/.state/qemu/uart
+      baudRate: 115200
+      captureWindowMs: 500
+      captureMaxBytes: 1048576
+      pollIntervalMs: 10
+      simulated: true
+  display:
+    kind: qemu
+    controller: pl111
+    width: 640
+    height: 480
+    pixelFormat: rgb565
+    capture:
+      durationMs: 10000
+      frameRate: 5
+      screenshotFormat: png
+      videoFormat: webm
+      encoder:
+        command: ffmpeg
+        videoCodec: libvpx-vp9
+        pixelFormat: yuv420p
+  simulationBoundary:
+    physicalProbe: false
+    physicalFlash: false
+    powerControl: false
+    uart: qemu-pty
+    display: qemu-pl111
+  runtime:
+    pidFiles:
+    - subjects/lcd-qemu-lcd-v1/.state/qemu/pid

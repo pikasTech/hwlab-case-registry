@@ -1,0 +1,7 @@
+#!/bin/sh
+set -eu
+root="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
+mkdir -p "$root/build"
+arm-none-eabi-gcc -mcpu=cortex-a9 -marm -mfloat-abi=soft -c "$root/src/startup.S" -o "$root/build/startup.o"
+arm-none-eabi-gcc -std=gnu17 -mcpu=cortex-a9 -marm -mfloat-abi=soft -ffreestanding -fno-builtin -Os -Wall -Wextra -nostdlib -Wl,-T,"$root/linker.ld" "$root/build/startup.o" "$root/src/main.c" -o "$root/build/qemu-gui.elf" -lgcc
+arm-none-eabi-size "$root/build/qemu-gui.elf"
