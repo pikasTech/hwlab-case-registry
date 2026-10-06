@@ -2,7 +2,7 @@ LVGL_DIR ?= third_party/lvgl
 BUILD_DIR ?= build
 CC := arm-none-eabi-gcc
 OBJCOPY ?= arm-none-eabi-objcopy
-CFLAGS := -mcpu=cortex-a9 -marm -mfloat-abi=soft -mno-unaligned-access -ffreestanding -fno-builtin -fdata-sections -ffunction-sections -Os -Wall -Wextra -I$(LVGL_DIR) -I. -Isrc -DLV_CONF_INCLUDE_SIMPLE
+CFLAGS := -std=gnu17 -mcpu=cortex-a9 -marm -mfloat-abi=soft -mno-unaligned-access -ffreestanding -fno-builtin -fdata-sections -ffunction-sections -Os -Wall -Wextra -I$(LVGL_DIR) -I. -Isrc -DLV_CONF_INCLUDE_SIMPLE
 LDFLAGS := -mcpu=cortex-a9 -marm -nostartfiles -Wl,--gc-sections -Wl,-T,src/linker.ld
 LVGL_SOURCES := $(shell test -d $(LVGL_DIR)/src && find $(LVGL_DIR)/src -name '*.c' -print)
 PROJECT_SOURCES := src/main.c src/board.c src/syscalls.c src/lvgl_alloc.c
@@ -19,4 +19,4 @@ $(BUILD_DIR)/lvgl-qemu.bin: $(BUILD_DIR)/lvgl-qemu.elf
 clean:
 	rm -rf $(BUILD_DIR)
 source-lock:
-	python3 scripts/verify-source-lock.py
+	python3 scripts/materialize-source-lock.py

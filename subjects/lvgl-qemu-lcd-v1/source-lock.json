@@ -5,7 +5,8 @@
     "lvgl": {
       "repository": "https://github.com/lvgl/lvgl.git",
       "ref": "v9.2.2",
-      "commit": "7f07a129e8d77f4984fff8e623fd5be18ff42e74"
+      "commit": "7f07a129e8d77f4984fff8e623fd5be18ff42e74",
+      "destination": "third_party/lvgl"
     },
     "qemu": {
       "package": "qemu-system-arm",
@@ -16,6 +17,12 @@
   },
   "toolchain": {
     "compiler": "arm-none-eabi-gcc",
-    "minimumVersion": "12.3.1"
+    "minimumVersion": "12.3.1",
+    "languageStandard": "gnu17"
+  },
+  "display": {
+    "pixelFormat": "RGB565 little-endian",
+    "controller": "PL111",
+    "channelOrder": "RGB; board adapter configures PL111 BGR bit"
   }
 }
