@@ -14,19 +14,19 @@ spec:
   workspace:
     path: /home/ubuntu/workspace/hwpod_qemu_gui_workspace
     toolchain: arm-none-eabi-gcc
-    buildCommand: scripts/build
-    rebuildCommand: scripts/rebuild
-    buildArtifactPath: build/qemu-gui.elf
+    buildCommand: subjects/arm2d-qemu-scene-basics/scripts/build
+    rebuildCommand: subjects/arm2d-qemu-scene-basics/scripts/rebuild
+    buildArtifactPath: subjects/arm2d-qemu-scene-basics/build/qemu-gui.elf
   debugProbe:
     type: qemu
     adapter: hwpod-qemu-gui-workspace
-    downloadCommand: scripts/download
-    resetCommand: scripts/reset
+    downloadCommand: subjects/arm2d-qemu-scene-basics/scripts/download
+    resetCommand: subjects/arm2d-qemu-scene-basics/scripts/reset
     physicalProbe: false
   ioProbe:
     uart:
       backend: pyserial
-      port: /home/ubuntu/workspace/hwpod_qemu_gui_workspace/.state/qemu/uart
+      port: subjects/arm2d-qemu-scene-basics/.state/qemu/uart
       baudRate: 115200
       captureWindowMs: 500
       captureMaxBytes: 1048576
@@ -39,7 +39,7 @@ spec:
     height: 480
     pixelFormat: rgb565
     capture:
-      qmpSocket: .state/qemu/qmp.sock
+      qmpSocket: subjects/arm2d-qemu-scene-basics/.state/qemu/qmp.sock
       durationMs: 10000
       frameRate: 5
       screenshotFormat: png
