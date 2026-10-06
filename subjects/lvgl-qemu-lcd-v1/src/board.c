@@ -13,6 +13,7 @@
 #define PL111_CONTROL 6u
 #define PL111_CONTROL_ENABLE 0x001u
 #define PL111_CONTROL_BPP_16_565 (6u << 1)
+#define PL111_CONTROL_BGR (1u << 8)
 #define PL111_CONTROL_POWER 0x800u
 #define KMI_STAT 1u
 #define KMI_DATA 2u
@@ -36,7 +37,7 @@ static void lcd_init(void) {
     lcd[PL111_TIMING3] = 0u;
     lcd[PL111_UPBASE] = (uint32_t)FRAMEBUFFER;
     lcd[PL111_LPBASE] = (uint32_t)FRAMEBUFFER;
-    lcd[PL111_CONTROL] = PL111_CONTROL_POWER | PL111_CONTROL_BPP_16_565 | PL111_CONTROL_ENABLE;
+    lcd[PL111_CONTROL] = PL111_CONTROL_POWER | PL111_CONTROL_BGR | PL111_CONTROL_BPP_16_565 | PL111_CONTROL_ENABLE;
 }
 void board_init(void) { for (uint32_t i = 0; i < LCD_WIDTH * LCD_HEIGHT; ++i) FRAMEBUFFER[i] = 0x07e0u; board_draw_baseline_primitives(); lcd_init(); board_uart_write("LVGL-QEMU-READY baseline=qemu-lcd-lvgl-v1\\r\\n"); }
 void board_tick(uint32_t milliseconds) { ticks += milliseconds; }
