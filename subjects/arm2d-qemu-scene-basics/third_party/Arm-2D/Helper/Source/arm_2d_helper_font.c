@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_font.c"
  * Description:  the font helper service source code
  *
- * $Date:        29 July 2025
- * $Revision:    V.3.0.1
+ * $Date:        19 Dec 2025
+ * $Revision:    V.3.0.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -352,7 +352,7 @@ arm_2d_size_t arm_lcd_text_get_actual_char_box(void)
 static void __arm_lcd_text_update_char_buffer(void)
 {
     const arm_2d_font_t *ptFont = s_tLCDTextControl.ptFont;
-    if (ARM_2D_COLOUR_MASK_A8 == ptFont->tileFont.tInfo.tColourInfo.chScheme) {
+    if (ARM_2D_COLOUR_SZ_8BIT == ptFont->tileFont.tInfo.tColourInfo.u3ColourSZ) {
         /* free memory */
         arm_2d_scratch_memory_free(&s_tLCDTextControl.tCharBuffer);
         return ;
@@ -672,7 +672,9 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char)
                                             ptileChar,
                                             (__arm_2d_color_t){tForeColour},
                                             chOpacity);
-    } else {
+    }
+#if defined(RTE_Acceleration_Arm_2D_Transform)
+    else {
         arm_2d_size_t tCharSize =  ptileChar->tRegion.tSize;
         arm_2d_location_t c_tCentre = {
             .iX = tCharSize.iWidth >> 1,
@@ -694,6 +696,9 @@ IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a8_font_draw_char)
                                                 chOpacity,
                                                 &tTargetCenter);
     }
+#else
+    return (arm_fsm_rt_t)ARM_2D_ERR_NOT_AVAILABLE;
+#endif
 }
 
 IMPL_FONT_DRAW_CHAR(__arm_2d_lcd_text_default_a1_font_draw_char)

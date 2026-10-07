@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        09. September 2025
- * $Revision:    V.1.3.2
+ * $Date:        16 June 2026
+ * $Revision:    V.1.4.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -62,12 +62,22 @@ extern "C" {
 #   pragma GCC diagnostic ignored "-Wpadded"
 #endif
 
+
+/*============================ MACROS ========================================*/
+
+/*!
+ * \addtogroup Deprecated
+ * @{
+ */
+#define bHasSrcMask     bHasSourceMask
+#define bHasDesMask     bHasTargetMask
+
+/*! @} */
+
 /*!
  * \addtogroup gKernel 1 Kernel
  * @{
  */
-
-/*============================ MACROS ========================================*/
 
 /* A patch for GCC support */
 #if defined(__IS_COMPILER_GCC__) && __IS_COMPILER_GCC__ && __ARM_2D_HAS_HELIUM__
@@ -126,15 +136,17 @@ extern "C" {
 #endif
 
 
-#if __IS_COMPILER_ARM_COMPILER_5__
+#if __IS_COMPILER_IAR__ || __IS_COMPILER_ARM_COMPILER_5__
 
 #define __UINT8_MAX__   UINT8_MAX
 #define __UINT16_MAX__  UINT16_MAX
 #define __UINT32_MAX__  UINT32_MAX
+#define __UINT64_MAX__  UINT64_MAX
 
 #define __INT8_MAX__    INT8_MAX
 #define __INT16_MAX__   INT16_MAX
 #define __INT32_MAX__   INT32_MAX
+#define __INT64_MAX__   INT64_MAX
 
 #endif
 
@@ -380,7 +392,9 @@ enum {
     ARM_2D_COLOUR_SZ_16BIT_msk  =   ARM_2D_COLOUR_SZ_16BIT<< 1,
     ARM_2D_COLOUR_SZ_32BIT_msk  =   ARM_2D_COLOUR_SZ_32BIT<< 1,
     ARM_2D_COLOUR_SZ_24BIT_msk  =   ARM_2D_COLOUR_SZ_24BIT<< 1,
-    ARM_2D_COLOUR_SZ_msk        =   (0x07 << 1),
+    ARM_2D_COLOUR_SZ_pos        =   1,
+    ARM_2D_COLOUR_SZ_msk        =   (0x07 << ARM_2D_COLOUR_SZ_pos),
+    
 
     ARM_2D_COLOUR_LITTLE_ENDIAN       = 0,
     ARM_2D_COLOUR_BIG_ENDIAN          = 1,
@@ -449,7 +463,7 @@ enum {
 
     ARM_2D_COLOUR_8BIT        =   ARM_2D_COLOUR_SZ_8BIT_msk,
     ARM_2D_COLOUR_GRAY8       =   ARM_2D_COLOUR_SZ_8BIT_msk,
-    ARM_2D_COLOUR_MASK_A8     =   ARM_2D_COLOUR_SZ_8BIT_msk,
+    ARM_2D_COLOUR_MASK_A8     =   ARM_2D_COLOUR_SZ_8BIT_msk | ARM_2D_COLOUR_VARIANT_msk,
 
     ARM_2D_COLOUR_16BIT       =   ARM_2D_COLOUR_SZ_16BIT_msk,
     ARM_2D_COLOUR_RGB16       =   ARM_2D_COLOUR_SZ_16BIT_msk,
@@ -487,8 +501,8 @@ enum {
 };
 
 /* macros for colour formats */
-#define ARM_2D_M_COLOUR_MONOCHROME  ARM_2D_M_COLOUR_SZ_1BIT_msk     |\
-                                    ARM_2D_M_COLOUR_VARIANT_msk                 //!< macro for the monochrome
+#define ARM_2D_M_COLOUR_MONOCHROME  (   ARM_2D_M_COLOUR_SZ_1BIT_msk \
+                                    |   ARM_2D_M_COLOUR_VARIANT_msk )          //!< macro for the monochrome
 #define ARM_2D_M_COLOUR_BIN         ARM_2D_M_COLOUR_MONOCHROME                  //!< macro for the 1bit colour format (alias)
 #define ARM_2D_M_COLOUR_1BIT        ARM_2D_M_COLOUR_MONOCHROME                  //!< macro for the 1bin colour format (alias)
 
@@ -498,7 +512,8 @@ enum {
 
 #define ARM_2D_M_COLOUR_8BIT        ARM_2D_M_COLOUR_SZ_8BIT_msk                 //!< macro for the generic 8bit colour formats
 #define ARM_2D_M_COLOUR_GRAY8       ARM_2D_M_COLOUR_SZ_8BIT_msk                 //!< macro for the gray8 colour format
-#define ARM_2D_M_COLOUR_MASK_A8     ARM_2D_M_COLOUR_SZ_8BIT_msk                 //!< macro for the 8bit alpha mask
+#define ARM_2D_M_COLOUR_MASK_A8     (   ARM_2D_M_COLOUR_SZ_8BIT_msk \
+                                    |   ARM_2D_M_COLOUR_VARIANT_msk)            //!< macro for the 8bit alpha mask
 
 #define ARM_2D_M_COLOUR_16BIT       ARM_2D_M_COLOUR_SZ_16BIT_msk                //!< macro for the generic 16bit colour formats
 #define ARM_2D_M_COLOUR_RGB16       ARM_2D_M_COLOUR_SZ_16BIT_msk                //!< macro for the generic 16bit colour formats
@@ -734,6 +749,7 @@ typedef struct arm_2d_padding_t {
  * \brief type for 4 points alpha sample points
  * 
  */
+__attribute__((aligned(4)))
 typedef union arm_2d_alpha_samples_4pts_t {
     struct {
         uint8_t chTopLeft;
@@ -931,19 +947,23 @@ typedef struct arm_2d_evt_t {
     void                    *pTarget;                                           //!< user attached target
 } arm_2d_evt_t;
 
-#define ARM_2D_OP_INFO_PARAM_HAS_SOURCE             _BV(0)                      //!< opcode has source tile info
-#define ARM_2D_OP_INFO_PARAM_HAS_TARGET             _BV(1)                      //!< opcode has target tile info
-#define ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK        _BV(2)                      //!< opcode has source mask info
-#define ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK        _BV(3)                      //!< opcode has target mask info
-#define ARM_2D_OP_INFO_PARAM_HAS_ORIGIN             _BV(4)                      //!< opcode has original tile info
+#define ARM_2D_OP_INFO_PARAM_HAS_SOURCE             _BV(0)                      //!< opcode has the source tile info
+#define ARM_2D_OP_INFO_PARAM_HAS_TARGET             _BV(1)                      //!< opcode has the target tile info
+#define ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK        _BV(2)                      //!< opcode has the source mask info
+#define ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK        _BV(3)                      //!< opcode has the target mask info
+#define ARM_2D_OP_INFO_PARAM_HAS_ORIGIN             _BV(4)                      //!< opcode has the original tile info
+#define ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE       _BV(5)                      //!< opcode has the extra source tile info
+#define ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE_MASK  _BV(6)                      //!< opcode has the extra source mask tile info
 
 /*! a bitmask for INFO_PARAM_HAS_xxxx bitfields */
-#define ARM_2D_OP_INFO_PARAM_TILES_MASK             (                           \
-            ARM_2D_OP_INFO_PARAM_HAS_SOURCE         |                           \
-            ARM_2D_OP_INFO_PARAM_HAS_TARGET         |                           \
-            ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK    |                           \
-            ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK    |                           \
-            ARM_2D_OP_INFO_PARAM_HAS_ORIGIN         )
+#define ARM_2D_OP_INFO_PARAM_TILES_MASK                     \
+            (   ARM_2D_OP_INFO_PARAM_HAS_SOURCE             \
+            |   ARM_2D_OP_INFO_PARAM_HAS_TARGET             \
+            |   ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK        \
+            |   ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK        \
+            |   ARM_2D_OP_INFO_PARAM_HAS_ORIGIN             \
+            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE       \
+            |   ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE_MASK  )
 
 
 //! \brief an incomplete defintion which is only used for defining pointers
@@ -957,12 +977,13 @@ typedef union __arm_2d_op_info_t {
         arm_2d_color_info_t Colour;                                             //!< the colour used in thie operation
         union {
             struct {
-                uint8_t bHasSource              : 1;                            //!< whether this operation contains source tile
-                uint8_t bHasTarget              : 1;                            //!< whether this operation contains target tile
-                uint8_t bHasSrcMask             : 1;                            //!< whether this operation has Mask layer for source tile
-                uint8_t bHasDesMask             : 1;                            //!< whether this operation has Mask layer for target tile
-                uint8_t bHasOrigin              : 1;                            //!< whether the Source has an origin tile
-                uint8_t                         : 2;
+                uint8_t bHasSource              : 1;                            //!< whether this OP contains a source tile
+                uint8_t bHasTarget              : 1;                            //!< whether this OP contains a target tile
+                uint8_t bHasSourceMask          : 1;                            //!< whether this OP has a mask layer for the source tile
+                uint8_t bHasTargetMask          : 1;                            //!< whether this OP has a mask layer for the target tile
+                uint8_t bHasOrigin              : 1;                            //!< whether this OP has an origin tile
+                uint8_t bHasExtraSource         : 1;                            //!< whether this OP has an extra source tile
+                uint8_t bHasExtraSourceMask     : 1;                            //!< whether this OP has an mask layer for the extra source tile
                 uint8_t bAllowEnforcedColour    : 1;                            //!< whether this operation allow enforced colours in tiles
             };
             uint8_t chValue;                                                    //!< feature value
@@ -971,6 +992,7 @@ typedef union __arm_2d_op_info_t {
         uint8_t chInClassOffset;                                                //!< some operation uses this as the offset of the key member in the class
         uint8_t chOpIndex;                                                      //!< __ARM_2D_OP_IDX_XXXXXX
 
+    #if 0
         union {
             struct {
                 uint8_t CopyLike;                                               //!< A copy-like interface contains the target tile, the source tile and the copy size
@@ -984,6 +1006,7 @@ typedef union __arm_2d_op_info_t {
                 uint8_t TileProcessLike;                                        //!< A simple interface contains only the target tile
             };
         }LowLevelInterfaceIndex;                                                //!< Low level interface index
+    #endif
 
         union {
             const __arm_2d_low_level_io_t *IO[2];                               //!< array of IOs
@@ -1231,6 +1254,40 @@ typedef struct arm_2d_op_src_orig_msk_t {
     } Mask;
 } arm_2d_op_src_orig_msk_t;
 
+/*!
+ * \brief the base class for operations with a target tile, 
+ *        a dummy tile, a reference to the original source tile,
+ *        an extra source tile and a corresponding mask tile
+ * \note arm_2d_op_src_orig_msk_extra_t inherits from arm_2d_op_src_orig_msk_t
+ */
+typedef struct arm_2d_op_src_orig_msk_extra_t {
+    inherit(arm_2d_op_core_t);
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< target tile
+        const arm_2d_region_t   *ptRegion;              //!< target region
+    } Target;
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< the dummy source tile
+    }Source;
+    uint32_t wMode;
+
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< the origin tile
+        arm_2d_tile_t           tDummySource;           //!< the buffer for the source
+    }Origin;
+
+    struct {
+        const arm_2d_tile_t     *ptOriginSide;          //!< origin side mask
+        const arm_2d_tile_t     *ptTargetSide;          //!< target side mask
+    } Mask;
+
+    /* derived part */
+    struct {
+        const arm_2d_tile_t     *ptTile;                //!< the extra source tile
+        const arm_2d_tile_t     *ptMask;                //!< the mask for the extra source tile
+    } ExtraSource;
+
+} arm_2d_op_src_orig_msk_extra_t;
 
 /*----------------------------------------------------------------------------*
  * Fast Rotation linear regression structure
@@ -1281,5 +1338,3 @@ typedef struct arm_2d_rot_linear_regr_t {
 #endif
 
 #endif // __ARM_2D_TYPES_H__
-
-

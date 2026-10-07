@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.h"
  * Description:  Public header file for the PFB helper service 
  *
- * $Date:        10. September 2025
- * $Revision:    V.2.4.1
+ * $Date:        10. Feb 2026
+ * $Revision:    V.2.4.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -911,7 +911,8 @@ ARM_PRIVATE(
     uint8_t bSuspendUpdate              : 1;
     uint8_t bIgnore                     : 1;
     uint8_t bOnlyUpdateMinimalEnclosure : 1;
-    uint8_t                             : 4;
+    uint8_t bNewRegionIsDifferent       : 1;
+    uint8_t                             : 3;
     uint8_t chUpdateLifeCycle;                  /* a life cycle counter used to avoid repeated update operations in the same frame.*/
 
     uint16_t u16Key;
@@ -953,6 +954,12 @@ typedef struct arm_2d_helper_dirty_region_transform_t {
     float fScaleY;
 
     arm_2d_helper_dirty_region_item_t tItem;
+
+    struct {
+        arm_2d_location_t *ptPoints;
+        uint8_t chCount;
+    } SourceReference;     
+
 ARM_PRIVATE(
     
     arm_2d_op_t *ptTransformOP;
@@ -1232,7 +1239,7 @@ void arm_2d_helper_pfb_resume_low_level_flush(arm_2d_helper_pfb_t *ptThis);
 extern
 ARM_NONNULL(1)
 bool arm_2d_helper_pfb_full_frame_refresh_mode( arm_2d_helper_pfb_t *ptThis, 
-                                            bool bEnabled);
+                                                bool bEnabled);
 
 /*!
  * \brief Enable or disable anti-noise-scanning mode
@@ -1685,10 +1692,11 @@ void arm_2d_helper_dirty_region_on_frame_start(
  *            the ptNewRegion, NULL means no clipping.
  * \param[in] ptNewRegion the new region to update, NULL means nothing 
  *            to update
+ * \return boolean whether the old region and the new region are different.
  */
 extern
 ARM_NONNULL(1,2)
-void __arm_2d_helper_dirty_region_item_update(
+bool __arm_2d_helper_dirty_region_item_update(
                                         arm_2d_helper_dirty_region_item_t *ptThis,
                                         const arm_2d_tile_t *ptTargetTile,
                                         const arm_2d_region_t *ptVisibleArea,
@@ -1772,27 +1780,27 @@ bool arm_2d_helper_dirty_region_force_to_use_minimal_enclosure(
  * \brief force the dirty region helper to suspend the dirty region update.
  * 
  * \param[in] ptThis the target helper
- * \param[in] bEnable whether enable this feature.
+ * \param[in] bSuspend whether suspend the update.
  * \return boolean the original setting
  */
 extern
 ARM_NONNULL(1)
 bool arm_2d_helper_dirty_region_suspend_update(
                                         arm_2d_helper_dirty_region_t *ptThis,
-                                        bool bEnable);
+                                        bool bSuspend);
 
 /*!
  * \brief force the arm_2d_helper_dirty_region_item_t object to suspend the 
  *        dirty region update.
  * 
  * \param[in] ptThis the target item
- * \param[in] bEnable whether enable this feature.
+ * \param[in] bSuspend whether suspend the update.
  * \return boolean the original setting
  */
 ARM_NONNULL(1)
 bool arm_2d_helper_dirty_region_item_suspend_update(
                                         arm_2d_helper_dirty_region_item_t *ptThis,
-                                        bool bEnable);
+                                        bool bSuspend);
 
 /*----------------------------------------------------------------------------*
  * The Transform Helper Service (Deprecated)                                  *

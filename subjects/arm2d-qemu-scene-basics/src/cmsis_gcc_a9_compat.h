@@ -1,12 +1,17 @@
 #ifndef HWLAB_CMSIS_GCC_A9_COMPAT_H
 #define HWLAB_CMSIS_GCC_A9_COMPAT_H
 
-/* CMSIS 5 DSP spellings required by the locked Arm-2D v1.2.4 headers.
+/* CMSIS 5 DSP spellings required by the locked Arm-2D develop headers.
  * Cortex-A9 has the corresponding instructions, but arm_acle.h exposes
  * different names. Keep this adapter separate from upstream sources. */
 #ifndef __ASSEMBLER__
 #include <stdint.h>
 #include <limits.h>
+#include <time.h>
+
+/* Newlib constants do not imply a POSIX clock on this bare-metal target.
+ * main.c supplies the board timestamp/frequency overrides. */
+#undef CLOCK_REALTIME
 
 static inline int32_t __SMUAD(uint32_t a, uint32_t b) {
     int32_t result;

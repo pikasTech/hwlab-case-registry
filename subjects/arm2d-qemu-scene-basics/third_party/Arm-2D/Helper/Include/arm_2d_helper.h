@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        9. July 2025
- * $Revision:    V.2.4.1
+ * $Date:        9. July 2026
+ * $Revision:    V.2.6.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -229,7 +229,7 @@ extern "C" {
                     __frame_count,                                              \
                     __period)                                                   \
     {                                                                           \
-        .use_as__arm_2d_tile_t =                                                \
+        .tTile =                                                                \
             impl_child_tile((__sprites_tile), 0, 0, (__width), (__height)),     \
         .hwColumn = (__column),                                                 \
         .hwFrameNum = (__frame_count),                                          \
@@ -242,7 +242,10 @@ extern "C" {
  * \brief a helper class to represent a GIF-like resource
  */
 typedef struct arm_2d_helper_film_t {
-    implement(arm_2d_tile_t);                                                   /*!< derived from arm_2d_tile_t */
+    union {
+        arm_2d_tile_t tTile;
+        implement(arm_2d_tile_t);                                               /*!< derived from arm_2d_tile_t */
+    };
     uint16_t hwColumn;                                                          /*!< number of frames per row in a sprite tile */
     uint16_t hwFrameNum;                                                        /*!< the total number of frames */
     uint16_t hwPeriodPerFrame;                                                  /*!< the period per frame (optional, used as a reference) */
@@ -293,11 +296,11 @@ int64_t arm_2d_helper_convert_ticks_to_ms(int64_t lTick);
 /*! 
  * \brief convert millisecond into ticks of the reference timer 
  *
- * \param[in] wMS the target time in millisecond
+ * \param[in] lMS the target time in millisecond
  * \return int64_t the ticks
  */
 extern
-int64_t arm_2d_helper_convert_ms_to_ticks(uint32_t wMS);
+int64_t arm_2d_helper_convert_ms_to_ticks(int64_t lMS);
 
 /*!
  * \brief get the reference clock frequency
@@ -324,6 +327,12 @@ int64_t arm_2d_helper_get_system_timestamp(void);
 extern
 ARM_NONNULL(1)
 int64_t __arm_2d_helper_time_elapsed(int64_t *plTimestamp);
+
+/*!
+ * \brief get the system frequency
+ */
+extern
+uint32_t arm_2d_helper_get_system_frequency(void);
 
 /*!
  * \brief set an alarm with given period and check the status
@@ -509,6 +518,23 @@ extern
 ARM_NONNULL(1)
 void arm_2d_helper_film_set_frame(arm_2d_helper_film_t *ptThis, int32_t nIndex);
 
+/*!
+ * \brief get the current frame index number
+ * \param[in] ptThis the target film
+ * \return uint_fast16_t the current index
+ */
+extern
+ARM_NONNULL(1)
+uint_fast16_t arm_2d_helper_film_get_frame_index(arm_2d_helper_film_t *ptThis);
+
+/*!
+ * \brief get the frame count
+ * \param[in] ptThis the target film
+ * \return uint_fast16_t the frame count
+ */
+extern
+ARM_NONNULL(1)
+uint_fast16_t arm_2d_helper_film_get_frame_count(arm_2d_helper_film_t *ptThis);
 /*----------------------------------------------------------------------------*
  * FIFO Helper Service                                                        *
  *----------------------------------------------------------------------------*/
@@ -547,6 +573,53 @@ ARM_NONNULL(1)
 bool arm_2d_byte_fifo_enqueue(arm_2d_byte_fifo_t *ptThis, uint8_t chChar);
 
 /*!
+ * \brief remove a byte from the queue tail
+ * \param[in] ptThis the target FIFO control block
+ * \param[in] pchChar a buffer to store the byte, NULL means drop a byte
+ * \retval false the FIFO is EMPTY
+ * \retval true operation is successful
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_byte_fifo_vomit(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar);
+
+/*!
+ * \brief enter a byte to the FIFO, if the FIFO is full, drop one from the FIFO
+ * \param[in] ptThis the target FIFO control block
+ * \param[in] chChar the target byte
+ */
+extern
+ARM_NONNULL(1)
+void arm_2d_byte_fifo_squeeze(arm_2d_byte_fifo_t *ptThis, uint8_t chChar);
+
+/*!
+ * \brief get the number of bytes available in the FIFO.
+ * \param[in] ptThis the target FIFO control block
+ * \return uint16_t the byte count
+ */
+ARM_NONNULL(1)
+uint16_t arm_2d_byte_fifo_get_item_count(arm_2d_byte_fifo_t *ptThis);
+
+/*!
+ * \brief get the depth of the FIFO
+ * \param[in] ptThis the target FIFO control block
+ * \return uint16_t the byte count
+ */
+extern
+ARM_NONNULL(1)
+uint16_t arm_2d_byte_fifo_get_capcity(arm_2d_byte_fifo_t *ptThis);
+
+/*
+ * \brief move the peek pointer with a given offset and mode
+ * \param[in] ptThis the target FIFO control block
+ * \param[in] iOffset the offset for a given mode
+ * \param[in] whence one of the seek mode: SEEK_SET, SEEK_END and SEEK_CUR
+ */
+ARM_NONNULL(1)
+int16_t arm_2d_byte_fifo_peek_seek( arm_2d_byte_fifo_t *ptThis,
+                                    int16_t iOffset,
+                                    int32_t whence);
+/*!
  * \brief read a byte from a given fifo
  * \param[in] ptThis the target FIFO control block
  * \param[in] pchChar a buffer to store the byte, NULL means drop a byte
@@ -569,6 +642,18 @@ ARM_NONNULL(1)
 bool arm_2d_byte_fifo_peek( arm_2d_byte_fifo_t *ptThis, 
                             uint8_t *pchChar, 
                             bool bMovePointer);
+
+/*!
+ * \brief peek a number of bytes from a given fifo
+ * \param[in] ptThis the target FIFO control block
+ * \param[in] pchChar a buffer to store the byte, NULL means drop a byte
+ * \return size_t the number of bytes actually read out
+ */
+extern
+ARM_NONNULL(1)
+size_t arm_2d_byte_fifo_peek_bytes( arm_2d_byte_fifo_t *ptThis, 
+                                    uint8_t *pchChar,
+                                    size_t tLength);
 
 /*!
  * \brief drop all peeked byte from a given fifo
@@ -622,6 +707,15 @@ void __arm_2d_helper_layout_debug_print_label(const arm_2d_tile_t *ptTile,
                                               arm_2d_region_t *ptRegion,
                                               const char *pchString);
 #endif
+
+__STATIC_INLINE 
+uint32_t __arm_2d_helper_benchmark_calculate_fps30score(int64_t dwTotal, 
+                                                        size_t uIterationCount)
+{
+    int64_t lFPS30TimeInMs = arm_2d_helper_convert_ticks_to_ms(dwTotal);
+    return (uint32_t)(  ((double)(1000ul * 10000ul * uIterationCount) / 30.0f)
+                     /  (double)lFPS30TimeInMs);
+}
 
 /*! @} */
 

@@ -18,11 +18,11 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        #include "arm_2d_transform.h"
+ * Title:        arm_2d_transform.h
  * Description:  Public header file to contain the APIs for transform
  *
- * $Date:        14 May 2025
- * $Revision:    V.2.3.2
+ * $Date:        05 Jan 2026
+ * $Revision:    V.2.8.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -331,6 +331,14 @@ extern "C" {
 #define arm_2d_rgb888_tile_scaling                                              \
             arm_2d_cccn888_tile_scaling_with_colour_keying
 
+#define arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_xy_prepare   \
+            arm_2dp_gray8_fill_colour_with_transformed_mask_and_opacity_prepare
+
+#define arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_xy_prepare   \
+            arm_2dp_rgb565_fill_colour_with_transformed_mask_and_opacity_prepare
+
+#define arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_xy_prepare   \
+            arm_2dp_cccn888_fill_colour_with_transformed_mask_and_opacity_prepare
 /*! @} */
 
 /*!
@@ -2326,7 +2334,7 @@ extern "C" {
                                         __MSK_COLOUR,                           \
                                         __OPACITY,...)                          \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_xy_prepare(   \
+        arm_2dp_gray8_fill_colour_with_transformed_mask_and_opacity_prepare(    \
                                         (__CB_ADDR),                            \
                                         (__MASK_ADDR),                          \
                                         (__CENTRE),                             \
@@ -2354,7 +2362,7 @@ extern "C" {
                                         __MSK_COLOUR,                           \
                                         __OPACITY,...)                          \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_xy_prepare(  \
+        arm_2dp_rgb565_fill_colour_with_transformed_mask_and_opacity_prepare(   \
                                         (__CB_ADDR),                            \
                                         (__MASK_ADDR),                          \
                                         (__CENTRE),                             \
@@ -2382,7 +2390,7 @@ extern "C" {
                                         __MSK_COLOUR,                           \
                                         __OPACITY,...)                          \
         ({ if (bIsNewFrame) {                                                   \
-        arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_xy_prepare( \
+        arm_2dp_cccn888_fill_colour_with_transformed_mask_and_opacity_prepare(  \
                                         (__CB_ADDR),                            \
                                         (__MASK_ADDR),                          \
                                         (__CENTRE),                             \
@@ -4189,7 +4197,7 @@ typedef struct __arm_2d_transform_info_t {
     float                   fAngle;         //!< target angle
     float                   fScaleX;        //!< scaling factor
     float                   fScaleY;        //!< scaling factor   
-    arm_2d_point_float_t    tCenter;        //!< pivot
+    arm_2d_point_float_t    tCenter;        //!< pivot on Source
 
     union {
         uint8_t             chColour;       //!< the key colour in 8bit
@@ -4197,13 +4205,13 @@ typedef struct __arm_2d_transform_info_t {
         uint16_t            hwColour;       //!< the key colour in 32bit
     } Mask;
 
-    
     /* private members used by runtime */
 ARM_PRIVATE(
-    arm_2d_location_t       tDummySourceOffset;
+    arm_2d_location_t           tDummySourceOffset;
     struct {
-        arm_2d_region_t     tRegion;
-        arm_2d_tile_t       tTile;
+        arm_2d_region_t         tRegion;
+        arm_2d_tile_t           tTile;
+        arm_2d_point_float_t    tPivot;     //!< pivot on target
     } Target;
 )
 
@@ -4307,6 +4315,8 @@ typedef struct arm_2d_op_trans_msk_t {
     __arm_2d_transform_info_t   tTransform;     //!< transform context
     
 } arm_2d_op_trans_msk_t;
+
+
 
 
 /*! \brief arm_2d_op_trans_msk_t is inherit from arm_2d_op_trans_msk_t
@@ -5132,7 +5142,9 @@ arm_2d_err_t arm_2dp_cccn888_tile_transform_xy_with_src_mask_and_opacity_prepare
 /*!
  * \brief prepare for a gray8 colour-filling with a mask, a given opacity and 
  *        transform
- * \deprecated this API is deprecated, please use arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_xy_prepare() instead.
+ * \deprecated this API is deprecated, please use 
+ *             arm_2dp_gray8_fill_colour_with_transformed_mask_and_opacity_prepare()
+ *             instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptMask the target mask
  * \param[in] tCentre the pivot in the source tile
@@ -5169,7 +5181,7 @@ arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_prepare(
  */
 extern
 ARM_NONNULL(2)
-arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_xy_prepare(
+arm_2d_err_t arm_2dp_gray8_fill_colour_with_transformed_mask_and_opacity_prepare(
                                         arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
                                         const arm_2d_tile_t *ptMask,
                                         const arm_2d_point_float_t tCentre,
@@ -5182,7 +5194,9 @@ arm_2d_err_t arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_xy_prepar
 /*!
  * \brief prepare for a rgb565 colour-filling with a mask, a given opacity and 
  *        transform
- * \deprecated this API is deprecated, please use arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_xy_prepare() instead.
+ * \deprecated this API is deprecated, please use 
+ *             arm_2dp_rgb565_fill_colour_with_transformed_mask_and_opacity_prepare()
+ *             instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptMask the target mask
  * \param[in] tCentre the pivot in the source tile
@@ -5218,7 +5232,7 @@ arm_2d_err_t arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_prepare(
  */
 extern
 ARM_NONNULL(2)
-arm_2d_err_t arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_xy_prepare(
+arm_2d_err_t arm_2dp_rgb565_fill_colour_with_transformed_mask_and_opacity_prepare(
                                         arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
                                         const arm_2d_tile_t *ptMask,
                                         const arm_2d_point_float_t tCentre,
@@ -5231,7 +5245,9 @@ arm_2d_err_t arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_xy_prepa
 /*!
  * \brief prepare for a cccn888 colour-filling with a mask, a given opacity and 
  *        transform
- * \deprecated this API is deprecated, please use arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_xy_prepare() instead.
+ * \deprecated this API is deprecated, please use 
+ *             arm_2dp_cccn888_fill_colour_with_transformed_mask_and_opacity_prepare()
+ *             instead.
  * \param[in] ptOP the control block, NULL means using the default control block
  * \param[in] ptMask the target mask
  * \param[in] tCentre the pivot in the source tile
@@ -5267,7 +5283,7 @@ arm_2d_err_t arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_prepare
  */
 extern
 ARM_NONNULL(2)
-arm_2d_err_t arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_xy_prepare(
+arm_2d_err_t arm_2dp_cccn888_fill_colour_with_transformed_mask_and_opacity_prepare(
                                         arm_2d_op_fill_cl_msk_opa_trans_t *ptOP,
                                         const arm_2d_tile_t *ptMask,
                                         const arm_2d_point_float_t tCentre,
@@ -5307,11 +5323,31 @@ arm_fsm_rt_t arm_2dp_tile_transform_xy( arm_2d_op_trans_t *ptOP,
                                         const arm_2d_tile_t *ptTarget,
                                         const arm_2d_region_t *ptRegion,
                                         const arm_2d_point_float_t *ptTargetCentre);
-
+/*!
+ * \brief Calculate a reference region on target side with given reference points on
+ *        source side. 
+ * 
+ * \note  you MUST call this API after arm_2dp_tile_transform_xy.
+ * 
+ * \param[in] ptOP the control block, NULL means using the default control block
+ * \param[out] ptOutput an arm_2d_region_t pointer points to the output buffer
+ * \param[in] ptReferencePoints the reference points
+ * \param[in] chPointsCount the number of reference points
+ * \return arm_2d_region_t * the reference region
+ */
+extern
+ARM_NONNULL(1,2)
+arm_2d_region_t *arm_2d_calculate_reference_target_region_after_transform(
+                                                    arm_2d_op_trans_t *ptOP,
+                                                    arm_2d_region_t *ptOutput,
+                                                    arm_2d_location_t *ptReferencePoints,
+                                                    uint_fast8_t chPointsCount);
 /*! @} */
 
 /*========================= POST INCLUDES ====================================*/
 #include "__arm_2d_tile_2xssaa_transform.h"
+#include "__arm_2d_fill_colour_with_transformed_mask_and_target_mask.h"
+#include "__arm_2d_tile_copy_with_transformed_mask_source_mask_and_target_mask.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

@@ -21,8 +21,8 @@
  * Title:        __arm_2d_direct.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        04 September 2025
- * $Revision:    V.1.10.0
+ * $Date:        16 Dec 2025
+ * $Revision:    V.1.15.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -11340,6 +11340,454 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888(
                         uint32_t *__RESTRICT pwTargetBase,
                         int16_t iTargetStride,
                         arm_2d_size_t *__RESTRICT ptTargetSize);
+
+extern
+void __arm_2d_impl_gray8_colour_filling_with_transformed_mask_and_target_mask(
+                                        __arm_2d_param_copy_orig_msk_t *ptParam,
+                                        __arm_2d_transform_info_t *ptInfo);
+
+extern
+void __arm_2d_impl_rgb565_colour_filling_with_transformed_mask_and_target_mask(
+                                        __arm_2d_param_copy_orig_msk_t *ptParam,
+                                        __arm_2d_transform_info_t *ptInfo);
+
+extern
+void __arm_2d_impl_cccn888_colour_filling_with_transformed_mask_and_target_mask(
+                                        __arm_2d_param_copy_orig_msk_t *ptParam,
+                                        __arm_2d_transform_info_t *ptInfo);
+
+extern
+void __arm_2d_impl_gray8_colour_filling_with_transformed_mask_target_mask_and_opacity(
+                                        __arm_2d_param_copy_orig_msk_t *ptParam,
+                                        __arm_2d_transform_info_t *ptInfo,
+                                        uint_fast16_t chOpacity);
+
+extern
+void __arm_2d_impl_rgb565_colour_filling_with_transformed_mask_target_mask_and_opacity(
+                                        __arm_2d_param_copy_orig_msk_t *ptParam,
+                                        __arm_2d_transform_info_t *ptInfo,
+                                        uint_fast16_t chOpacity);
+
+extern
+void __arm_2d_impl_cccn888_colour_filling_with_transformed_mask_target_mask_and_opacity(
+                                        __arm_2d_param_copy_orig_msk_t *ptParam,
+                                        __arm_2d_transform_info_t *ptInfo,
+                                        uint_fast16_t chOpacity);
+
+extern
+void __arm_2d_impl_gray8_tile_copy_with_transformed_mask(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo);
+
+extern
+void __arm_2d_impl_rgb565_tile_copy_with_transformed_mask(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo);
+
+extern
+void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo);
+
+extern
+void __arm_2d_impl_gray8_tile_copy_with_transformed_mask_and_opacity(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo,
+                                    uint_fast16_t chOpacity);
+
+extern
+void __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_and_opacity(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo,
+                                    uint_fast16_t chOpacity);
+
+extern
+void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_and_opacity(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo,
+                                    uint_fast16_t chOpacity);
+
+extern
+void __arm_2d_impl_gray8_tile_copy_with_transformed_mask_and_source_mask(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo);
+
+extern
+void __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_and_source_mask(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo);
+
+extern
+void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_and_source_mask(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo);
+
+extern
+void __arm_2d_impl_gray8_tile_copy_with_transformed_mask_source_mask_and_opacity(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo,
+                                    uint_fast16_t chOpacity);
+
+extern
+void __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo,
+                                    uint_fast16_t chOpacity);
+
+extern
+void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo,
+                                    uint_fast16_t chOpacity);
+
+extern
+void __arm_2d_impl_gray8_tile_copy_with_transformed_mask_and_target_mask(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo);
+
+extern
+void __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_and_target_mask(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo);
+
+extern
+void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_and_target_mask(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo);
+
+extern 
+void __arm_2d_impl_gray8_tile_copy_with_transformed_mask_target_mask_and_opacity(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo,
+                                    uint_fast16_t chOpacity);
+
+extern 
+void __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo,
+                                    uint_fast16_t chOpacity);
+
+extern 
+void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_target_mask_and_opacity(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo,
+                                    uint_fast16_t chOpacity);
+
+extern
+void __arm_2d_impl_gray8_tile_copy_with_transformed_mask_source_mask_and_target_mask(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo);
+
+extern
+void __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_source_mask_and_target_mask(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo);
+
+extern
+void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_source_mask_and_target_mask(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo);
+
+extern 
+void __arm_2d_impl_gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo,
+                                    uint_fast16_t chOpacity);
+
+extern 
+void __arm_2d_impl_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo,
+                                    uint_fast16_t chOpacity);
+
+extern 
+void __arm_2d_impl_cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity(
+                                    __arm_2d_param_copy_orig_msk_extra_t *ptParam,
+                                    __arm_2d_transform_info_t *ptInfo,
+                                    uint_fast16_t chOpacity);
+
+extern
+void __arm_2d_impl_gray8_colour_filling_with_masks_only(
+                            uint8_t *__RESTRICT pchTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint8_t chColour);
+
+extern
+void __arm_2d_impl_rgb565_colour_filling_with_masks_only(
+                            uint16_t *__RESTRICT phwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint16_t hwColour);
+
+extern
+void __arm_2d_impl_cccn888_colour_filling_with_masks_only(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint32_t wColour);
+
+
+extern
+void __arm_2d_impl_gray8_colour_filling_with_masks_and_opacity_only(
+                            uint8_t *__RESTRICT pchTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint8_t chColour,
+                            uint16_t hwOpacity);
+
+extern
+void __arm_2d_impl_rgb565_colour_filling_with_masks_and_opacity_only(
+                            uint16_t *__RESTRICT phwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint16_t hwColour,
+                            uint16_t hwOpacity);
+
+extern
+void __arm_2d_impl_cccn888_colour_filling_with_masks_and_opacity_only(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint32_t wColour,
+                            uint16_t hwOpacity);
+
+
+extern
+void __arm_2d_impl_gray8_colour_filling_with_masks_and_x_mirror(
+                            uint8_t *__RESTRICT pchTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint8_t chColour);
+
+extern
+void __arm_2d_impl_rgb565_colour_filling_with_masks_and_x_mirror(
+                            uint16_t *__RESTRICT phwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint16_t hwColour);
+
+extern
+void __arm_2d_impl_cccn888_colour_filling_with_masks_and_x_mirror(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint32_t wColour);
+
+
+extern
+void __arm_2d_impl_gray8_colour_filling_with_masks_x_mirror_and_opacity(
+                            uint8_t *__RESTRICT pchTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint8_t chColour,
+                            uint16_t hwOpacity);
+
+extern
+void __arm_2d_impl_rgb565_colour_filling_with_masks_x_mirror_and_opacity(
+                            uint16_t *__RESTRICT phwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint16_t hwColour,
+                            uint16_t hwOpacity);
+
+extern
+void __arm_2d_impl_cccn888_colour_filling_with_masks_x_mirror_and_opacity(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint32_t wColour,
+                            uint16_t hwOpacity);
+
+
+extern
+void __arm_2d_impl_gray8_colour_filling_with_masks_and_y_mirror(
+                            uint8_t *__RESTRICT pchTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint8_t chColour);
+
+extern
+void __arm_2d_impl_rgb565_colour_filling_with_masks_and_y_mirror(
+                            uint16_t *__RESTRICT phwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint16_t hwColour);
+
+extern
+void __arm_2d_impl_cccn888_colour_filling_with_masks_and_y_mirror(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint32_t wColour);
+
+
+extern
+void __arm_2d_impl_gray8_colour_filling_with_masks_y_mirror_and_opacity(
+                            uint8_t *__RESTRICT pchTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint8_t chColour,
+                            uint16_t hwOpacity);
+
+extern
+void __arm_2d_impl_rgb565_colour_filling_with_masks_y_mirror_and_opacity(
+                            uint16_t *__RESTRICT phwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint16_t hwColour,
+                            uint16_t hwOpacity);
+
+extern
+void __arm_2d_impl_cccn888_colour_filling_with_masks_y_mirror_and_opacity(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint32_t wColour,
+                            uint16_t hwOpacity);
+
+
+extern
+void __arm_2d_impl_gray8_colour_filling_with_masks_and_xy_mirror(
+                            uint8_t *__RESTRICT pchTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint8_t chColour);
+
+extern
+void __arm_2d_impl_rgb565_colour_filling_with_masks_and_xy_mirror(
+                            uint16_t *__RESTRICT phwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint16_t hwColour);
+
+extern
+void __arm_2d_impl_cccn888_colour_filling_with_masks_and_xy_mirror(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint32_t wColour);
+
+
+extern
+void __arm_2d_impl_gray8_colour_filling_with_masks_xy_mirror_and_opacity(
+                            uint8_t *__RESTRICT pchTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint8_t chColour,
+                            uint16_t hwOpacity);
+
+extern
+void __arm_2d_impl_rgb565_colour_filling_with_masks_xy_mirror_and_opacity(
+                            uint16_t *__RESTRICT phwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint16_t hwColour,
+                            uint16_t hwOpacity);
+
+extern
+void __arm_2d_impl_cccn888_colour_filling_with_masks_xy_mirror_and_opacity(
+                            uint32_t *__RESTRICT pwTarget,
+                            int16_t iTargetStride,
+                            uint8_t *__RESTRICT pchSourceMask,
+                            int16_t iSourceMaskStride,
+                            uint8_t *__RESTRICT pchTargetMask,
+                            int16_t iTargetMaskStride,
+                            arm_2d_size_t *__RESTRICT ptCopySize,
+                            uint32_t wColour,
+                            uint16_t hwOpacity);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

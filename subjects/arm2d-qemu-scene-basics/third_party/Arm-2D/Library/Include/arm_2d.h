@@ -18,12 +18,12 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        #include "arm_2d.h"
+ * Title:        arm_2d.h
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        28 May 2025
- * $Revision:    V.1.2.4-dev
+ * $Date:        6 April 2026
+ * $Revision:    V.1.3.0-dev
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -73,8 +73,10 @@ extern "C" {
 #   pragma GCC diagnostic ignored "-Wnonnull-compare"
 #   pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 #   pragma GCC diagnostic ignored "-Wunused-const-variable"
-#elif defined(__IS_COMPILER_ARM_COMPILER_5__)
+#elif __IS_COMPILER_ARM_COMPILER_5__
 #   pragma diag_suppress 1296,174,64,177,1
+#elif __IS_COMPILER_IAR__
+#   pragma diag_suppress=Pa029,Pe301,Pe174,Pe191,Pe177,Pe546
 #endif
 
 /*!
@@ -86,9 +88,9 @@ extern "C" {
 
 /*  arm-2d version */
 #define ARM_2D_VERSION_MAJOR        1                                           //!< Major version
-#define ARM_2D_VERSION_MINOR        2                                           //!< Minor version
-#define ARM_2D_VERSION_PATCH        4                                           //!< Patch number
-#define ARM_2D_VERSION_STR          ""                                          //!< tag
+#define ARM_2D_VERSION_MINOR        3                                           //!< Minor version
+#define ARM_2D_VERSION_PATCH        0                                           //!< Patch number
+#define ARM_2D_VERSION_STR          "dev"                                       //!< tag
 
 /*!
  * \brief arm-2d version number in decimal

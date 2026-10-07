@@ -188,26 +188,6 @@ const arm_2d_tile_t c_tileWhiteDotGRAY8 = {
 };
 
 
-extern const arm_2d_tile_t c_tileSmallDotMask;
-
-ARM_SECTION("arm2d.tile.c_tileSmallDotMask")
-const arm_2d_tile_t c_tileSmallDotMask = {
-    .tRegion = {
-        .tSize = {
-            .iWidth = 7,
-            .iHeight = 7,
-        },
-    },
-    .tInfo = {
-        .bIsRoot = true,
-        .bHasEnforcedColour = true,
-        .tColourInfo = {
-            .chScheme = ARM_2D_COLOUR_8BIT,
-        },
-    },
-    .phwBuffer = (uint16_t *)c_bmpSmallDotAlpha,
-};
-
 extern const arm_2d_tile_t c_tileWhiteDotRGB565;
 ARM_SECTION("arm2d.tile.c_tileWhiteDotRGB565")
 const arm_2d_tile_t c_tileWhiteDotRGB565 = {
@@ -321,5 +301,4 @@ const arm_2d_tile_t c_tileWhiteDotAlphaQuarter = {
 #elif defined(__IS_COMPILER_ARM_COMPILER_5__)
 #   pragma diag_warning=1296
 #endif
-
 

@@ -8,22 +8,22 @@ set -- \
   "$root/src/main.c" \
   "$root/src/arm_2d_disp_adapter_0.c" \
   "$arm2d/examples/demos/arm_2d_scene_basics.c" \
-  "$arm2d/examples/common/asset_DigitsFont.c" \
+  "$arm2d/examples/common/asset/arm_2d_asset_DigitsFont.c" \
   "$arm2d/Library/Source/arm_2d.c" \
   "$arm2d/Library/Source/arm_2d_alpha_blending.c" \
   "$arm2d/Library/Source/arm_2d_async.c" \
   "$arm2d/Library/Source/arm_2d_conversion.c" \
   "$arm2d/Library/Source/arm_2d_draw.c" \
   "$arm2d/Library/Source/arm_2d_transform.c" \
-  "$arm2d/Platform/math/arm_common_tables.c" \
-  "$arm2d/Platform/math/arm_cos_f32.c" \
-  "$arm2d/Platform/math/arm_cos_q31.c" \
-  "$arm2d/Platform/math/arm_sin_f32.c" \
-  "$arm2d/Platform/math/arm_sin_q31.c" \
+  "$arm2d/examples/[template][pc][vscode]/platform/math/arm_common_tables.c" \
+  "$arm2d/examples/[template][pc][vscode]/platform/math/arm_cos_f32.c" \
+  "$arm2d/examples/[template][pc][vscode]/platform/math/arm_cos_q31.c" \
+  "$arm2d/examples/[template][pc][vscode]/platform/math/arm_sin_f32.c" \
+  "$arm2d/examples/[template][pc][vscode]/platform/math/arm_sin_q31.c" \
   "$arm2d/Helper/Source/arm_2d_asset_circle_small.c" \
   "$arm2d/Helper/Source/arm_2d_asset_cmsis_logo.c" \
   "$arm2d/Helper/Source/arm_2d_asset_glcd_fonts.c" \
-  "$arm2d/Helper/Source/arm_2d_asset_white_dot_small.c" \
+  "$arm2d/Helper/Source/arm_2d_asset_white_dot.c" \
   "$arm2d/Helper/Source/arm_2d_helper.c" \
   "$arm2d/Helper/Source/arm_2d_helper_built_in.c" \
   "$arm2d/Helper/Source/arm_2d_helper_control.c" \
@@ -43,7 +43,7 @@ arm-none-eabi-gcc -std=gnu17 -fms-extensions -Wno-error=int-conversion -mcpu=cor
   -I"$root/src" \
   -I"$arm2d/Library/Include" \
   -I"$arm2d/Helper/Include" \
-  -I"$arm2d/Platform/math" \
+  -I"$arm2d/examples/[template][pc][vscode]/platform/math" \
   -I"$arm2d/examples/demos" \
   -I"$arm2d/examples/common/controls" \
   -nostdlib -Wl,-Map,"$root/build/qemu-gui.map" -Wl,--build-id=none -Wl,--gc-sections -Wl,-T,"$root/linker.ld" \

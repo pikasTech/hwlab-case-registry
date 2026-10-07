@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        11. September 2025
- * $Revision:    V.1.4.12
+ * $Date:        25. June 2026
+ * $Revision:    V.1.6.0
  *
  * -------------------------------------------------------------------- */
 
@@ -52,31 +52,28 @@
 #   include __ARM_2D_HAS_USER_HEADER__
 #endif
 
-#undef __IS_SUPPORTED_ARM_ARCH__
+#undef __IS_SUPPORTED_ARM_ARCH_M__
 #if (__ARM_ARCH_PROFILE == 'M') || defined(__TARGET_PROFILE_M)
-#   define __IS_SUPPORTED_ARM_ARCH__        1
+#   define __IS_SUPPORTED_ARM_ARCH_M__        1
 #else
-#   define __IS_SUPPORTED_ARM_ARCH__        0
+#   define __IS_SUPPORTED_ARM_ARCH_M__        0
 #endif
 
-/*! \note arm-2d relies on CMSIS 5.8.0 and above.
- */
-#if __IS_SUPPORTED_ARM_ARCH__
-
-#ifdef   __cplusplus
-extern "C" {
-#endif
-
-#   include "cmsis_compiler.h"
-
-#ifdef   __cplusplus
-}
-#endif
-
+#undef __IS_SUPPORTED_ARM_ARCH_A__
+#if (__ARM_ARCH_PROFILE == 'A') || defined(__TARGET_PROFILE_A)
+#   define __IS_SUPPORTED_ARM_ARCH_A__        1
 #else
-#   include "arm_2d_user_arch_port.h"
+#   define __IS_SUPPORTED_ARM_ARCH_A__        0
 #endif
 
+#undef __IS_ARCH_ARM__
+#if ((__ARM_ARCH_PROFILE == 'A') || defined(__TARGET_PROFILE_A)) \
+ || ((__ARM_ARCH_PROFILE == 'R') || defined(__TARGET_PROFILE_R)) \
+ || ((__ARM_ARCH_PROFILE == 'M') || defined(__TARGET_PROFILE_M))
+#   define __IS_ARCH_ARM__        1
+#else
+#   define __IS_ARCH_ARM__        0
+#endif
 
 #ifdef   __cplusplus
 extern "C" {
@@ -213,6 +210,19 @@ extern "C" {
  * \note this macro does NOT support microsoft extensions (-fms-extensions)
  */
 #define inherit_ex(__type, __name)      __inherit_ex(__type, __name)
+
+/*----------------------------------------------------------------------------*
+ * Intrinsics Patch                                                           *
+ *----------------------------------------------------------------------------*/
+#if __IS_SUPPORTED_ARM_ARCH_M__                                                 \
+ && (   __IS_COMPILER_ARM_COMPILER_5__                                          \
+    ||  (__IS_COMPILER_GCC__ && (__GNUC__ < 14)))
+
+#   define __rev16      __REV16
+#   define __rev        __REV 
+#   define __ror        __ROR
+
+#endif
 
 
 /*----------------------------------------------------------------------------*
@@ -710,7 +720,7 @@ extern "C" {
 
    \endcode
  */
-#if __IS_SUPPORTED_ARM_ARCH__
+#if __IS_SUPPORTED_ARM_ARCH_M__
 #   undef arm_irq_safe
 #   undef arm_exit_irq_safe
 #   define arm_irq_safe                                                         \
@@ -1309,6 +1319,23 @@ extern
 size_t strnlen(const char *pchString, size_t tMaxSize);
 #endif
 
+/*============================ POST-INCLUDES ================================*/
+
+#if __IS_ARCH_ARM__ && !__IS_COMPILER_ARM_COMPILER_5__
+#    include <arm_acle.h>
+#endif
+
+/*! \note arm-2d relies on CMSIS 5.8.0 and above.
+ */
+#if __IS_SUPPORTED_ARM_ARCH_M__
+
+#   include "cmsis_compiler.h"
+#   include "cmsis_version.h"
+
+#else
+#   include "arm_2d_user_arch_port.h"
+#endif
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #elif __IS_COMPILER_ARM_COMPILER_5__
@@ -1339,7 +1366,7 @@ size_t strnlen(const char *pchString, size_t tMaxSize);
 #define ARM_PUBLIC(...)    struct {__VA_ARGS__};
 
 /* redefine macros */
-#if defined(__cplusplus)
+#if defined(__cplusplus) || defined(__ARM_2D_DEBUG__)
 #   define ARM_PRIVATE(...)                                                     \
         struct  {                                                               \
             __VA_ARGS__                                                         \
@@ -1350,7 +1377,7 @@ size_t strnlen(const char *pchString, size_t tMaxSize);
             __VA_ARGS__                                                         \
         };
 
-#elif defined(__ARM_2D_IMPL__) || defined(__IS_COMPILER_IAR__)
+#elif defined(__ARM_2D_IMPL__) //|| defined(__IS_COMPILER_IAR__)
 
 #   define ARM_PRIVATE(...)                                                     \
         struct  {                                                               \

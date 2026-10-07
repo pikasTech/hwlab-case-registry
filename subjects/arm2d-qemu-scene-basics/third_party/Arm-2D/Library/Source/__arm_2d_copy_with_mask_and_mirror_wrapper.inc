@@ -64,7 +64,7 @@
 #define __API_MCMM_COLOUR_UPPERCASE           __API_CMMW_COLOUR_UPPERCASE
 #define __API_MCMM_COLOUR_SZ                  __API_CMMW_COLOUR_SZ
 #define __API_MCMM_INT_TYPE                   __API_CMMW_INT_TYPE
-#define __API_MCMM_OP                         ARM_2D_OP_TILE_COPY_WITH_MASK
+#define __API_MCMM_OP                         ARM_2D_OP_TILE_COPY_WITH_MASKS
 #define __API_MCMM_OP_TYPE                    arm_2d_op_cp_msk_t
 #define __API_MCMM_MIRROR_TYPE                only
 #define __API_MCMM_MIRROR_TYPE_UPPERCASE      ONLY
@@ -111,7 +111,7 @@
 #define __API_MCMM_COLOUR_UPPERCASE           __API_CMMW_COLOUR_UPPERCASE
 #define __API_MCMM_COLOUR_SZ                  __API_CMMW_COLOUR_SZ
 #define __API_MCMM_INT_TYPE                   __API_CMMW_INT_TYPE
-#define __API_MCMM_OP                         ARM_2D_OP_TILE_COPY_WITH_MASK_AND
+#define __API_MCMM_OP                         ARM_2D_OP_TILE_COPY_WITH_MASKS_AND
 #define __API_MCMM_OP_TYPE                    arm_2d_op_cp_msk_t
 #define __API_MCMM_MIRROR_TYPE                x_mirror
 #define __API_MCMM_MIRROR_TYPE_UPPERCASE      X_MIRROR
@@ -156,7 +156,7 @@
 #define __API_MCMM_COLOUR_UPPERCASE           __API_CMMW_COLOUR_UPPERCASE
 #define __API_MCMM_COLOUR_SZ                  __API_CMMW_COLOUR_SZ
 #define __API_MCMM_INT_TYPE                   __API_CMMW_INT_TYPE
-#define __API_MCMM_OP                         ARM_2D_OP_TILE_COPY_WITH_MASK_AND
+#define __API_MCMM_OP                         ARM_2D_OP_TILE_COPY_WITH_MASKS_AND
 #define __API_MCMM_OP_TYPE                    arm_2d_op_cp_msk_t
 #define __API_MCMM_MIRROR_TYPE                y_mirror
 #define __API_MCMM_MIRROR_TYPE_UPPERCASE      Y_MIRROR
@@ -202,7 +202,7 @@
 #define __API_MCMM_COLOUR_UPPERCASE           __API_CMMW_COLOUR_UPPERCASE
 #define __API_MCMM_COLOUR_SZ                  __API_CMMW_COLOUR_SZ
 #define __API_MCMM_INT_TYPE                   __API_CMMW_INT_TYPE
-#define __API_MCMM_OP                         ARM_2D_OP_TILE_COPY_WITH_MASK_AND
+#define __API_MCMM_OP                         ARM_2D_OP_TILE_COPY_WITH_MASKS_AND
 #define __API_MCMM_OP_TYPE                    arm_2d_op_cp_msk_t
 #define __API_MCMM_MIRROR_TYPE                xy_mirror
 #define __API_MCMM_MIRROR_TYPE_UPPERCASE      XY_MIRROR
@@ -249,7 +249,7 @@
 #define __API_MFMM_COLOUR_UPPERCASE           __API_CMMW_COLOUR_UPPERCASE
 #define __API_MFMM_COLOUR_SZ                  __API_CMMW_COLOUR_SZ
 #define __API_MFMM_INT_TYPE                   __API_CMMW_INT_TYPE
-#define __API_MFMM_OP                         ARM_2D_OP_TILE_FILL_WITH_MASK
+#define __API_MFMM_OP                         ARM_2D_OP_TILE_FILL_WITH_MASKS
 #define __API_MFMM_OP_TYPE                    arm_2d_op_cp_msk_t
 #define __API_MFMM_MIRROR_TYPE                only
 #define __API_MFMM_MIRROR_TYPE_UPPERCASE      ONLY
@@ -295,7 +295,7 @@
 #define __API_MFMM_COLOUR_UPPERCASE           __API_CMMW_COLOUR_UPPERCASE
 #define __API_MFMM_COLOUR_SZ                  __API_CMMW_COLOUR_SZ
 #define __API_MFMM_INT_TYPE                   __API_CMMW_INT_TYPE
-#define __API_MFMM_OP                         ARM_2D_OP_TILE_FILL_WITH_MASK_AND
+#define __API_MFMM_OP                         ARM_2D_OP_TILE_FILL_WITH_MASKS_AND
 #define __API_MFMM_OP_TYPE                    arm_2d_op_cp_msk_t
 #define __API_MFMM_MIRROR_TYPE                x_mirror
 #define __API_MFMM_MIRROR_TYPE_UPPERCASE      X_MIRROR
@@ -341,7 +341,7 @@
 #define __API_MFMM_COLOUR_UPPERCASE           __API_CMMW_COLOUR_UPPERCASE
 #define __API_MFMM_COLOUR_SZ                  __API_CMMW_COLOUR_SZ
 #define __API_MFMM_INT_TYPE                   __API_CMMW_INT_TYPE
-#define __API_MFMM_OP                         ARM_2D_OP_TILE_FILL_WITH_MASK_AND
+#define __API_MFMM_OP                         ARM_2D_OP_TILE_FILL_WITH_MASKS_AND
 #define __API_MFMM_OP_TYPE                    arm_2d_op_cp_msk_t
 #define __API_MFMM_MIRROR_TYPE                y_mirror
 #define __API_MFMM_MIRROR_TYPE_UPPERCASE      Y_MIRROR
@@ -386,7 +386,7 @@
 #define __API_MFMM_COLOUR_UPPERCASE           __API_CMMW_COLOUR_UPPERCASE
 #define __API_MFMM_COLOUR_SZ                  __API_CMMW_COLOUR_SZ
 #define __API_MFMM_INT_TYPE                   __API_CMMW_INT_TYPE
-#define __API_MFMM_OP                         ARM_2D_OP_TILE_FILL_WITH_MASK_AND
+#define __API_MFMM_OP                         ARM_2D_OP_TILE_FILL_WITH_MASKS_AND
 #define __API_MFMM_OP_TYPE                    arm_2d_op_cp_msk_t
 #define __API_MFMM_MIRROR_TYPE                xy_mirror
 #define __API_MFMM_MIRROR_TYPE_UPPERCASE      XY_MIRROR

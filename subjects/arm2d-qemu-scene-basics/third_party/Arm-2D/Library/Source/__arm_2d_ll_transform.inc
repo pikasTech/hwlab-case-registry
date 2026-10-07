@@ -22,8 +22,8 @@
  * Title:        __arm_2d_fill_colour.inc
  * Description:  c code template for drawing pattern
  *
- * $Date:        09. September 2025
- * $Revision:    V.1.3.0
+ * $Date:        20. Nov 2025
+ * $Revision:    V.1.4.0
  *
  * -------------------------------------------------------------------- */
 
@@ -938,11 +938,38 @@ void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
 
     uint8_t *pchAlphaSample = &pchOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
+#if !__ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
     uint8_t chPixelAlpha0 = *pchAlphaSample++;
     uint8_t chPixelAlpha1 = *pchAlphaSample;
     pchAlphaSample += iOrigStride;
     uint8_t chPixelAlpha3 = *pchAlphaSample--;
     uint8_t chPixelAlpha2 = *pchAlphaSample;
+#else
+    union {
+        uint32_t wValue;
+        uint8_t chPixel[4];
+    } PixelAlpha;
+
+#undef chPixelAlpha0
+#undef chPixelAlpha1
+#undef chPixelAlpha2
+#undef chPixelAlpha3
+
+#define chPixelAlpha0   PixelAlpha.chPixel[0]
+#define chPixelAlpha1   PixelAlpha.chPixel[1]
+#define chPixelAlpha2   PixelAlpha.chPixel[2]
+#define chPixelAlpha3   PixelAlpha.chPixel[3]
+
+    chPixelAlpha0 = *pchAlphaSample++;
+    chPixelAlpha1 = *pchAlphaSample;
+    pchAlphaSample += iOrigStride;
+    chPixelAlpha3 = *pchAlphaSample--;
+    chPixelAlpha2 = *pchAlphaSample;
+
+    if (0 == PixelAlpha.wValue) {
+        return ;
+    }
+#endif
 
     uint16_t hwAlpha1 = (uint32_t)((uint32_t)hwAlphaX * (256 - (uint32_t)hwAlphaY)) >> 8;
     uint16_t hwAlpha2 = ((256 - hwAlphaX) * hwAlphaY) >> 8;
@@ -963,11 +990,16 @@ void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
     wTotalAlpha += (chPixelAlpha3 == 255) * (hwAlpha3 << 8) 
                 + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
 
+    wTotalAlpha >>= 8;
     if (wTotalAlpha) {
-        uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
-                            + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
+        uint16_t hwAlpha = (wTotalAlpha >= 0xFF) * hwOpacity
+                            + (!(wTotalAlpha >= 0xFF) * (wTotalAlpha * hwOpacity >> 8));
 
-        __API_PIXEL_BLENDING( &MaskColour, pTarget, hwAlpha);
+        if (hwAlpha >= 255) {
+            *pTarget = MaskColour;
+        } else {
+            __API_PIXEL_BLENDING( &MaskColour, pTarget, hwAlpha);
+        }
     }
 
 #else
@@ -977,18 +1009,27 @@ void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
         .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
 
-    uint32_t wPixelAlpha = 0;
-    //if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tPoint)) {
-        wPixelAlpha = pchOrigin[   tPoint.iY * iOrigStride
+    uint32_t wPixelAlpha = pchOrigin[   tPoint.iY * iOrigStride
                                      +   tPoint.iX];
+    if (0 == wPixelAlpha) {
+        return ;
+    }
 
-        wPixelAlpha =  (wPixelAlpha == 255) * hwOpacity
-                     + !(wPixelAlpha == 255) * (wPixelAlpha * hwOpacity >> 8);
+    wPixelAlpha =  (wPixelAlpha == 255) * hwOpacity
+                    + !(wPixelAlpha == 255) * (wPixelAlpha * hwOpacity >> 8);
 
+    if (wPixelAlpha >= 255) {
+        *pTarget = MaskColour;
+    } else {
         __API_PIXEL_BLENDING( &MaskColour, pTarget, wPixelAlpha);
-    //}
+    }
 
 #endif
+
+#undef chPixelAlpha0
+#undef chPixelAlpha1
+#undef chPixelAlpha2
+#undef chPixelAlpha3
 }
 
 
@@ -1080,8 +1121,7 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity_transform)(
 
             __ARM_2D_FUNC(get_alpha_with_opacity) (
                             &tPointFast,
-                            &ptParam->tOrigin.
-                            tValidRegion,
+                            &ptParam->tOrigin.tValidRegion,
                             pchOrigin,
                             iOrigStride,
                             pTargetBase,
@@ -1118,11 +1158,39 @@ void __ARM_2D_FUNC(get_chn_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
 
     uint32_t *pwAlphaSample = &pwOrigin[tPoint.iY * iOrigStride + tPoint.iX];
 
+#if !__ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
     uint8_t chPixelAlpha0 = *(uint8_t *)(pwAlphaSample++);
     uint8_t chPixelAlpha1 = *(uint8_t *)pwAlphaSample;
     pwAlphaSample += iOrigStride;
     uint8_t chPixelAlpha3 = *(uint8_t *)(pwAlphaSample--);
     uint8_t chPixelAlpha2 = *(uint8_t *)pwAlphaSample;
+#else
+    union {
+        uint32_t wValue;
+        uint8_t chPixel[4];
+    } PixelAlpha;
+
+#undef chPixelAlpha0
+#undef chPixelAlpha1
+#undef chPixelAlpha2
+#undef chPixelAlpha3
+
+#define chPixelAlpha0   PixelAlpha.chPixel[0]
+#define chPixelAlpha1   PixelAlpha.chPixel[1]
+#define chPixelAlpha2   PixelAlpha.chPixel[2]
+#define chPixelAlpha3   PixelAlpha.chPixel[3]
+
+    chPixelAlpha0 = *(uint8_t *)(pwAlphaSample++);
+    chPixelAlpha1 = *(uint8_t *)pwAlphaSample;
+    pwAlphaSample += iOrigStride;
+    chPixelAlpha3 = *(uint8_t *)(pwAlphaSample--);
+    chPixelAlpha2 = *(uint8_t *)pwAlphaSample;
+
+    if (0 == PixelAlpha.wValue) {
+        return ;
+    }
+
+#endif
 
     uint16_t hwAlpha1 = (hwAlphaX * (256 - hwAlphaY)) >> 8;
     uint16_t hwAlpha2 = ((256 - hwAlphaX) * hwAlphaY) >> 8;
@@ -1147,7 +1215,11 @@ void __ARM_2D_FUNC(get_chn_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
         uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
                             + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
-        __API_PIXEL_BLENDING( &MaskColour, pTarget, hwAlpha);
+        if (hwAlpha >= 255) {
+            *pTarget = MaskColour;
+        } else {
+            __API_PIXEL_BLENDING( &MaskColour, pTarget, hwAlpha);
+        }
     }
 
 #else
@@ -1157,17 +1229,27 @@ void __ARM_2D_FUNC(get_chn_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
         .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
 
-    uint32_t wPixelAlpha = 0;
-    //if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tPoint)) {
-        wPixelAlpha = *(uint8_t *)&pwOrigin[ tPoint.iY * iOrigStride + tPoint.iX];
+    uint32_t wPixelAlpha = *(uint8_t *)&pwOrigin[ tPoint.iY * iOrigStride + tPoint.iX];
 
-        wPixelAlpha =  (wPixelAlpha == 255) * hwOpacity
-                     + !(wPixelAlpha == 255) * (wPixelAlpha * hwOpacity >> 8);
+    if (0 == wPixelAlpha) {
+        return ;
+    }
 
+    wPixelAlpha =  (wPixelAlpha == 255) * hwOpacity
+                    + !(wPixelAlpha == 255) * (wPixelAlpha * hwOpacity >> 8);
+
+    if (wPixelAlpha >= 255) {
+        *pTarget = MaskColour;
+    } else {
         __API_PIXEL_BLENDING( &MaskColour, pTarget, wPixelAlpha);
-    //}
+    }
 
 #endif
+
+#undef chPixelAlpha0
+#undef chPixelAlpha1
+#undef chPixelAlpha2
+#undef chPixelAlpha3
 }
 
 

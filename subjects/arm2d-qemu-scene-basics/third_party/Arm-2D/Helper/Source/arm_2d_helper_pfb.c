@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        10. September 2025
- * $Revision:    V.2.4.1
+ * $Date:        10. Feb 2026
+ * $Revision:    V.2.4.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3082,7 +3082,7 @@ ARM_PT_BEGIN(this.Adapter.chPT)
                     this.tCFG.Dependency.Navigation.evtOnDrawing.pTarget,
                     this.Adapter.ptFrameBuffer,
                     this.Adapter.bIsNewFrame);
-            arm_2d_op_wait_async(NULL);
+            ARM_2D_OP_WAIT_ASYNC();
             
             this.Statistics.nTotalCycle += 
                 __arm_2d_helper_perf_counter_stop(
@@ -4704,7 +4704,7 @@ void arm_2d_helper_dirty_region_item_set_extra_region(
 
 
 ARM_NONNULL(1,2)
-void __arm_2d_helper_dirty_region_item_update(
+bool __arm_2d_helper_dirty_region_item_update(
                                         arm_2d_helper_dirty_region_item_t *ptThis,
                                         const arm_2d_tile_t *ptTargetTile,
                                         const arm_2d_region_t *ptVisibleArea,
@@ -4713,20 +4713,38 @@ void __arm_2d_helper_dirty_region_item_update(
     assert(NULL != ptThis);
     assert(NULL != ptTargetTile);
 
+    bool bTryToIgnore = false;
+
     arm_2d_helper_dirty_region_t *ptHelper = this.ptHelper;
 
     if (NULL != ptHelper) {
         if (ptHelper->chUpdateLifeCycle == this.chUpdateLifeCycle) {
             /* already updated */
-            return ;
+            return this.bNewRegionIsDifferent;
         }
         this.chUpdateLifeCycle = ptHelper->chUpdateLifeCycle;
     }
 
+    this.bNewRegionIsDifferent = false;
+
+    if (ARM_2D_RT_TRUE != arm_2d_target_tile_is_new_frame(ptTargetTile)) {
+        if (NULL == arm_2d_tile_get_root(ptTargetTile, NULL, NULL)) {
+            this.bIgnore = true;
+
+            return this.bNewRegionIsDifferent;
+        }
+    }
+
     if (NULL == ptNewRegion) {
+
+    #if 0
         this.bIgnore = true;
 
-        return ;
+        return this.bNewRegionIsDifferent;
+    #else
+        bTryToIgnore = true;
+        goto label_try_to_ignore;
+    #endif
     }
     this.bIgnore = false;
     this.bOnlyUpdateMinimalEnclosure = false;
@@ -4759,8 +4777,13 @@ void __arm_2d_helper_dirty_region_item_update(
             if (!arm_2d_region_intersect(   &tNewRegion, 
                                             &tTargetRegion,
                                             &tNewRegion)) {
+            #if 0
                 this.bIgnore = true;
                 break;
+            #else
+                bTryToIgnore = true;
+                goto label_try_to_ignore;
+            #endif
             }
         }
 
@@ -4773,15 +4796,27 @@ void __arm_2d_helper_dirty_region_item_update(
                                                                  NULL,
                                                                  true)) {
                 /* output visual area */
-                this.bIgnore = true;
-                break;
+                #if 0
+                    this.bIgnore = true;
+                    break;
+                #else
+                    bTryToIgnore = true;
+                    goto label_try_to_ignore;
+                #endif
             }
 
-            if (!arm_2d_region_intersect(   &tNewRegion, 
-                                            &tValidRegionOnVirtualScreen,
-                                            &tNewRegion)) {
-                this.bIgnore = true;
-                break;
+            if (!this.bForceToUseMinimalEnclosure) {
+                if (!arm_2d_region_intersect(   &tNewRegion, 
+                                                &tValidRegionOnVirtualScreen,
+                                                &tNewRegion)) {
+                #if 0
+                    this.bIgnore = true;
+                    break;
+                #else
+                    bTryToIgnore = true;
+                    goto label_try_to_ignore;
+                #endif
+                }
             }
         }
 
@@ -4790,6 +4825,13 @@ void __arm_2d_helper_dirty_region_item_update(
 
         /* update the new region */
         this.tNewRegion = tNewRegion;
+
+        if ((this.tNewRegion.tLocation.iX != this.tOldRegion.tLocation.iX)
+        ||  (this.tNewRegion.tLocation.iY != this.tOldRegion.tLocation.iY)
+        ||  (this.tNewRegion.tSize.iWidth != this.tOldRegion.tSize.iWidth)
+        ||  (this.tNewRegion.tSize.iHeight != this.tOldRegion.tSize.iHeight)) {
+            this.bNewRegionIsDifferent = true;
+        }
 
         /* region optimization */
         arm_2d_region_t tOverlapArea, tEnclosureArea;
@@ -4831,6 +4873,22 @@ void __arm_2d_helper_dirty_region_item_update(
             }
         }
     } while(0);
+
+label_try_to_ignore:
+    if (bTryToIgnore) {
+        /* keep the old region */
+        this.tOldRegion = this.tNewRegion;
+
+        this.tNewRegion.tSize.iHeight = 0;
+        this.tNewRegion.tSize.iWidth = 0;
+
+        if (    0 == this.tOldRegion.tSize.iHeight
+           ||   0 == this.tOldRegion.tSize.iWidth) {
+            this.bIgnore = true;
+        } 
+    }
+
+    return this.bNewRegionIsDifferent;
 
 }
 
@@ -4916,11 +4974,11 @@ void __arm_2d_helper_dirty_region_update_dirty_regions(
             }
             break;
         case DIRTY_REGION_HELPER_UPDATE_NEW_REGION:
-            __arm_2d_dynamic_dirty_region_update( &this.tDirtyRegion,
-                                                NULL, 
-                                                &this.ptCurrent->tNewRegion,
-                                                DIRTY_REGION_HELEPR_CHECK_NEXT_ITEM,
-                                                true);
+            __arm_2d_dynamic_dirty_region_update(   &this.tDirtyRegion,
+                                                    NULL, 
+                                                    &this.ptCurrent->tNewRegion,
+                                                    DIRTY_REGION_HELEPR_CHECK_NEXT_ITEM,
+                                                    true);
             this.ptCurrent = this.ptCurrent->ptNext;                            /* move to next */
 
             break;
@@ -4964,14 +5022,14 @@ bool arm_2d_helper_dirty_region_force_to_use_minimal_enclosure(
 ARM_NONNULL(1)
 bool arm_2d_helper_dirty_region_item_suspend_update(
                                         arm_2d_helper_dirty_region_item_t *ptThis,
-                                        bool bEnable)
+                                        bool bSuspend)
 {
     bool bOrigin = false;
     assert(NULL != ptThis);
 
     arm_irq_safe {
         bOrigin = this.bSuspendUpdate;
-        this.bSuspendUpdate = bEnable;
+        this.bSuspendUpdate = bSuspend;
     }
 
     return bOrigin;
@@ -4980,13 +5038,13 @@ bool arm_2d_helper_dirty_region_item_suspend_update(
 ARM_NONNULL(1)
 bool arm_2d_helper_dirty_region_suspend_update(
                                         arm_2d_helper_dirty_region_t *ptThis,
-                                        bool bEnable)
+                                        bool bSuspend)
 {
     bool bOrigin = false;
     assert(NULL != ptThis);
 
     return arm_2d_helper_dirty_region_item_suspend_update(  &this.tDefaultItem,
-                                                            bEnable);
+                                                            bSuspend);
 }
 
 /*----------------------------------------------------------------------------*
@@ -5051,6 +5109,23 @@ void arm_2d_helper_dirty_region_transform_update(
 
     assert(NULL != ptTarget->ptParent);
 
+    const arm_2d_region_t *ptRegion = NULL;
+    arm_2d_region_t tReferenceRegion = {0};
+
+#if defined(RTE_Acceleration_Arm_2D_Transform)
+    if (NULL != this.SourceReference.ptPoints && this.SourceReference.chCount > 0) {
+        ptRegion = arm_2d_calculate_reference_target_region_after_transform(
+                                                    (arm_2d_op_trans_t *)this.ptTransformOP, 
+                                                    &tReferenceRegion,
+                                                    this.SourceReference.ptPoints,
+                                                    this.SourceReference.chCount);
+    } else 
+#endif
+    {
+        ptRegion = (this.ptTransformOP->Target.ptRegion);
+    }
+
+    bool bIsRegionDifferent = false;
     if (NULL != ptCanvas) {
         arm_2d_region_t tCanvasInTarget = *ptCanvas;
 
@@ -5059,18 +5134,22 @@ void arm_2d_helper_dirty_region_transform_update(
          */
         tCanvasInTarget.tLocation.iX -= ptTarget->tRegion.tLocation.iX;
         tCanvasInTarget.tLocation.iY -= ptTarget->tRegion.tLocation.iY;
-        
-        __arm_2d_helper_dirty_region_item_update(
-                                        &this.tItem,
-                                        ptTarget,
-                                        &tCanvasInTarget,
-                                        (this.ptTransformOP->Target.ptRegion));
+
+        bIsRegionDifferent = __arm_2d_helper_dirty_region_item_update(
+                                                            &this.tItem,
+                                                            ptTarget,
+                                                            &tCanvasInTarget,
+                                                            ptRegion);
     } else {
-        __arm_2d_helper_dirty_region_item_update(
-                                        &this.tItem,
-                                        ptTarget,
-                                        NULL,
-                                        (this.ptTransformOP->Target.ptRegion));
+        bIsRegionDifferent = __arm_2d_helper_dirty_region_item_update(
+                                                            &this.tItem,
+                                                            ptTarget,
+                                                            NULL,
+                                                            ptRegion);
+    }
+
+    if (bIsRegionDifferent && bIsNewFrame) {
+        arm_2d_helper_dirty_region_item_suspend_update(&this.tItem, false);
     }
 }
 
@@ -5377,6 +5456,7 @@ bool arm_2d_helper_pfb_is_region_being_drawing(
             break;
         }
 
+
         if (NULL != __arm_2d_tile_get_virtual_screen_or_root(   
                                                     ptTarget, 
                                                     NULL, 
@@ -5397,10 +5477,10 @@ bool __arm_2d_helper_pfb_is_region_active0( const arm_2d_tile_t *ptTarget,
 {
     const arm_2d_tile_t *ptScreen = NULL;
 
-    bool bResult = arm_2d_helper_pfb_is_region_being_drawing(   ptTarget, 
-                                                                ptRegion, 
-                                                                &ptScreen);
-
+    bool bResult = arm_2d_helper_pfb_is_region_being_drawing(ptTarget, 
+                                                            ptRegion, 
+                                                            &ptScreen);
+    
     do {
         if (bResult) {
             break;

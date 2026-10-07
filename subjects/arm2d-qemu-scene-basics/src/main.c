@@ -210,8 +210,8 @@ int main(void) {
     arm_2d_scene_basics_init(&DISP0_ADAPTER, &scene);
 
     uart_puts("QEMU-GUI Arm-2D official scene_basics\r\n");
-    uart_puts("ARM-software/Arm-2D v1.2.4\r\n");
-    uart_puts("commit=b73ec43b6567feffe57642861e8b5eb083788011\r\n");
+    uart_puts("ARM-software/Arm-2D develop\r\n");
+    uart_puts("commit=9439667a9055df47caf948b16a3865bd63820ac6\r\n");
 
     for (;;) {
         arm_fsm_rt_t result = __disp_adapter0_task();

@@ -70,6 +70,16 @@ typedef struct dynamic_nebula_on_draw_particle_evt_t {
     void *pTarget;
 } dynamic_nebula_on_draw_particle_evt_t;
 
+typedef void dynamic_nebula_update_particle_handler_t(  void *pObj,
+                                                        dynamic_nebula_t *ptThis,
+                                                        dynamic_nebula_particle_t *ptParticle,
+                                                        int_fast16_t iAngle);
+
+typedef struct dynamic_nebula_on_update_particle_evt_t {
+    dynamic_nebula_update_particle_handler_t *fnHandler;
+    void *pTarget;
+} dynamic_nebula_on_update_particle_evt_t;
+
 typedef struct dynamic_nebula_cfg_t {
     int16_t     iRadius;
     int16_t     iVisibleRingWidth;
@@ -84,7 +94,10 @@ typedef struct dynamic_nebula_cfg_t {
     float       fSpeed;
 
     dynamic_nebula_particle_t               *ptParticles;
+
     dynamic_nebula_on_draw_particle_evt_t   evtOnDrawParticles;
+    dynamic_nebula_on_update_particle_evt_t evtOnUpdateParticle;
+
 } dynamic_nebula_cfg_t;
 
 /*!
@@ -126,6 +139,10 @@ void dynamic_nebula_show(   dynamic_nebula_t *ptThis,
 extern
 ARM_NONNULL(1)
 int16_t dynamic_nebula_get_radius(dynamic_nebula_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+int16_t dynamic_nebula_get_particle_distance(dynamic_nebula_t *ptThis, dynamic_nebula_particle_t *ptParticle);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
