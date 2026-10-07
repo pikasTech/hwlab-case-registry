@@ -21,8 +21,8 @@
  * Title:        __arm_2d_meta_trans_with_masks.inc
  * Description:  c code template for tile transform with masks operations
  *
- * $Date:        24. May 2022
- * $Revision:    V.1.1.2
+ * $Date:        09. Jan 2026
+ * $Revision:    V.1.2.0
  *
  * -------------------------------------------------------------------- */
 
@@ -123,7 +123,12 @@
 
 #define __MTWM_TYPE(__NAME)   ___MTWM_TYPE(__NAME, __API_MTWM_COLOUR)
 
-#define MASK_COLOR(sz)  (sz == 8) ? ptInfo->Mask.chColour : ((sz == 16) ?  ptInfo->Mask.hwColour :  ptInfo->Mask.wColour)
+#undef MASK_COLOR
+#define MASK_COLOR(sz)  (   (sz == 8)                                           \
+                        ? ptInfo->Mask.chColour                                 \
+                        :   (   (sz == 16)                                      \
+                            ?   ptInfo->Mask.hwColour                           \
+                            :   ptInfo->Mask.wColour))
 
 /*============================ PROTOTYPES ====================================*/
 extern
@@ -208,24 +213,20 @@ void __MTWM_FUNC(get_pixel_colour_mask)(arm_2d_point_fx_t  *ptFxPoint,
 #endif
 
     uint32_t wTotalAlpha = 0;
-    uint16_t hwTempAlpha;
 
-    hwTempAlpha = (chPixelAlpha0 == 255) * (hwAlpha0 << 8) 
+    wTotalAlpha += (chPixelAlpha0 == 255) * (hwAlpha0 << 8) 
                     + (!(chPixelAlpha0 == 255) * chPixelAlpha0 * hwAlpha0);
-    wTotalAlpha += hwTempAlpha;
-    
-    hwTempAlpha = (chPixelAlpha1 == 255) * (hwAlpha1 << 8) 
+
+    wTotalAlpha += (chPixelAlpha1 == 255) * (hwAlpha1 << 8) 
                     + (!(chPixelAlpha1 == 255) * chPixelAlpha1 * hwAlpha1);
-    wTotalAlpha += hwTempAlpha;
 
-    hwTempAlpha = (chPixelAlpha2 == 255) * (hwAlpha2 << 8) 
+    wTotalAlpha += (chPixelAlpha2 == 255) * (hwAlpha2 << 8) 
                     + (!(chPixelAlpha2 == 255) * chPixelAlpha2 * hwAlpha2);
-    wTotalAlpha += hwTempAlpha;
 
-    hwTempAlpha = (chPixelAlpha3 == 255) * (hwAlpha3 << 8) 
+    wTotalAlpha += (chPixelAlpha3 == 255) * ((uint32_t)hwAlpha3 << 8) 
                     + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
-    wTotalAlpha += hwTempAlpha;
 
+    wTotalAlpha >>= 8;
     if (0 == wTotalAlpha) {
         return ;
     }
@@ -251,14 +252,18 @@ void __MTWM_FUNC(get_pixel_colour_mask)(arm_2d_point_fx_t  *ptFxPoint,
 
 #if __API_MTWM_CFG_SUPPORT_SOURCE_MASK
     #if __API_MTWM_CFG_SUPPORT_OPACITY
-        uint16_t hwPixelAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
-                              + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
+        uint16_t hwPixelAlpha = (wTotalAlpha >= 0xFF) * hwOpacity
+                              + (!(wTotalAlpha >= 0xFF) * (wTotalAlpha * hwOpacity >> 8));
 
         __API_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
     #else
-        uint16_t hwPixelAlpha = wTotalAlpha >> 8;
+        uint16_t hwPixelAlpha = wTotalAlpha;
 
-        __API_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
+        if (hwPixelAlpha >= 255) {
+            *pTarget = uPixelResult;
+        } else {
+            __API_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
+        }
     #endif
 #else
     if (uPixelResult != MaskColour) {
@@ -302,7 +307,11 @@ void __MTWM_FUNC(get_pixel_colour_mask)(arm_2d_point_fx_t  *ptFxPoint,
         hwPixelAlpha += (hwPixelAlpha == 255);
         #endif
 
-        __API_MTWM_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
+        if (hwPixelAlpha >= 255) {
+            *pTarget = uPixelResult;
+        } else if (hwPixelAlpha > 0) {
+            __API_MTWM_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
+        }
     #else
 
         if (uPixelResult != MaskColour) {

@@ -18,12 +18,12 @@
 
 /* ----------------------------------------------------------------------
  * Project:      Arm-2D Library
- * Title:        #include "arm_2d.h"
+ * Title:        arm_2d_op.h
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        18. August 2025
- * $Revision:    V.1.8.0
+ * $Date:        16 Dec 2025
+ * $Revision:    V.1.16.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -41,6 +41,20 @@ extern "C" {
 /*============================ MACROS ========================================*/
 #define LOW_LEVEL_IO__ARM_2D_IO_NONE    (*(void *)NULL)
 
+/*! 
+ *  \addtogroup Deprecated
+ *  @{
+ */
+#define ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_GRAY8              \
+            ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_GRAY8
+
+#define ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_RGB565             \
+            ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_RGB565
+
+#define ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_CCCN888            \
+            ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_CCCN888
+/*! @} */
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
@@ -54,14 +68,6 @@ const __arm_2d_op_info_t ARM_2D_OP_BARRIER;
 /*----------------------------------------------------------------------------*
  * Basic Tile Operation (Core)                                                *
  *----------------------------------------------------------------------------*/
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_C8BIT;    
-
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_RGB16;
-    
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_RGB32;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_ONLY_C8BIT;    
@@ -134,15 +140,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_XY_MIRROR_RGB16;
     
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_XY_MIRROR_RGB32;
-
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_C8BIT;
-    
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_RGB16;
-    
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_RGB32;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_COLOUR_KEYING_ONLY_C8BIT;
@@ -355,6 +352,78 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_Y_MIRROR_AND_OPACITY_CC
 extern
 const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASK_XY_MIRROR_AND_OPACITY_CCCN888;
 
+extern 
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_ONLY_GRAY8;
+
+extern 
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_ONLY_RGB565;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_ONLY_CCCN888;
+
+extern 
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_OPACITY_ONLY_GRAY8;
+
+extern 
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_OPACITY_ONLY_RGB565;
+    
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_OPACITY_ONLY_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_X_MIRROR_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_Y_MIRROR_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_XY_MIRROR_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_X_MIRROR_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_Y_MIRROR_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_XY_MIRROR_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_X_MIRROR_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_Y_MIRROR_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_AND_XY_MIRROR_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_X_MIRROR_AND_OPACITY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_Y_MIRROR_AND_OPACITY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_XY_MIRROR_AND_OPACITY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_X_MIRROR_AND_OPACITY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_Y_MIRROR_AND_OPACITY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_XY_MIRROR_AND_OPACITY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_X_MIRROR_AND_OPACITY_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_Y_MIRROR_AND_OPACITY_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MASKS_XY_MIRROR_AND_OPACITY_CCCN888;
+
 extern
 const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_GRAY8;
 
@@ -493,96 +562,78 @@ const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_OPACITY_RGB565;
     
 extern
 const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_OPACITY_RGB888;
-    
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_GRAY8;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_RGB565;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_ONLY_GRAY8;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_CCCN888;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_ONLY_RGB565;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_ONLY_GRAY8;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_ONLY_CCCN888;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_ONLY_RGB565;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_X_MIRROR_GRAY8;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_ONLY_CCCN888;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_X_MIRROR_RGB565;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_X_MIRROR_GRAY8;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_X_MIRROR_CCCN888;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_X_MIRROR_RGB565;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_Y_MIRROR_GRAY8;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_X_MIRROR_CCCN888;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_Y_MIRROR_RGB565;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_Y_MIRROR_GRAY8;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_Y_MIRROR_CCCN888;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_Y_MIRROR_RGB565;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_XY_MIRROR_GRAY8;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_Y_MIRROR_CCCN888;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_XY_MIRROR_RGB565;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_XY_MIRROR_GRAY8;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASKS_AND_XY_MIRROR_CCCN888;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_XY_MIRROR_RGB565;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_ONLY_GRAY8;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_MASK_AND_XY_MIRROR_CCCN888;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_ONLY_RGB565;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_ONLY_GRAY8;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_ONLY_CCCN888;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_ONLY_RGB565;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_X_MIRROR_GRAY8;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_ONLY_CCCN888;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_X_MIRROR_RGB565;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_X_MIRROR_GRAY8;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_X_MIRROR_CCCN888;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_X_MIRROR_RGB565;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_Y_MIRROR_GRAY8;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_X_MIRROR_CCCN888;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_Y_MIRROR_RGB565;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_Y_MIRROR_GRAY8;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_Y_MIRROR_CCCN888;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_Y_MIRROR_RGB565;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_XY_MIRROR_GRAY8;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_Y_MIRROR_CCCN888;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_XY_MIRROR_RGB565;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_XY_MIRROR_GRAY8;
-
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_XY_MIRROR_RGB565;
-
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASK_AND_XY_MIRROR_CCCN888;
-
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_GRAY8;
-
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_RGB565;
-
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_CCCN888;
+const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_MASKS_AND_XY_MIRROR_CCCN888;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_SRC_MASK_ONLY_GRAY8;
@@ -682,15 +733,6 @@ const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_SRC_MASK_AND_XY_MIRROR_RGB565;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_FILL_WITH_SRC_MASK_AND_XY_MIRROR_CCCN888;
-
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_GRAY8;
-
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_RGB565;
-
-extern
-const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_CCCN888;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_DES_MASK_ONLY_GRAY8;
@@ -856,13 +898,13 @@ extern
 const __arm_2d_op_info_t ARM_2D_OP_TRANSFORM_WITH_SRC_MSK_AND_OPACITY_CCCN888;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_GRAY8;
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_GRAY8;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_RGB565;
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_RGB565;
 
 extern
-const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_MSK_OPACITY_AND_TRANSFORM_CCCN888;
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY_CCCN888;
 
 extern
 const __arm_2d_op_info_t ARM_2D_OP_FILTER_IIR_BLUR_GRAY8;
@@ -882,6 +924,98 @@ const __arm_2d_op_info_t ARM_2D_OP_FILTER_REVERSE_COLOUR_RGB565;
 extern
 const __arm_2d_op_info_t ARM_2D_OP_FILTER_REVERSE_COLOUR_CCCN888;
 
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_OPACITY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_OPACITY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_OPACITY_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_SOURCE_MASK_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_SOURCE_MASK_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_SOURCE_MASK_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_OPACITY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_OPACITY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_OPACITY_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_AND_TARGET_MASK_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK_CCCN888;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_GRAY8;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_RGB565;
+
+extern
+const __arm_2d_op_info_t ARM_2D_OP_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY_CCCN888;
 /*============================ PROTOTYPES ====================================*/
 
 

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        28. Dec 2024
- * $Revision:    V.2.3.1
+ * $Date:        21 Oct 2025
+ * $Revision:    V.2.4.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -152,7 +152,7 @@ arm_2d_err_t __arm_2d_list_core_init(   __arm_2d_list_core_t *ptThis,
         }
     }
     
-    this.bListSizeChanged = true;
+    this.Runtime.bListSizeChanged = true;
     this.Runtime.bIsRegCalInit = false;
 
     return ARM_2D_ERR_NONE;
@@ -959,8 +959,8 @@ bool __arm_2d_list_core_update_normal(
     arm_2d_list_item_t *ptItem = NULL;
     
     /* update start-offset */
-    if (this.bListSizeChanged) {
-        this.bListSizeChanged = false;
+    if (this.Runtime.bListSizeChanged) {
+        this.Runtime.bListSizeChanged = false;
         
         /* update the iStartOffset */
         ptItem = __arm_2d_list_core_get_item(   
@@ -1065,8 +1065,8 @@ bool __arm_2d_list_core_update_fixed_size_no_status_check(
     
 
     /* update start-offset */
-    if (this.bListSizeChanged) {
-        this.bListSizeChanged = false;
+    if (this.Runtime.bListSizeChanged) {
+        this.Runtime.bListSizeChanged = false;
         
         /* update the iStartOffset */
         ptItem = __arm_2d_list_core_get_item(   
@@ -1331,6 +1331,355 @@ arm_2d_region_t *__arm_2d_list_core_get_selection_region(__arm_2d_list_core_t *p
     return ptRegionBuffer;
 }
 
+static 
+__arm_2d_list_work_area_t *__draw_vertical( __arm_2d_list_core_t *ptThis,
+                                            __arm_2d_list_item_iterator *fnIterator,
+                                            bool bIgnoreStatusCheck,
+                                            bool bForceRingMode)
+{
+    arm_2d_list_item_t *ptItem = NULL;
+    
+ARM_PT_BEGIN(this.chDrawingState)
+
+    /* start draw items */
+    do {
+__label_draw_top:
+        /* move to the top item */
+        ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                    this.CalMidAligned.hwTopVisibleItemID,
+                    bIgnoreStatusCheck,
+                    bForceRingMode);
+
+        assert(NULL != ptItem);
+        
+        /* prepare working area */
+        this.Runtime.tWorkingArea.ptItem = ptItem;
+        this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
+        this.Runtime.tWorkingArea.tRegion.tLocation.iY 
+            = this.CalMidAligned.iTopVisibleOffset 
+            + this.iStartOffset 
+            + ptItem->Padding.chPrevious;
+        this.Runtime.tWorkingArea.tRegion.tLocation.iX = 0;
+        
+        //! calculate distance and opacity
+        do {
+            int16_t iDistance 
+                = this.Runtime.tWorkingArea.tRegion.tLocation.iY
+                + (this.Runtime.tWorkingArea.tRegion.tSize.iHeight >> 1);
+            int16_t iCentre = this.Runtime.tileList.tRegion.tSize.iHeight >> 1;
+            
+            iDistance = iCentre - iDistance;
+
+            this.CalMidAligned.hwTopDistance = ABS(iDistance);
+            if (this.CalMidAligned.hwTopDistance <= this.CalMidAligned.hwBottomDistance) {
+                goto __label_draw_bottom;
+            }
+
+            this.Runtime.tWorkingArea.tParam.hwRatio = this.CalMidAligned.hwTopDistance;
+            
+            if (this.Runtime.tWorkingArea.tParam.hwRatio > iCentre) {
+                this.Runtime.tWorkingArea.tParam.chOpacity = 0;
+            } else {
+                this.Runtime.tWorkingArea.tParam.chOpacity 
+                    = 255 - this.Runtime.tWorkingArea.tParam.hwRatio * 255 
+                          / iCentre;
+            }
+        } while(0);
+
+    ARM_PT_YIELD( &this.Runtime.tWorkingArea )
+
+        if (    this.CalMidAligned.iBottomVisibleOffset 
+            <=  this.CalMidAligned.iTopVisibleOffset) {
+            break;
+        }
+
+        /* resume local context */
+        ptItem = this.Runtime.tWorkingArea.ptItem;
+
+        /* update top visiable item id and offset */
+        do {
+            this.CalMidAligned.iTopVisibleOffset += ptItem->tSize.iHeight 
+                                                  + ptItem->Padding.chPrevious
+                                                  + ptItem->Padding.chNext;
+            
+            /* move to the next item */
+            ptItem = __arm_2d_list_core_get_item(   
+                        ptThis, 
+                        fnIterator, 
+                        __ARM_2D_LIST_GET_NEXT,
+                        0,
+                        bIgnoreStatusCheck,
+                        bForceRingMode);
+
+            this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
+        } while(0);
+
+        goto __label_draw_top;
+
+__label_draw_bottom:
+        /* move to the bottom item */
+        ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                    this.CalMidAligned.hwBottomVisibleItemID,
+                    bIgnoreStatusCheck,
+                    bForceRingMode);
+        assert(NULL != ptItem);
+        
+        /* prepare working area */
+        this.Runtime.tWorkingArea.ptItem = ptItem;
+        this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
+        this.Runtime.tWorkingArea.tRegion.tLocation.iY 
+            = this.CalMidAligned.iBottomVisibleOffset 
+            + this.iStartOffset 
+            + ptItem->Padding.chPrevious;
+        this.Runtime.tWorkingArea.tRegion.tLocation.iX = 0;
+
+        //! calculate distance and opacity
+        do {
+            int16_t iDistance 
+                = this.Runtime.tWorkingArea.tRegion.tLocation.iY
+                + (this.Runtime.tWorkingArea.tRegion.tSize.iHeight >> 1);
+            int16_t iCentre = this.Runtime.tileList.tRegion.tSize.iHeight >> 1;
+            
+            iDistance = iCentre - iDistance;
+
+            this.CalMidAligned.hwBottomDistance = ABS(iDistance);
+            if (this.CalMidAligned.hwBottomDistance < this.CalMidAligned.hwTopDistance) {
+                goto __label_draw_top;
+            }
+        
+            this.Runtime.tWorkingArea.tParam.hwRatio = this.CalMidAligned.hwBottomDistance;
+            
+            if (this.Runtime.tWorkingArea.tParam.hwRatio > iCentre) {
+                this.Runtime.tWorkingArea.tParam.chOpacity = 0;
+            } else {
+                this.Runtime.tWorkingArea.tParam.chOpacity 
+                    = 255 - this.Runtime.tWorkingArea.tParam.hwRatio * 255 
+                          / iCentre;
+            }
+        } while(0);
+
+    ARM_PT_YIELD( &this.Runtime.tWorkingArea )
+
+        if (    this.CalMidAligned.iBottomVisibleOffset 
+            <=  this.CalMidAligned.iTopVisibleOffset) {
+            break;
+        }
+
+        /* update bottom visiable item id and offset */
+        do {
+            /* move to the previous item */
+            ptItem = __arm_2d_list_core_get_item(   
+                        ptThis, 
+                        fnIterator, 
+                        __ARM_2D_LIST_GET_PREVIOUS,
+                        0,
+                        bIgnoreStatusCheck,
+                        bForceRingMode);
+            if (NULL == ptItem) {
+                /* no valid item, return NULL */
+                ARM_PT_RETURN(NULL)
+            }
+
+            this.CalMidAligned.hwBottomVisibleItemID = ptItem->hwID;
+            
+            this.CalMidAligned.iBottomVisibleOffset 
+                -= ptItem->tSize.iHeight 
+                 + ptItem->Padding.chPrevious
+                 + ptItem->Padding.chNext;
+
+        } while(0);
+
+        goto __label_draw_bottom;
+
+    } while(true);
+
+ARM_PT_END()
+
+    return NULL;
+
+}
+
+
+static 
+__arm_2d_list_work_area_t *__draw_horizontal(   __arm_2d_list_core_t *ptThis,
+                                                __arm_2d_list_item_iterator *fnIterator,
+                                                bool bIgnoreStatusCheck,
+                                                bool bForceRingMode)
+{
+    arm_2d_list_item_t *ptItem = NULL;
+    
+ARM_PT_BEGIN(this.chDrawingState)
+
+    /* start draw items */
+    do {
+__label_draw_top:
+        /* move to the top item */
+        ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                    this.CalMidAligned.hwTopVisibleItemID,
+                    bIgnoreStatusCheck,
+                    bForceRingMode);
+
+        assert(NULL != ptItem);
+        
+        /* prepare working area */
+        this.Runtime.tWorkingArea.ptItem = ptItem;
+        this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
+        this.Runtime.tWorkingArea.tRegion.tLocation.iX 
+            = this.CalMidAligned.iTopVisibleOffset 
+            + this.iStartOffset 
+            + ptItem->Padding.chPrevious;
+        this.Runtime.tWorkingArea.tRegion.tLocation.iY = 0;
+        
+        //! calculate distance and opacity
+        do {
+            int16_t iDistance 
+                = this.Runtime.tWorkingArea.tRegion.tLocation.iX
+                + (this.Runtime.tWorkingArea.tRegion.tSize.iWidth >> 1);
+            int16_t iCentre = this.Runtime.tileList.tRegion.tSize.iWidth >> 1;
+            
+            iDistance = iCentre - iDistance;
+
+            this.CalMidAligned.hwTopDistance = ABS(iDistance);
+            if (this.CalMidAligned.hwTopDistance <= this.CalMidAligned.hwBottomDistance) {
+                goto __label_draw_bottom;
+            }
+
+            this.Runtime.tWorkingArea.tParam.hwRatio = this.CalMidAligned.hwTopDistance;
+            
+            if (this.Runtime.tWorkingArea.tParam.hwRatio > iCentre) {
+                this.Runtime.tWorkingArea.tParam.chOpacity = 0;
+            } else {
+                this.Runtime.tWorkingArea.tParam.chOpacity 
+                    = 255 - this.Runtime.tWorkingArea.tParam.hwRatio * 255 
+                          / iCentre;
+            }
+        } while(0);
+
+    ARM_PT_YIELD( &this.Runtime.tWorkingArea )
+
+        if (    this.CalMidAligned.iBottomVisibleOffset 
+            <=  this.CalMidAligned.iTopVisibleOffset) {
+            break;
+        }
+
+        /* resume local context */
+        ptItem = this.Runtime.tWorkingArea.ptItem;
+
+        /* update top visiable item id and offset */
+        do {
+            this.CalMidAligned.iTopVisibleOffset += ptItem->tSize.iWidth 
+                                                  + ptItem->Padding.chPrevious
+                                                  + ptItem->Padding.chNext;
+            
+            /* move to the next item */
+            ptItem = __arm_2d_list_core_get_item(   
+                        ptThis, 
+                        fnIterator, 
+                        __ARM_2D_LIST_GET_NEXT,
+                        0,
+                        bIgnoreStatusCheck,
+                        bForceRingMode);
+
+            this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
+        } while(0);
+
+        goto __label_draw_top;
+
+__label_draw_bottom:
+        /* move to the bottom item */
+        ptItem = __arm_2d_list_core_get_item(   
+                    ptThis, 
+                    fnIterator, 
+                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
+                    this.CalMidAligned.hwBottomVisibleItemID,
+                    bIgnoreStatusCheck,
+                    bForceRingMode);
+        assert(NULL != ptItem);
+        
+        /* prepare working area */
+        this.Runtime.tWorkingArea.ptItem = ptItem;
+        this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
+        this.Runtime.tWorkingArea.tRegion.tLocation.iX 
+            = this.CalMidAligned.iBottomVisibleOffset 
+            + this.iStartOffset 
+            +   ptItem->Padding.chPrevious;
+        this.Runtime.tWorkingArea.tRegion.tLocation.iY = 0;
+
+        //! calculate distance and opacity
+        do {
+            int16_t iDistance 
+                = this.Runtime.tWorkingArea.tRegion.tLocation.iX
+                + (this.Runtime.tWorkingArea.tRegion.tSize.iWidth >> 1);
+            int16_t iCentre = this.Runtime.tileList.tRegion.tSize.iWidth >> 1;
+            
+            iDistance = iCentre - iDistance;
+
+            this.CalMidAligned.hwBottomDistance = ABS(iDistance);
+            if (this.CalMidAligned.hwBottomDistance < this.CalMidAligned.hwTopDistance) {
+                goto __label_draw_top;
+            }
+        
+            this.Runtime.tWorkingArea.tParam.hwRatio = this.CalMidAligned.hwBottomDistance;
+            
+            if (this.Runtime.tWorkingArea.tParam.hwRatio > iCentre) {
+                this.Runtime.tWorkingArea.tParam.chOpacity = 0;
+            } else {
+                this.Runtime.tWorkingArea.tParam.chOpacity 
+                    = 255 - this.Runtime.tWorkingArea.tParam.hwRatio * 255 
+                          / iCentre;
+            }
+        } while(0);
+
+    ARM_PT_YIELD( &this.Runtime.tWorkingArea )
+
+        if (    this.CalMidAligned.iBottomVisibleOffset 
+            <=  this.CalMidAligned.iTopVisibleOffset) {
+            break;
+        }
+
+        /* update bottom visiable item id and offset */
+        do {
+            /* move to the previous item */
+            ptItem = __arm_2d_list_core_get_item(   
+                        ptThis, 
+                        fnIterator, 
+                        __ARM_2D_LIST_GET_PREVIOUS,
+                        0,
+                        bIgnoreStatusCheck,
+                        bForceRingMode);
+            if (NULL == ptItem) {
+                /* no valid item, return NULL */
+                ARM_PT_RETURN(NULL)
+            }
+
+            this.CalMidAligned.hwBottomVisibleItemID = ptItem->hwID;
+            
+            this.CalMidAligned.iBottomVisibleOffset 
+                -= ptItem->tSize.iWidth 
+                 + ptItem->Padding.chPrevious
+                 + ptItem->Padding.chNext;
+
+        } while(0);
+
+        goto __label_draw_bottom;
+
+    } while(true);
+
+ARM_PT_END()
+
+    return NULL;
+
+}
+
 
 static
 __arm_2d_list_work_area_t * __calculator_vertical (
@@ -1588,8 +1937,9 @@ ARM_PT_BEGIN(this.chState)
         int32_t nTempOffset = nOffset;
         
         while(NULL != ptItem) {
+
             if (nTempOffset >= 0) {
-                assert(this.tCFG.bDisableRingMode);
+                //assert(this.tCFG.bDisableRingMode);
                 break;
             }
 
@@ -1665,7 +2015,7 @@ ARM_PT_BEGIN(this.chState)
         } while(true);
     }
 
-
+#if 0
     /* start draw items */
     do {
         /* move to the top item */
@@ -1806,12 +2156,25 @@ ARM_PT_BEGIN(this.chState)
         } while(0);
 
     } while(true);
+#endif
+
+    this.CalMidAligned.hwTopDistance = __UINT16_MAX__;
+    this.CalMidAligned.hwBottomDistance = __UINT16_MAX__;
+
+    this.chDrawingState = 0;
+
+ARM_PT_ENTRY()
+    __arm_2d_list_work_area_t *ptWorkArea = 
+        __draw_vertical(ptThis, fnIterator, false, false);
+    
+    if (NULL != ptWorkArea) {
+        ARM_PT_GOTO_PREV_ENTRY(ptWorkArea);
+    }
 
 ARM_PT_END()
 
     return NULL;
 }
-
 
 static
 __arm_2d_list_work_area_t *__calculator_horizontal (
@@ -2072,7 +2435,7 @@ ARM_PT_BEGIN(this.chState)
         while(NULL != ptItem) {
 
             if (nTempOffset >= 0) {
-                assert(this.tCFG.bDisableRingMode);
+                //assert(this.tCFG.bDisableRingMode);
                 break;
             }
 
@@ -2149,145 +2512,18 @@ ARM_PT_BEGIN(this.chState)
 
     }
 
-    /* start draw items */
-    do {
-        /* move to the top item */
-        ptItem = __arm_2d_list_core_get_item(   
-                    ptThis, 
-                    fnIterator, 
-                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
-                    this.CalMidAligned.hwTopVisibleItemID,
-                    false,
-                    false);
+    this.CalMidAligned.hwTopDistance = __UINT16_MAX__;
+    this.CalMidAligned.hwBottomDistance = __UINT16_MAX__;
 
-        assert(NULL != ptItem);
-        
-        /* prepare working area */
-        this.Runtime.tWorkingArea.ptItem = ptItem;
-        this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
-        this.Runtime.tWorkingArea.tRegion.tLocation.iX 
-            = this.CalMidAligned.iTopVisibleOffset 
-            + this.iStartOffset 
-            + ptItem->Padding.chPrevious;
-        this.Runtime.tWorkingArea.tRegion.tLocation.iY = 0;
-        
-        //! calculate distance and opacity
-        do {
-            int16_t iDistance 
-                = this.Runtime.tWorkingArea.tRegion.tLocation.iX
-                + (this.Runtime.tWorkingArea.tRegion.tSize.iWidth >> 1);
-            int16_t iCentre = this.Runtime.tileList.tRegion.tSize.iWidth >> 1;
-            
-            iDistance = iCentre - iDistance;
-            this.Runtime.tWorkingArea.tParam.hwRatio = ABS(iDistance);
-            
-            if (this.Runtime.tWorkingArea.tParam.hwRatio > iCentre) {
-                this.Runtime.tWorkingArea.tParam.chOpacity = 0;
-            } else {
-                this.Runtime.tWorkingArea.tParam.chOpacity 
-                    = 255 - this.Runtime.tWorkingArea.tParam.hwRatio * 255 
-                          / iCentre;
-            }
-        } while(0);
+    this.chDrawingState = 0;
 
-    ARM_PT_YIELD( &this.Runtime.tWorkingArea )
-
-        if (    this.CalMidAligned.iBottomVisibleOffset 
-            <=  this.CalMidAligned.iTopVisibleOffset) {
-            break;
-        }
-
-        /* resume local context */
-        ptItem = this.Runtime.tWorkingArea.ptItem;
-
-        /* update top visiable item id and offset */
-        do {
-            this.CalMidAligned.iTopVisibleOffset += ptItem->tSize.iWidth 
-                                                  + ptItem->Padding.chPrevious
-                                                  + ptItem->Padding.chNext;
-            
-            /* move to the top item */
-            ptItem = __arm_2d_list_core_get_item(   
-                        ptThis, 
-                        fnIterator, 
-                        __ARM_2D_LIST_GET_NEXT,
-                        0,
-                        false,
-                        false);
-
-            this.CalMidAligned.hwTopVisibleItemID = ptItem->hwID;
-        } while(0);
-
-        /* move to the bottom item */
-        ptItem = __arm_2d_list_core_get_item(   
-                    ptThis, 
-                    fnIterator, 
-                    __ARM_2D_LIST_GET_ITEM_AND_MOVE_POINTER,
-                    this.CalMidAligned.hwBottomVisibleItemID,
-                    false,
-                    false);
-        assert(NULL != ptItem);
-        
-        /* prepare working area */
-        this.Runtime.tWorkingArea.ptItem = ptItem;
-        this.Runtime.tWorkingArea.tRegion.tSize = ptItem->tSize;
-        this.Runtime.tWorkingArea.tRegion.tLocation.iX 
-            = this.CalMidAligned.iBottomVisibleOffset 
-            + this.iStartOffset 
-            +   ptItem->Padding.chPrevious;
-        this.Runtime.tWorkingArea.tRegion.tLocation.iY = 0;
-
-        //! calculate distance and opacity
-        do {
-            int16_t iDistance 
-                = this.Runtime.tWorkingArea.tRegion.tLocation.iX
-                + (this.Runtime.tWorkingArea.tRegion.tSize.iWidth >> 1);
-            int16_t iCentre = this.Runtime.tileList.tRegion.tSize.iWidth >> 1;
-            
-            iDistance = iCentre - iDistance;
-            this.Runtime.tWorkingArea.tParam.hwRatio = ABS(iDistance);
-            
-            if (this.Runtime.tWorkingArea.tParam.hwRatio > iCentre) {
-                this.Runtime.tWorkingArea.tParam.chOpacity = 0;
-            } else {
-                this.Runtime.tWorkingArea.tParam.chOpacity 
-                    = 255 - this.Runtime.tWorkingArea.tParam.hwRatio * 255 
-                          / iCentre;
-            }
-        } while(0);
-
-    ARM_PT_YIELD( &this.Runtime.tWorkingArea )
-
-        if (    this.CalMidAligned.iBottomVisibleOffset 
-            <=  this.CalMidAligned.iTopVisibleOffset) {
-            break;
-        }
-
-        /* update bottom visiable item id and offset */
-        do {
-            /* move to the top item */
-            ptItem = __arm_2d_list_core_get_item(   
-                        ptThis, 
-                        fnIterator, 
-                        __ARM_2D_LIST_GET_PREVIOUS,
-                        0,
-                        false,
-                        false);
-            if (NULL == ptItem) {
-                /* no valid item, return NULL */
-                ARM_PT_RETURN(NULL)
-            }
-
-            this.CalMidAligned.hwBottomVisibleItemID = ptItem->hwID;
-            
-            this.CalMidAligned.iBottomVisibleOffset 
-                -= ptItem->tSize.iWidth 
-                 + ptItem->Padding.chPrevious
-                 + ptItem->Padding.chNext;
-
-        } while(0);
-
-    } while(true);
+ARM_PT_ENTRY()
+    __arm_2d_list_work_area_t *ptWorkArea = 
+        __draw_horizontal(ptThis, fnIterator, false, false);
+    
+    if (NULL != ptWorkArea) {
+        ARM_PT_GOTO_PREV_ENTRY(ptWorkArea);
+    }
 
 ARM_PT_END()
 
@@ -2552,7 +2788,6 @@ ARM_PT_BEGIN(this.chState)
             } while(true);
         }
 
-
         int32_t nTempOffset = nOffset;
         
         do {
@@ -2645,7 +2880,7 @@ ARM_PT_BEGIN(this.chState)
         } while(true);
     }
 
-
+#if 0
     /* start draw items */
     do {
         /* move to the top item */
@@ -2786,6 +3021,20 @@ ARM_PT_BEGIN(this.chState)
         } while(0);
 
     } while(true);
+#endif
+
+    this.CalMidAligned.hwTopDistance = __UINT16_MAX__;
+    this.CalMidAligned.hwBottomDistance = __UINT16_MAX__;
+
+    this.chDrawingState = 0;
+
+ARM_PT_ENTRY()
+    __arm_2d_list_work_area_t *ptWorkArea = 
+        __draw_vertical(ptThis, fnIterator, true, false);
+    
+    if (NULL != ptWorkArea) {
+        ARM_PT_GOTO_PREV_ENTRY(ptWorkArea);
+    }
 
 ARM_PT_END()
 
@@ -3139,7 +3388,7 @@ ARM_PT_BEGIN(this.chState)
         } while(true);
     }
 
-
+#if 0
     /* start draw items */
     do {
         /* move to the top item */
@@ -3280,6 +3529,20 @@ ARM_PT_BEGIN(this.chState)
         } while(0);
 
     } while(true);
+#endif
+
+    this.CalMidAligned.hwTopDistance = __UINT16_MAX__;
+    this.CalMidAligned.hwBottomDistance = __UINT16_MAX__;
+
+    this.chDrawingState = 0;
+
+ARM_PT_ENTRY()
+    __arm_2d_list_work_area_t *ptWorkArea = 
+        __draw_horizontal(ptThis, fnIterator, true, false);
+    
+    if (NULL != ptWorkArea) {
+        ARM_PT_GOTO_PREV_ENTRY(ptWorkArea);
+    }
 
 ARM_PT_END()
 

@@ -1267,7 +1267,8 @@ void __draw_scene_default(arm_2d_scene_player_t *ptThis,
 
         ARM_2D_INVOKE( ptScene->fnScene, ptScene, ptTile, bIsNewFrame);
     }
-    arm_2d_op_wait_async(NULL);
+
+    ARM_2D_OP_WAIT_ASYNC();
 }
 
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_mode_erase)
@@ -2412,8 +2413,6 @@ arm_fsm_rt_t arm_2d_scene_player_task(arm_2d_scene_player_t *ptThis)
 
     arm_2d_scene_t *ptScene = this.SceneFIFO.ptHead;
     arm_fsm_rt_t tResult;
-    
-    
     
     switch (this.Runtime.chState) {
         case START:

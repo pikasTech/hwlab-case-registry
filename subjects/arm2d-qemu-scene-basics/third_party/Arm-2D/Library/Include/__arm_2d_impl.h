@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        18. August 2025
- * $Revision:    V.1.7.0
+ * $Date:        10 July 2026
+ * $Revision:    V.2.5.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -105,10 +105,9 @@ extern "C" {
         uint8_t *ARM_2D_SAFE_NAME(pchDes) = (uint8_t *)(__DES_ADDR);            \
                                                                                 \
         *ARM_2D_SAFE_NAME(pchDes)                                               \
-            = ((uint16_t)(  (   (uint16_t)(*ARM_2D_SAFE_NAME(pchSrc))           \
-                            *   ARM_2D_SAFE_NAME(hwOPA))                        \
-                         +  ((uint16_t)(*ARM_2D_SAFE_NAME(pchDes)) * (__TRANS)) \
-                         ) >> 8);                                               \
+            = arm_2d_helper_blend_chn(  *ARM_2D_SAFE_NAME(pchSrc),              \
+                                        *ARM_2D_SAFE_NAME(pchDes),              \
+                                        ARM_2D_SAFE_NAME(hwOPA));               \
     } while(0)
 #endif
 
@@ -120,148 +119,151 @@ extern "C" {
         __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tSrcPix);                    \
         __arm_2d_ccca8888_unpack(*(__SRC_ADDR), &ARM_2D_SAFE_NAME(tSrcPix));    \
         uint16_t ARM_2D_SAFE_NAME(hwOPA) = ARM_2D_SAFE_NAME(tSrcPix).BGRA[3];   \
-        ARM_2D_SAFE_NAME(hwOPA) += (ARM_2D_SAFE_NAME(hwOPA) == 255);            \
-        ARM_2D_SAFE_NAME(hwOPA) = ARM_2D_SAFE_NAME(hwOPA) * ((__TRANS) == 0)    \
-                +   (   (ARM_2D_SAFE_NAME(hwOPA) * (256 - (__TRANS)) >> 8)      \
-                    *   ((__TRANS) != 0));                                      \
-        uint16_t ARM_2D_SAFE_NAME(hwTRANS) = 256 - ARM_2D_SAFE_NAME(hwOPA);     \
+        ARM_2D_SAFE_NAME(hwOPA)                                                 \
+            = arm_2d_helper_opacity_mix(ARM_2D_SAFE_NAME(hwOPA), (__TRANS));    \
                                                                                 \
         uint8_t *ARM_2D_SAFE_NAME(pchTargetPixel) = (__DES_ADDR);               \
         uint8_t ARM_2D_SAFE_NAME(chSrcPixel)                                    \
             = __arm_2d_gray8_pack(&ARM_2D_SAFE_NAME(tSrcPix));                  \
                                                                                 \
         *ARM_2D_SAFE_NAME(pchTargetPixel) =                                     \
-            ((uint16_t) (   (   (uint16_t)ARM_2D_SAFE_NAME(chSrcPixel)          \
-                            *   ARM_2D_SAFE_NAME(hwOPA))                        \
-                        +   (   (uint16_t)(*ARM_2D_SAFE_NAME(pchTargetPixel))   \
-                            *   (ARM_2D_SAFE_NAME(hwTRANS)))                    \
-                        ) >> 8);                                                \
+            arm_2d_helper_blend_chn(ARM_2D_SAFE_NAME(chSrcPixel),               \
+            *ARM_2D_SAFE_NAME(pchTargetPixel), ARM_2D_SAFE_NAME(hwOPA));        \
     } while(0)
 #endif
 
+#ifndef __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8_OPA
+#   define __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8_OPA(   __SRC_ADDR,         \
+                                                            __DES_ADDR,         \
+                                                            __OPA)              \
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8(  (__SRC_ADDR),           \
+                                                        (__DES_ADDR),           \
+                                                        256 - (__OPA))
+#endif
+
+__STATIC_INLINE 
+void __arm_2d_rgb565_pixel_blend_sw(uint16_t * phwSource,
+                                    uint16_t * phwTarget,
+                                    uint16_t hwOpacity)
+{
+    uint32_t wSourcePixel = *phwSource;
+    uint32_t wTargetPixel = *phwTarget;
+    uint32_t wOpacity = hwOpacity >> 3;
+
+    wSourcePixel = (wSourcePixel | (wSourcePixel << 16)) & 0x07e0f81f;
+    wTargetPixel = (wTargetPixel | (wTargetPixel << 16)) & 0x07e0f81f;
+    wTargetPixel += (wSourcePixel - wTargetPixel) * wOpacity >> 5;
+    wTargetPixel &= 0x07e0f81f;
+    *phwTarget = (uint16_t)(wTargetPixel | (wTargetPixel >> 16));
+}
+
 #ifndef __ARM_2D_PIXEL_BLENDING_RGB565
 #   define __ARM_2D_PIXEL_BLENDING_RGB565(__SRC_ADDR, __DES_ADDR, __TRANS)      \
-    do {                                                                        \
-        uint16_t ARM_2D_SAFE_NAME(hwOPA) = 256 - (__TRANS);                     \
-        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tSrcPix);                    \
-        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tTargetPix);                 \
-        uint16_t *ARM_2D_SAFE_NAME(phwTargetPixel) = (__DES_ADDR);              \
-        __arm_2d_rgb565_unpack(*(__SRC_ADDR), &ARM_2D_SAFE_NAME(tSrcPix));      \
-        __arm_2d_rgb565_unpack(*ARM_2D_SAFE_NAME(phwTargetPixel),               \
-                                &ARM_2D_SAFE_NAME(tTargetPix));                 \
-                                                                                \
-        for (int    ARM_2D_SAFE_NAME(i) = 0;                                    \
-                    ARM_2D_SAFE_NAME(i) < 3;                                    \
-                    ARM_2D_SAFE_NAME(i)++) {                                    \
-            uint16_t ARM_2D_SAFE_NAME(hwTemp) =                                 \
-                (uint16_t)( ARM_2D_SAFE_NAME(tSrcPix).BGRA[ARM_2D_SAFE_NAME(i)] \
-                          * ARM_2D_SAFE_NAME(hwOPA))                            \
-                +   (   ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)]  \
-                    *   (__TRANS));                                             \
-            ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)]              \
-                = (uint16_t) (ARM_2D_SAFE_NAME(hwTemp) >> 8);                   \
-        }                                                                       \
-                                                                                \
-        /* pack merged stream */                                                \
-        *ARM_2D_SAFE_NAME(phwTargetPixel)                                       \
-            = __arm_2d_rgb565_pack(&ARM_2D_SAFE_NAME(tTargetPix));              \
-    } while(0)
+        __arm_2d_rgb565_pixel_blend_sw((__SRC_ADDR), (__DES_ADDR), 256 - (__TRANS))
 #endif
+
+__STATIC_INLINE 
+void __arm_2d_ccca8888_pixel_blend_to_rgb565_sw(uint32_t *pwSource,
+                                                uint16_t *hwTarget,
+                                                uint16_t hwOpacity)
+{
+    uint32_t wSourcePixel = *pwSource;
+    
+    uint32_t wOpacity = ((wSourcePixel >> 24) * hwOpacity) >> (8 + 3);
+
+    if (wOpacity) {
+        if (wOpacity == (0xFF >> 3)) {
+            *hwTarget = (uint16_t)( ((wSourcePixel >> 8) & 0xf800) 
+                                  + ((wSourcePixel >> 5) & 0x7e0) 
+                                  + ((wSourcePixel >> 3) & 0x1f));
+        } else {
+            uint32_t wTargetPixel = *hwTarget;
+
+            wSourcePixel = ((wSourcePixel & 0xfc00) << 11) 
+                         + ((wSourcePixel >> 8) & 0xf800) 
+                         + ((wSourcePixel >> 3) & 0x1f);
+
+            wTargetPixel = (wTargetPixel | (wTargetPixel << 16)) & 0x07e0f81f;
+            wTargetPixel += (wSourcePixel - wTargetPixel) * wOpacity >> 5;
+            wTargetPixel &= 0x07e0f81f;
+            *hwTarget = (uint16_t)(wTargetPixel | (wTargetPixel >> 16));
+        }
+    }
+}
 
 #ifndef __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565
 #   define __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565(  __SRC_ADDR,             \
                                                         __DES_ADDR,             \
                                                         __TRANS)                \
-    do {                                                                        \
-        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tSrcPix);                    \
-        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tTargetPix);                 \
-        __arm_2d_ccca8888_unpack(*(__SRC_ADDR), &ARM_2D_SAFE_NAME(tSrcPix));    \
-        uint16_t ARM_2D_SAFE_NAME(hwOPA) = ARM_2D_SAFE_NAME(tSrcPix).BGRA[3];   \
-        ARM_2D_SAFE_NAME(hwOPA) += (ARM_2D_SAFE_NAME(hwOPA) == 255);            \
-        ARM_2D_SAFE_NAME(hwOPA) = ARM_2D_SAFE_NAME(hwOPA) * ((__TRANS) == 0)    \
-                +   (   (   ARM_2D_SAFE_NAME(hwOPA)                             \
-                        *   (256 - (__TRANS)) >> 8)                             \
-                    *   ((__TRANS) != 0));                                      \
-        uint16_t ARM_2D_SAFE_NAME(hwTRANS) = 256 - ARM_2D_SAFE_NAME(hwOPA);     \
-                                                                                \
-        uint16_t *ARM_2D_SAFE_NAME(phwTargetPixel) = (__DES_ADDR);              \
-        __arm_2d_rgb565_unpack(*ARM_2D_SAFE_NAME(phwTargetPixel),               \
-                                &ARM_2D_SAFE_NAME(tTargetPix));                 \
-                                                                                \
-        for (   int ARM_2D_SAFE_NAME(i) = 0;                                    \
-                ARM_2D_SAFE_NAME(i) < 3;                                        \
-                ARM_2D_SAFE_NAME(i)++) {                                        \
-            uint16_t ARM_2D_SAFE_NAME(hwTemp) =                                 \
-                    (   ARM_2D_SAFE_NAME(tSrcPix).BGRA[ARM_2D_SAFE_NAME(i)]     \
-                    *   ARM_2D_SAFE_NAME(hwOPA))                                \
-                +   (   ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)]  \
-                    *   (ARM_2D_SAFE_NAME(hwTRANS)));                           \
-            ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)] =            \
-                (uint16_t) (ARM_2D_SAFE_NAME(hwTemp) >> 8);                     \
-        }                                                                       \
-                                                                                \
-        /* pack merged stream */                                                \
-        *ARM_2D_SAFE_NAME(phwTargetPixel)                                       \
-            = __arm_2d_rgb565_pack(&ARM_2D_SAFE_NAME(tTargetPix));              \
-    } while(0)
+        __arm_2d_ccca8888_pixel_blend_to_rgb565_sw( (__SRC_ADDR),               \
+                                                    (__DES_ADDR),               \
+                                                    256 - (__TRANS))
 #endif
+
+#ifndef __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565_OPA
+#   define __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565_OPA(  __SRC_ADDR,         \
+                                                        __DES_ADDR,             \
+                                                        __OPA)                  \
+        __arm_2d_ccca8888_pixel_blend_to_rgb565_sw( (__SRC_ADDR),               \
+                                                    (__DES_ADDR),               \
+                                                    (__OPA))
+#endif
+
+__STATIC_INLINE 
+void __arm_2d_cccn888_pixel_blend_sw(uint32_t * pwSource,
+                                     uint32_t * pwTarget,
+                                     uint16_t hwOpacity)
+{
+    uint64_t dwSourcePixel = *pwSource;
+    uint64_t dwTargetPixel = *pwTarget;
+
+    dwSourcePixel = (dwSourcePixel | dwSourcePixel << 32) & 0x0000FF0000FF00FF;
+    dwTargetPixel = (dwTargetPixel | dwTargetPixel << 32) & 0x0000FF0000FF00FF;
+    dwTargetPixel += ((dwSourcePixel - dwTargetPixel) * hwOpacity) >> 8;
+    dwTargetPixel &= 0x0000FF0000FF00FF;
+    *pwTarget = (uint32_t)(dwTargetPixel | (dwTargetPixel >> 32) | 0xFF000000);
+}
 
 #ifndef __ARM_2D_PIXEL_BLENDING_CCCN888
-#   define __ARM_2D_PIXEL_BLENDING_CCCN888(__SRC_ADDR, __DES_ADDR, __TRANS)     \
-    do {                                                                        \
-        uint16_t ARM_2D_SAFE_NAME(hwOPA) = 256 - (__TRANS);                     \
-        /* do not change alpha */                                               \
-        uint_fast8_t ARM_2D_SAFE_NAME(n) = sizeof(uint32_t) - 1;                \
-        const uint8_t *ARM_2D_SAFE_NAME(pchSrc) = (uint8_t *)(__SRC_ADDR);      \
-        uint8_t *ARM_2D_SAFE_NAME(pchDes) = (uint8_t *)(__DES_ADDR);            \
-                                                                                \
-        do {                                                                    \
-            *ARM_2D_SAFE_NAME(pchDes) =                                         \
-                (   (   (uint_fast16_t)(*ARM_2D_SAFE_NAME(pchSrc)++)            \
-                    *   ARM_2D_SAFE_NAME(hwOPA))                                \
-                +   ((uint_fast16_t)(*ARM_2D_SAFE_NAME(pchDes)) * (__TRANS))    \
-                ) >> 8;                                                         \
-                ARM_2D_SAFE_NAME(pchDes)++;                                     \
-        } while(--ARM_2D_SAFE_NAME(n));                                         \
-    } while(0)
+#   define __ARM_2D_PIXEL_BLENDING_CCCN888(__SRC_ADDR, __DES_ADDR, __TRANS)      \
+        __arm_2d_cccn888_pixel_blend_sw((__SRC_ADDR), (__DES_ADDR), 256 - (__TRANS))
 #endif
 
+__STATIC_INLINE 
+void __arm_2d_ccca8888_pixel_blend_to_cccn888_sw(uint32_t * pwSource,
+                                                 uint32_t * pwTarget,
+                                                 uint16_t hwOpacity)
+{
+    if (hwOpacity) {
+        uint64_t dwSourcePixel = *pwSource;
+        uint64_t dwTargetPixel = *pwTarget;
+
+        uint32_t wOpacity = arm_2d_helper_opacity_mix((*pwSource >> 24), hwOpacity);
+
+        dwSourcePixel = (dwSourcePixel | dwSourcePixel << 32) & 0x0000FF0000FF00FF;
+        dwTargetPixel = (dwTargetPixel | dwTargetPixel << 32) & 0x0000FF0000FF00FF;
+        dwTargetPixel += ((dwSourcePixel - dwTargetPixel) * hwOpacity) >> 8;
+        dwTargetPixel &= 0x0000FF0000FF00FF;
+        *pwTarget = (uint32_t)(dwTargetPixel | (dwTargetPixel >> 32) | 0xFF000000);
+    }
+}
+
 #ifndef __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888
-#   define __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888( __SRC_ADDR,             \
+#   define __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888(  __SRC_ADDR,            \
                                                         __DES_ADDR,             \
                                                         __TRANS)                \
-    do {                                                                        \
-        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tSrcPix);                    \
-        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tTargetPix);                 \
-        __arm_2d_ccca8888_unpack(*(__SRC_ADDR), &ARM_2D_SAFE_NAME(tSrcPix));    \
-        uint16_t ARM_2D_SAFE_NAME(hwOPA) = ARM_2D_SAFE_NAME(tSrcPix).BGRA[3];   \
-        ARM_2D_SAFE_NAME(hwOPA) += (ARM_2D_SAFE_NAME(hwOPA) == 255);            \
-        ARM_2D_SAFE_NAME(hwOPA) =                                               \
-                    ARM_2D_SAFE_NAME(hwOPA) * ((__TRANS) == 0)                  \
-                +   (   (ARM_2D_SAFE_NAME(hwOPA) * (256 - (__TRANS)) >> 8)      \
-                    *   ((__TRANS) != 0));                                      \
-        uint16_t ARM_2D_SAFE_NAME(hwTRANS) = 256 - ARM_2D_SAFE_NAME(hwOPA);     \
-                                                                                \
-        uint32_t *ARM_2D_SAFE_NAME(pwTargetPixel) = (__DES_ADDR);               \
-        __arm_2d_ccca8888_unpack(   *ARM_2D_SAFE_NAME(pwTargetPixel),           \
-                                    &ARM_2D_SAFE_NAME(tTargetPix));             \
-                                                                                \
-        for (   int ARM_2D_SAFE_NAME(i) = 0;                                    \
-                ARM_2D_SAFE_NAME(i) < 3;                                        \
-                ARM_2D_SAFE_NAME(i)++) {                                        \
-            uint16_t ARM_2D_SAFE_NAME(hwTemp) =                                 \
-                    (   ARM_2D_SAFE_NAME(tSrcPix).BGRA[ARM_2D_SAFE_NAME(i)]     \
-                    *   ARM_2D_SAFE_NAME(hwOPA))                                \
-                +   (   ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)]  \
-                    *   ARM_2D_SAFE_NAME(hwTRANS));                             \
-            ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)]              \
-                = (uint16_t) (ARM_2D_SAFE_NAME(hwTemp) >> 8);                   \
-        }                                                                       \
-                                                                                \
-        /* pack merged stream */                                                \
-        *ARM_2D_SAFE_NAME(pwTargetPixel)                                        \
-            = __arm_2d_ccca888_pack(&ARM_2D_SAFE_NAME(tTargetPix));             \
-    } while(0)
+        __arm_2d_ccca8888_pixel_blend_to_cccn888_sw( (__SRC_ADDR),              \
+                                                    (__DES_ADDR),               \
+                                                    256 - (__TRANS))
+#endif
+
+#ifndef __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888_OPA
+#   define __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888_OPA(  __SRC_ADDR,        \
+                                                        __DES_ADDR,             \
+                                                        __OPA)                  \
+        __arm_2d_ccca8888_pixel_blend_to_cccn888_sw((__SRC_ADDR),               \
+                                                    (__DES_ADDR),               \
+                                                    (__OPA))
 #endif
 
 #ifndef __ARM_2D_PIXEL_BLENDING_OPA_GRAY8
@@ -281,51 +283,12 @@ extern "C" {
 
 #ifndef __ARM_2D_PIXEL_BLENDING_OPA_RGB565
 #   define __ARM_2D_PIXEL_BLENDING_OPA_RGB565(__SRC_ADDR, __DES_ADDR, __OPA)    \
-    do {                                                                        \
-        uint16_t ARM_2D_SAFE_NAME(hwTrans) = 256 - (__OPA);                     \
-        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tSrcPix);                    \
-        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tTargetPix);                 \
-        uint16_t *ARM_2D_SAFE_NAME(phwTargetPixel) = (__DES_ADDR);              \
-        __arm_2d_rgb565_unpack(*(__SRC_ADDR), &ARM_2D_SAFE_NAME(tSrcPix));      \
-        __arm_2d_rgb565_unpack( *ARM_2D_SAFE_NAME(phwTargetPixel),              \
-                                &ARM_2D_SAFE_NAME(tTargetPix));                 \
-                                                                                \
-        for (   int ARM_2D_SAFE_NAME(i) = 0;                                    \
-                ARM_2D_SAFE_NAME(i) < 3;                                        \
-                ARM_2D_SAFE_NAME(i)++) {                                        \
-            uint16_t ARM_2D_SAFE_NAME(hwTemp) =                                 \
-                    (   ARM_2D_SAFE_NAME(tSrcPix).BGRA[ARM_2D_SAFE_NAME(i)]     \
-                    *   (__OPA))                                                \
-                +   (   ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)]  \
-                    *   ARM_2D_SAFE_NAME(hwTrans));                             \
-            ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)]              \
-                = (uint16_t) (ARM_2D_SAFE_NAME(hwTemp) >> 8);                   \
-        }                                                                       \
-                                                                                \
-        /* pack merged stream */                                                \
-        *ARM_2D_SAFE_NAME(phwTargetPixel)                                       \
-            = __arm_2d_rgb565_pack(&ARM_2D_SAFE_NAME(tTargetPix));              \
-    } while(0)
+        __arm_2d_rgb565_pixel_blend_sw((__SRC_ADDR), (__DES_ADDR), (__OPA))
 #endif
 
 #ifndef __ARM_2D_PIXEL_BLENDING_OPA_CCCN888
-#   define __ARM_2D_PIXEL_BLENDING_OPA_CCCN888(__SRC_ADDR, __DES_ADDR, __OPA)   \
-    do {                                                                        \
-        uint16_t ARM_2D_SAFE_NAME(hwTrans) = 256 - (__OPA);                     \
-        /* do not change alpha */                                               \
-        uint_fast8_t ARM_2D_SAFE_NAME(n) = sizeof(uint32_t) - 1;                \
-        const uint8_t *ARM_2D_SAFE_NAME(pchSrc) = (uint8_t *)(__SRC_ADDR);      \
-        uint8_t *ARM_2D_SAFE_NAME(pchDes) = (uint8_t *)(__DES_ADDR);            \
-                                                                                \
-        do {                                                                    \
-            *ARM_2D_SAFE_NAME(pchDes) =                                         \
-                (   ((uint_fast16_t)(*ARM_2D_SAFE_NAME(pchSrc)++) * (__OPA))    \
-                +   (   (uint_fast16_t)(*ARM_2D_SAFE_NAME(pchDes))              \
-                    *   ARM_2D_SAFE_NAME(hwTrans))                              \
-                ) >> 8;                                                         \
-                ARM_2D_SAFE_NAME(pchDes)++;                                     \
-        } while(--ARM_2D_SAFE_NAME(n));                                         \
-    } while(0)
+#   define __ARM_2D_PIXEL_BLENDING_OPA_CCCN888(__SRC_ADDR, __DES_ADDR, __OPA)    \
+        __arm_2d_cccn888_pixel_blend_sw((__SRC_ADDR), (__DES_ADDR), (__OPA))
 #endif
 
 #ifndef __ARM_2D_PIXEL_AVERAGE_RGB565
@@ -384,8 +347,7 @@ enum {
     /*------------ arm-2d operation idx begin --------------*/
     __ARM_2D_OP_IDX_BARRIER,
     __ARM_2D_OP_IDX_SYNC = __ARM_2D_OP_IDX_BARRIER,
-    
-    __ARM_2D_OP_IDX_COPY,
+
     __ARM_2D_OP_IDX_COPY_ONLY,
     __ARM_2D_OP_IDX_COPY_WITH_X_MIRROR,
     __ARM_2D_OP_IDX_COPY_WITH_Y_MIRROR,
@@ -396,14 +358,13 @@ enum {
     __ARM_2D_OP_IDX_FILL_WITH_Y_MIRROR,
     __ARM_2D_OP_IDX_FILL_WITH_XY_MIRROR,
 
-    
-    __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING,
-    __ARM_2D_OP_IDX_COPY_ONLY_WITH_COLOUR_KEYING,
+
+    __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING_ONLY,
     __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING_AND_X_MIRROR,
     __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING_AND_Y_MIRROR,
     __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING_AND_XY_MIRROR,
 
-    __ARM_2D_OP_IDX_FILL_ONLY_WITH_COLOUR_KEYING,
+    __ARM_2D_OP_IDX_FILL_WITH_COLOUR_KEYING_ONLY,
     __ARM_2D_OP_IDX_FILL_WITH_COLOUR_KEYING_AND_X_MIRROR,
     __ARM_2D_OP_IDX_FILL_WITH_COLOUR_KEYING_AND_Y_MIRROR,
     __ARM_2D_OP_IDX_FILL_WITH_COLOUR_KEYING_AND_XY_MIRROR,
@@ -413,7 +374,6 @@ enum {
 
     __ARM_2D_OP_IDX_COPY_WITH_COLOUR_KEYING_AND_OPACITY,
 
-    __ARM_2D_OP_IDX_COPY_WITH_MASKS,
     __ARM_2D_OP_IDX_COPY_WITH_MASKS_ONLY,
     __ARM_2D_OP_IDX_COPY_WITH_MASKS_AND_X_MIRROR,
     __ARM_2D_OP_IDX_COPY_WITH_MASKS_AND_Y_MIRROR,
@@ -422,8 +382,7 @@ enum {
     __ARM_2D_OP_IDX_FILL_WITH_MASKS_AND_X_MIRROR,
     __ARM_2D_OP_IDX_FILL_WITH_MASKS_AND_Y_MIRROR,
     __ARM_2D_OP_IDX_FILL_WITH_MASKS_AND_XY_MIRROR,
-    
-    __ARM_2D_OP_IDX_COPY_WITH_SOURCE_MASK,
+
     __ARM_2D_OP_IDX_COPY_WITH_SOURCE_MASK_ONLY,
     __ARM_2D_OP_IDX_COPY_WITH_SOURCE_MASK_AND_X_MIRROR,
     __ARM_2D_OP_IDX_COPY_WITH_SOURCE_MASK_AND_Y_MIRROR,
@@ -436,7 +395,6 @@ enum {
     __ARM_2D_OP_IDX_COPY_WITH_SOURCE_MASK_AND_OPACITY_ONLY,
     __ARM_2D_OP_IDX_FILL_WITH_SOURCE_MASK_AND_OPACITY_ONLY,
 
-    __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK,
     __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK_ONLY,
     __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK_AND_X_MIRROR,
     __ARM_2D_OP_IDX_COPY_WITH_TARGET_MASK_AND_Y_MIRROR,
@@ -456,11 +414,18 @@ enum {
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK 
         = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A8_MASK,
 
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_ONLY = 
+        __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_X_MIRROR,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_Y_MIRROR,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_XY_MIRROR,
-    
+
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_REPEAT,
+
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_ONLY,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_AND_X_MIRROR,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_AND_Y_MIRROR,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_AND_XY_MIRROR,
     
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A1_MASK_AND_OPACITY,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A2_MASK_AND_OPACITY,
@@ -469,14 +434,21 @@ enum {
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_OPACITY 
         = __ARM_2D_OP_IDX_FILL_COLOUR_WITH_A8_MASK_AND_OPACITY,
     
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_OPACITY_ONLY = 
+        __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_OPACITY,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_X_MIRROR_AND_OPACITY,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_Y_MIRROR_AND_OPACITY,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_XY_MIRROR_AND_OPACITY,
 
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_OPACITY_AND_REPEAT,
+
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_AND_OPACITY_ONLY,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_X_MIRROR_AND_OPACITY,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_Y_MIRROR_AND_OPACITY,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASKS_XY_MIRROR_AND_OPACITY,
     
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_AND_TRANFORM,
-    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_MASK_OPACITY_AND_TRANFORM,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_OPACITY,
 
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK,
     __ARM_2D_OP_IDX_FILL_COLOUR_WITH_HORIZONTAL_LINE_MASK_AND_OPACITY,
@@ -517,13 +489,29 @@ enum {
     __ARM_2D_OP_IDX_TRANSFORM_WITH_COLOUR_KEYING,
     __ARM_2D_OP_IDX_TRANSFORM_WITH_COLOUR_KEYING_AND_OPACITY,
 
-    //__ARM_2D_OP_IDX_TRANSFORM_WITH_MASKS,                                     //!< todo in the future
-    __ARM_2D_OP_IDX_TRANSFORM_WITH_SOURCE_MASK,                                 
-    //__ARM_2D_OP_IDX_TRANSFORM_WITH_TARGET_MASK,                               //!< todo in the future
 
-    //__ARM_2D_OP_IDX_TRANSFORM_WITH_MASKS_AND_OPACITY,                         //!< todo in the future
+    __ARM_2D_OP_IDX_TRANSFORM_WITH_SOURCE_MASK,     
     __ARM_2D_OP_IDX_TRANSFORM_WITH_SOURCE_MASK_AND_OPACITY,
+
+    //__ARM_2D_OP_IDX_TRANSFORM_WITH_TARGET_MASK,                               //!< todo in the future
     //__ARM_2D_OP_IDX_TRANSFORM_WITH_TARGET_MASK_AND_OPACITY,                   //!< todo in the future
+
+    //__ARM_2D_OP_IDX_TRANSFORM_WITH_MASKS,                                     //!< todo in the future
+    //__ARM_2D_OP_IDX_TRANSFORM_WITH_MASKS_AND_OPACITY,                         //!< todo in the future
+
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK,
+    __ARM_2D_OP_IDX_FILL_COLOUR_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY,
+
+    __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK,
+    __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_AND_OPACITY,
+    __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_AND_SOURCE_MASK,
+    __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_OPACITY,
+
+    __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_AND_TARGET_MASK,
+    __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_SOURCE_MASK_TARGET_MASK_AND_OPACITY,
+
+    __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_AND_TARGET_MASK,
+    __ARM_2D_OP_IDX_TILE_COPY_WITH_TRANSFORMED_MASK_TARGET_MASK_AND_OPACITY,
 
     __ARM_2D_OP_IDX_FILTER_IIR_BLUR,
     __ARM_2D_OP_IDX_FILTER_REVERSE_COLOUR,
@@ -597,6 +585,13 @@ typedef struct __arm_2d_param_copy_orig_msk_t {
     
 } __arm_2d_param_copy_orig_msk_t;
 
+typedef struct __arm_2d_param_copy_orig_msk_extra_t {
+    implement(__arm_2d_param_copy_orig_msk_t);
+
+    __arm_2d_tile_param_t tExtraSource;
+    __arm_2d_tile_param_t tExtraSourceMask;
+} __arm_2d_param_copy_orig_msk_extra_t;
+
 typedef struct __arm_2d_param_fill_t {
     __arm_2d_tile_param_t tSource;
     __arm_2d_tile_param_t tTarget;
@@ -628,17 +623,18 @@ ARM_PRIVATE(
     uint16_t                            : 16;
     
     union {
-        __arm_2d_tile_param_t           tTileProcess;
-        __arm_2d_param_target_msk_t     tTileMaskProcess;
+        __arm_2d_tile_param_t                   tTileProcess;
+        __arm_2d_param_target_msk_t             tTileMaskProcess;
 
-        __arm_2d_param_copy_t           tCopy;
-        __arm_2d_param_copy_msk_t       tCopyMask;
-        __arm_2d_param_copy_orig_t      tCopyOrig;                              //!< for transform
-        __arm_2d_param_copy_orig_msk_t  tCopyOrigMask;                          //!< for transform with masks
+        __arm_2d_param_copy_t                   tCopy;
+        __arm_2d_param_copy_msk_t               tCopyMask;
+        __arm_2d_param_copy_orig_t              tCopyOrig;                      //!< for transform
+        __arm_2d_param_copy_orig_msk_t          tCopyOrigMask;                  //!< for transform with masks
+        __arm_2d_param_copy_orig_msk_extra_t    tCopyOrigMaskExtra;             //!< for transform with masks and extra masks
         
-        __arm_2d_param_fill_t           tFill;
-        __arm_2d_param_fill_msk_t       tFillMask;
-        __arm_2d_param_fill_orig_t      tFillOrig;
+        __arm_2d_param_fill_t                   tFill;
+        __arm_2d_param_fill_msk_t               tFillMask;
+        __arm_2d_param_fill_orig_t              tFillOrig;
     }Param;
 )};
 
@@ -664,25 +660,27 @@ ARM_PRIVATE(
     arm_2d_tile_t           *ptDefaultFrameBuffer;
     
     union {
-        arm_2d_op_t                         tBasic;
-        arm_2d_op_fill_cl_t                 tFillColour;
-        arm_2d_op_fill_cl_msk_t             tFillColourMask;
-        arm_2d_op_fill_cl_opc_t             tFillColourOpacity;
-        arm_2d_op_src_t                     tWithSource;
+        arm_2d_op_t                                         tBasic;
+        arm_2d_op_fill_cl_t                                 tFillColour;
+        arm_2d_op_fill_cl_msk_t                             tFillColourMask;
+        arm_2d_op_fill_cl_opc_t                             tFillColourOpacity;
+        arm_2d_op_src_t                                     tWithSource;
         
-        arm_2d_op_alpha_t                   tAlpha;
-        arm_2d_op_alpha_cl_key_t            tAlphaColourKeying;
-        arm_2d_op_fill_cl_msk_opc_t   tAlphaFillColourMaskOpacity;
-        arm_2d_op_cp_msk_t                  tCopyMasks;
+        arm_2d_op_alpha_t                                   tAlpha;
+        arm_2d_op_alpha_cl_key_t                            tAlphaColourKeying;
+        arm_2d_op_fill_cl_msk_opc_t                         tAlphaFillColourMaskOpacity;
+        arm_2d_op_cp_msk_t                                  tCopyMasks;
         
-        arm_2d_op_drw_patn_t                tDrawPattern;
-        arm_2d_op_trans_t                   tTransform;
-        arm_2d_op_trans_opa_t               tTransformOpacity;
-        arm_2d_op_trans_msk_opa_t           tTransformMaskOpacity;
+        arm_2d_op_drw_patn_t                                tDrawPattern;
+        arm_2d_op_trans_t                                   tTransform;
+        arm_2d_op_trans_opa_t                               tTransformOpacity;
+        arm_2d_op_trans_msk_opa_t                           tTransformMaskOpacity;
+        arm_2d_op_tile_cp_src_msk_trans_msk_des_msk_opa_t   tTileCopySourceMaskTransformMaskTargetMaskOpacity;
         
-        arm_2d_op_msk_t                     tBasicMask;
-        arm_2d_op_src_msk_t                 tSourceMask;
-        arm_2d_op_src_orig_msk_t            tSourceOrigMask;
+        arm_2d_op_msk_t                                     tBasicMask;
+        arm_2d_op_src_msk_t                                 tSourceMask;
+        arm_2d_op_src_orig_msk_t                            tSourceOrigMask;
+        
     } DefaultOP;
 )};
 
@@ -750,7 +748,6 @@ bool __arm_2d_valid_mask(   const arm_2d_tile_t *ptAlpha,
                             uint_fast8_t chAllowMask);
 
 extern
-ARM_NONNULL(1)
 const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
                                             const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
@@ -759,7 +756,6 @@ const arm_2d_tile_t *__arm_2d_tile_get_1st_derived_child_or_root(
                                             bool bQuitWhenFindFirstDerivedChild);
 
 extern
-ARM_NONNULL(1)
 const arm_2d_tile_t *__arm_2d_tile_get_root(const arm_2d_tile_t *ptTile,
                                             arm_2d_region_t *ptValidRegion,
                                             arm_2d_location_t *ptOffset,
@@ -881,30 +877,6 @@ extern
 arm_fsm_rt_t __arm_2d_rgb32_sw_tile_fill_xy_mirror(  __arm_2d_sub_task_t *ptTask);
 
 extern
-arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_masks(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_gray8_sw_tile_fill_with_masks(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_masks(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_masks(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_masks(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_masks(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
 arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_masks_only(
                                                 __arm_2d_sub_task_t *ptTask);
 
@@ -999,31 +971,6 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_masks_and_xy_mirror(
 extern
 arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_masks_and_xy_mirror(
                                                 __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_src_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_gray8_sw_tile_fill_with_src_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_src_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_src_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_src_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_src_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
 
 extern
 arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_src_mask_only(
@@ -1147,32 +1094,6 @@ extern
 arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_src_mask_and_xy_mirror(
                                                 __arm_2d_sub_task_t *ptTask);
 
-
-extern
-arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_des_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_gray8_sw_tile_fill_with_des_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_rgb565_sw_tile_copy_with_des_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_des_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_des_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_des_mask(
-                                                __arm_2d_sub_task_t *ptTask);
-
-
 extern
 arm_fsm_rt_t __arm_2d_gray8_sw_tile_copy_with_des_mask_only(
                                                 __arm_2d_sub_task_t *ptTask);
@@ -1272,19 +1193,6 @@ extern
 arm_fsm_rt_t __arm_2d_cccn888_sw_tile_fill_with_des_mask_and_xy_mirror(
                                                 __arm_2d_sub_task_t *ptTask);
 
-
-extern 
-arm_fsm_rt_t __arm_2d_c8bit_sw_tile_copy_with_colour_keying(
-                                                __arm_2d_sub_task_t *ptTask);
-
-extern 
-arm_fsm_rt_t __arm_2d_rgb16_sw_tile_copy_with_colour_keying(
-                                        __arm_2d_sub_task_t *ptTask);
-
-extern 
-arm_fsm_rt_t __arm_2d_rgb32_sw_tile_copy_with_colour_keying(
-                                        __arm_2d_sub_task_t *ptTask);
-
 extern 
 arm_fsm_rt_t __arm_2d_c8bit_sw_tile_copy_with_colour_keying_only(
                                                 __arm_2d_sub_task_t *ptTask);
@@ -1296,7 +1204,6 @@ arm_fsm_rt_t __arm_2d_rgb16_sw_tile_copy_with_colour_keying_only(
 extern 
 arm_fsm_rt_t __arm_2d_rgb32_sw_tile_copy_with_colour_keying_only(
                                         __arm_2d_sub_task_t *ptTask);
-
 
 extern 
 arm_fsm_rt_t __arm_2d_c8bit_sw_tile_copy_with_colour_keying_and_x_mirror(
@@ -1332,18 +1239,6 @@ arm_fsm_rt_t __arm_2d_rgb16_sw_tile_copy_with_colour_keying_and_xy_mirror(
 
 extern 
 arm_fsm_rt_t __arm_2d_rgb32_sw_tile_copy_with_colour_keying_and_xy_mirror(
-                                        __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_c8bit_sw_tile_fill_with_colour_keying( 
-                                        __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_rgb16_sw_tile_fill_with_colour_keying( 
-                                        __arm_2d_sub_task_t *ptTask);
-
-extern
-arm_fsm_rt_t __arm_2d_rgb32_sw_tile_fill_with_colour_keying( 
                                         __arm_2d_sub_task_t *ptTask);
 
 extern
@@ -1452,6 +1347,18 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask(
                                         __arm_2d_sub_task_t *ptTask);
 
 extern 
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_masks_only(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_masks_only(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_masks_only(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
 arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_a1_mask_and_opacity(
                                         __arm_2d_sub_task_t *ptTask);
 
@@ -1499,16 +1406,28 @@ extern
 arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_and_opacity(
                                         __arm_2d_sub_task_t *ptTask);
 
-extern
-arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_mask_opacity_and_transform(
+extern 
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_masks_and_opacity_only(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_masks_and_opacity_only(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern 
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_masks_and_opacity_only(
                                         __arm_2d_sub_task_t *ptTask);
 
 extern
-arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_opacity_and_transform(
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_transformed_mask_and_opacity(
                                         __arm_2d_sub_task_t *ptTask);
 
 extern
-arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_opacity_and_transform(
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_transformed_mask_and_opacity(
+                                        __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_transformed_mask_and_opacity(
                                         __arm_2d_sub_task_t *ptTask);
 
 extern
@@ -1580,6 +1499,77 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_mask_xy_mirror_and_opacity(
 
 extern
 arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_mask_xy_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_masks_and_x_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_masks_and_x_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_masks_and_x_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_masks_x_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_masks_x_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_masks_x_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_masks_and_y_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_masks_and_y_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_masks_and_y_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_masks_y_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_masks_y_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_masks_y_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_masks_and_xy_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_masks_and_xy_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_masks_and_xy_mirror(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_masks_xy_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_masks_xy_mirror_and_opacity(
+                                                __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_masks_xy_mirror_and_opacity(
                                                 __arm_2d_sub_task_t *ptTask);
 
 extern
@@ -1910,6 +1900,157 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_filter_reverse_colour( __arm_2d_sub_task_t *ptTa
 
 extern
 arm_fsm_rt_t __arm_2d_cccn888_sw_filter_reverse_colour( __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_gray8_sw_colour_filling_with_transformed_mask_target_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_rgb565_sw_colour_filling_with_transformed_mask_target_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_cccn888_sw_colour_filling_with_transformed_mask_target_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_gray8_sw_colour_filling_with_transformed_mask_and_target_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_rgb565_sw_colour_filling_with_transformed_mask_and_target_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_cccn888_sw_colour_filling_with_transformed_mask_and_target_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_gray8_sw_tile_copy_with_transformed_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_rgb565_sw_tile_copy_with_transformed_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_cccn888_sw_tile_copy_with_transformed_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_gray8_sw_tile_copy_with_transformed_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_rgb565_sw_tile_copy_with_transformed_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_cccn888_sw_tile_copy_with_transformed_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_gray8_sw_tile_copy_with_transformed_mask_and_source_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_rgb565_sw_tile_copy_with_transformed_mask_and_source_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_cccn888_sw_tile_copy_with_transformed_mask_and_source_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_gray8_sw_tile_copy_with_transformed_mask_source_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_rgb565_sw_tile_copy_with_transformed_mask_source_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_cccn888_sw_tile_copy_with_transformed_mask_source_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_gray8_sw_tile_copy_with_transformed_mask_and_target_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_rgb565_sw_tile_copy_with_transformed_mask_and_target_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_cccn888_sw_tile_copy_with_transformed_mask_and_target_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_gray8_sw_tile_copy_with_transformed_mask_target_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_rgb565_sw_tile_copy_with_transformed_mask_target_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_cccn888_sw_tile_copy_with_transformed_mask_target_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_gray8_sw_tile_copy_with_transformed_mask_source_mask_and_target_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_rgb565_sw_tile_copy_with_transformed_mask_source_mask_and_target_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_cccn888_sw_tile_copy_with_transformed_mask_source_mask_and_target_mask(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_gray8_sw_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_rgb565_sw_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+
+extern
+arm_fsm_rt_t 
+__arm_2d_cccn888_sw_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity(
+    __arm_2d_sub_task_t *ptTask);
+    
 /*========================== POST INCLUDES ===================================*/
 #include "__arm_2d_direct.h"
 

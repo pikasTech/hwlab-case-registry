@@ -21,8 +21,8 @@
  * Title:        __arm_2d_meta_ccca8888_trans.inc
  * Description:  c code template for ccca8888 tile transform operations
  *
- * $Date:        8. September 2025
- * $Revision:    V.1.1.0
+ * $Date:        18. Nov 2025
+ * $Revision:    V.1.1.1
  *
  * -------------------------------------------------------------------- */
 
@@ -70,6 +70,7 @@
 
 #define __CCCA8888_TRANS_TYPE(__NAME)   ___CCCA8888_TRANS_TYPE(__NAME, __API_CCCA8888_TRANS_COLOUR)
 
+#undef MASK_COLOR
 #define MASK_COLOR(sz)  (sz == 8) ? ptInfo->Mask.chColour : ((sz == 16) ?  ptInfo->Mask.hwColour :  ptInfo->Mask.wColour)
 
 /*============================ PROTOTYPES ====================================*/
@@ -143,6 +144,7 @@ void __CCCA8888_TRANS_FUNC(get_pixel_colour)(arm_2d_point_fx_t  *ptFxPoint,
     wTotalAlpha += (chPixelAlpha3 == 255) * (hwAlpha3 << 8) 
                     + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
 
+    wTotalAlpha >>= 8;  
     if (0 == wTotalAlpha) {
         return ;
     }
@@ -167,12 +169,12 @@ void __CCCA8888_TRANS_FUNC(get_pixel_colour)(arm_2d_point_fx_t  *ptFxPoint,
     __API_CCCA8888_TRANS_INT_TYPE uPixelResult = __API_CCCA8888_TRANS_PIXEL_AVERAGE_RESULT();
 
     #if __API_CCCA8888_TRANS_CFG_SUPPORT_OPACITY
-        uint16_t hwPixelAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
-                              + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
+        uint16_t hwPixelAlpha = (wTotalAlpha >= 0xFF) * hwOpacity
+                              + (!(wTotalAlpha >= 0xFF) * (wTotalAlpha * hwOpacity >> 8));
 
         __API_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
     #else
-        uint16_t hwPixelAlpha = wTotalAlpha >> 8;
+        uint16_t hwPixelAlpha = wTotalAlpha;
 
         __API_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
     #endif

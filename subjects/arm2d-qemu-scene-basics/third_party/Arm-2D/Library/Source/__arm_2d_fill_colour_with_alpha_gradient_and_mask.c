@@ -22,8 +22,8 @@
  * Description:  The source code of APIs for colour-filling-with-alpha-gradient
  *               -and-mask
  *
- * $Date:        15. Aug 2024
- * $Revision:    V.0.5.2
+ * $Date:        20 Oct 2025
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -416,17 +416,25 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_4pts_alpha_gradient_and_mask(
 
     assert(ARM_2D_COLOUR_SZ_8BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
+    arm_2d_region_t tValidRegionRegion = ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen;
 
-    if (NULL == OPCODE.Target.ptRegion) {
-        tTargetRegion.tSize = OPCODE.Target.ptTile->tRegion.tSize;
-    } else {
+    if (NULL != OPCODE.Target.ptRegion) {
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
+
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
                                         tTargetRegion.tLocation,
                                         true);
+
+    if (!arm_2d_region_intersect(&tTargetRegion, &tValidRegionRegion, &tValidRegionRegion)) {
+        return arm_fsm_rt_cpl;
+    }
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -438,7 +446,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_4pts_alpha_gradient_and_mask(
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.chColour,
                             this.tSamplePoints);
@@ -449,7 +457,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_4pts_alpha_gradient_and_mask(
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.chColour,
                             this.tSamplePoints);
@@ -792,17 +800,25 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_3pts_alpha_gradient_and_mask(
 
     assert(ARM_2D_COLOUR_SZ_8BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
+    arm_2d_region_t tValidRegionRegion = ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen;
 
-    if (NULL == OPCODE.Target.ptRegion) {
-        tTargetRegion.tSize = OPCODE.Target.ptTile->tRegion.tSize;
-    } else {
+    if (NULL != OPCODE.Target.ptRegion) {
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
+
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
                                         tTargetRegion.tLocation,
                                         true);
+
+    if (!arm_2d_region_intersect(&tTargetRegion, &tValidRegionRegion, &tValidRegionRegion)) {
+        return arm_fsm_rt_cpl;
+    }
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -814,7 +830,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_3pts_alpha_gradient_and_mask(
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.chColour,
                             this.tSamplePoints);
@@ -825,7 +841,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_3pts_alpha_gradient_and_mask(
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.chColour,
                             this.tSamplePoints);
@@ -1138,17 +1154,25 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_horizontal_alpha_gradient_and
 
     assert(ARM_2D_COLOUR_SZ_8BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
+    arm_2d_region_t tValidRegionRegion = ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen;
 
-    if (NULL == OPCODE.Target.ptRegion) {
-        tTargetRegion.tSize = OPCODE.Target.ptTile->tRegion.tSize;
-    } else {
+    if (NULL != OPCODE.Target.ptRegion) {
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
+
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
                                         tTargetRegion.tLocation,
                                         true);
+
+    if (!arm_2d_region_intersect(&tTargetRegion, &tValidRegionRegion, &tValidRegionRegion)) {
+        return arm_fsm_rt_cpl;
+    }
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -1160,7 +1184,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_horizontal_alpha_gradient_and
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.chColour,
                             this.tSamplePoints);
@@ -1171,7 +1195,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_horizontal_alpha_gradient_and
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.chColour,
                             this.tSamplePoints);
@@ -1490,17 +1514,25 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_vertical_alpha_gradient_and_m
 
     assert(ARM_2D_COLOUR_SZ_8BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
+    arm_2d_region_t tValidRegionRegion = ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen;
 
-    if (NULL == OPCODE.Target.ptRegion) {
-        tTargetRegion.tSize = OPCODE.Target.ptTile->tRegion.tSize;
-    } else {
+    if (NULL != OPCODE.Target.ptRegion) {
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
+
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
                                         tTargetRegion.tLocation,
                                         true);
+
+    if (!arm_2d_region_intersect(&tTargetRegion, &tValidRegionRegion, &tValidRegionRegion)) {
+        return arm_fsm_rt_cpl;
+    }
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -1512,7 +1544,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_vertical_alpha_gradient_and_m
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.chColour,
                             this.tSamplePoints);
@@ -1523,7 +1555,7 @@ arm_fsm_rt_t __arm_2d_gray8_sw_colour_filling_with_vertical_alpha_gradient_and_m
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.chColour,
                             this.tSamplePoints);
@@ -1880,17 +1912,25 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_4pts_alpha_gradient_and_mask
 
     assert(ARM_2D_COLOUR_SZ_16BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
+    arm_2d_region_t tValidRegionRegion = ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen;
 
-    if (NULL == OPCODE.Target.ptRegion) {
-        tTargetRegion.tSize = OPCODE.Target.ptTile->tRegion.tSize;
-    } else {
+    if (NULL != OPCODE.Target.ptRegion) {
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
+
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
                                         tTargetRegion.tLocation,
                                         true);
+
+    if (!arm_2d_region_intersect(&tTargetRegion, &tValidRegionRegion, &tValidRegionRegion)) {
+        return arm_fsm_rt_cpl;
+    }
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -1902,7 +1942,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_4pts_alpha_gradient_and_mask
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.hwColour,
                             this.tSamplePoints);
@@ -1913,7 +1953,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_4pts_alpha_gradient_and_mask
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.hwColour,
                             this.tSamplePoints);
@@ -2256,17 +2296,25 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_3pts_alpha_gradient_and_mask
 
     assert(ARM_2D_COLOUR_SZ_16BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
+    arm_2d_region_t tValidRegionRegion = ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen;
 
-    if (NULL == OPCODE.Target.ptRegion) {
-        tTargetRegion.tSize = OPCODE.Target.ptTile->tRegion.tSize;
-    } else {
+    if (NULL != OPCODE.Target.ptRegion) {
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
+
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
                                         tTargetRegion.tLocation,
                                         true);
+
+    if (!arm_2d_region_intersect(&tTargetRegion, &tValidRegionRegion, &tValidRegionRegion)) {
+        return arm_fsm_rt_cpl;
+    }
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -2278,7 +2326,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_3pts_alpha_gradient_and_mask
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.hwColour,
                             this.tSamplePoints);
@@ -2289,7 +2337,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_3pts_alpha_gradient_and_mask
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.hwColour,
                             this.tSamplePoints);
@@ -2602,17 +2650,25 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_horizontal_alpha_gradient_an
 
     assert(ARM_2D_COLOUR_SZ_16BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
+    arm_2d_region_t tValidRegionRegion = ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen;
 
-    if (NULL == OPCODE.Target.ptRegion) {
-        tTargetRegion.tSize = OPCODE.Target.ptTile->tRegion.tSize;
-    } else {
+    if (NULL != OPCODE.Target.ptRegion) {
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
+
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
                                         tTargetRegion.tLocation,
                                         true);
+
+    if (!arm_2d_region_intersect(&tTargetRegion, &tValidRegionRegion, &tValidRegionRegion)) {
+        return arm_fsm_rt_cpl;
+    }
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -2624,7 +2680,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_horizontal_alpha_gradient_an
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.hwColour,
                             this.tSamplePoints);
@@ -2635,7 +2691,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_horizontal_alpha_gradient_an
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.hwColour,
                             this.tSamplePoints);
@@ -2954,17 +3010,25 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_vertical_alpha_gradient_and_
 
     assert(ARM_2D_COLOUR_SZ_16BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
+    arm_2d_region_t tValidRegionRegion = ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen;
 
-    if (NULL == OPCODE.Target.ptRegion) {
-        tTargetRegion.tSize = OPCODE.Target.ptTile->tRegion.tSize;
-    } else {
+    if (NULL != OPCODE.Target.ptRegion) {
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
+
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
                                         tTargetRegion.tLocation,
                                         true);
+
+    if (!arm_2d_region_intersect(&tTargetRegion, &tValidRegionRegion, &tValidRegionRegion)) {
+        return arm_fsm_rt_cpl;
+    }
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -2976,7 +3040,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_vertical_alpha_gradient_and_
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.hwColour,
                             this.tSamplePoints);
@@ -2987,7 +3051,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_colour_filling_with_vertical_alpha_gradient_and_
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.hwColour,
                             this.tSamplePoints);
@@ -3344,17 +3408,25 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_4pts_alpha_gradient_and_mas
 
     assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
+    arm_2d_region_t tValidRegionRegion = ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen;
 
-    if (NULL == OPCODE.Target.ptRegion) {
-        tTargetRegion.tSize = OPCODE.Target.ptTile->tRegion.tSize;
-    } else {
+    if (NULL != OPCODE.Target.ptRegion) {
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
+
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
                                         tTargetRegion.tLocation,
                                         true);
+
+    if (!arm_2d_region_intersect(&tTargetRegion, &tValidRegionRegion, &tValidRegionRegion)) {
+        return arm_fsm_rt_cpl;
+    }
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -3366,7 +3438,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_4pts_alpha_gradient_and_mas
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.wColour,
                             this.tSamplePoints);
@@ -3377,7 +3449,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_4pts_alpha_gradient_and_mas
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.wColour,
                             this.tSamplePoints);
@@ -3720,17 +3792,25 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_3pts_alpha_gradient_and_mas
 
     assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
+    arm_2d_region_t tValidRegionRegion = ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen;
 
-    if (NULL == OPCODE.Target.ptRegion) {
-        tTargetRegion.tSize = OPCODE.Target.ptTile->tRegion.tSize;
-    } else {
+    if (NULL != OPCODE.Target.ptRegion) {
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
+
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
                                         tTargetRegion.tLocation,
                                         true);
+
+    if (!arm_2d_region_intersect(&tTargetRegion, &tValidRegionRegion, &tValidRegionRegion)) {
+        return arm_fsm_rt_cpl;
+    }
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -3742,7 +3822,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_3pts_alpha_gradient_and_mas
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.wColour,
                             this.tSamplePoints);
@@ -3753,7 +3833,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_3pts_alpha_gradient_and_mas
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.wColour,
                             this.tSamplePoints);
@@ -4066,17 +4146,25 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_horizontal_alpha_gradient_a
 
     assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
+    arm_2d_region_t tValidRegionRegion = ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen;
 
-    if (NULL == OPCODE.Target.ptRegion) {
-        tTargetRegion.tSize = OPCODE.Target.ptTile->tRegion.tSize;
-    } else {
+    if (NULL != OPCODE.Target.ptRegion) {
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
+
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
                                         tTargetRegion.tLocation,
                                         true);
+
+    if (!arm_2d_region_intersect(&tTargetRegion, &tValidRegionRegion, &tValidRegionRegion)) {
+        return arm_fsm_rt_cpl;
+    }
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -4088,7 +4176,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_horizontal_alpha_gradient_a
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.wColour,
                             this.tSamplePoints);
@@ -4099,7 +4187,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_horizontal_alpha_gradient_a
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.wColour,
                             this.tSamplePoints);
@@ -4418,17 +4506,25 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_vertical_alpha_gradient_and
 
     assert(ARM_2D_COLOUR_SZ_32BIT == OP_CORE.ptOp->Info.Colour.u3ColourSZ);
     arm_2d_region_t tTargetRegion = {0};
+    arm_2d_region_t tValidRegionRegion = ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen;
 
-    if (NULL == OPCODE.Target.ptRegion) {
-        tTargetRegion.tSize = OPCODE.Target.ptTile->tRegion.tSize;
-    } else {
+    if (NULL != OPCODE.Target.ptRegion) {
         tTargetRegion = *OPCODE.Target.ptRegion;
     }
+
+    arm_2d_size_t tSourceSize = OPCODE.Source.ptTile->tRegion.tSize;
+
+    tTargetRegion.tSize.iWidth =  MIN(tSourceSize.iWidth, tTargetRegion.tSize.iWidth);
+    tTargetRegion.tSize.iHeight =  MIN(tSourceSize.iHeight, tTargetRegion.tSize.iHeight);
 
     tTargetRegion.tLocation 
         = arm_2d_get_absolute_location( OPCODE.Target.ptTile,
                                         tTargetRegion.tLocation,
                                         true);
+
+    if (!arm_2d_region_intersect(&tTargetRegion, &tValidRegionRegion, &tValidRegionRegion)) {
+        return arm_fsm_rt_cpl;
+    }
 
     if (ARM_2D_CHANNEL_8in32 == ptTask->Param.tCopy.tSource.tColour.chScheme) {
     #if !__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
@@ -4440,7 +4536,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_vertical_alpha_gradient_and
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.wColour,
                             this.tSamplePoints);
@@ -4451,7 +4547,7 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_colour_filling_with_vertical_alpha_gradient_and
                             ptTask->Param.tCopy.tTarget.iStride,
                             ptTask->Param.tCopy.tSource.pBuffer,                //!< alpha tile
                             ptTask->Param.tCopy.tSource.iStride,                //!< alpha tile
-                            &(ptTask->Param.tCopy.tTarget.tValidRegionInVirtualScreen),
+                            &tValidRegionRegion,
                             &tTargetRegion,
                             this.wColour,
                             this.tSamplePoints);

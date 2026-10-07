@@ -22,14 +22,14 @@
  * Description:  A private header file for 
  *               colour-filling-with-mask-and-mirroring
  *
- * $Date:        20. Feb 2024
- * $Revision:    V.0.6.1
+ * $Date:        09. Jan 2026
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
  
-#ifndef __ARM_2D_FILL_COLOUR_WITH_MIRRORING_H__
-#define __ARM_2D_FILL_COLOUR_WITH_MIRRORING_H__
+#ifndef __ARM_2D_FILL_COLOUR_WITH_MASK_AND_MIRRORING_H__
+#define __ARM_2D_FILL_COLOUR_WITH_MASK_AND_MIRRORING_H__
 
 /*============================ INCLUDES ======================================*/
 
@@ -56,25 +56,25 @@ extern "C" {
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#define arm_2d_gray8_fill_colour_with_mask_and_x_mirror(                       \
+#define arm_2d_gray8_fill_colour_with_mask_and_x_mirror(                        \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __ALPHA_ADDR,   /*   alpha tile address */  \
                                     __COLOUR)       /*   colour */              \
-            arm_2dp_gray8_fill_colour_with_mask_and_x_mirror(                  \
+            arm_2dp_gray8_fill_colour_with_mask_and_x_mirror(                   \
                                       NULL,                                     \
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR),                           \
                                      (__ALPHA_ADDR),                            \
                                      (__COLOUR))
 
-#define arm_2d_gray8_fill_colour_with_mask_x_mirror_and_opacity(               \
+#define arm_2d_gray8_fill_colour_with_mask_x_mirror_and_opacity(                \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __ALPHA_ADDR,   /*   alpha tile address */  \
                                     __COLOUR,       /*   colour */              \
                                     __OPACITY)      /*   opacity */             \
-            arm_2dp_gray8_fill_colour_with_mask_x_mirror_and_opacity(          \
+            arm_2dp_gray8_fill_colour_with_mask_x_mirror_and_opacity(           \
                                       NULL,                                     \
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR),                           \
@@ -82,25 +82,25 @@ extern "C" {
                                      (__COLOUR),                                \
                                      (__OPACITY))
 
-#define arm_2d_gray8_fill_colour_with_mask_and_y_mirror(                       \
+#define arm_2d_gray8_fill_colour_with_mask_and_y_mirror(                        \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __ALPHA_ADDR,   /*   alpha tile address */  \
                                     __COLOUR)       /*   colour */              \
-            arm_2dp_gray8_fill_colour_with_mask_and_y_mirror(                  \
+            arm_2dp_gray8_fill_colour_with_mask_and_y_mirror(                   \
                                       NULL,                                     \
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR),                           \
                                      (__ALPHA_ADDR),                            \
                                      (__COLOUR))
 
-#define arm_2d_gray8_fill_colour_with_mask_y_mirror_and_opacity(               \
+#define arm_2d_gray8_fill_colour_with_mask_y_mirror_and_opacity(                \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __ALPHA_ADDR,   /*   alpha tile address */  \
                                     __COLOUR,       /*   colour */              \
                                     __OPACITY)      /*   opacity */             \
-            arm_2dp_gray8_fill_colour_with_mask_y_mirror_and_opacity(          \
+            arm_2dp_gray8_fill_colour_with_mask_y_mirror_and_opacity(           \
                                       NULL,                                     \
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR),                           \
@@ -133,6 +133,124 @@ extern "C" {
                                      (__ALPHA_ADDR),                            \
                                      (__COLOUR),                                \
                                      (__OPACITY))
+
+#define arm_2d_gray8_fill_colour_with_mask_only(                                \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR)       /*   colour */              \
+            arm_2dp_gray8_fill_colour_with_mask_only(                           \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR))
+
+#define arm_2d_gray8_fill_colour_with_mask_and_opacity_only(                    \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY)      /*   opacity */             \
+            arm_2dp_gray8_fill_colour_with_mask_and_opacity_only(               \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR),                                \
+                                     (__OPACITY))
+
+#define arm_2d_gray8_fill_colour_with_mask(                                     \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __COLOUR,       /*   colour */              \
+                                    ...)            /*   mode */                \
+({                                                                              \
+    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
+    switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                       \
+           &    ARM_2D_CP_MODE_XY_MIRROR) {                                     \
+        case ARM_2D_CP_MODE_NO_MIRROR:                                          \
+            tResult = arm_2d_gray8_fill_colour_with_mask_only(                  \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR));                                        \
+            break;                                                              \
+        case ARM_2D_CP_MODE_X_MIRROR:                                           \
+            tResult = arm_2d_gray8_fill_colour_with_mask_and_x_mirror(          \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR));                                        \
+            break;                                                              \
+        case ARM_2D_CP_MODE_Y_MIRROR:                                           \
+            tResult = arm_2d_gray8_fill_colour_with_mask_and_y_mirror(          \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR));                                        \
+            break;                                                              \
+        case ARM_2D_CP_MODE_XY_MIRROR:                                          \
+            tResult = arm_2d_gray8_fill_colour_with_mask_and_xy_mirror(         \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR));                                        \
+            break;                                                              \
+    }                                                                           \
+    tResult;                                                                    \
+})
+
+#define arm_2d_gray8_fill_colour_with_mask_and_opacity(                         \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY,      /*   opacity */             \
+                                    ...)            /*   mode */                \
+({                                                                              \
+    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
+    switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                       \
+           &    ARM_2D_CP_MODE_XY_MIRROR) {                                     \
+        case ARM_2D_CP_MODE_NO_MIRROR:                                          \
+            tResult = arm_2d_gray8_fill_colour_with_mask_and_opacity_only(      \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR),                                         \
+                            (__OPACITY));                                       \
+            break;                                                              \
+        case ARM_2D_CP_MODE_X_MIRROR:                                           \
+            tResult =                                                           \
+                arm_2d_gray8_fill_colour_with_mask_x_mirror_and_opacity(        \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR),                                         \
+                            (__OPACITY));                                       \
+            break;                                                              \
+        case ARM_2D_CP_MODE_Y_MIRROR:                                           \
+            tResult =                                                           \
+                arm_2d_gray8_fill_colour_with_mask_y_mirror_and_opacity(        \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR),                                         \
+                            (__OPACITY));                                       \
+            break;                                                              \
+        case ARM_2D_CP_MODE_XY_MIRROR:                                          \
+            tResult =                                                           \
+                arm_2d_gray8_fill_colour_with_mask_xy_mirror_and_opacity(       \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR),                                         \
+                            (__OPACITY));                                       \
+            break;                                                              \
+    }                                                                           \
+    tResult;                                                                    \
+})
 
 #define arm_2d_rgb565_fill_colour_with_mask_and_x_mirror(                       \
                                     __TARGET_ADDR,  /*   target tile address*/  \
@@ -186,25 +304,25 @@ extern "C" {
                                      (__COLOUR),                                \
                                      (__OPACITY))
 
-#define arm_2d_rgb565_fill_colour_with_mask_and_xy_mirror(                       \
+#define arm_2d_rgb565_fill_colour_with_mask_and_xy_mirror(                      \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __ALPHA_ADDR,   /*   alpha tile address */  \
                                     __COLOUR)       /*   colour */              \
-            arm_2dp_rgb565_fill_colour_with_mask_and_xy_mirror(                  \
+            arm_2dp_rgb565_fill_colour_with_mask_and_xy_mirror(                 \
                                       NULL,                                     \
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR),                           \
                                      (__ALPHA_ADDR),                            \
                                      (__COLOUR))
 
-#define arm_2d_rgb565_fill_colour_with_mask_xy_mirror_and_opacity(               \
+#define arm_2d_rgb565_fill_colour_with_mask_xy_mirror_and_opacity(              \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __ALPHA_ADDR,   /*   alpha tile address */  \
                                     __COLOUR,       /*   colour */              \
                                     __OPACITY)      /*   opacity */             \
-            arm_2dp_rgb565_fill_colour_with_mask_xy_mirror_and_opacity(          \
+            arm_2dp_rgb565_fill_colour_with_mask_xy_mirror_and_opacity(         \
                                       NULL,                                     \
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR),                           \
@@ -212,25 +330,25 @@ extern "C" {
                                      (__COLOUR),                                \
                                      (__OPACITY))
 
-#define arm_2d_cccn888_fill_colour_with_mask_and_x_mirror(                       \
+#define arm_2d_rgb565_fill_colour_with_mask_only(                               \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __ALPHA_ADDR,   /*   alpha tile address */  \
                                     __COLOUR)       /*   colour */              \
-            arm_2dp_cccn888_fill_colour_with_mask_and_x_mirror(                  \
+            arm_2dp_rgb565_fill_colour_with_mask_only(                          \
                                       NULL,                                     \
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR),                           \
                                      (__ALPHA_ADDR),                            \
                                      (__COLOUR))
 
-#define arm_2d_cccn888_fill_colour_with_mask_x_mirror_and_opacity(               \
+#define arm_2d_rgb565_fill_colour_with_mask_and_opacity_only(                   \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __ALPHA_ADDR,   /*   alpha tile address */  \
                                     __COLOUR,       /*   colour */              \
                                     __OPACITY)      /*   opacity */             \
-            arm_2dp_cccn888_fill_colour_with_mask_x_mirror_and_opacity(          \
+            arm_2dp_rgb565_fill_colour_with_mask_and_opacity_only(              \
                                       NULL,                                     \
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR),                           \
@@ -238,25 +356,117 @@ extern "C" {
                                      (__COLOUR),                                \
                                      (__OPACITY))
 
-#define arm_2d_cccn888_fill_colour_with_mask_and_y_mirror(                       \
+#define arm_2d_rgb565_fill_colour_with_mask(                                    \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __COLOUR,       /*   colour */              \
+                                    ...)            /*   mode */                \
+({                                                                              \
+    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
+    switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                       \
+           &    ARM_2D_CP_MODE_XY_MIRROR) {                                     \
+        case ARM_2D_CP_MODE_NO_MIRROR:                                          \
+            tResult = arm_2d_rgb565_fill_colour_with_mask_only(                 \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR));                                        \
+            break;                                                              \
+        case ARM_2D_CP_MODE_X_MIRROR:                                           \
+            tResult = arm_2d_rgb565_fill_colour_with_mask_and_x_mirror(         \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR));                                        \
+            break;                                                              \
+        case ARM_2D_CP_MODE_Y_MIRROR:                                           \
+            tResult = arm_2d_rgb565_fill_colour_with_mask_and_y_mirror(         \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR));                                        \
+            break;                                                              \
+        case ARM_2D_CP_MODE_XY_MIRROR:                                          \
+            tResult = arm_2d_rgb565_fill_colour_with_mask_and_xy_mirror(        \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR));                                        \
+            break;                                                              \
+    }                                                                           \
+    tResult;                                                                    \
+})
+
+#define arm_2d_rgb565_fill_colour_with_mask_and_opacity(                        \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY,      /*   opacity */             \
+                                    ...)            /*   mode */                \
+({                                                                              \
+    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
+    switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                       \
+           &    ARM_2D_CP_MODE_XY_MIRROR) {                                     \
+        case ARM_2D_CP_MODE_NO_MIRROR:                                          \
+            tResult = arm_2d_rgb565_fill_colour_with_mask_and_opacity_only(     \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR),                                         \
+                            (__OPACITY));                                       \
+            break;                                                              \
+        case ARM_2D_CP_MODE_X_MIRROR:                                           \
+            tResult =                                                           \
+                arm_2d_rgb565_fill_colour_with_mask_x_mirror_and_opacity(       \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR),                                         \
+                            (__OPACITY));                                       \
+            break;                                                              \
+        case ARM_2D_CP_MODE_Y_MIRROR:                                           \
+            tResult =                                                           \
+                arm_2d_rgb565_fill_colour_with_mask_y_mirror_and_opacity(       \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR),                                         \
+                            (__OPACITY));                                       \
+            break;                                                              \
+        case ARM_2D_CP_MODE_XY_MIRROR:                                          \
+            tResult =                                                           \
+                arm_2d_rgb565_fill_colour_with_mask_xy_mirror_and_opacity(      \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR),                                         \
+                            (__OPACITY));                                       \
+            break;                                                              \
+    }                                                                           \
+    tResult;                                                                    \
+})
+
+#define arm_2d_cccn888_fill_colour_with_mask_and_x_mirror(                      \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __ALPHA_ADDR,   /*   alpha tile address */  \
                                     __COLOUR)       /*   colour */              \
-            arm_2dp_cccn888_fill_colour_with_mask_and_y_mirror(                  \
+            arm_2dp_cccn888_fill_colour_with_mask_and_x_mirror(                 \
                                       NULL,                                     \
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR),                           \
                                      (__ALPHA_ADDR),                            \
                                      (__COLOUR))
 
-#define arm_2d_cccn888_fill_colour_with_mask_y_mirror_and_opacity(               \
+#define arm_2d_cccn888_fill_colour_with_mask_x_mirror_and_opacity(              \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __ALPHA_ADDR,   /*   alpha tile address */  \
                                     __COLOUR,       /*   colour */              \
                                     __OPACITY)      /*   opacity */             \
-            arm_2dp_cccn888_fill_colour_with_mask_y_mirror_and_opacity(          \
+            arm_2dp_cccn888_fill_colour_with_mask_x_mirror_and_opacity(         \
                                       NULL,                                     \
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR),                           \
@@ -264,31 +474,175 @@ extern "C" {
                                      (__COLOUR),                                \
                                      (__OPACITY))
 
-#define arm_2d_cccn888_fill_colour_with_mask_and_xy_mirror(                       \
+#define arm_2d_cccn888_fill_colour_with_mask_and_y_mirror(                      \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __ALPHA_ADDR,   /*   alpha tile address */  \
                                     __COLOUR)       /*   colour */              \
-            arm_2dp_cccn888_fill_colour_with_mask_and_xy_mirror(                  \
+            arm_2dp_cccn888_fill_colour_with_mask_and_y_mirror(                 \
                                       NULL,                                     \
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR),                           \
                                      (__ALPHA_ADDR),                            \
                                      (__COLOUR))
 
-#define arm_2d_cccn888_fill_colour_with_mask_xy_mirror_and_opacity(               \
+#define arm_2d_cccn888_fill_colour_with_mask_y_mirror_and_opacity(              \
                                     __TARGET_ADDR,  /*   target tile address*/  \
                                     __REGION_ADDR,  /*   target region address*/\
                                     __ALPHA_ADDR,   /*   alpha tile address */  \
                                     __COLOUR,       /*   colour */              \
                                     __OPACITY)      /*   opacity */             \
-            arm_2dp_cccn888_fill_colour_with_mask_xy_mirror_and_opacity(          \
+            arm_2dp_cccn888_fill_colour_with_mask_y_mirror_and_opacity(         \
                                       NULL,                                     \
                                      (__TARGET_ADDR),                           \
                                      (__REGION_ADDR),                           \
                                      (__ALPHA_ADDR),                            \
                                      (__COLOUR),                                \
                                      (__OPACITY))
+
+#define arm_2d_cccn888_fill_colour_with_mask_and_xy_mirror(                     \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR)       /*   colour */              \
+            arm_2dp_cccn888_fill_colour_with_mask_and_xy_mirror(                \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR))
+
+#define arm_2d_cccn888_fill_colour_with_mask_xy_mirror_and_opacity(             \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY)      /*   opacity */             \
+            arm_2dp_cccn888_fill_colour_with_mask_xy_mirror_and_opacity(        \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR),                                \
+                                     (__OPACITY))
+
+#define arm_2d_cccn888_fill_colour_with_mask_only(                              \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR)       /*   colour */              \
+            arm_2dp_cccn888_fill_colour_with_mask_only(                         \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR))
+
+#define arm_2d_cccn888_fill_colour_with_mask_and_opacity_only(                  \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __ALPHA_ADDR,   /*   alpha tile address */  \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY)      /*   opacity */             \
+            arm_2dp_cccn888_fill_colour_with_mask_and_opacity_only(             \
+                                      NULL,                                     \
+                                     (__TARGET_ADDR),                           \
+                                     (__REGION_ADDR),                           \
+                                     (__ALPHA_ADDR),                            \
+                                     (__COLOUR),                                \
+                                     (__OPACITY))
+
+#define arm_2d_cccn888_fill_colour_with_mask(                                   \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __COLOUR,       /*   colour */              \
+                                    ...)            /*   mode */                \
+({                                                                              \
+    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
+    switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                       \
+           &    ARM_2D_CP_MODE_XY_MIRROR) {                                     \
+        case ARM_2D_CP_MODE_NO_MIRROR:                                          \
+            tResult = arm_2d_cccn888_fill_colour_with_mask_only(                \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR));                                        \
+            break;                                                              \
+        case ARM_2D_CP_MODE_X_MIRROR:                                           \
+            tResult = arm_2d_cccn888_fill_colour_with_mask_and_x_mirror(        \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR));                                        \
+            break;                                                              \
+        case ARM_2D_CP_MODE_Y_MIRROR:                                           \
+            tResult = arm_2d_cccn888_fill_colour_with_mask_and_y_mirror(        \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR));                                        \
+            break;                                                              \
+        case ARM_2D_CP_MODE_XY_MIRROR:                                          \
+            tResult = arm_2d_cccn888_fill_colour_with_mask_and_xy_mirror(       \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR));                                        \
+            break;                                                              \
+    }                                                                           \
+    tResult;                                                                    \
+})
+
+#define arm_2d_cccn888_fill_colour_with_mask_and_opacity(                       \
+                                    __TARGET_ADDR,  /*   target tile address*/  \
+                                    __REGION_ADDR,  /*   target region address*/\
+                                    __SRC_MSK_ADDR, /*   source mask address */ \
+                                    __COLOUR,       /*   colour */              \
+                                    __OPACITY,      /*   opacity */             \
+                                    ...)            /*   mode */                \
+({                                                                              \
+    arm_fsm_rt_t tResult = (arm_fsm_rt_t)ARM_2D_ERR_UNKNOWN;                    \
+    switch (    (ARM_2D_CP_MODE_NO_MIRROR, ##__VA_ARGS__)                       \
+           &    ARM_2D_CP_MODE_XY_MIRROR) {                                     \
+        case ARM_2D_CP_MODE_NO_MIRROR:                                          \
+            tResult = arm_2d_cccn888_fill_colour_with_mask_and_opacity_only(    \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR),                                         \
+                            (__OPACITY));                                       \
+            break;                                                              \
+        case ARM_2D_CP_MODE_X_MIRROR:                                           \
+            tResult =                                                           \
+                arm_2d_cccn888_fill_colour_with_mask_x_mirror_and_opacity(      \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR),                                         \
+                            (__OPACITY));                                       \
+            break;                                                              \
+        case ARM_2D_CP_MODE_Y_MIRROR:                                           \
+            tResult =                                                           \
+                arm_2d_cccn888_fill_colour_with_mask_y_mirror_and_opacity(      \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR),                                         \
+                            (__OPACITY));                                       \
+            break;                                                              \
+        case ARM_2D_CP_MODE_XY_MIRROR:                                          \
+            tResult =                                                           \
+                arm_2d_cccn888_fill_colour_with_mask_xy_mirror_and_opacity(     \
+                            (__TARGET_ADDR),                                    \
+                            (__REGION_ADDR),                                    \
+                            (__SRC_MSK_ADDR),                                   \
+                            (__COLOUR),                                         \
+                            (__OPACITY));                                       \
+            break;                                                              \
+    }                                                                           \
+    tResult;                                                                    \
+})
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/

@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        18. August 2025
- * $Revision:    V.1.8.4
+ * $Date:        10. July 2026
+ * $Revision:    V.2.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -96,12 +96,14 @@ extern "C" {
 #   define arm_2d_pixel_from_brga8888  arm_2d_pixel_brga8888_to_gray8
 
 #   define __arm_2d_iir_blur_acc_t  __arm_2d_iir_blur_acc_gray8_t
-
 #   define arm_2dp_filter_iir_blur  arm_2dp_gray8_filter_iir_blur
-
 #   define arm_2dp_filter_iir_blur_depose                                       \
                 arm_2dp_gray8_filter_iir_blur_depose
 
+#   define arm_2d_tile_fill                                                     \
+                arm_2d_c8bit_tile_fill
+#   define arm_2d_tile_fill_with_src_mask                                       \
+                arm_2d_gray8_tile_fill_with_src_mask
 #   define arm_2d_draw_pattern      arm_2d_c8bit_draw_pattern
 #   define arm_2dp_fill_colour_with_opacity                                     \
                 arm_2dp_gray8_fill_colour_with_opacity
@@ -109,6 +111,10 @@ extern "C" {
                 arm_2d_gray8_fill_colour_with_mask
 #   define arm_2d_fill_colour_with_mask_and_opacity                             \
                 arm_2d_gray8_fill_colour_with_mask_and_opacity
+#   define arm_2d_fill_colour_with_masks_and_opacity                            \
+                arm_2d_gray8_fill_colour_with_masks_and_opacity
+#   define arm_2d_fill_colour_with_masks                                        \
+                arm_2d_gray8_fill_colour_with_masks
 #   define arm_2d_tile_copy_with_colour_keying_and_opacity                      \
                 arm_2d_gray8_tile_copy_with_colour_keying_and_opacity
 #   define arm_2d_tile_copy_with_masks                                          \
@@ -121,6 +127,8 @@ extern "C" {
                 arm_2d_gray8_tile_copy_with_masks_and_y_mirror
 #   define arm_2d_tile_copy_with_masks_and_xy_mirror                            \
                 arm_2d_gray8_tile_copy_with_masks_and_xy_mirror
+#   define arm_2d_tile_fill_with_masks                                          \
+                arm_2d_gray8_tile_fill_with_masks
 #   define arm_2d_tile_fill_with_masks_only                                     \
                 arm_2d_gray8_tile_fill_with_masks_only
 #   define arm_2d_tile_fill_with_masks_and_x_mirror                             \
@@ -157,6 +165,8 @@ extern "C" {
                 arm_2d_gray8_tile_copy_with_des_mask_and_y_mirror
 #   define arm_2d_tile_copy_with_des_mask_and_xy_mirror                         \
                 arm_2d_gray8_tile_copy_with_des_mask_and_xy_mirror
+#   define arm_2d_tile_fill_with_des_mask                                       \
+                arm_2d_gray8_tile_fill_with_des_mask
 #   define arm_2d_tile_fill_with_des_mask_only                                  \
                 arm_2d_gray8_tile_fill_with_des_mask_only
 #   define arm_2d_tile_fill_with_des_mask_and_x_mirror                          \
@@ -199,6 +209,8 @@ extern "C" {
                 arm_2d_c8bit_tile_copy_with_colour_keying_and_y_mirror
 #   define arm_2d_tile_copy_with_colour_keying_and_xy_mirror                    \
                 arm_2d_c8bit_tile_copy_with_colour_keying_and_xy_mirror
+#   define arm_2d_tile_fill_with_colour_keying                                  \
+                arm_2d_c8bit_tile_fill_with_colour_keying
 #   define arm_2d_tile_fill_with_colour_keying_only                             \
                 arm_2d_c8bit_tile_fill_with_colour_keying_only
 #   define arm_2d_tile_fill_with_colour_keying_and_x_mirror                     \
@@ -215,6 +227,14 @@ extern "C" {
                 arm_2d_gray8_tile_copy_with_des_mask
 #   define arm_2d_tile_copy_with_src_mask                                       \
                 arm_2d_gray8_tile_copy_with_src_mask
+#   define arm_2dp_tile_copy_with_transformed_mask_and_opacity                  \
+                arm_2dp_gray8_tile_copy_with_transformed_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_source_mask_and_opacity      \
+                arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_target_mask_and_opacity  \
+                arm_2dp_gray8_tile_copy_with_transformed_mask_target_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity  \
+                arm_2dp_gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity
 #   define arm_2dp_tile_transform_only                                          \
                 arm_2dp_gray8_tile_transform_only
 #   define arm_2d_tile_scaling_only                                             \
@@ -279,12 +299,18 @@ extern "C" {
                 arm_2d_gray8_fill_colour_with_mask_and_xy_mirror
 #   define arm_2d_fill_colour_with_mask_xy_mirror_and_opacity                   \
                 arm_2d_gray8_fill_colour_with_mask_xy_mirror_and_opacity
+
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
                 arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform_xy               \
                 arm_2dp_gray8_fill_colour_with_mask_opacity_and_transform_xy
 #   define arm_2d_fill_colour_with_mask_opacity_and_transform                   \
                 arm_2d_gray8_fill_colour_with_mask_opacity_and_transform
+#   define arm_2dp_fill_colour_with_transformed_mask_target_mask_and_opacity    \
+                arm_2dp_gray8_fill_colour_with_transformed_mask_target_mask_and_opacity
+#   define arm_2dp_fill_colour_with_transformed_mask_and_target_mask            \
+                arm_2dp_gray8_fill_colour_with_transformed_mask_and_target_mask
+
 #   define arm_2d_fill_colour_with_horizontal_line_mask                         \
                 arm_2d_gray8_fill_colour_with_horizontal_line_mask
 #   define arm_2d_fill_colour_with_horizontal_line_mask_and_opacity             \
@@ -337,12 +363,14 @@ extern "C" {
 #   define arm_2d_pixel_from_brga8888  arm_2d_pixel_brga8888_to_rgb565
 
 #   define __arm_2d_iir_blur_acc_t  __arm_2d_iir_blur_acc_rgb565_t
-
 #   define arm_2dp_filter_iir_blur  arm_2dp_rgb565_filter_iir_blur
-
 #   define arm_2dp_filter_iir_blur_depose                                       \
                 arm_2dp_rgb565_filter_iir_blur_depose
 
+#   define arm_2d_tile_fill                                                     \
+                arm_2d_rgb16_tile_fill
+#   define arm_2d_tile_fill_with_src_mask                                       \
+                arm_2d_rgb565_tile_fill_with_src_mask
 #   define arm_2d_draw_pattern      arm_2d_rgb16_draw_pattern 
 #   define arm_2dp_fill_colour_with_opacity                                     \
                 arm_2dp_rgb565_fill_colour_with_opacity
@@ -350,6 +378,10 @@ extern "C" {
                 arm_2d_rgb565_fill_colour_with_mask
 #   define arm_2d_fill_colour_with_mask_and_opacity                             \
                 arm_2d_rgb565_fill_colour_with_mask_and_opacity
+#   define arm_2d_fill_colour_with_masks_and_opacity                            \
+                arm_2d_rgb565_fill_colour_with_masks_and_opacity
+#   define arm_2d_fill_colour_with_masks                                        \
+                arm_2d_rgb565_fill_colour_with_masks
 #   define arm_2d_tile_copy_with_colour_keying_and_opacity                      \
                 arm_2d_rgb565_tile_copy_with_colour_keying_and_opacity
 #   define arm_2d_tile_copy_with_masks                                          \
@@ -362,6 +394,8 @@ extern "C" {
                 arm_2d_rgb565_tile_copy_with_masks_and_y_mirror
 #   define arm_2d_tile_copy_with_masks_and_xy_mirror                            \
                 arm_2d_rgb565_tile_copy_with_masks_and_xy_mirror
+#   define arm_2d_tile_fill_with_masks                                          \
+                arm_2d_rgb565_tile_fill_with_masks
 #   define arm_2d_tile_fill_with_masks_only                                     \
                 arm_2d_rgb565_tile_fill_with_masks_only
 #   define arm_2d_tile_fill_with_masks_and_x_mirror                             \
@@ -398,6 +432,8 @@ extern "C" {
                 arm_2d_rgb565_tile_copy_with_des_mask_and_y_mirror
 #   define arm_2d_tile_copy_with_des_mask_and_xy_mirror                         \
                 arm_2d_rgb565_tile_copy_with_des_mask_and_xy_mirror
+#   define arm_2d_tile_fill_with_des_mask                                       \
+                arm_2d_rgb565_tile_fill_with_des_mask
 #   define arm_2d_tile_fill_with_des_mask_only                                  \
                 arm_2d_rgb565_tile_fill_with_des_mask_only
 #   define arm_2d_tile_fill_with_des_mask_and_x_mirror                          \
@@ -440,6 +476,8 @@ extern "C" {
                 arm_2d_rgb16_tile_copy_with_colour_keying_and_y_mirror
 #   define arm_2d_tile_copy_with_colour_keying_and_xy_mirror                    \
                 arm_2d_rgb16_tile_copy_with_colour_keying_and_xy_mirror
+#   define arm_2d_tile_fill_with_colour_keying                                  \
+                arm_2d_rgb16_tile_fill_with_colour_keying
 #   define arm_2d_tile_fill_with_colour_keying_only                             \
                 arm_2d_rgb16_tile_fill_with_colour_keying_only
 #   define arm_2d_tile_fill_with_colour_keying_and_x_mirror                     \
@@ -456,6 +494,14 @@ extern "C" {
                 arm_2d_rgb565_tile_copy_with_des_mask
 #   define arm_2d_tile_copy_with_src_mask                                       \
                 arm_2d_rgb565_tile_copy_with_src_mask
+#   define arm_2dp_tile_copy_with_transformed_mask_and_opacity                  \
+                arm_2dp_rgb565_tile_copy_with_transformed_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_source_mask_and_opacity      \
+                arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_target_mask_and_opacity  \
+                arm_2dp_rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity  \
+                arm_2dp_rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity
 #   define arm_2dp_tile_transform_only                                          \
                 arm_2dp_rgb565_tile_transform_only
 #   define arm_2d_tile_scaling_only                                             \
@@ -520,12 +566,18 @@ extern "C" {
                 arm_2d_rgb565_fill_colour_with_mask_and_xy_mirror
 #   define arm_2d_fill_colour_with_mask_xy_mirror_and_opacity                   \
                 arm_2d_rgb565_fill_colour_with_mask_xy_mirror_and_opacity
+
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
                 arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform_xy               \
                 arm_2dp_rgb565_fill_colour_with_mask_opacity_and_transform_xy
 #   define arm_2d_fill_colour_with_mask_opacity_and_transform                   \
                 arm_2d_rgb565_fill_colour_with_mask_opacity_and_transform
+#   define arm_2dp_fill_colour_with_transformed_mask_target_mask_and_opacity    \
+                arm_2dp_rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity
+#   define arm_2dp_fill_colour_with_transformed_mask_and_target_mask            \
+                arm_2dp_rgb565_fill_colour_with_transformed_mask_and_target_mask
+
 #   define arm_2d_fill_colour_with_horizontal_line_mask                         \
                 arm_2d_rgb565_fill_colour_with_horizontal_line_mask
 #   define arm_2d_fill_colour_with_horizontal_line_mask_and_opacity             \
@@ -573,16 +625,19 @@ extern "C" {
 
 #   define __arm_2d_color_t         arm_2d_color_cccn888_t
 #   define COLOUR_INT               uint32_t
-#   define ARM_2D_COLOUR            ARM_2D_COLOUR_CCCA8888
+#   define ARM_2D_COLOUR            ARM_2D_COLOUR_CCCN888
 
 #   define arm_2d_pixel_from_brga8888  
 
 #   define __arm_2d_iir_blur_acc_t  __arm_2d_iir_blur_acc_cccn888_t
-
 #   define arm_2dp_filter_iir_blur  arm_2dp_cccn888_filter_iir_blur
 #   define arm_2dp_filter_iir_blur_depose                                       \
                 arm_2dp_cccn888_filter_iir_blur_depose
 
+#   define arm_2d_tile_fill                                                     \
+                arm_2d_rgb32_tile_fill
+#   define arm_2d_tile_fill_with_src_mask                                       \
+                arm_2d_cccn888_tile_fill_with_src_mask    
 #   define arm_2d_draw_pattern      arm_2d_rgb32_draw_pattern 
 #   define arm_2dp_fill_colour_with_opacity                                     \
                 arm_2dp_cccn888_fill_colour_with_opacity
@@ -590,6 +645,10 @@ extern "C" {
                 arm_2d_cccn888_fill_colour_with_mask
 #   define arm_2d_fill_colour_with_mask_and_opacity                             \
                 arm_2d_cccn888_fill_colour_with_mask_and_opacity
+#   define arm_2d_fill_colour_with_masks_and_opacity                            \
+                arm_2d_cccn888_fill_colour_with_masks_and_opacity
+#   define arm_2d_fill_colour_with_masks                                        \
+                arm_2d_cccn888_fill_colour_with_masks
 #   define arm_2d_tile_copy_with_colour_keying_and_opacity                      \
                 arm_2d_cccn888_tile_copy_with_colour_keying_and_opacity
 #   define arm_2d_tile_copy_with_masks                                          \
@@ -602,6 +661,8 @@ extern "C" {
                 arm_2d_cccn888_tile_copy_with_masks_and_y_mirror
 #   define arm_2d_tile_copy_with_masks_and_xy_mirror                            \
                 arm_2d_cccn888_tile_copy_with_masks_and_xy_mirror
+#   define arm_2d_tile_fill_with_masks                                          \
+                arm_2d_cccn888_tile_fill_with_masks
 #   define arm_2d_tile_fill_with_masks_only                                     \
                 arm_2d_cccn888_tile_fill_with_masks_only
 #   define arm_2d_tile_fill_with_masks_and_x_mirror                             \
@@ -638,6 +699,8 @@ extern "C" {
                 arm_2d_cccn888_tile_copy_with_des_mask_and_y_mirror
 #   define arm_2d_tile_copy_with_des_mask_and_xy_mirror                         \
                 arm_2d_cccn888_tile_copy_with_des_mask_and_xy_mirror
+#   define arm_2d_tile_fill_with_des_mask                                       \
+                arm_2d_cccn888_tile_fill_with_des_mask
 #   define arm_2d_tile_fill_with_des_mask_only                                  \
                 arm_2d_cccn888_tile_fill_with_des_mask_only
 #   define arm_2d_tile_fill_with_des_mask_and_x_mirror                          \
@@ -680,6 +743,8 @@ extern "C" {
                 arm_2d_rgb32_tile_copy_with_colour_keying_and_y_mirror
 #   define arm_2d_tile_copy_with_colour_keying_and_xy_mirror                    \
                 arm_2d_rgb32_tile_copy_with_colour_keying_and_xy_mirror
+#   define arm_2d_tile_fill_with_colour_keying                                  \
+                arm_2d_rgb32_tile_fill_with_colour_keying
 #   define arm_2d_tile_fill_with_colour_keying_only                             \
                 arm_2d_rgb32_tile_fill_with_colour_keying_only
 #   define arm_2d_tile_fill_with_colour_keying_and_x_mirror                     \
@@ -696,6 +761,14 @@ extern "C" {
                 arm_2d_cccn888_tile_copy_with_des_mask
 #   define arm_2d_tile_copy_with_src_mask                                       \
                 arm_2d_cccn888_tile_copy_with_src_mask
+#   define arm_2dp_tile_copy_with_transformed_mask_and_opacity                  \
+                arm_2dp_cccn888_tile_copy_with_transformed_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_source_mask_and_opacity      \
+                arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_target_mask_and_opacity  \
+                arm_2dp_cccn888_tile_copy_with_transformed_mask_target_mask_and_opacity
+#   define arm_2dp_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity  \
+                arm_2dp_cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity
 #   define arm_2dp_tile_transform_only                                          \
                 arm_2dp_cccn888_tile_transform_only
 #   define arm_2d_tile_scaling_only                                             \
@@ -760,12 +833,18 @@ extern "C" {
                 arm_2d_cccn888_fill_colour_with_mask_and_xy_mirror
 #   define arm_2d_fill_colour_with_mask_xy_mirror_and_opacity                   \
                 arm_2d_cccn888_fill_colour_with_mask_xy_mirror_and_opacity
+
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform                  \
                 arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform
 #   define arm_2dp_fill_colour_with_mask_opacity_and_transform_xy               \
                 arm_2dp_cccn888_fill_colour_with_mask_opacity_and_transform_xy
 #   define arm_2d_fill_colour_with_mask_opacity_and_transform                   \
                 arm_2d_cccn888_fill_colour_with_mask_opacity_and_transform
+#   define arm_2dp_fill_colour_with_transformed_mask_target_mask_and_opacity    \
+                arm_2dp_cccn888_fill_colour_with_transformed_mask_target_mask_and_opacity
+#   define arm_2dp_fill_colour_with_transformed_mask_and_target_mask            \
+                arm_2dp_cccn888_fill_colour_with_transformed_mask_and_target_mask
+    
 #   define arm_2d_fill_colour_with_horizontal_line_mask                         \
                 arm_2d_cccn888_fill_colour_with_horizontal_line_mask
 #   define arm_2d_fill_colour_with_horizontal_line_mask_and_opacity             \
@@ -845,6 +924,7 @@ extern "C" {
 #define GLCD_COLOR_LIGHT_GREY   __RGB( 192, 192, 192  )
 #define GLCD_COLOR_DARK_GREY    __RGB( 128, 128, 128  )
 #define GLCD_COLOR_BLUE         __RGB(   0,   0, 255  )
+#define GLCD_COLOR_SKY_BLUE     __RGB( 135, 206, 235  )
 #define GLCD_COLOR_GREEN        __RGB(   0, 255,   0  )
 #define GLCD_COLOR_CYAN         __RGB(   0, 255, 255  )
 #define GLCD_COLOR_RED          __RGB( 255,   0,   0  )
@@ -1050,15 +1130,15 @@ extern "C" {
                     ARM_2D_SAFE_NAME(ContainerRegion).tSize.iHeight             \
                         -= ARM_2D_SAFE_NAME(tMargin).chTop                      \
                         + ARM_2D_SAFE_NAME(tMargin).chBottom;                   \
-                    arm_2d_tile_generate_child(                                 \
+                    __arm_2d_tile_generate_child(                               \
                                             ARM_2D_SAFE_NAME(ptTile),           \
                                             &ARM_2D_SAFE_NAME(ContainerRegion), \
                                             &(__container_name),                \
-                                            false);                             \
+                                            false, false);                      \
                 },                                                              \
                 {                                                               \
                     (void)0;                                                    \
-                }) arm_2d_canvas( &__container_name, __container_name##_canvas)
+                })
 
 /*!
  * \brief generate a child tile with a given name, a reference region and an 
@@ -1084,9 +1164,40 @@ extern "C" {
                             ...)                                                \
             __arm_2d_container( (__tile_ptr),                                   \
                                 __container_name,                               \
-                                (__region_ptr),##__VA_ARGS__)
+                                (__region_ptr),##__VA_ARGS__)                   \
+                arm_2d_canvas( &__container_name, __container_name##_canvas)
 
+#define arm_2d_container_open(  __tile_ptr,                                     \
+                                __container_name,                               \
+                                __region_ptr,                                   \
+                                ...)                                            \
+            __arm_2d_container( (__tile_ptr),                                   \
+                                __container_name,                               \
+                                (__region_ptr),##__VA_ARGS__)                   \
+                arm_2d_canvas_open( &__container_name, __container_name##_canvas)
 
+#if !__ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
+#   define __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __region_name)
+#else
+#   define __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __region_name)                   \
+        __ARM_USING2(__arm_2d_layout_debug_t __arm_2d_reserve_canvas__ = {      \
+                        .ptTile = (arm_2d_tile_t *)(__tile_ptr)                 \
+                    },                                                          \
+                    { /* on leave */                                            \
+                        COLOUR_INT tColor = arm_2d_pixel_from_brga8888(         \
+                                        __arm_2d_helper_colour_slider(          \
+                                            __RGB32(0, 0xFF, 0),                \
+                                            __RGB32(0, 0, 0xFF),                \
+                                            8,                                  \
+                                            __arm_2d_reserve_canvas__.wLevel)); \
+                        arm_2d_helper_draw_box(                                 \
+                            (__arm_2d_reserve_canvas__.ptTile),                 \
+                            NULL,                                               \
+                            1,                                                  \
+                            tColor,                                             \
+                            128);                                               \
+                    })
+#endif
 
 /*!
  * \brief Please do NOT use this macro directly directly
@@ -1096,6 +1207,7 @@ extern "C" {
                                 __new_canvas_name,                              \
                                 __region_ptr,                                   \
                                 ...)                                            \
+            __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __new_canvas_name)              \
             for (arm_2d_margin_t ARM_2D_SAFE_NAME(tMargin),                     \
                 *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;              \
                  ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL ?          \
@@ -1176,29 +1288,6 @@ extern "C" {
                                 __new_canvas_name,                              \
                                 (__reference_region_ptr),##__VA_ARGS__)
 
-#if !__ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
-#   define __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __region_name)
-#else
-#   define __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __region_name)                   \
-        __ARM_USING2(__arm_2d_layout_debug_t __arm_2d_reserve_canvas__ = {      \
-                        .ptTile = (arm_2d_tile_t *)(__tile_ptr)                 \
-                    },                                                          \
-                    { /* on leave */                                            \
-                        COLOUR_INT tColor = arm_2d_pixel_from_brga8888(         \
-                                        __arm_2d_helper_colour_slider(          \
-                                            __RGB32(0, 0xFF, 0),                \
-                                            __RGB32(0, 0, 0xFF),                \
-                                            8,                                  \
-                                            __arm_2d_reserve_canvas__.wLevel)); \
-                        arm_2d_helper_draw_box(                                 \
-                            (__arm_2d_reserve_canvas__.ptTile),                 \
-                            NULL,                                               \
-                            1,                                                  \
-                            tColor,                                             \
-                            128);                                               \
-                })
-#endif
-
 #if defined(__ARM_2D_CFG_OPTIMIZE_FOR_PFB_IN_LAYOUT_ASSISTANT__)                \
  && __ARM_2D_CFG_OPTIMIZE_FOR_PFB_IN_LAYOUT_ASSISTANT__
 
@@ -1235,6 +1324,7 @@ extern "C" {
 #endif
 
 #define __arm_2d_canvas(__tile_ptr, __region_name, ...)                         \
+            __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __region_name)                  \
             arm_using(arm_2d_region_t __region_name = {0},                      \
                     {                                                           \
                         ARM_2D_UNUSED(__region_name);                           \
@@ -3373,6 +3463,7 @@ typedef union COLOUR_TYPE_T {
     uint16_t hwColour;
     uint32_t wColour;
     COLOUR_INT tColour;
+    uint8_t chChannels[4];
 } COLOUR_TYPE_T;
 
 typedef struct __arm_2d_layout_debug_t {
@@ -3530,19 +3621,6 @@ const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_RIGHT_TO_LEFT_BOTTOM_UP = 
 
 
 /*============================ PROTOTYPES ====================================*/
-
-__STATIC_INLINE
-uint8_t arm_2d_helper_alpha_mix(uint_fast8_t chAlpha1, 
-                                uint_fast8_t chAlpha2)
-{
-    chAlpha1 = MIN(255, chAlpha1);
-    chAlpha2 = MIN(255, chAlpha2);
-    return (uint8_t)(   (chAlpha1 == 255) 
-                    ?   chAlpha2 
-                    :   (   (chAlpha2 == 255) 
-                        ?   chAlpha1 
-                        :   ((uint16_t)chAlpha1 * (uint16_t)chAlpha2 >> 8)));
-}
 
 extern
 ARM_NONNULL(2)

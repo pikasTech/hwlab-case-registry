@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        9. July 2025
- * $Revision:    V.2.4.1
+ * $Date:        9. July 2026
+ * $Revision:    V.2.6.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -33,6 +33,7 @@
 #include <stdint.h>
 #include <assert.h>
 #include <time.h>
+#include <stdio.h>
 
 #define __ARM_2D_HELPER_COMMON_IMPLEMENT__
 #define __ARM_2D_HELPER_IMPLEMENT__
@@ -137,6 +138,7 @@ void arm_2d_helper_init(void)
     if (s_tHelper.wMSUnit == 0) {
         s_tHelper.wMSUnit = 1;
     }
+
 #if __ARM_2D_HAS_ASYNC__
     /*! \note create a event flag and attach it to the default OP */
     arm_2d_op_attach_semaphore(NULL, arm_2d_port_new_semaphore());
@@ -167,17 +169,27 @@ void arm_2d_helper_init(void)
 
 /* NOTE: for non-arm architecture, you have to implement those functions.
  */
-#if __IS_SUPPORTED_ARM_ARCH__
-__WEAK int64_t arm_2d_helper_get_system_timestamp(void)
+#if __IS_SUPPORTED_ARM_ARCH_M__ || __IS_SUPPORTED_ARM_ARCH_A__
+__WEAK 
+int64_t arm_2d_helper_get_system_timestamp(void)
 {
-    int64_t iOriginTimestamp = 
+    int64_t iOriginTimestamp = 0;
 #if defined(__PERF_COUNTER__)
-    get_system_ticks();
+    iOriginTimestamp = get_system_ticks();
+#elif defined(_POSIX_VERSION) || defined(CLOCK_REALTIME) || defined(__APPLE__)
+    struct timespec timestamp;
+   clock_gettime(CLOCK_REALTIME, &timestamp);
+
+    return (1000000ll * timestamp.tv_sec) + (timestamp.tv_nsec / 1000ll);
+#elif defined(__aarch64__)
+    __asm volatile("mrs %0, cntvct_el0" : "=r" (iOriginTimestamp));
 #else
     0;
 #endif
 
+#if !(defined(_POSIX_VERSION) || defined(CLOCK_REALTIME) || defined(__APPLE__))
     return iOriginTimestamp + s_tHelper.lTimestampInit;
+#endif
 }
 
 __WEAK 
@@ -186,6 +198,12 @@ uint32_t arm_2d_helper_get_reference_clock_frequency(void)
 #if defined(__PERF_COUNTER__) && __PER_COUNTER_VER__ >= 20300
     extern uint32_t perfc_port_get_system_timer_freq(void);
     return perfc_port_get_system_timer_freq();
+#elif defined(_POSIX_VERSION) || defined(CLOCK_REALTIME) || defined(__APPLE__)
+    return 1000000ul;
+#elif defined(__aarch64__)
+    uint64_t dwFrequency;
+    __asm volatile("mrs %0, cntfrq_el0" : "=r" (dwFrequency));
+    return (uint32_t)dwFrequency;
 #else
     extern uint32_t SystemCoreClock;
     return SystemCoreClock;
@@ -198,12 +216,22 @@ int64_t arm_2d_helper_convert_ticks_to_ms(int64_t lTick)
     return lTick / (int64_t)s_tHelper.wMSUnit;
 }
 
-int64_t arm_2d_helper_convert_ms_to_ticks(uint32_t wMS)
+int64_t arm_2d_helper_convert_ms_to_ticks(int64_t lMS)
 {
-    int64_t lResult = (int64_t)s_tHelper.wMSUnit * (int64_t)wMS;
+    int64_t lResult = (int64_t)s_tHelper.wMSUnit * lMS;
     return lResult ? lResult : 1;
 }
 
+__WEAK
+uint32_t arm_2d_helper_get_system_frequency(void)
+{
+#if __IS_SUPPORTED_ARM_ARCH_M__
+    extern uint32_t SystemCoreClock;
+    return SystemCoreClock;
+#else
+    return 0;
+#endif
+}
 
 ARM_NONNULL(2)
 bool __arm_2d_helper_is_time_out(int64_t lPeriod, int64_t *plTimestamp)
@@ -728,7 +756,7 @@ bool arm_2d_helper_film_next_frame(arm_2d_helper_film_t *ptThis)
     bool bReachTheEnd = false;
     assert(NULL != ptThis);
     
-    arm_2d_tile_t *ptFrame = &this.use_as__arm_2d_tile_t;
+    arm_2d_tile_t *ptFrame = &this.tTile;
                 
     ptFrame->tRegion.tLocation.iX += ptFrame->tRegion.tSize.iWidth;
     if (ptFrame->tRegion.tLocation.iX >= ptFrame->tRegion.tSize.iWidth * this.hwColumn) {
@@ -750,7 +778,7 @@ ARM_NONNULL(1)
 void arm_2d_helper_film_reset(arm_2d_helper_film_t *ptThis)
 {
     assert(NULL != ptThis);
-    arm_2d_tile_t *ptFrame = &this.use_as__arm_2d_tile_t;
+    arm_2d_tile_t *ptFrame = &this.tTile;
 
     ptFrame->tRegion.tLocation.iX = 0;
     ptFrame->tRegion.tLocation.iY = 0;
@@ -762,7 +790,7 @@ ARM_NONNULL(1)
 void arm_2d_helper_film_set_frame(arm_2d_helper_film_t *ptThis, int32_t nIndex)
 {
     assert(NULL != ptThis);
-    arm_2d_tile_t *ptFrame = &this.use_as__arm_2d_tile_t;
+    arm_2d_tile_t *ptFrame = &this.tTile;
 
     nIndex %= this.hwFrameNum;
     if (nIndex < 0) {
@@ -774,6 +802,22 @@ void arm_2d_helper_film_set_frame(arm_2d_helper_film_t *ptThis, int32_t nIndex)
         = (nIndex % this.hwColumn) * ptFrame->tRegion.tSize.iWidth;
     ptFrame->tRegion.tLocation.iY 
         = (nIndex / this.hwColumn) * ptFrame->tRegion.tSize.iHeight;
+}
+
+ARM_NONNULL(1)
+uint_fast16_t arm_2d_helper_film_get_frame_index(arm_2d_helper_film_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return this.hwFrameIndex;
+}
+
+ARM_NONNULL(1)
+uint_fast16_t arm_2d_helper_film_get_frame_count(arm_2d_helper_film_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return this.hwFrameNum;
 }
 
 #if __ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
@@ -900,7 +944,7 @@ arm_2d_op_core_t *arm_2d_op_depose(arm_2d_op_core_t *ptOP, size_t tSize)
         
         arm_2d_port_free_semaphore(arm_2d_op_get_semaphore(ptOP));
         
-        arm_2d_op_attach_semaphore(ptOP, NULL);
+        arm_2d_op_attach_semaphore(ptOP, (uintptr_t)NULL);
     
     } while(0);
 
@@ -1022,6 +1066,73 @@ bool arm_2d_byte_fifo_enqueue(arm_2d_byte_fifo_t *ptThis, uint8_t chChar)
 }
 
 ARM_NONNULL(1)
+bool arm_2d_byte_fifo_vomit(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar)
+{
+    assert(NULL != ptThis);
+    bool bResult = false;
+
+    if (NULL == this.pchBuffer) {
+        return false;
+    }
+
+    arm_irq_safe {
+        do {
+            if ((this.hwTail == this.tHead.hwPointer) 
+            &&  (this.tHead.hwDataAvailable == 0)) {
+                /* FIFO is EMPTY */
+                break;
+            }
+
+            if (this.hwTail == 0) {
+                this.hwTail = this.hwSize;
+            }
+            this.hwTail--;
+
+            if (NULL != pchChar) {
+                *pchChar = this.pchBuffer[this.hwTail];
+            }
+
+            this.tHead.hwDataAvailable--;
+            this.tPeek = this.tHead;
+
+            bResult = true;
+        } while(0);
+    }
+
+    return bResult;
+}
+
+ARM_NONNULL(1)
+void arm_2d_byte_fifo_squeeze(arm_2d_byte_fifo_t *ptThis, uint8_t chChar)
+{
+    assert(NULL != ptThis);
+    if (NULL == this.pchBuffer) {
+        return ;
+    }
+
+    do {
+        if (arm_2d_byte_fifo_enqueue(ptThis, chChar)) {
+            break;
+        }
+        arm_2d_byte_fifo_dequeue(ptThis, NULL);
+    } while(true);
+}
+
+ARM_NONNULL(1)
+uint16_t arm_2d_byte_fifo_get_item_count(arm_2d_byte_fifo_t *ptThis)
+{
+    assert(NULL != ptThis);
+    return this.tHead.hwDataAvailable;
+}
+
+ARM_NONNULL(1)
+uint16_t arm_2d_byte_fifo_get_capcity(arm_2d_byte_fifo_t *ptThis)
+{
+    assert(NULL != ptThis);
+    return this.hwSize;
+}
+
+ARM_NONNULL(1)
 bool arm_2d_byte_fifo_dequeue(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar)
 {
     assert(NULL != ptThis);
@@ -1060,6 +1171,72 @@ bool arm_2d_byte_fifo_dequeue(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar)
     }
 
     return bResult;
+}
+
+ARM_NONNULL(1)
+int16_t arm_2d_byte_fifo_peek_seek( arm_2d_byte_fifo_t *ptThis,
+                                    int16_t iOffset,
+                                    int32_t whence)
+{
+    assert(NULL != ptThis);
+    int16_t iCurrentIndex = -1;
+
+    arm_irq_safe {
+        do {
+            if (NULL == this.pchBuffer) {
+                break;
+            }
+
+            int16_t iTotalAvailableByteLength = this.tHead.hwDataAvailable;
+            int16_t iPosition = iTotalAvailableByteLength - this.tPeek.hwDataAvailable;
+
+            switch (whence) {
+                case SEEK_SET:
+                    if (iOffset >= iTotalAvailableByteLength || iOffset < 0) {
+                        /* errno = EINVAL */
+                        goto label_exit;
+                    }
+                    iPosition = iOffset;
+                    break;
+                case SEEK_END:
+                    if (iOffset > 0 || ((-iOffset) > iTotalAvailableByteLength)) {
+                        /* errno = EINVAL */
+                        goto label_exit;
+                    }
+                    iPosition = iTotalAvailableByteLength + iOffset;
+                    break;
+                case SEEK_CUR:
+                    iPosition += iOffset;
+                    if (iPosition >= iTotalAvailableByteLength || iPosition < 0) {
+                        /* errno = EINVAL */
+                        goto label_exit;
+                    }
+                    break;
+            }
+
+            /* we get a new iPostion, now let's update the peek pointer */
+            uint16_t hwNewPeekPointer = this.tHead.hwPointer + iPosition;
+
+            do {
+                if (hwNewPeekPointer >= this.hwSize) {
+                    hwNewPeekPointer -= this.hwSize;
+                } else {
+                    break;
+                }
+            } while(true);
+
+            this.tPeek.hwPointer = hwNewPeekPointer;
+            this.tPeek.hwDataAvailable = iTotalAvailableByteLength - iPosition;
+
+            iCurrentIndex = iPosition;
+
+        } while(0);
+label_exit:
+        /* make some compiler happy*/
+        ARM_2D_UNUSED(iCurrentIndex);   
+    }
+
+    return iCurrentIndex;
 }
 
 ARM_NONNULL(1)
@@ -1104,6 +1281,48 @@ bool arm_2d_byte_fifo_peek( arm_2d_byte_fifo_t *ptThis,
     return bResult;
 }
 
+
+ARM_NONNULL(1)
+size_t arm_2d_byte_fifo_peek_bytes( arm_2d_byte_fifo_t *ptThis, 
+                                    uint8_t *pchChar,
+                                    size_t tLength)
+{
+    assert(NULL != ptThis);
+    size_t tActualRead = 0;
+
+    if (NULL == this.pchBuffer || 0 == tLength) {
+        return 0;
+    }
+
+    arm_irq_safe {
+        do {
+            
+            if ((this.tPeek.hwPointer == this.hwTail) 
+            &&  (this.tPeek.hwDataAvailable == 0)) {
+                /* Nothing left to peek */
+                break;
+            }
+
+            tActualRead = MIN(tLength, this.tPeek.hwDataAvailable);
+            size_t tMaxToReadUntilEnd = this.hwSize - this.tPeek.hwPointer;
+            tActualRead = MIN(tActualRead, tMaxToReadUntilEnd);
+
+            if (NULL != pchChar) {
+                memcpy(pchChar, &this.pchBuffer[this.tPeek.hwPointer], tActualRead);
+            }
+
+            this.tPeek.hwPointer += tActualRead;
+            if (this.tPeek.hwPointer >= this.hwSize) {
+                this.tPeek.hwPointer = 0;
+            }
+
+            this.tPeek.hwDataAvailable -= tActualRead;
+        } while(0);
+    }
+
+    return tActualRead;
+}
+
 ARM_NONNULL(1)
 void arm_2d_byte_fifo_get_all_peeked(arm_2d_byte_fifo_t *ptThis)
 {
@@ -1142,7 +1361,7 @@ void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount)
     if ((((uintptr_t) phwBuffer) & 0x03) == 0x02) {
         // handle the leading pixel
         uint32_t wTemp = *phwBuffer;
-        *phwBuffer++ = (uint16_t)__REV16(wTemp);
+        *phwBuffer++ = (uint16_t)__rev16(wTemp);
         wCount--;
     }
 
@@ -1154,13 +1373,13 @@ void arm_2d_helper_swap_rgb16(uint16_t *phwBuffer, uint32_t wCount)
     if (wWords > 0) {
         do {
             uint32_t wTemp = *pwBuffer;
-            *pwBuffer++ = __REV16(wTemp);
+            *pwBuffer++ = __rev16(wTemp);
         } while(--wWords);
     }
 
     if (wCount) {
         uint32_t wTemp = *pwBuffer;
-        (*(uint16_t *)pwBuffer) = (uint16_t)__REV16(wTemp);
+        (*(uint16_t *)pwBuffer) = (uint16_t)__rev16(wTemp);
     }
 }
 

@@ -62,9 +62,14 @@ typedef struct image_box_cfg_t {
     float fXRatio;
     float fYRatio;
 
+    /*! \note When ptilePhoto points to a tile having enforced colour type GRAY8,
+     *        it will be used as an A8 mask for colour-filling. In such a case, we 
+     *        use tScreenColour to specify the colour.
+     */
     COLOUR_TYPE_T tScreenColour;
-    uint8_t u2Mode              : 2;
-    uint8_t                     : 5;
+    uint8_t u2Mode              : 2;                                            /* IMG_BOX_MODE_xxxx */
+    uint8_t                     : 4;
+    uint8_t __bNoScaling        : 1;                                            /* please ignore this flag */
     uint8_t __bShowGrayScale    : 1;                                            /* please ignore this flag */
 
 } image_box_cfg_t;
