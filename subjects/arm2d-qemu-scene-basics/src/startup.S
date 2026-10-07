@@ -5,7 +5,7 @@
 .global _start
 .type _start, %function
 _start:
-    ldr sp, =0x60100000
+    ldr sp, =_stack_top
     bl main
 1:
     wfi

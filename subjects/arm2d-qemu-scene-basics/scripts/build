@@ -36,7 +36,7 @@ set -- \
 printf '%s\n' 'compiler phase: startup assembler (cortex-a9)' >&2
 arm-none-eabi-gcc -mcpu=cortex-a9 -marm -c "$root/src/startup.S" -o "$root/build/startup.o"
 printf '%s\n' 'compiler phase: C gnu17 and link (cortex-a9, CMSIS adapter)' >&2
-arm-none-eabi-gcc -std=gnu17 -fms-extensions -Wno-error=int-conversion -mcpu=cortex-a9 -marm -ffreestanding -fno-builtin -O2 \
+arm-none-eabi-gcc -std=gnu17 -fms-extensions -Wno-error=int-conversion -mcpu=cortex-a9 -marm -ffreestanding -fno-builtin -mno-unaligned-access -O2 \
   -ffunction-sections -fdata-sections -D_RTE_ \
   -include "$root/src/cmsis_gcc_a9_compat.h" \
   -include "$root/src/RTE_Components.h" \
@@ -46,6 +46,6 @@ arm-none-eabi-gcc -std=gnu17 -fms-extensions -Wno-error=int-conversion -mcpu=cor
   -I"$arm2d/Platform/math" \
   -I"$arm2d/examples/demos" \
   -I"$arm2d/examples/common/controls" \
-  -nostdlib -Wl,--build-id=none -Wl,--gc-sections -Wl,-T,"$root/linker.ld" \
+  -nostdlib -Wl,-Map,"$root/build/qemu-gui.map" -Wl,--build-id=none -Wl,--gc-sections -Wl,-T,"$root/linker.ld" \
   "$root/build/startup.o" "$@" -lgcc -o "$root/build/qemu-gui.elf"
 arm-none-eabi-size "$root/build/qemu-gui.elf"
